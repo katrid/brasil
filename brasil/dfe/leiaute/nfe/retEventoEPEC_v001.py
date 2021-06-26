@@ -22,12 +22,12 @@ class TCOrgaoIBGE(str):
 
 
 class retEnvEvento(ComplexType):
-    idLote: str = Element(str)
-    tpAmb: TAmb = Element(TAmb)
-    verAplic: TVerAplic = Element(TVerAplic)
-    cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE)
-    cStat: TStat = Element(TStat)
-    xMotivo: TMotivo = Element(TMotivo)
+    idLote: str = Element(str, documentation=['Identificador de controle do Lote de envio do Evento, conforme informado na mensagem de entrada.'])
+    tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente: 1=Produção /2=Homologação'])
+    verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão da aplicação que processou o evento.'])
+    cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código da UF que registrou o Evento. '])
+    cStat: TStat = Element(TStat, documentation=['Código do status da resposta '])
+    xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição do status da resposta '])
 
     class retEvento(ComplexType):
         _max_occurs = 20
@@ -37,19 +37,19 @@ class retEnvEvento(ComplexType):
 
 
         class infEvento(ComplexType):
-            tpAmb: TAmb = Element(TAmb)
-            verAplic: TVerAplic = Element(TVerAplic)
-            cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE)
-            cStat: TStat = Element(TStat)
-            xMotivo: TMotivo = Element(TMotivo)
-            chNFe: TChNFe = Element(TChNFe)
-            tpEvento: str = Element(str)
-            xEvento: str = Element(str)
-            nSeqEvento: str = Element(str)
-            cOrgaoAutor: TCodUfIBGE = Element(TCodUfIBGE)
-            dhRegEvento: TDateTimeUTC = Element(TDateTimeUTC)
-            nProt: TProt = Element(TProt)
-            chNFePend: List[TChNFe] = Element(TChNFe, max_occurs=50)
+            tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente: 1=Produção /2=Homologação'])
+            verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão da aplicação que registrou o Evento, utilizar literal que permita a identificação do órgão, como a sigla da UF ou do órgão.'])
+            cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código da UF que registrou o Evento. '])
+            cStat: TStat = Element(TStat, documentation=['Código do status da resposta.'])
+            xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição do status da resposta.'])
+            chNFe: TChNFe = Element(TChNFe, documentation=['Chave de Acesso da NFC-e vinculada ao evento.'])
+            tpEvento: str = Element(str, documentation=['110140 \x96 EPEC'])
+            xEvento: str = Element(str, documentation=['\x93EPEC autorizado\x94'])
+            nSeqEvento: str = Element(str, documentation=['Sequencial do evento, conforme a mensagem de entrada.'])
+            cOrgaoAutor: TCodUfIBGE = Element(TCodUfIBGE, documentation=['Idem a mensagem de entrada.'])
+            dhRegEvento: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora de registro do evento no formato AAAA-MM-DDTHH:MM:SSTZD (formato UTC, onde TZD é +HH:MM ou \x96HH:MM). Se o evento for rejeitado informar a data e hora de recebimento do evento.'])
+            nProt: TProt = Element(TProt, documentation=['Número do Protocolo do Evento'])
+            chNFePend: List[TChNFe] = Element(TChNFe, max_occurs=50, documentation=['Relação de Chaves de Acesso de EPEC pendentes de'])
             Id: str = Attribute(None)
         infEvento: infEvento = Element(infEvento)
         Signature: Signature = Element(Signature)

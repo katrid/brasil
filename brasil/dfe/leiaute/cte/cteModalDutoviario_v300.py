@@ -9,8 +9,8 @@ from .cteTiposBasico_v300 import *
 
 class duto(ComplexType):
     """Informações do modal Dutoviário"""
-    vTar: TDec_0906Opc = Element(TDec_0906Opc, tipo="N", tam=(9, 6))
-    dIni: TData = Element(TData)
-    dFim: TData = Element(TData)
+    vTar: TDec_0906Opc = Element(TDec_0906Opc, tipo="N", tam=(9, 6), documentation=['Valor da tarifa'])
+    dIni: TData = Element(TData, documentation=['Data de Início da prestação do serviço'])
+    dFim: TData = Element(TData, documentation=['Data de Fim da prestação do serviço'])
 
-duto: duto = Element(duto)
+duto: duto = Element(duto, documentation=['Informações do modal Dutoviário'])

@@ -17,9 +17,9 @@ class detEvento(ComplexType):
     class dest(ComplexType):
         _choice = [['CNPJ', 'CPF', 'idEstrangeiro']]
         UF: UF = Element(UF)
-        CNPJ: TCnpj = Element(TCnpj)
-        CPF: TCpf = Element(TCpf)
-        idEstrangeiro: str = Element(str)
+        CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit)
+        CPF: TCpf = Element(TCpf, filter=str.isdigit)
+        idEstrangeiro: str = Element(str, documentation=['Identificador do destinatário, em caso de comprador estrangeiro'])
         IE: IE = Element(IE)
         vNF: vNF = Element(vNF)
         vICMS: vICMS = Element(vICMS)

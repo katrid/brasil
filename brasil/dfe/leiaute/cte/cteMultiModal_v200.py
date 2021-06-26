@@ -9,7 +9,7 @@ from .cteTiposBasico_v200 import *
 
 class multimodal(ComplexType):
     """Informações do Multimodal"""
-    COTM: str = Element(str)
-    indNegociavel: str = Element(str)
+    COTM: str = Element(str, documentation=['Número do Certificado do Operador de Transporte Multimodal', None])
+    indNegociavel: str = Element(str, documentation=['Indicador Negociável\nPreencher com: 0 - Não Negociável; 1 - Negociável', None])
 
-multimodal: multimodal = Element(multimodal)
+multimodal: multimodal = Element(multimodal, documentation=['Informações do Multimodal'])

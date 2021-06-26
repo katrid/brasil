@@ -10,9 +10,9 @@ class detEvento(ComplexType):
     descEvento: str = Element(str)
     cOrgaoAutor: TCOrgaoIBGE = Element(TCOrgaoIBGE)
     tpAutor: str = Element(str)
-    verAplic: TVerAplic = Element(TVerAplic)
+    verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão do Aplicativo do Autor do Evento'])
     chCTe: str = Element(str)
     nProtCTeCanc: str = Element(str)
     versao: str = Attribute(None)
 
-detEvento: detEvento = Element(detEvento)
+detEvento: detEvento = Element(detEvento, documentation=['Schema XML de validação do evento de Cancelamento do Comprovante de Entrega de CT-e'])

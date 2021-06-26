@@ -13,4 +13,4 @@ class cteProc(ComplexType):
     protCTe: TProtCTe = Element(TProtCTe)
     versao: str = Attribute(TVerCTe)
 
-cteProc: cteProc = Element(cteProc)
+cteProc: cteProc = Element(cteProc, documentation=[' CT-e processado'])

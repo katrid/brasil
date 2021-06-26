@@ -5,8 +5,8 @@ from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString,
 
 class detEvento(ComplexType):
     """Schema XML de validação do evento de desconhecimento da operação"""
-    descEvento: str = Element(str)
-    xJust: str = Element(str)
+    descEvento: str = Element(str, documentation=['Descrição do Evento:\n\t\t\t\t\t\t\t\t\t\t\t "Desconhecimento da Operacao"'])
+    xJust: str = Element(str, documentation=['Justificativa de desconhecimento da Operacao'])
     versao: str = Attribute(None)
 
-detEvento: detEvento = Element(detEvento)
+detEvento: detEvento = Element(detEvento, documentation=['Schema XML de validação do evento de desconhecimento da operação'])

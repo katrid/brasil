@@ -19,13 +19,13 @@ class TCancCTe(Element):
 
     class infCanc(ComplexType):
         """Dados do Pedido de Cancelamentode Conhecimento de Transporte Eletrônico"""
-        tpAmb: TAmb = Element(TAmb)
-        xServ: TServ = Element(TServ)
-        chCTe: TChNFe = Element(TChNFe)
-        nProt: TProt = Element(TProt)
-        xJust: TJust = Element(TJust)
+        tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+        xServ: TServ = Element(TServ, documentation=['Serviço Solicitado'])
+        chCTe: TChNFe = Element(TChNFe, documentation=['Chaves de acesso compostas por Código da UF + AAMM da emissão + CNPJ do Emitente + Modelo, Série e Número do CT-e+ Código Numérico + DV.'])
+        nProt: TProt = Element(TProt, documentation=['Número do Protocolo de Status do CT-e. 1 posição tipo de autorizador (1 – Secretaria de Fazenda Estadual 2 – Receita Federal - SCAN, 3 - SEFAZ Virtual RFB ); 2 posições ano; 10 seqüencial no ano.'])
+        xJust: TJust = Element(TJust, documentation=['Justificativa do cancelamento'])
         Id: str = Attribute(None)
-    infCanc: infCanc = Element(infCanc)
+    infCanc: infCanc = Element(infCanc, documentation=['Dados do Pedido de Cancelamentode Conhecimento de Transporte Eletrônico'])
     Signature: Signature = Element(Signature)
     versao: str = Attribute(TVerCancCTe)
 
@@ -36,16 +36,16 @@ class TRetCancCTe(Element):
 
     class infCanc(ComplexType):
         """Dados do Resultado do Pedido de Cancelamento do Conhecimento de Transporte Eletrônico"""
-        tpAmb: TAmb = Element(TAmb)
-        cUF: TCodUfIBGE = Element(TCodUfIBGE)
-        verAplic: TVerAplic = Element(TVerAplic)
-        cStat: TStat = Element(TStat)
-        xMotivo: TMotivo = Element(TMotivo)
-        chCTe: TChNFe = Element(TChNFe)
-        dhRecbto: dateTime = Element(dateTime)
-        nProt: TProt = Element(TProt)
+        tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+        cUF: TCodUfIBGE = Element(TCodUfIBGE, documentation=['Identificação da UF'])
+        verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão do Aplicativo que processou o pedido de cancelamento'])
+        cStat: TStat = Element(TStat, documentation=['Código do status da mensagem enviada.'])
+        xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do serviço solicitado.'])
+        chCTe: TChNFe = Element(TChNFe, documentation=['Chaves de acesso do CT-e, compostas por: UF do emitente, AAMM da emissão do CT-e, CNPJ do emitente, modelo, série e número do CT-e e código numérico + DV.'])
+        dhRecbto: dateTime = Element(dateTime, documentation=['Data e hora de recebimento, no formato AAAA-MM-DDTHH:MM:SS. Deve ser preenchida com data e hora da gravação no Banco em caso de Confirmação.'])
+        nProt: TProt = Element(TProt, documentation=['Número do Protocolo de homologação do cancelamento: 1 posição tipo de autorizador (1 – Secretaria de Fazenda Estadual, 3 - SEFAZ Virtual RS, 5 - SEFAZ Virtual SP ); 2 posições ano; 10 seqüencial no ano.'])
         Id: str = Attribute(ID)
-    infCanc: infCanc = Element(infCanc)
+    infCanc: infCanc = Element(infCanc, documentation=['Dados do Resultado do Pedido de Cancelamento do Conhecimento de Transporte Eletrônico'])
     Signature: Signature = Element(Signature)
     versao: str = Attribute(TVerCancCTe)
 

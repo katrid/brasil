@@ -7,9 +7,9 @@ from .tiposBasico_v103 import *
 
 class detEvento(ComplexType):
     """Schema XML de validação do evento do cancelamento 1101111"""
-    descEvento: str = Element(str)
-    nProt: TProt = Element(TProt)
-    xJust: TJust = Element(TJust)
+    descEvento: str = Element(str, documentation=['Descrição do Evento - “Cancelamento”'])
+    nProt: TProt = Element(TProt, documentation=['Número do Protocolo de Status da NF-e. 1 posição (1 – Secretaria de Fazenda Estadual 2 – Receita Federal); 2 posições ano; 10 seqüencial no ano.'])
+    xJust: TJust = Element(TJust, documentation=['Justificativa do cancelamento'])
     versao: str = Attribute(None)
 
-detEvento: detEvento = Element(detEvento)
+detEvento: detEvento = Element(detEvento, documentation=['Schema XML de validação do evento do cancelamento 1101111'])

@@ -5,8 +5,8 @@ from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString,
 
 class detEvento(ComplexType):
     """Schema XML de validação do evento de Recusa de Recebimento (Operação não Realizada)"""
-    descEvento: str = Element(str)
-    xJust: str = Element(str)
+    descEvento: str = Element(str, documentation=['Descrição do Evento:"Operação não Realizada"'])
+    xJust: str = Element(str, documentation=['Justificativa de recusa do recebimento da mercadoria'])
     versao: str = Attribute(None)
 
-detEvento: detEvento = Element(detEvento)
+detEvento: detEvento = Element(detEvento, documentation=['Schema XML de validação do evento de Recusa de Recebimento (Operação não Realizada)'])

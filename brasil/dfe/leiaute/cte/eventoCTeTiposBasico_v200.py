@@ -18,18 +18,18 @@ class TEvento(Element):
     """Tipo Evento"""
 
     class infEvento(ComplexType):
-        cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE)
-        tpAmb: TAmb = Element(TAmb)
-        CNPJ: TCnpj = Element(TCnpj)
-        chCTe: TChNFe = Element(TChNFe)
-        dhEvento: str = Element(str)
-        tpEvento: str = Element(str)
-        nSeqEvento: str = Element(str)
+        cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar SUFRAMA'])
+        tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+        CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['CNPJ do emissor do evento'])
+        chCTe: TChNFe = Element(TChNFe, documentation=['Chave de Acesso do CT-e vinculado ao evento'])
+        dhEvento: str = Element(str, documentation=['Data e Hora do Evento, formato UTC (AAAA-MM-DDThh:mm:ss)'])
+        tpEvento: str = Element(str, documentation=['Tipo do Evento'])
+        nSeqEvento: str = Element(str, documentation=['Seqüencial do evento para o mesmo tipo de evento.  Para maioria dos eventos será 1, nos casos em que possa existir mais de um evento o autor do evento deve numerar de forma seqüencial.'])
 
         class detEvento(ComplexType):
             """Detalhamento do evento específico"""
             versaoEvento: str = Attribute(None)
-        detEvento: detEvento = Element(detEvento)
+        detEvento: detEvento = Element(detEvento, documentation=['Detalhamento do evento específico'])
         Id: str = Attribute(None)
     infEvento: infEvento = Element(infEvento)
     Signature: Signature = Element(Signature)
@@ -41,17 +41,17 @@ class TRetEvento(Element):
     """Tipo retorno do Evento"""
 
     class infEvento(ComplexType):
-        tpAmb: TAmb = Element(TAmb)
-        verAplic: TVerAplic = Element(TVerAplic)
-        cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE)
-        cStat: TStat = Element(TStat)
-        xMotivo: TMotivo = Element(TMotivo)
-        chCTe: TChNFe = Element(TChNFe)
-        tpEvento: str = Element(str)
-        xEvento: str = Element(str)
-        nSeqEvento: str = Element(str)
-        dhRegEvento: str = Element(str)
-        nProt: TProt = Element(TProt)
+        tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+        verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão do Aplicativo que recebeu o Evento'])
+        cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar SUFRAMA'])
+        cStat: TStat = Element(TStat, documentation=['Código do status da registro do Evento'])
+        xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do registro do Evento'])
+        chCTe: TChNFe = Element(TChNFe, documentation=['Chave de Acesso CT-e vinculado'])
+        tpEvento: str = Element(str, documentation=['Tipo do Evento vinculado'])
+        xEvento: str = Element(str, documentation=['Descrição do Evento'])
+        nSeqEvento: str = Element(str, documentation=['Seqüencial do evento'])
+        dhRegEvento: str = Element(str, documentation=['Data e Hora de do recebimento do evento ou do registro do evento formato AAAA-MM-DDThh:mm:ss'])
+        nProt: TProt = Element(TProt, documentation=['Número do protocolo de registro do evento'])
         Id: str = Attribute(None)
     infEvento: infEvento = Element(infEvento)
     Signature: Signature = Element(Signature)

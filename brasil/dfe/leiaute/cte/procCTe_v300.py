@@ -12,4 +12,4 @@ class cteProc(ComplexType):
     versao: str = Attribute(TVerCTe)
     ipTransmissor: str = Attribute(TIPv4)
 
-cteProc: cteProc = Element(cteProc)
+cteProc: cteProc = Element(cteProc, documentation=[' CT-e processado'])

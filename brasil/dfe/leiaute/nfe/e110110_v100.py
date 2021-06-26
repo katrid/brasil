@@ -5,9 +5,9 @@ from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString,
 
 class detEvento(ComplexType):
     """Schema XML de validação do evento do carta de correção e1101110"""
-    descEvento: str = Element(str)
-    xCorrecao: str = Element(str)
-    xCondUso: str = Element(str)
+    descEvento: str = Element(str, documentation=['Descrição do Evento - “Carta de Correção”'])
+    xCorrecao: str = Element(str, documentation=['Correção a ser considerada'])
+    xCondUso: str = Element(str, documentation=['Texto Fixo com as condições de uso da Carta de Correção'])
     versao: str = Attribute(None)
 
-detEvento: detEvento = Element(detEvento)
+detEvento: detEvento = Element(detEvento, documentation=['Schema XML de validação do evento do carta de correção e1101110'])

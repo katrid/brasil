@@ -7,11 +7,11 @@ from .cteTiposBasico_v200 import *
 
 class aquav(ComplexType):
     """Informações do modal Aquaviário"""
-    vPrest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
-    vAFRMM: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
-    nBooking: str = Element(str)
-    nCtrl: str = Element(str)
-    xNavio: str = Element(str)
+    vPrest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da Prestação Base de Cálculo do AFRMM'])
+    vAFRMM: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['AFRMM (Adicional de Frete para Renovação da Marinha Mercante)'])
+    nBooking: str = Element(str, documentation=['Número do Booking (reserva)'])
+    nCtrl: str = Element(str, documentation=['Número de Controle', 'campo para uso das empresas transportadoras'])
+    xNavio: str = Element(str, documentation=['Identificação do Navio '])
 
     class balsa(ComplexType):
         """Grupo de informações das balsas"""
@@ -20,15 +20,15 @@ class aquav(ComplexType):
         def add(self, xBalsa=None) -> aquav.balsa:
             return super().add(xBalsa=xBalsa)
 
-        xBalsa: str = Element(str)
-    balsa: List[balsa] = Element(balsa, max_occurs=3)
-    nViag: str = Element(str)
-    direc: str = Element(str)
-    prtEmb: str = Element(str)
-    prtTrans: str = Element(str)
-    prtDest: str = Element(str)
-    tpNav: str = Element(str)
-    irin: str = Element(str)
+        xBalsa: str = Element(str, documentation=['Identificador da Balsa'])
+    balsa: List[balsa] = Element(balsa, max_occurs=3, documentation=['Grupo de informações das balsas'])
+    nViag: str = Element(str, documentation=['Número da Viagem'])
+    direc: str = Element(str, documentation=['Direção', 'Preencher com: N-Norte, L-Leste, S-Sul, O-Oeste  '])
+    prtEmb: str = Element(str, documentation=['Porto de Embarque'])
+    prtTrans: str = Element(str, documentation=['Porto de Transbordo'])
+    prtDest: str = Element(str, documentation=['Porto de Destino'])
+    tpNav: str = Element(str, documentation=['Tipo de Navegação', 'Preencher com: \n\t\t\t\t\t\t0 - Interior;\n\t\t\t\t\t\t1 - Cabotagem'])
+    irin: str = Element(str, documentation=['Irin do navio sempre deverá ser informado'])
 
     class detCont(ComplexType):
         """Grupo de informações de detalhamento dos conteiners
@@ -38,7 +38,7 @@ class aquav(ComplexType):
         def add(self, nCont=None, lacre=None, infDoc=None) -> aquav.detCont:
             return super().add(nCont=nCont, lacre=lacre, infDoc=infDoc)
 
-        nCont: TContainer = Element(TContainer)
+        nCont: TContainer = Element(TContainer, documentation=['Identificação do Container'])
 
         class lacre(ComplexType):
             """Grupo de informações dos lacres dos cointainers da qtde da carga"""
@@ -47,8 +47,8 @@ class aquav(ComplexType):
             def add(self, nLacre=None) -> aquav.detCont.lacre:
                 return super().add(nLacre=nLacre)
 
-            nLacre: str = Element(str)
-        lacre: List[lacre] = Element(lacre, max_occurs=3)
+            nLacre: str = Element(str, documentation=['Lacre'])
+        lacre: List[lacre] = Element(lacre, max_occurs=3, documentation=['Grupo de informações dos lacres dos cointainers da qtde da carga '])
 
         class infDoc(ComplexType):
             """Informações dos documentos dos conteiners"""
@@ -61,10 +61,10 @@ class aquav(ComplexType):
                 def add(self, serie=None, nDoc=None, unidRat=None) -> aquav.detCont.infDoc.infNF:
                     return super().add(serie=serie, nDoc=nDoc, unidRat=unidRat)
 
-                serie: str = Element(str)
-                nDoc: str = Element(str)
-                unidRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2))
-            infNF: List[infNF] = Element(infNF, max_occurs=-1)
+                serie: str = Element(str, documentation=['Série'])
+                nDoc: str = Element(str, documentation=['Número '])
+                unidRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2), documentation=['Unidade de medida rateada (Peso,Volume)'])
+            infNF: List[infNF] = Element(infNF, max_occurs=-1, documentation=['Informações das NF'])
 
             class infNFe(ComplexType):
                 """Informações das NFe"""
@@ -73,10 +73,10 @@ class aquav(ComplexType):
                 def add(self, chave=None, unidRat=None) -> aquav.detCont.infDoc.infNFe:
                     return super().add(chave=chave, unidRat=unidRat)
 
-                chave: TChNFe = Element(TChNFe)
-                unidRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2))
-            infNFe: List[infNFe] = Element(infNFe, max_occurs=-1)
-        infDoc: infDoc = Element(infDoc)
-    detCont: List[detCont] = Element(detCont, max_occurs=-1)
+                chave: TChNFe = Element(TChNFe, documentation=['Chave de acesso da NF-e'])
+                unidRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2), documentation=['Unidade de medida rateada (Peso,Volume)'])
+            infNFe: List[infNFe] = Element(infNFe, max_occurs=-1, documentation=['Informações das NFe'])
+        infDoc: infDoc = Element(infDoc, documentation=['Informações dos documentos dos conteiners'])
+    detCont: List[detCont] = Element(detCont, max_occurs=-1, documentation=['Grupo de informações de detalhamento dos conteiners\n(Somente para Redespacho Intermediario)'])
 
-aquav: aquav = Element(aquav)
+aquav: aquav = Element(aquav, documentation=['Informações do modal Aquaviário'])

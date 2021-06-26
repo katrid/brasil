@@ -26,15 +26,15 @@ class TEvento(Element):
 
     class infEvento(ComplexType):
         _choice = [['CNPJ', 'CPF']]
-        cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE)
-        tpAmb: TAmb = Element(TAmb)
-        CNPJ: TCnpjOpc = Element(TCnpjOpc)
-        CPF: TCpf = Element(TCpf)
-        chNFe: TChNFe = Element(TChNFe)
-        dhEvento: TDateTimeUTC = Element(TDateTimeUTC)
-        tpEvento: str = Element(str)
-        nSeqEvento: str = Element(str)
-        verEvento: str = Element(str)
+        cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar o Ambiente Nacional'])
+        tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+        CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['CNPJ'])
+        CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF'])
+        chNFe: TChNFe = Element(TChNFe, documentation=['Chave de Acesso da NF-e vinculada ao evento'])
+        dhEvento: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e Hora do Evento, formato UTC (AAAA-MM-DDThh:mm:ssTZD, onde TZD = +hh:mm ou -hh:mm)'])
+        tpEvento: str = Element(str, documentation=['Tipo do Evento:\n\t\t\t\t\t\t\t\t\t111500  - Pedido de Prorrogação Primeiro Prazo\n\t\t\t\t\t\t\t\t\t111501  - Pedido de Prorrogação Segundo Prazo\n\t\t\t\t\t\t\t\t\t111502  - Pedido de Cancelamento Primeiro Prazo\n\t\t\t\t\t\t\t\t\t111503  - Pedido de Cancelamento Segundo Prazo\n\t\t\t\t\t\t\t\t'])
+        nSeqEvento: str = Element(str, documentation=['Seqüencial do evento para o mesmo tipo de evento.  Para maioria dos eventos será 1, nos casos em que possa existir mais de um evento, como é o caso da carta de correção, o autor do evento deve numerar de forma seqüencial.'])
+        verEvento: str = Element(str, documentation=['Versão do Tipo do Evento'])
 
         class detEvento(ComplexType):
             pass
@@ -51,21 +51,21 @@ class TRetEvento(Element):
 
     class infEvento(ComplexType):
         _choice = [['CNPJDest', 'CPFDest']]
-        tpAmb: TAmb = Element(TAmb)
-        verAplic: TVerAplic = Element(TVerAplic)
-        cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE)
-        cStat: TStat = Element(TStat)
-        xMotivo: TMotivo = Element(TMotivo)
-        chNFe: TChNFe = Element(TChNFe)
-        tpEvento: str = Element(str)
-        xEvento: str = Element(str)
-        nSeqEvento: str = Element(str)
-        cOrgaoAutor: TCOrgaoIBGE = Element(TCOrgaoIBGE)
-        CNPJDest: TCnpjOpc = Element(TCnpjOpc)
-        CPFDest: TCpf = Element(TCpf)
-        emailDest: str = Element(str)
-        dhRegEvento: str = Element(str)
-        nProt: TProt = Element(TProt)
+        tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+        verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão do Aplicativo que recebeu o Evento'])
+        cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar o Ambiente Nacional'])
+        cStat: TStat = Element(TStat, documentation=['Código do status da registro do Evento'])
+        xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do registro do Evento'])
+        chNFe: TChNFe = Element(TChNFe, documentation=['Chave de Acesso NF-e vinculada'])
+        tpEvento: str = Element(str, documentation=['Tipo do Evento vinculado'])
+        xEvento: str = Element(str, documentation=['Descrição do Evento'])
+        nSeqEvento: str = Element(str, documentation=['Seqüencial do evento'])
+        cOrgaoAutor: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código do órgão de autor do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar o Ambiente Nacional'])
+        CNPJDest: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['CNPJ Destinatário'])
+        CPFDest: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF Destiantário'])
+        emailDest: str = Element(str, documentation=['email do destinatário'])
+        dhRegEvento: str = Element(str, documentation=['Data e Hora de registro do evento formato UTC AAAA-MM-DDTHH:MM:SSTZD'])
+        nProt: TProt = Element(TProt, documentation=['Número do protocolo de registro do evento'])
         Id: str = Attribute(None)
     infEvento: infEvento = Element(infEvento)
     Signature: Signature = Element(Signature)
@@ -91,11 +91,11 @@ class TEnvEvento(Element):
 class TRetEnvEvento(Element):
     """Tipo Retorno de Lote de Envio"""
     idLote: str = Element(str)
-    tpAmb: TAmb = Element(TAmb)
-    verAplic: TVerAplic = Element(TVerAplic)
-    cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE)
-    cStat: TStat = Element(TStat)
-    xMotivo: TMotivo = Element(TMotivo)
+    tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+    verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão do Aplicativo que recebeu o Evento'])
+    cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código do òrgao que registrou o Evento'])
+    cStat: TStat = Element(TStat, documentation=['Código do status da registro do Evento'])
+    xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do registro do Evento'])
     retEvento: List[TRetEvento] = Element(TRetEvento, max_occurs=20)
     versao: str = Attribute(TVerEnvEvento)
 

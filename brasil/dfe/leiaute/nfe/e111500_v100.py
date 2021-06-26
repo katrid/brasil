@@ -7,8 +7,8 @@ from .tiposBasico_v103 import *
 
 class detEvento(ComplexType):
     """Informações do Pedido de Prorrogação"""
-    descEvento: str = Element(str)
-    nProt: TProt = Element(TProt)
+    descEvento: str = Element(str, documentation=['Pedido de Prorrogação ou Pedido de Prorrogacao'])
+    nProt: TProt = Element(TProt, documentation=['Informar o número do Protocolo de Autorização da NF-e a ser Prorrogada. (vide item 5.6).'])
 
     class itemPedido(ComplexType):
         """Item do Pedido de Prorrogação. Recomenda-se agrupar a maior quantidade de itens em cada Pedido de Prorrogação"""
@@ -18,9 +18,9 @@ class detEvento(ComplexType):
         def add(self, qtdeItem=None, numItem=None) -> detEvento.itemPedido:
             return super().add(qtdeItem=qtdeItem, numItem=numItem)
 
-        qtdeItem: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4))
+        qtdeItem: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), documentation=['Quantidade do item que será solicitado a prorrogação de prazo'])
         numItem: str = Attribute(None)
-    itemPedido: List[itemPedido] = Element(itemPedido, min_occurs=1, max_occurs=990)
+    itemPedido: List[itemPedido] = Element(itemPedido, min_occurs=1, max_occurs=990, documentation=['Item do Pedido de Prorrogação. Recomenda-se agrupar a maior quantidade de itens em cada Pedido de Prorrogação'])
     versao: str = Attribute(None)
 
-detEvento: detEvento = Element(detEvento)
+detEvento: detEvento = Element(detEvento, documentation=['Informações do Pedido de Prorrogação'])

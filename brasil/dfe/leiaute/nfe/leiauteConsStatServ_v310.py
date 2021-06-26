@@ -14,24 +14,24 @@ class TVerConsStatServ(token):
 
 class TConsStatServ(Element):
     """Tipo Pedido de Consulta do Status do Serviço"""
-    tpAmb: TAmb = Element(TAmb)
-    cUF: TCodUfIBGE = Element(TCodUfIBGE)
-    xServ: str = Element(str)
+    tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+    cUF: TCodUfIBGE = Element(TCodUfIBGE, documentation=['Sigla da UF consultada'])
+    xServ: str = Element(str, documentation=['Serviço Solicitado'])
     versao: str = Attribute(TVerConsStatServ)
 
 
 
 class TRetConsStatServ(Element):
     """Tipo Resultado da Consulta do Status do Serviço"""
-    tpAmb: TAmb = Element(TAmb)
-    verAplic: TVerAplic = Element(TVerAplic)
-    cStat: TStat = Element(TStat)
-    xMotivo: TMotivo = Element(TMotivo)
-    cUF: TCodUfIBGE = Element(TCodUfIBGE)
-    dhRecbto: TDateTimeUTC = Element(TDateTimeUTC)
-    tMed: TMed = Element(TMed)
-    dhRetorno: TDateTimeUTC = Element(TDateTimeUTC)
-    xObs: TMotivo = Element(TMotivo)
+    tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+    verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão do Aplicativo que processou a NF-e'])
+    cStat: TStat = Element(TStat, documentation=['Código do status da mensagem enviada.'])
+    xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do serviço solicitado.'])
+    cUF: TCodUfIBGE = Element(TCodUfIBGE, documentation=['Código da UF responsável pelo serviço'])
+    dhRecbto: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora do recebimento da consulta no formato AAAA-MM-DDTHH:MM:SSTZD'])
+    tMed: TMed = Element(TMed, documentation=['Tempo médio de resposta do serviço (em segundos) dos últimos 5 minutos'])
+    dhRetorno: TDateTimeUTC = Element(TDateTimeUTC, documentation=['AAAA-MM-DDTHH:MM:SSDeve ser preenchida com data e hora previstas para o retorno dos serviços prestados.'])
+    xObs: TMotivo = Element(TMotivo, documentation=['Campo observação utilizado para incluir informações ao contribuinte'])
     versao: str = Attribute(TVerConsStatServ)
 
 

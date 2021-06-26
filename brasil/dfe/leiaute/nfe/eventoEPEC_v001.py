@@ -22,7 +22,7 @@ class TCOrgaoIBGE(str):
 
 
 class envEvento(ComplexType):
-    idLote: str = Element(str)
+    idLote: str = Element(str, documentation=['Identificador de controle do Lote de envio do Evento.'])
 
     class evento(ComplexType):
         _max_occurs = 20
@@ -33,34 +33,34 @@ class envEvento(ComplexType):
 
         class infEvento(ComplexType):
             _choice = [['CNPJ', 'CPF']]
-            cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE)
-            tpAmb: TAmb = Element(TAmb)
-            CNPJ: TCnpjOpc = Element(TCnpjOpc)
-            CPF: TCpf = Element(TCpf)
-            chNFe: TChNFe = Element(TChNFe)
-            dhEvento: TDateTimeUTC = Element(TDateTimeUTC)
-            tpEvento: str = Element(str)
-            nSeqEvento: str = Element(str)
-            verEvento: TVerEvento = Element(TVerEvento)
+            cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código do órgão de recepção do Evento.'])
+            tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente: 1=Produção /2=Homologação'])
+            CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['CNPJ'])
+            CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF'])
+            chNFe: TChNFe = Element(TChNFe, documentation=['Para o evento de EPEC, a posição 35 da Chave de Acesso deve ser 4 (tpEmis=4).'])
+            dhEvento: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora do evento no formato AAAA-MM-DDThh:mm:ssTZD (UTC - Universal Coordinated Time).'])
+            tpEvento: str = Element(str, documentation=['Código do evento: 110140 -EPEC'])
+            nSeqEvento: str = Element(str, documentation=['Informar o valor "1" para o evento do EPEC.'])
+            verEvento: TVerEvento = Element(TVerEvento, documentation=['Versão do detalhe do evento (grupo detEvento - P17), informação usada pela SEFAZ para validar o grupo detEvento.'])
 
             class detEvento(ComplexType):
-                descEvento: str = Element(str)
-                cOrgaoAutor: TCodUfIBGE = Element(TCodUfIBGE)
-                tpAutor: str = Element(str)
-                verAplic: TVerAplic = Element(TVerAplic)
-                dhEmi: TDateTimeUTC = Element(TDateTimeUTC)
-                tpNF: str = Element(str)
-                IE: TIe = Element(TIe)
+                descEvento: str = Element(str, documentation=['"EPEC"'])
+                cOrgaoAutor: TCodUfIBGE = Element(TCodUfIBGE, documentation=['Código do Órgão do Autor do Evento.'])
+                tpAutor: str = Element(str, documentation=['Informar "1=Empresa Emitente" para este evento.'])
+                verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão do aplicativo do Autor do Evento.'])
+                dhEmi: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora no formato UTC (Universal Coordinated Time): "AAAA-MM-DDThh:mm:ss TZD".'])
+                tpNF: str = Element(str, documentation=['Informar 1=Saída.'])
+                IE: TIe = Element(TIe, filter=str.isdigit, documentation=['IE do Emitente'])
 
                 class dest(ComplexType):
                     _choice = [['CNPJ', 'CPF', 'idEstrangeiro']]
-                    UF: TUf = Element(TUf)
-                    CNPJ: TCnpjOpc = Element(TCnpjOpc)
-                    CPF: TCpf = Element(TCpf)
-                    idEstrangeiro: str = Element(str)
+                    UF: TUf = Element(TUf, documentation=['Sigla da UF do destinatário. '])
+                    CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['CNPJ'])
+                    CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF'])
+                    idEstrangeiro: str = Element(str, documentation=['ID Estrangeiro'])
                 dest: dest = Element(dest)
-                vNF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
-                vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vNF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor total da NFC-e'])
+                vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor total do ICMS'])
                 versao: str = Attribute(TVerEvento)
             detEvento: detEvento = Element(detEvento)
             Id: str = Attribute(None)

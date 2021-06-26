@@ -16,9 +16,9 @@ class TVerConsSitNFe(str):
 
 class TConsSitNFe(Element):
     """Tipo Pedido de Consulta da Situação Atual da Nota Fiscal Eletrônica"""
-    tpAmb: TAmb = Element(TAmb)
-    xServ: str = Element(str)
-    chNFe: TChNFe = Element(TChNFe)
+    tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+    xServ: str = Element(str, documentation=['Serviço Solicitado'])
+    chNFe: TChNFe = Element(TChNFe, documentation=['Chaves de acesso da NF-e, compostas por: UF do emitente, AAMM da emissão da NFe, CNPJ do emitente, modelo, série e número da NF-e e código numérico + DV.'])
     versao: str = Attribute(TVerConsSitNFe)
 
 
@@ -35,16 +35,16 @@ class TProtNFe(Element):
 
     class infProt(ComplexType):
         """Dados do protocolo de status"""
-        tpAmb: TAmb = Element(TAmb)
-        verAplic: TVerAplic = Element(TVerAplic)
-        chNFe: TChNFe = Element(TChNFe)
-        dhRecbto: dateTime = Element(dateTime)
-        nProt: TProt = Element(TProt)
-        digVal: DigestValueType = Element(DigestValueType)
-        cStat: TStat = Element(TStat)
-        xMotivo: TMotivo = Element(TMotivo)
+        tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+        verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão do Aplicativo que processou a NF-e'])
+        chNFe: TChNFe = Element(TChNFe, documentation=['Chaves de acesso da NF-e, compostas por: UF do emitente, AAMM da emissão da NFe, CNPJ do emitente, modelo, série e número da NF-e e código numérico+DV.'])
+        dhRecbto: dateTime = Element(dateTime, documentation=['Data e hora de processamento, no formato AAAA-MM-DDTHH:MM:SS (ou AAAA-MM-DDTHH:MM:SSTZD, de acordo com versão). Deve ser preenchida com data e hora da gravação no Banco em caso de Confirmação. Em caso de Rejeição, com data e hora do recebimento do Lote de NF-e enviado.'])
+        nProt: TProt = Element(TProt, documentation=['Número do Protocolo de Status da NF-e. 1 posição (1 – Secretaria de Fazenda Estadual 2 – Receita Federal); 2 - códiga da UF - 2 posições ano; 10 seqüencial no ano.'])
+        digVal: DigestValueType = Element(DigestValueType, documentation=['Digest Value da NF-e processada. Utilizado para conferir a integridade da NF-e original.'])
+        cStat: TStat = Element(TStat, documentation=['Código do status da mensagem enviada.'])
+        xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do serviço solicitado.'])
         Id: str = Attribute(ID)
-    infProt: infProt = Element(infProt)
+    infProt: infProt = Element(infProt, documentation=['Dados do protocolo de status'])
     Signature: Signature = Element(Signature)
     versao: str = Attribute(TVerNFe)
 
@@ -62,16 +62,16 @@ class TRetCancNFe(Element):
 
     class infCanc(ComplexType):
         """Dados do Resultado do Pedido de Cancelamento da Nota Fiscal Eletrônica"""
-        tpAmb: TAmb = Element(TAmb)
-        verAplic: TVerAplic = Element(TVerAplic)
-        cStat: TStat = Element(TStat)
-        xMotivo: TMotivo = Element(TMotivo)
-        cUF: TCodUfIBGE = Element(TCodUfIBGE)
-        chNFe: TChNFe = Element(TChNFe)
-        dhRecbto: dateTime = Element(dateTime)
-        nProt: TProt = Element(TProt)
+        tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+        verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão do Aplicativo que processou o pedido de cancelamento'])
+        cStat: TStat = Element(TStat, documentation=['Código do status da mensagem enviada.'])
+        xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do serviço solicitado.'])
+        cUF: TCodUfIBGE = Element(TCodUfIBGE, documentation=['código da UF de atendimento'])
+        chNFe: TChNFe = Element(TChNFe, documentation=['Chaves de acesso da NF-e, compostas por: UF do emitente, AAMM da emissão da NFe, CNPJ do emitente, modelo, série e número da NF-e e código numérico + DV.'])
+        dhRecbto: dateTime = Element(dateTime, documentation=['Data e hora de recebimento, no formato AAAA-MM-DDTHH:MM:SS. Deve ser preenchida com data e hora da gravação no Banco em caso de Confirmação.'])
+        nProt: TProt = Element(TProt, documentation=['Número do Protocolo de Status da NF-e. 1 posição (1 – Secretaria de Fazenda Estadual 2 – Receita Federal); 2 - código da UF - 2 posições ano; 10 seqüencial no ano.'])
         Id: str = Attribute(ID)
-    infCanc: infCanc = Element(infCanc)
+    infCanc: infCanc = Element(infCanc, documentation=['Dados do Resultado do Pedido de Cancelamento da Nota Fiscal Eletrônica'])
     Signature: Signature = Element(Signature)
     versao: str = Attribute(TVerCancNFe)
 
@@ -89,20 +89,20 @@ class TRetEvento(Element):
 
     class infEvento(ComplexType):
         _choice = [['CNPJDest', 'CPFDest']]
-        tpAmb: TAmb = Element(TAmb)
-        verAplic: TVerAplic = Element(TVerAplic)
-        cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE)
-        cStat: TStat = Element(TStat)
-        xMotivo: TMotivo = Element(TMotivo)
-        chNFe: TChNFe = Element(TChNFe)
-        tpEvento: str = Element(str)
-        xEvento: str = Element(str)
-        nSeqEvento: str = Element(str)
-        CNPJDest: TCnpjOpc = Element(TCnpjOpc)
-        CPFDest: TCpf = Element(TCpf)
-        emailDest: str = Element(str)
-        dhRegEvento: TDateTimeUTC = Element(TDateTimeUTC)
-        nProt: TProt = Element(TProt)
+        tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+        verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão do Aplicativo que recebeu o Evento'])
+        cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar o Ambiente Nacional'])
+        cStat: TStat = Element(TStat, documentation=['Código do status da registro do Evento'])
+        xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do registro do Evento'])
+        chNFe: TChNFe = Element(TChNFe, documentation=['Chave de Acesso NF-e vinculada'])
+        tpEvento: str = Element(str, documentation=['Tipo do Evento vinculado'])
+        xEvento: str = Element(str, documentation=['Descrição do Evento'])
+        nSeqEvento: str = Element(str, documentation=['Seqüencial do evento'])
+        CNPJDest: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['CNPJ Destinatário'])
+        CPFDest: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF Destiantário'])
+        emailDest: str = Element(str, documentation=['email do destinatário'])
+        dhRegEvento: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e Hora de registro do evento formato UTC AAAA-MM-DDTHH:MM:SSTZD'])
+        nProt: TProt = Element(TProt, documentation=['Número do protocolo de registro do evento'])
         Id: str = Attribute(None)
     infEvento: infEvento = Element(infEvento)
     Signature: Signature = Element(Signature)
@@ -122,20 +122,20 @@ class TEvento(Element):
 
     class infEvento(ComplexType):
         _choice = [['CNPJ', 'CPF']]
-        cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE)
-        tpAmb: TAmb = Element(TAmb)
-        CNPJ: TCnpjOpc = Element(TCnpjOpc)
-        CPF: TCpf = Element(TCpf)
-        chNFe: TChNFe = Element(TChNFe)
-        dhEvento: TDateTimeUTC = Element(TDateTimeUTC)
-        tpEvento: str = Element(str)
-        nSeqEvento: str = Element(str)
-        verEvento: str = Element(str)
+        cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar o Ambiente Nacional'])
+        tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+        CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['CNPJ'])
+        CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF'])
+        chNFe: TChNFe = Element(TChNFe, documentation=['Chave de Acesso da NF-e vinculada ao evento'])
+        dhEvento: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e Hora do Evento, formato UTC (AAAA-MM-DDThh:mm:ssTZD, onde TZD = +hh:mm ou -hh:mm)'])
+        tpEvento: str = Element(str, documentation=['Tipo do Evento'])
+        nSeqEvento: str = Element(str, documentation=['Seqüencial do evento para o mesmo tipo de evento.  Para maioria dos eventos será 1, nos casos em que possa existir mais de um evento, como é o caso da carta de correção, o autor do evento deve numerar de forma seqüencial.'])
+        verEvento: str = Element(str, documentation=['Versão do Tipo do Evento'])
 
         class detEvento(ComplexType):
             """Detalhe Específico do Evento"""
             pass
-        detEvento: detEvento = Element(detEvento)
+        detEvento: detEvento = Element(detEvento, documentation=['Detalhe Específico do Evento'])
         Id: str = Attribute(None)
     infEvento: infEvento = Element(infEvento)
     Signature: Signature = Element(Signature)
@@ -153,16 +153,16 @@ class TProcEvento(Element):
 
 class TRetConsSitNFe(Element):
     """Tipo Retorno de Pedido de Consulta da Situação Atual da Nota Fiscal Eletrônica"""
-    tpAmb: TAmb = Element(TAmb)
-    verAplic: TVerAplic = Element(TVerAplic)
-    cStat: TStat = Element(TStat)
-    xMotivo: TMotivo = Element(TMotivo)
-    cUF: TCodUfIBGE = Element(TCodUfIBGE)
-    dhRecbto: TDateTimeUTC = Element(TDateTimeUTC)
-    chNFe: TChNFe = Element(TChNFe)
-    protNFe: TProtNFe = Element(TProtNFe)
-    retCancNFe: TRetCancNFe = Element(TRetCancNFe)
-    procEventoNFe: List[TProcEvento] = Element(TProcEvento, max_occurs=-1)
+    tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+    verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão do Aplicativo que processou a NF-e'])
+    cStat: TStat = Element(TStat, documentation=['Código do status da mensagem enviada.'])
+    xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do serviço solicitado.'])
+    cUF: TCodUfIBGE = Element(TCodUfIBGE, documentation=['código da UF de atendimento'])
+    dhRecbto: TDateTimeUTC = Element(TDateTimeUTC, documentation=['AAAA-MM-DDTHH:MM:SSTZD'])
+    chNFe: TChNFe = Element(TChNFe, documentation=['Chaves de acesso da NF-e consultada'])
+    protNFe: TProtNFe = Element(TProtNFe, documentation=['Protocolo de autorização de uso da NF-e'])
+    retCancNFe: TRetCancNFe = Element(TRetCancNFe, documentation=['Protocolo de homologação de cancelamento de uso da NF-e'])
+    procEventoNFe: List[TProcEvento] = Element(TProcEvento, max_occurs=-1, documentation=['Protocolo de registro de evento da NF-e'])
     versao: str = Attribute(TVerConsSitNFe)
 
 

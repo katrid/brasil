@@ -24,34 +24,34 @@ class TNroRegEstadual(str):
 class rodoOS(ComplexType):
     """Informações do modal Rodoviário"""
     _choice = [['TAF', 'NroRegEstadual']]
-    TAF: TTermoAutFreta = Element(TTermoAutFreta)
-    NroRegEstadual: TNroRegEstadual = Element(TNroRegEstadual)
+    TAF: TTermoAutFreta = Element(TTermoAutFreta, documentation=['Termo de Autorização de Fretamento – TAF', 'Registro obrigatório do emitente do CT-e OS junto à ANTT, de acordo com a Resolução ANTT nº 4.777/2015'])
+    NroRegEstadual: TNroRegEstadual = Element(TNroRegEstadual, documentation=['Número do Registro Estadual ', 'Registro obrigatório do emitente do CT-e OS junto à Agência Reguladora  Estadual.\t\t\t\t\t'])
 
     class veic(ComplexType):
         """Dados do Veículo"""
-        placa: str = Element(str)
-        RENAVAM: str = Element(str)
+        placa: str = Element(str, documentation=['Placa do veículo '])
+        RENAVAM: str = Element(str, documentation=['RENAVAM do veículo '])
 
         class prop(ComplexType):
             """Proprietários do Veículo.
 Só preenchido quando o veículo não pertencer à empresa emitente do CT-e OS"""
             _choice = [['CPF', 'CNPJ'], ['TAF', 'NroRegEstadual']]
-            CPF: TCpf = Element(TCpf)
-            CNPJ: TCnpjOpc = Element(TCnpjOpc)
-            TAF: TTermoAutFreta = Element(TTermoAutFreta)
-            NroRegEstadual: TNroRegEstadual = Element(TNroRegEstadual)
-            xNome: str = Element(str)
-            IE: str = Element(str)
-            UF: TUf = Element(TUf)
-            tpProp: str = Element(str)
-        prop: prop = Element(prop)
-        UF: TUf = Element(TUf)
-    veic: veic = Element(veic)
+            CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
+            CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Informar os zeros não significativos.'])
+            TAF: TTermoAutFreta = Element(TTermoAutFreta, documentation=['Termo de Autorização de Fretamento – TAF', 'De acordo com a Resolução ANTT nº 4.777/2015\t\t\t\t\t\t'])
+            NroRegEstadual: TNroRegEstadual = Element(TNroRegEstadual, documentation=['Número do Registro Estadual ', 'Registro obrigatório do emitente do CT-e OS junto à Agência Reguladora  Estadual\t\t\t\t\t\t'])
+            xNome: str = Element(str, documentation=['Razão Social ou Nome do proprietário'])
+            IE: str = Element(str, documentation=['Inscrição Estadual'])
+            UF: TUf = Element(TUf, documentation=['UF'])
+            tpProp: str = Element(str, documentation=['Tipo Proprietário', 'Preencher com:\n\t\t\t\t\t\t\t\t\t\t\t\t0-TAC – Agregado;\n\t\t\t\t\t\t\t\t\t\t\t\t1-TAC Independente; ou \n\t\t\t\t\t\t\t\t\t\t\t\t2 – Outros.'])
+        prop: prop = Element(prop, documentation=['Proprietários do Veículo.\nSó preenchido quando o veículo não pertencer à empresa emitente do CT-e OS'])
+        UF: TUf = Element(TUf, documentation=['UF em que veículo está licenciado', 'Sigla da UF de licenciamento do veículo.'])
+    veic: veic = Element(veic, documentation=['Dados do Veículo'])
 
     class infFretamento(ComplexType):
         """Dados do fretamento (apenas para Transporte de Pessoas)"""
-        tpFretamento: str = Element(str)
-        dhViagem: TDateTimeUTC = Element(TDateTimeUTC)
-    infFretamento: infFretamento = Element(infFretamento)
+        tpFretamento: str = Element(str, documentation=['Tipo Fretamento', 'Preencher com:\n 1 - Eventual 2 - Continuo\t\t\t\t\t\t\t\t'])
+        dhViagem: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora da viagem (Apenas para fretamento eventual)', 'Formato AAAA-MM-DDTHH:MM:DD TZD'])
+    infFretamento: infFretamento = Element(infFretamento, documentation=['Dados do fretamento (apenas para Transporte de Pessoas)'])
 
-rodoOS: rodoOS = Element(rodoOS)
+rodoOS: rodoOS = Element(rodoOS, documentation=['Informações do modal Rodoviário'])

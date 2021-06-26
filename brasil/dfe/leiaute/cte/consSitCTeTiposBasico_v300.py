@@ -9,9 +9,9 @@ from .xmldsig_core_schema_v101 import *
 
 class TConsSitCTe(Element):
     """Tipo Pedido de Consulta da Situação Atual do Conhecimento de Transporte eletrônico"""
-    tpAmb: TAmb = Element(TAmb)
-    xServ: TServ = Element(TServ)
-    chCTe: TChNFe = Element(TChNFe)
+    tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+    xServ: TServ = Element(TServ, documentation=['Serviço Solicitado'])
+    chCTe: TChNFe = Element(TChNFe, documentation=['Chaves de acesso da CT-e, compostas por: UF do emitente, AAMM da emissão da CT-e, CNPJ do emitente, modelo, série e número da CT-e e código numérico + DV.'])
     versao: str = Attribute(None)
 
 
@@ -25,11 +25,11 @@ class TVerConsSitCTe(str):
 
 class TRetConsSitCTe(Element):
     """Tipo Retorno de Pedido de Consulta da Situação Atual do Conhecimento de Transporte eletrônico"""
-    tpAmb: TAmb = Element(TAmb)
-    verAplic: TVerAplic = Element(TVerAplic)
-    cStat: TStat = Element(TStat)
-    xMotivo: TMotivo = Element(TMotivo)
-    cUF: TCodUfIBGE = Element(TCodUfIBGE)
+    tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
+    verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão do Aplicativo que processou o CT-e'])
+    cStat: TStat = Element(TStat, documentation=['Código do status da mensagem enviada.'])
+    xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do serviço solicitado.'])
+    cUF: TCodUfIBGE = Element(TCodUfIBGE, documentation=['código da UF de atendimento'])
 
     class protCTe(ComplexType):
         versao: str = Attribute(None)

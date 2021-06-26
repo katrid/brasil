@@ -9,4 +9,4 @@ class procEventoCTe(ComplexType):
     """Pedido de Registro de Eventos de CT-e processado"""
     pass
 
-procEventoCTe: procEventoCTe = Element(procEventoCTe)
+procEventoCTe: procEventoCTe = Element(procEventoCTe, documentation=['Pedido de Registro de Eventos de CT-e processado'])
