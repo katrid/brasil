@@ -1,3 +1,4 @@
+from __future__ import annotations
 import os
 import sys
 from lxml import etree
@@ -83,20 +84,49 @@ def adjust_deps(types):
 
 
 class SimpleType:
+    parent: SimpleType = None
     name: str = None
-    documentation: str = None
-    complex_type: 'ComplexType' = None
-    simple_type: 'SimpleType' = None
-    min_occurs: str = None
-    max_occurs: str = None
+    complex_type: ComplexType = None
+    simple_type: SimpleType = None
+    _min_occurs: int = None
+    _max_occurs: int = None
     type_: str = None
     restriction: Restriction = None
 
-    def __init__(self):
+    def __init__(self, parent=None):
+        if isinstance(parent, Element):
+            parent = parent.parent
+        self.documentation: list[str] = []
+        self.parent = parent
         self.types = {}
+        self.choices = []
         self.sequence = []
         self.enumeration = []
         self.deps = []
+
+    @property
+    def min_occurs(self):
+        return self._min_occurs
+
+    @min_occurs.setter
+    def min_occurs(self, value):
+        if isinstance(value, str) and value.isdigit():
+            self._min_occurs = int(value)
+        else:
+            self._min_occurs = value
+
+    @property
+    def max_occurs(self):
+        return self._max_occurs
+
+    @max_occurs.setter
+    def max_occurs(self, value):
+        if value == 'unbounded':
+            self._max_occurs = -1
+        elif isinstance(value, str) and value.isdigit():
+            self._max_occurs = int(value)
+        else:
+            self._max_occurs = value
 
     def read(self, el):
         self.name = el.attrib.get('name')
@@ -121,9 +151,9 @@ class SimpleType:
         if el.tag == '{http://www.w3.org/2001/XMLSchema}annotation':
             self.read_nodes(el)
         elif el.tag == '{http://www.w3.org/2001/XMLSchema}documentation':
-            self.documentation = el.text
+            self.documentation.append(el.text)
         elif el.tag == '{http://www.w3.org/2001/XMLSchema}element':
-            element = Element()
+            element = Element(self)
             element.read(el)
             self.deps.extend(element.deps)
             self.sequence.append(element)
@@ -132,13 +162,17 @@ class SimpleType:
         elif el.tag == '{http://www.w3.org/2001/XMLSchema}restriction':
             self.restriction = Restriction()
             self.restriction.read(el)
+        elif el.tag == '{http://www.w3.org/2001/XMLSchema}choice':
+            choices = [child.attrib.get('name') for child in el if child.tag.endswith('element')]
+            self.choices.append(choices)
+            self.read_nodes(el)
         elif el.tag == '{http://www.w3.org/2001/XMLSchema}complexType':
-            self.complex_type = ComplexType()
+            self.complex_type = ComplexType(parent=self)
             self.complex_type.read(el)
             self.deps.extend(self.complex_type.deps)
             self.complex_type.name = self.name
         elif el.tag == '{http://www.w3.org/2001/XMLSchema}simpleType':
-            self.simple_type = SimpleType()
+            self.simple_type = SimpleType(parent=self)
             self.simple_type.read(el)
             self.deps.extend(self.simple_type.deps)
             self.simple_type.name = self.name
@@ -152,6 +186,8 @@ class SimpleType:
 
     def render(self, indent=0):
         stream = []
+        level0 = ' ' * (indent * 4)
+        level1 = ' ' * ((indent + 1) * 4)
         if self.name:
             base_type = self.type_
             if not base_type and self.restriction:
@@ -166,20 +202,30 @@ class SimpleType:
             elif ':' in base_type:
                 base_type = base_type.split(':', 1)[1]
 
-            stream.append(f'{" " * (indent * 4)}class {self.name}({base_type}):')
+            stream.append(f'\n{level0}class {self.name}({base_type}):')
             if self.documentation:
-                stream.append(f'{" " * ((indent + 1) * 4)}"""{self.documentation.strip()}"""')
+                doc = "\n".join([s.strip().replace('"', '\\"') for s in self.documentation])
+                stream.append(f'{level1}"""{doc}"""')
 
             if self.min_occurs:
-                stream.append(f'{" " * ((indent + 1) * 4)}_min_occurs = {self.min_occurs}')
+                stream.append(f'{level1}_min_occurs = {self.min_occurs}')
             if self.max_occurs:
-                stream.append(f'{" " * ((indent + 1) * 4)}_max_occurs = {self.max_occurs}')
+                stream.append(f'{level1}_max_occurs = {self.max_occurs}')
 
             if self.restriction:
                 stream.append(self.restriction.render(indent + 1))
 
-            if not self.sequence:
-                stream.append(f'{" " * ((indent + 1) * 4)}pass')
+            if self.choices:
+                stream.append(f'{level1}_choice = {self.choices}')
+
+            if self._max_occurs:
+                args = [s.name for s in self.sequence if s.name]
+                stream.append(f'\n{level1}def add(self, {", ".join([a + "=None" for a in args])}) -> {self.qualname()}:')
+                stream.append(f'{" " * ((indent + 2) * 4)}return super().add({", ".join([a + "=" + a for a in args])})')
+                stream.append('')
+            elif not self.sequence:
+                stream.append(f'{level1}pass')
+
 
             types = []
             if self.types:
@@ -193,6 +239,12 @@ class SimpleType:
         if indent == 0:
             stream.append('')
         return '\n'.join(stream) + '\n'
+
+    def qualname(self):
+        name = self.name
+        if self.parent and self.parent.name:
+            name = self.parent.qualname() + '.' + name
+        return name
 
     def __str__(self):
         return self.render()
@@ -209,26 +261,34 @@ class Element(SimpleType):
             el_type = el_type.split(':', 1)[1]
         if not name:
             name = el_type
+
+        args = ''
+        is_lst = False
+        if self.min_occurs:
+            args += f', min_occurs={self.min_occurs}'
+            if int(self.min_occurs) > 0:
+                is_lst = True
+        if self.max_occurs:
+            max_occurs = self.max_occurs
+            if max_occurs == 'unbounded':
+                max_occurs = -1
+            args += f', max_occurs={max_occurs}'
+            if int(max_occurs) > 0 or max_occurs == -1:
+                is_lst = True
+
         if self.complex_type:
             self.complex_type.type_ = 'ComplexType'
+            self.complex_type.documentation = self.documentation
+            self.complex_type.min_occurs = self.min_occurs
+            self.complex_type.max_occurs = self.max_occurs
             s = self.complex_type.render(indent)
             el_type = self.name
-            return s + f'{" " * (indent * 4)}{name}: {el_type}'
+            if is_lst:
+                ref_type = f'List[{el_type}]'
+            else:
+                ref_type = el_type
+            return s + f'{" " * (indent * 4)}{name}: {ref_type} = Element({el_type}{args})'
         else:
-            args = ''
-            is_lst = False
-            if self.min_occurs:
-                args += f', min_occurs={self.min_occurs}'
-                if int(self.min_occurs) > 0:
-                    is_lst = True
-            if self.max_occurs:
-                max_occurs = self.max_occurs
-                if max_occurs == 'unbounded':
-                    max_occurs = -1
-                args += f', max_occurs={max_occurs}'
-                if int(max_occurs) > 0 or max_occurs == -1:
-                    is_lst = True
-
             if is_lst:
                 ref_type = f'List[{el_type}]'
             else:
@@ -252,6 +312,7 @@ class Module(SimpleType):
         self.xsd = xsd
         self.lst = lst
         self.imports = [
+            'from __future__ import annotations',
             'from typing import List',
             'from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime'
         ]
