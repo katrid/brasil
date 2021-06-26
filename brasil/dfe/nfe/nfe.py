@@ -29,7 +29,7 @@ class NotaFiscal(DocumentoFiscal):
         if isinstance(root, str):
             root = etree.fromstring(root)
         for child in root:
-            if child.tag.endswith('infNfe'):
+            if child.tag.endswith('infNFe'):
                 return certificado.assinar(child, ref)
 
 

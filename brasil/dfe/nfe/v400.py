@@ -13,6 +13,7 @@ class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.infNFe.versao = '4.00'
+        self.infNFe.emit.CRT = 3
 
     def _validate_schema(self):
         if NFe.schema is None:
@@ -34,4 +35,6 @@ class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
         self.infNFe.Id = 'NFe' + value
 
     def _xml(self, name=None):
+        for i, det in enumerate(self.infNFe.det._list):
+            det.nItem = i + 1
         return remover_acentos(super()._xml(name)).decode('utf-8')

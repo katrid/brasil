@@ -262,7 +262,7 @@ class TCTe(Element):
                 toma: str = Element(str, documentation=['Tomador do Serviço', 'Preencher com: \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t4 - Outros\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tObs: Informar os dados cadastrais do tomador do serviço'])
                 CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\nInformar os zeros não significativos.'])
                 CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
-                IE: TIeDest = Element(TIeDest, documentation=['Inscrição Estadual', 'Informar a IE do tomador ou ISENTO se tomador é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o tomador não seja contribuinte do ICMS não informar o conteúdo.'])
+                IE: TIeDest = Element(TIeDest, filter=str.isdigit, documentation=['Inscrição Estadual', 'Informar a IE do tomador ou ISENTO se tomador é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o tomador não seja contribuinte do ICMS não informar o conteúdo.'])
                 xNome: str = Element(str, documentation=['Razão Social ou Nome'])
                 xFant: str = Element(str, documentation=['Nome Fantasia'])
                 fone: TFone = Element(TFone, filter=str.isdigit, documentation=['Telefone'])
@@ -392,7 +392,7 @@ Poderá não ser informado para os CT-e de redespacho intermediário. Nos demais
                     self.CNPJ = value
             CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.\n\t\t\t\t\t\t\t\t\t\t\t\tInformar os zeros não significativos.'])
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
-            IE: TIeDest = Element(TIeDest, documentation=['Inscrição Estadual', 'Informar a IE do remetente ou ISENTO se remetente é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o remetente não seja contribuinte do ICMS não informar o conteúdo.'])
+            IE: TIeDest = Element(TIeDest, filter=str.isdigit, documentation=['Inscrição Estadual', 'Informar a IE do remetente ou ISENTO se remetente é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o remetente não seja contribuinte do ICMS não informar o conteúdo.'])
             xNome: str = Element(str, documentation=['Razão social ou nome do remetente'])
             xFant: str = Element(str, documentation=['Nome fantasia'])
             fone: TFone = Element(TFone, filter=str.isdigit, documentation=['Telefone'])
@@ -416,7 +416,7 @@ Poderá não ser informado para os CT-e de redespacho intermediário. Nos demais
                     self.CNPJ = value
             CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.\n\t\t\t\t\t\t\t\t\t\t\t\tInformar os zeros não significativos.'])
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
-            IE: TIeDest = Element(TIeDest, documentation=['Inscrição Estadual', 'Informar a IE do expedidor ou ISENTO se expedidor é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o expedidor não seja contribuinte do ICMS não informar o conteúdo.'])
+            IE: TIeDest = Element(TIeDest, filter=str.isdigit, documentation=['Inscrição Estadual', 'Informar a IE do expedidor ou ISENTO se expedidor é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o expedidor não seja contribuinte do ICMS não informar o conteúdo.'])
             xNome: str = Element(str, documentation=['Razão Social ou Nome'])
             fone: TFone = Element(TFone, filter=str.isdigit, documentation=['Telefone'])
             enderExped: TEndereco = Element(TEndereco, documentation=['Dados do endereço'])
@@ -439,7 +439,7 @@ Poderá não ser informado para os CT-e de redespacho intermediário. Nos demais
                     self.CNPJ = value
             CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.\n\t\t\t\t\t\t\t\t\t\t\t\tInformar os zeros não significativos.'])
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
-            IE: TIeDest = Element(TIeDest, documentation=['Inscrição Estadual', 'Informar a IE do recebedor ou ISENTO se recebedor é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o recebedor não seja contribuinte do ICMS não informar o conteúdo.'])
+            IE: TIeDest = Element(TIeDest, filter=str.isdigit, documentation=['Inscrição Estadual', 'Informar a IE do recebedor ou ISENTO se recebedor é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o recebedor não seja contribuinte do ICMS não informar o conteúdo.'])
             xNome: str = Element(str, documentation=['Razão Social ou Nome '])
             fone: TFone = Element(TFone, filter=str.isdigit, documentation=['Telefone'])
             enderReceb: TEndereco = Element(TEndereco, documentation=['Dados do endereço'])

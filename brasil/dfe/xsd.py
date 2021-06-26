@@ -29,6 +29,7 @@ class ComplexType(SimpleType, metaclass=ElementType):
     _xml_props: dict = None
     _cls: 'ComplexType' = None
     _xmltmp = None
+    _parent = None
 
     def __init__(self, cls=None,  min_occurs=None, max_occurs=None):
         self._cls = cls
@@ -40,6 +41,8 @@ class ComplexType(SimpleType, metaclass=ElementType):
             for k, v in self._xml_props.items():
                 if v._cls and issubclass(v._cls, ComplexType):
                     v = v._cls()
+                # elif self._required() and v._base_type is Decimal:
+                #     v = 0
                 else:
                     v = None
                 setattr(self, k, v)
@@ -143,12 +146,17 @@ class ComplexType(SimpleType, metaclass=ElementType):
                         res.extend(v._validar())
         return res
 
+    def _required(self):
+        req = (self.min_occurs is None) or (self.min_occurs > 0)
+        if self._parent and req:
+            req = req and self._parent._required()
+        return req
+
 
 class Element(ComplexType):
     _restriction = None
     _caption: str = None
     _tipo: str = None
-    _parent = None
 
     def __init__(self, cls=None, min_occurs=None, max_occurs=None, documentation: list[str]=None, *args, **kwargs):
         if min_occurs is None:
@@ -172,9 +180,6 @@ class Element(ComplexType):
         #             setattr(self, k, v())
         #         else:
         #             setattr(self, k, None)
-
-    def __getattr__(self, item):
-        return getattr(self._cls, item)
 
     def __call__(self, *args, **kwargs):
         if issubclass(self._cls, str):
@@ -201,10 +206,6 @@ class Element(ComplexType):
     def __set_name__(self, owner, name):
         self._parent = owner
 
-    @property
-    def _required(self):
-        return self.min_occurs > 0
-
 
 class Alias:
     def __init__(self, element):
@@ -215,6 +216,7 @@ class Attribute:
     _base_type = None
     _filter = None
     _cls = None
+    _required = None
 
     def __init__(self, type):
         self.type = type

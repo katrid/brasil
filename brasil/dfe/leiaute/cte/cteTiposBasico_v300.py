@@ -239,7 +239,7 @@ class TRespTec(Element):
     CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['CNPJ da pessoa jurídica responsável técnica pelo sistema utilizado na emissão do documento fiscal eletrônico', 'Informar o CNPJ da pessoa jurídica desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico.'])
     xContato: str = Element(str, documentation=['Nome da pessoa a ser contatada', 'Informar o nome da pessoa a ser contatada na empresa desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico. No caso de pessoa física, informar o respectivo nome.'])
     email: TEmail = Element(TEmail, documentation=['Email da pessoa jurídica a ser contatada'])
-    fone: str = Element(str, documentation=['Telefone da pessoa jurídica a ser contatada', 'Preencher com o Código DDD + número do telefone.'])
+    fone: str = Element(str, filter=str.isdigit, documentation=['Telefone da pessoa jurídica a ser contatada', 'Preencher com o Código DDD + número do telefone.'])
     idCSRT: str = Element(str, documentation=['Identificador do código de segurança do responsável técnico', 'Identificador do CSRT utilizado para geração do hash'])
     hashCSRT: str = Element(str, documentation=['Hash do token do código de segurança do responsável técnico', 'O hashCSRT é o resultado das funções SHA-1 e base64 do token CSRT fornecido pelo fisco + chave de acesso do DF-e. (Implementação em futura NT)\n\nObservação: 28 caracteres são representados no schema como 20 bytes do tipo base64Binary'])
 

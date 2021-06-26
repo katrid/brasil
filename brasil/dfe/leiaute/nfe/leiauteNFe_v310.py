@@ -21,7 +21,7 @@ class TEndereco(Element):
     CEP: str = Element(str, filter=str.isdigit, documentation=['CEP'])
     cPais: str = Element(str, documentation=['Código de Pais'])
     xPais: str = Element(str, documentation=['Nome do país'])
-    fone: str = Element(str, documentation=['Telefone, preencher com Código DDD + número do telefone , nas operações com exterior é permtido informar o código do país + código da localidade + número do telefone'])
+    fone: str = Element(str, filter=str.isdigit, documentation=['Telefone, preencher com Código DDD + número do telefone , nas operações com exterior é permtido informar o código do país + código da localidade + número do telefone'])
 
 
 
@@ -37,7 +37,7 @@ class TEnderEmi(Element):
     CEP: str = Element(str, filter=str.isdigit, documentation=['CEP - NT 2011/004'])
     cPais: str = Element(str, documentation=['Código do país'])
     xPais: str = Element(str, documentation=['Nome do país'])
-    fone: str = Element(str, documentation=['Preencher com Código DDD + número do telefone (v.2.0)'])
+    fone: str = Element(str, filter=str.isdigit, documentation=['Preencher com Código DDD + número do telefone (v.2.0)'])
 
 
 
@@ -213,7 +213,7 @@ class TNFe(Element):
                     AAMM: str = Element(str, documentation=['AAMM da emissão da NF de produtor'])
                     CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['CNPJ do emitente da NF de produtor'])
                     CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF do emitente da NF de produtor'])
-                    IE: TIeDest = Element(TIeDest, documentation=['IE do emitente da NF de Produtor'])
+                    IE: TIeDest = Element(TIeDest, filter=str.isdigit, documentation=['IE do emitente da NF de Produtor'])
                     mod: str = Element(str, documentation=['Código do modelo do Documento Fiscal - utilizar 04 para NF de produtor  ou 01 para NF Avulsa'])
                     serie: TSerie = Element(TSerie, documentation=['Série do Documento Fiscal, informar zero se inexistentesérie'])
                     nNF: TNF = Element(TNF, documentation=['Número do Documento Fiscal - 1 – 999999999'])
@@ -249,7 +249,7 @@ class TNFe(Element):
             xFant: str = Element(str, documentation=['Nome fantasia'])
             enderEmit: TEnderEmi = Element(TEnderEmi, documentation=['Endereço do emitente'])
             IE: TIe = Element(TIe, filter=str.isdigit, documentation=['Inscrição Estadual do Emitente'])
-            IEST: TIeST = Element(TIeST, documentation=['Inscricao Estadual do Substituto Tributário'])
+            IEST: TIeST = Element(TIeST, filter=str.isdigit, documentation=['Inscricao Estadual do Substituto Tributário'])
             IM: str = Element(str, documentation=['Inscrição Municipal'])
             CNAE: str = Element(str, documentation=['CNAE Fiscal'])
             CRT: str = Element(str, documentation=['Código de Regime Tributário. \nEste campo será obrigatoriamente preenchido com:\n1 – Simples Nacional;\n2 – Simples Nacional – excesso de sublimite de receita bruta;\n3 – Regime Normal.\n'])
@@ -261,7 +261,7 @@ class TNFe(Element):
             xOrgao: str = Element(str, documentation=['Órgão emitente'])
             matr: str = Element(str, documentation=['Matrícula do agente'])
             xAgente: str = Element(str, documentation=['Nome do agente'])
-            fone: str = Element(str, documentation=['Telefone'])
+            fone: str = Element(str, filter=str.isdigit, documentation=['Telefone'])
             UF: TUfEmi = Element(TUfEmi, documentation=['Sigla da Unidade da Federação'])
             nDAR: str = Element(str, documentation=['Número do Documento de Arrecadação de Receita'])
             dEmi: TData = Element(TData, base_type=date, documentation=['Data de emissão do DAR (AAAA-MM-DD)'])
@@ -279,7 +279,7 @@ class TNFe(Element):
             xNome: str = Element(str, documentation=['Razão Social ou nome do destinatário'])
             enderDest: TEndereco = Element(TEndereco, documentation=['Dados do endereço'])
             indIEDest: str = Element(str, documentation=['Indicador da IE do destinatário:\n1 – Contribuinte ICMSpagamento à vista;\n2 – Contribuinte isento de inscrição;\n9 – Não Contribuinte'])
-            IE: TIeDestNaoIsento = Element(TIeDestNaoIsento, documentation=['Inscrição Estadual (obrigatório nas operações com contribuintes do ICMS)'])
+            IE: TIeDestNaoIsento = Element(TIeDestNaoIsento, filter=str.isdigit, documentation=['Inscrição Estadual (obrigatório nas operações com contribuintes do ICMS)'])
             ISUF: str = Element(str, documentation=['Inscrição na SUFRAMA (Obrigatório nas operações com as áreas com benefícios de incentivos fiscais sob controle da SUFRAMA) PL_005d - 11/08/09 - alterado para aceitar 8 ou 9 dígitos'])
             IM: str = Element(str, documentation=['Inscrição Municipal do tomador do serviço'])
             email: str = Element(str, documentation=['Informar o e-mail do destinatário. O campo pode ser utilizado para informar o e-mail\nde recepção da NF-e indicada pelo destinatário'])
@@ -987,7 +987,7 @@ Substituição Tributaria;"""
                 CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['CNPJ do transportador'])
                 CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF do transportador'])
                 xNome: str = Element(str, documentation=['Razão Social ou nome do transportador'])
-                IE: TIeDest = Element(TIeDest, documentation=['Inscrição Estadual (v2.0)'])
+                IE: TIeDest = Element(TIeDest, filter=str.isdigit, documentation=['Inscrição Estadual (v2.0)'])
                 xEnder: str = Element(str, documentation=['Endereço completo'])
                 xMun: str = Element(str, documentation=['Nome do munícipio'])
                 UF: TUf = Element(TUf, documentation=['Sigla da UF'])

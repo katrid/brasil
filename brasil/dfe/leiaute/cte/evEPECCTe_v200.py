@@ -34,7 +34,7 @@ class evEPECCTe(ComplexType):
         UF: TUf = Element(TUf, documentation=['UF do tomador do serviço', "Informar 'EX' para operações com o exterior."])
         CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\nInformar os zeros não significativos.'])
         CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
-        IE: TIeDest = Element(TIeDest, documentation=['Inscrição Estadual', 'Informar a IE do tomador ou ISENTO se tomador é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o tomador não seja contribuinte do ICMS não informar o conteúdo.'])
+        IE: TIeDest = Element(TIeDest, filter=str.isdigit, documentation=['Inscrição Estadual', 'Informar a IE do tomador ou ISENTO se tomador é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o tomador não seja contribuinte do ICMS não informar o conteúdo.'])
     toma04: toma04 = Element(toma04, documentation=['Indicador do "papel" do tomador do serviço no CT-e'])
     modal: TModTransp = Element(TModTransp, documentation=['Modal', 'Preencher com:\n \n01-Rodoviário;\n\n02-Aéreo;\n03-Aquaviário;\n\n04-Ferroviário;\n\n05-Dutoviário;\n06-Multimodal;'])
     UFIni: TUf = Element(TUf, documentation=['UF do início da prestação', "Informar 'EX' para operações com o exterior."])

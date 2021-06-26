@@ -1,6 +1,7 @@
 from __future__ import annotations
 import os
 import sys
+import json
 from lxml import etree
 
 
@@ -217,6 +218,18 @@ class SimpleType:
 
             if self.choices:
                 stream.append(f'{level1}_choice = {self.choices}')
+                for choice in self.choices:
+                    if len(choice) == 2 and 'CPF' in choice and 'CNPJ' in choice:
+                        stream.append(f'{level1}@property')
+                        stream.append(f'{level1}def CNPJCPF(self):')
+                        stream.append(f'{level1}    return self.CPF or self.CNPJ\n')
+                        stream.append(f'{level1}@CNPJCPF.setter')
+                        stream.append(f'{level1}def CNPJCPF(self, value):')
+                        stream.append(f'{level1}    value = "".join(filter(str.isdigit, value))')
+                        stream.append(f'{level1}    if len(value) == 11:')
+                        stream.append(f'{level1}        self.CPF = value')
+                        stream.append(f'{level1}    else:')
+                        stream.append(f'{level1}        self.CNPJ = value')
 
             if self._max_occurs:
                 args = [s.name for s in self.sequence if s.name]
@@ -287,6 +300,8 @@ class Element(SimpleType):
                 ref_type = f'List[{el_type}]'
             else:
                 ref_type = el_type
+            if self.documentation:
+                args += ', documentation=' + str(self.documentation)
             return s + f'{" " * (indent * 4)}{name}: {ref_type} = Element({el_type}{args})'
         else:
             if is_lst:
@@ -295,6 +310,21 @@ class Element(SimpleType):
                 ref_type = el_type
             if indent == 0:
                 return s + f'class {name}({ref_type}):\n    pass\n'
+            if el_type.startswith('TDec_'):
+                tam = el_type.split('_')[1]
+                tam = f'({int(tam[0:2])}, {int(tam[2:4])})'
+                args += ', tipo="N", tam=' + tam + ', base_type=Decimal'
+                if el_type.endswith('Opc'):
+                    args += ', optional=True'
+            elif el_type.lower() in ('tfone', 'tcpf', 'tcnpj', 'tcnpjopc', 'tie', 'tiest', 'tiedest', 'tiedestnaoisento') or self.name == 'CEP' or self.name == 'fone':
+                args += ', filter=str.isdigit'
+            elif el_type == 'TDateTimeUTC':
+                args += ', base_type=datetime'
+            elif el_type == 'TData':
+                args += ', base_type=date'
+
+            if self.documentation:
+                args += ', documentation=' + str(self.documentation)
             return s + f'{" " * (indent * 4)}{name}: {ref_type} = Element({el_type}{args})'
 
     def read(self, el):
@@ -313,6 +343,8 @@ class Module(SimpleType):
         self.lst = lst
         self.imports = [
             'from __future__ import annotations',
+            'from datetime import date, datetime',
+            'from decimal import Decimal',
             'from typing import List',
             'from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime'
         ]
