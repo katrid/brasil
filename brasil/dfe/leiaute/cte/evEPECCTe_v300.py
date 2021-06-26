@@ -10,10 +10,10 @@ class evEPECCTe(ComplexType):
 110113"""
     descEvento: str = Element(str)
     xJust: TJust = Element(TJust)
-    vICMS: TDec_1302 = Element(TDec_1302)
-    vICMSST: TDec_1302 = Element(TDec_1302)
-    vTPrest: TDec_1302 = Element(TDec_1302)
-    vCarga: TDec_1302 = Element(TDec_1302)
+    vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+    vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+    vTPrest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+    vCarga: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
 
     class toma4(ComplexType):
         """Indicador do \"papel\" do tomador do serviço no CT-e"""

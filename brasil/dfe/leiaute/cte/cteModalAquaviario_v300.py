@@ -7,8 +7,8 @@ from .cteTiposBasico_v300 import *
 
 class aquav(ComplexType):
     """Informações do modal Aquaviário"""
-    vPrest: TDec_1302 = Element(TDec_1302)
-    vAFRMM: TDec_1302 = Element(TDec_1302)
+    vPrest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+    vAFRMM: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
     xNavio: str = Element(str)
 
     class balsa(ComplexType):
@@ -57,7 +57,7 @@ class aquav(ComplexType):
 
                 serie: str = Element(str)
                 nDoc: str = Element(str)
-                unidRat: TDec_0302_0303 = Element(TDec_0302_0303)
+                unidRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2))
             infNF: List[infNF] = Element(infNF, max_occurs=-1)
 
             class infNFe(ComplexType):
@@ -68,7 +68,7 @@ class aquav(ComplexType):
                     return super().add(chave=chave, unidRat=unidRat)
 
                 chave: TChNFe = Element(TChNFe)
-                unidRat: TDec_0302_0303 = Element(TDec_0302_0303)
+                unidRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2))
             infNFe: List[infNFe] = Element(infNFe, max_occurs=-1)
         infDoc: infDoc = Element(infDoc)
     detCont: List[detCont] = Element(detCont, max_occurs=-1)

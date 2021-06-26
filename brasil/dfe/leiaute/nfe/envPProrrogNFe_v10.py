@@ -18,7 +18,7 @@ class detEvento(ComplexType):
         def add(self, qtdeItem=None, numItem=None) -> detEvento.itemPedido:
             return super().add(qtdeItem=qtdeItem, numItem=numItem)
 
-        qtdeItem: TDec_1104v = Element(TDec_1104v)
+        qtdeItem: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4))
         numItem: str = Attribute(None)
     itemPedido: List[itemPedido] = Element(itemPedido, min_occurs=1, max_occurs=990)
     versao: str = Attribute(None)

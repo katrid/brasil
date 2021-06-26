@@ -28,7 +28,7 @@ class ferrov(ComplexType):
         """Detalhamento de informações para o tráfego mútuo"""
         respFat: str = Element(str)
         ferrEmi: str = Element(str)
-        vFrete: TDec_1302 = Element(TDec_1302)
+        vFrete: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
         chCTeFerroOrigem: TChNFe = Element(TChNFe)
 
         class ferroEnv(ComplexType):

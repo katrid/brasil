@@ -21,7 +21,7 @@ class aereo(ComplexType):
         """Informações de tarifa"""
         CL: str = Element(str)
         cTar: str = Element(str)
-        vTar: TDec_1302 = Element(TDec_1302)
+        vTar: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
     tarifa: tarifa = Element(tarifa)
 
     class peri(ComplexType):
@@ -38,7 +38,7 @@ O preenchimento desses campos não desobriga a empresa aérea de emitir os demai
         class infTotAP(ComplexType):
             """Grupo de informações das quantidades totais de artigos perigosos
 Preencher conforme a legislação de transporte de produtos perigosos aplicada ao modal"""
-            qTotProd: TDec_1104 = Element(TDec_1104)
+            qTotProd: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4))
             uniAP: str = Element(str)
         infTotAP: infTotAP = Element(infTotAP)
     peri: List[peri] = Element(peri, max_occurs=-1)

@@ -46,7 +46,7 @@ class TEvento(Element):
                 nDue: str = Element(str)
                 nItem: str = Element(str)
                 nItemDue: str = Element(str)
-                qItem: TDec_1104Neg = Element(TDec_1104Neg)
+                qItem: TDec_1104Neg = Element(TDec_1104Neg, tipo="N", tam=(11, 4))
                 motAlteracao: str = Element(str)
             itensAverbados: List[itensAverbados] = Element(itensAverbados, min_occurs=1, max_occurs=990)
             versao: str = Attribute(None)

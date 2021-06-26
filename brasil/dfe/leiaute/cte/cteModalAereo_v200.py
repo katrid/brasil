@@ -17,7 +17,7 @@ class aereo(ComplexType):
         """Informações de tarifa"""
         CL: str = Element(str)
         cTar: str = Element(str)
-        vTar: TDec_1302 = Element(TDec_1302)
+        vTar: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
     tarifa: tarifa = Element(tarifa)
 
     class natCarga(ComplexType):

@@ -24,7 +24,7 @@ class resNFe(ComplexType):
     IE: TIe = Element(TIe)
     dhEmi: TDateTimeUTC = Element(TDateTimeUTC)
     tpNF: str = Element(str)
-    vNF: TDec_1302 = Element(TDec_1302)
+    vNF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
     digVal: DigestValueType = Element(DigestValueType)
     dhRecbto: TDateTimeUTC = Element(TDateTimeUTC)
     nProt: TProt = Element(TProt)

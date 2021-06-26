@@ -43,18 +43,18 @@ class TImp(Element):
     class ICMS00(ComplexType):
         """Prestação sujeito à tributação normal do ICMS"""
         CST: str = Element(str)
-        vBC: TDec_1302 = Element(TDec_1302)
-        pICMS: TDec_0302 = Element(TDec_0302)
-        vICMS: TDec_1302 = Element(TDec_1302)
+        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+        pICMS: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2))
+        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
     ICMS00: ICMS00 = Element(ICMS00)
 
     class ICMS20(ComplexType):
         """Prestação sujeito à tributação com redução de BC do ICMS"""
         CST: str = Element(str)
-        pRedBC: TDec_0302Opc = Element(TDec_0302Opc)
-        vBC: TDec_1302 = Element(TDec_1302)
-        pICMS: TDec_0302 = Element(TDec_0302)
-        vICMS: TDec_1302 = Element(TDec_1302)
+        pRedBC: TDec_0302Opc = Element(TDec_0302Opc, tipo="N", tam=(3, 2))
+        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+        pICMS: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2))
+        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
     ICMS20: ICMS20 = Element(ICMS20)
 
     class ICMS45(ComplexType):
@@ -65,29 +65,29 @@ class TImp(Element):
     class ICMS60(ComplexType):
         """Tributação pelo ICMS60 - ICMS cobrado por substituição tributária.Responsabilidade do recolhimento do ICMS atribuído ao tomador ou 3º por ST"""
         CST: str = Element(str)
-        vBCSTRet: TDec_1302 = Element(TDec_1302)
-        vICMSSTRet: TDec_1302 = Element(TDec_1302)
-        pICMSSTRet: TDec_0302 = Element(TDec_0302)
-        vCred: TDec_1302 = Element(TDec_1302)
+        vBCSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+        vICMSSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+        pICMSSTRet: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2))
+        vCred: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
     ICMS60: ICMS60 = Element(ICMS60)
 
     class ICMS90(ComplexType):
         """ICMS Outros"""
         CST: str = Element(str)
-        pRedBC: TDec_0302Opc = Element(TDec_0302Opc)
-        vBC: TDec_1302 = Element(TDec_1302)
-        pICMS: TDec_0302 = Element(TDec_0302)
-        vICMS: TDec_1302 = Element(TDec_1302)
-        vCred: TDec_1302 = Element(TDec_1302)
+        pRedBC: TDec_0302Opc = Element(TDec_0302Opc, tipo="N", tam=(3, 2))
+        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+        pICMS: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2))
+        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+        vCred: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
     ICMS90: ICMS90 = Element(ICMS90)
 
     class ICMSOutraUF(ComplexType):
         """ICMS devido à UF de origem da prestação, quando  diferente da UF do emitente"""
         CST: str = Element(str)
-        pRedBCOutraUF: TDec_0302Opc = Element(TDec_0302Opc)
-        vBCOutraUF: TDec_1302 = Element(TDec_1302)
-        pICMSOutraUF: TDec_0302 = Element(TDec_0302)
-        vICMSOutraUF: TDec_1302 = Element(TDec_1302)
+        pRedBCOutraUF: TDec_0302Opc = Element(TDec_0302Opc, tipo="N", tam=(3, 2))
+        vBCOutraUF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+        pICMSOutraUF: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2))
+        vICMSOutraUF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
     ICMSOutraUF: ICMSOutraUF = Element(ICMSOutraUF)
 
     class ICMSSN(ComplexType):
@@ -118,7 +118,7 @@ class TUnidCarga(Element):
 
         nLacre: str = Element(str)
     lacUnidCarga: List[lacUnidCarga] = Element(lacUnidCarga, max_occurs=-1)
-    qtdRat: TDec_0302_0303 = Element(TDec_0302_0303)
+    qtdRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2))
 
 
 
@@ -137,7 +137,7 @@ class TUnidadeTransp(Element):
         nLacre: str = Element(str)
     lacUnidTransp: List[lacUnidTransp] = Element(lacUnidTransp, max_occurs=-1)
     infUnidCarga: List[TUnidCarga] = Element(TUnidCarga, max_occurs=-1)
-    qtdRat: TDec_0302_0303 = Element(TDec_0302_0303)
+    qtdRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2))
 
 
 
@@ -416,8 +416,8 @@ Só pode ser omitido em caso de redespacho intermediário"""
 
         class vPrest(ComplexType):
             """Valores da Prestação de Serviço"""
-            vTPrest: TDec_1302 = Element(TDec_1302)
-            vRec: TDec_1302 = Element(TDec_1302)
+            vTPrest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+            vRec: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
 
             class Comp(ComplexType):
                 """Componentes do Valor da Prestação"""
@@ -427,27 +427,27 @@ Só pode ser omitido em caso de redespacho intermediário"""
                     return super().add(xNome=xNome, vComp=vComp)
 
                 xNome: str = Element(str)
-                vComp: TDec_1302 = Element(TDec_1302)
+                vComp: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
             Comp: List[Comp] = Element(Comp, max_occurs=-1)
         vPrest: vPrest = Element(vPrest)
 
         class imp(ComplexType):
             """Informações relativas aos Impostos"""
             ICMS: TImp = Element(TImp)
-            vTotTrib: TDec_1302 = Element(TDec_1302)
+            vTotTrib: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
             infAdFisco: str = Element(str)
 
             class ICMSUFFim(ComplexType):
                 """Informações do ICMS de partilha com a UF de término do serviço de transporte na operação interestadual
 Grupo a ser informado nas prestações interestaduais para consumidor final, não contribuinte do ICMS"""
-                vBCUFFim: TDec_1302 = Element(TDec_1302)
-                pFCPUFFim: TDec_0302 = Element(TDec_0302)
-                pICMSUFFim: TDec_0302 = Element(TDec_0302)
-                pICMSInter: TDec_0302 = Element(TDec_0302)
-                pICMSInterPart: TDec_0302 = Element(TDec_0302)
-                vFCPUFFim: TDec_1302 = Element(TDec_1302)
-                vICMSUFFim: TDec_1302 = Element(TDec_1302)
-                vICMSUFIni: TDec_1302 = Element(TDec_1302)
+                vBCUFFim: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                pFCPUFFim: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2))
+                pICMSUFFim: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2))
+                pICMSInter: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2))
+                pICMSInterPart: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2))
+                vFCPUFFim: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vICMSUFFim: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vICMSUFIni: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
             ICMSUFFim: ICMSUFFim = Element(ICMSUFFim)
         imp: imp = Element(imp)
 
@@ -456,7 +456,7 @@ Grupo a ser informado nas prestações interestaduais para consumidor final, nã
 
             class infCarga(ComplexType):
                 """Informações da Carga do CT-e"""
-                vCarga: TDec_1302 = Element(TDec_1302)
+                vCarga: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                 proPred: str = Element(str)
                 xOutCat: str = Element(str)
 
@@ -474,7 +474,7 @@ Para o Aéreo é obrigatório o preenchimento desse campo da seguinte forma.
 
                     cUnid: str = Element(str)
                     tpMed: str = Element(str)
-                    qCarga: TDec_1104 = Element(TDec_1104)
+                    qCarga: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4))
                 infQ: List[infQ] = Element(infQ, max_occurs=-1)
             infCarga: infCarga = Element(infCarga)
 
@@ -499,14 +499,14 @@ Este grupo deve ser informado quando o documento originário for NF"""
                     serie: str = Element(str)
                     nDoc: str = Element(str)
                     dEmi: TData = Element(TData)
-                    vBC: TDec_1302 = Element(TDec_1302)
-                    vICMS: TDec_1302 = Element(TDec_1302)
-                    vBCST: TDec_1302 = Element(TDec_1302)
-                    vST: TDec_1302 = Element(TDec_1302)
-                    vProd: TDec_1302 = Element(TDec_1302)
-                    vNF: TDec_1302 = Element(TDec_1302)
+                    vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                    vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                    vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                    vST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                    vProd: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                    vNF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     nCFOP: TCfop = Element(TCfop)
-                    nPeso: TDec_1203Opc = Element(TDec_1203Opc)
+                    nPeso: TDec_1203Opc = Element(TDec_1203Opc, tipo="N", tam=(12, 3))
                     PIN: str = Element(str)
                     dPrev: TData = Element(TData)
                     infUnidTransp: List[TUnidadeTransp] = Element(TUnidadeTransp, max_occurs=-1)
@@ -540,7 +540,7 @@ Este grupo deve ser informado quando o documento originário for NF"""
                     descOutros: str = Element(str)
                     nDoc: str = Element(str)
                     dEmi: TData = Element(TData)
-                    vDocFisc: TDec_1302Opc = Element(TDec_1302Opc)
+                    vDocFisc: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
                     dPrev: TData = Element(TData)
                     infUnidTransp: List[TUnidadeTransp] = Element(TUnidadeTransp, max_occurs=-1)
                     infUnidCarga: List[TUnidCarga] = Element(TUnidCarga, max_occurs=-1)
@@ -611,7 +611,7 @@ Este grupo deve ser informado quando o documento originário for NF"""
                 xSeg: str = Element(str)
                 nApol: str = Element(str)
                 nAver: str = Element(str)
-                vCarga: TDec_1302Opc = Element(TDec_1302Opc)
+                vCarga: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
             seg: List[seg] = Element(seg, max_occurs=-1)
 
             class infModal(ComplexType):
@@ -649,8 +649,8 @@ Não deve ser preenchido para modal dutoviário.
                 cCor: str = Element(str)
                 xCor: str = Element(str)
                 cMod: str = Element(str)
-                vUnit: TDec_1302 = Element(TDec_1302)
-                vFrete: TDec_1302 = Element(TDec_1302)
+                vUnit: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vFrete: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
             veicNovos: List[veicNovos] = Element(veicNovos, max_occurs=-1)
 
             class cobr(ComplexType):
@@ -659,9 +659,9 @@ Não deve ser preenchido para modal dutoviário.
                 class fat(ComplexType):
                     """Dados da fatura"""
                     nFat: str = Element(str)
-                    vOrig: TDec_1302Opc = Element(TDec_1302Opc)
-                    vDesc: TDec_1302Opc = Element(TDec_1302Opc)
-                    vLiq: TDec_1302Opc = Element(TDec_1302Opc)
+                    vOrig: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                    vDesc: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                    vLiq: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
                 fat: fat = Element(fat)
 
                 class dup(ComplexType):
@@ -673,7 +673,7 @@ Não deve ser preenchido para modal dutoviário.
 
                     nDup: str = Element(str)
                     dVenc: TData = Element(TData)
-                    vDup: TDec_1302Opc = Element(TDec_1302Opc)
+                    vDup: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
                 dup: List[dup] = Element(dup, max_occurs=-1)
             cobr: cobr = Element(cobr)
 
@@ -696,7 +696,7 @@ Não deve ser preenchido para modal dutoviário.
                         serie: TSerie = Element(TSerie)
                         subserie: TSerie = Element(TSerie)
                         nro: str = Element(str)
-                        valor: TDec_1302 = Element(TDec_1302)
+                        valor: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                         dEmi: TData = Element(TData)
                     refNF: refNF = Element(refNF)
                     refCte: TChNFe = Element(TChNFe)

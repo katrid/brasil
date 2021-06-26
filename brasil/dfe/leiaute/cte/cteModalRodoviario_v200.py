@@ -66,7 +66,7 @@ Outras informações sobre Vale-Pedágio obrigatório que não tenham campos esp
         CNPJForn: str = Element(str)
         nCompra: str = Element(str)
         CNPJPg: TCnpjOpc = Element(TCnpjOpc)
-        vValePed: TDec_1302 = Element(TDec_1302)
+        vValePed: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
     valePed: List[valePed] = Element(valePed, max_occurs=-1)
 
     class veic(ComplexType):

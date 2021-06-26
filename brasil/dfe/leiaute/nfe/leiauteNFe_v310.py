@@ -117,11 +117,11 @@ class TIpi(Element):
     class IPITrib(ComplexType):
         _choice = [[]]
         CST: str = Element(str)
-        vBC: TDec_1302 = Element(TDec_1302)
-        pIPI: TDec_0302a04 = Element(TDec_0302a04)
-        qUnid: TDec_1204v = Element(TDec_1204v)
-        vUnid: TDec_1104 = Element(TDec_1104)
-        vIPI: TDec_1302 = Element(TDec_1302)
+        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+        pIPI: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+        qUnid: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4))
+        vUnid: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4))
+        vIPI: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
     IPITrib: IPITrib = Element(IPITrib)
 
     class IPINT(ComplexType):
@@ -230,7 +230,7 @@ class TNFe(Element):
             UF: TUfEmi = Element(TUfEmi)
             nDAR: str = Element(str)
             dEmi: TData = Element(TData)
-            vDAR: TDec_1302 = Element(TDec_1302)
+            vDAR: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
             repEmi: str = Element(str)
             dPag: TData = Element(TData)
         avulsa: avulsa = Element(avulsa)
@@ -284,17 +284,17 @@ class TNFe(Element):
                 EXTIPI: str = Element(str)
                 CFOP: str = Element(str)
                 uCom: str = Element(str)
-                qCom: TDec_1104v = Element(TDec_1104v)
-                vUnCom: TDec_1110v = Element(TDec_1110v)
-                vProd: TDec_1302 = Element(TDec_1302)
+                qCom: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4))
+                vUnCom: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10))
+                vProd: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                 cEANTrib: str = Element(str)
                 uTrib: str = Element(str)
-                qTrib: TDec_1104v = Element(TDec_1104v)
-                vUnTrib: TDec_1110v = Element(TDec_1110v)
-                vFrete: TDec_1302Opc = Element(TDec_1302Opc)
-                vSeg: TDec_1302Opc = Element(TDec_1302Opc)
-                vDesc: TDec_1302Opc = Element(TDec_1302Opc)
-                vOutro: TDec_1302Opc = Element(TDec_1302Opc)
+                qTrib: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4))
+                vUnTrib: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10))
+                vFrete: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vSeg: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vDesc: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vOutro: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
                 indTot: str = Element(str)
 
                 class DI(ComplexType):
@@ -311,7 +311,7 @@ class TNFe(Element):
                     UFDesemb: TUfEmi = Element(TUfEmi)
                     dDesemb: TData = Element(TData)
                     tpViaTransp: str = Element(str)
-                    vAFRMM: TDec_1302 = Element(TDec_1302)
+                    vAFRMM: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     tpIntermedio: str = Element(str)
                     CNPJ: TCnpj = Element(TCnpj)
                     UFTerceiro: TUfEmi = Element(TUfEmi)
@@ -327,7 +327,7 @@ class TNFe(Element):
                         nAdicao: str = Element(str)
                         nSeqAdic: str = Element(str)
                         cFabricante: str = Element(str)
-                        vDescDI: TDec_1302Opc = Element(TDec_1302Opc)
+                        vDescDI: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
                         nDraw: str = Element(str)
                     adi: List[adi] = Element(adi, max_occurs=100)
                 DI: List[DI] = Element(DI, max_occurs=100)
@@ -345,7 +345,7 @@ class TNFe(Element):
                         """Exportação indireta"""
                         nRE: str = Element(str)
                         chNFe: TChNFe = Element(TChNFe)
-                        qExport: TDec_1104v = Element(TDec_1104v)
+                        qExport: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4))
                     exportInd: exportInd = Element(exportInd)
                 detExport: List[detExport] = Element(detExport, max_occurs=500)
                 xPed: str = Element(str)
@@ -388,10 +388,10 @@ class TNFe(Element):
                         return super().add(nLote=nLote, qLote=qLote, dFab=dFab, dVal=dVal, vPMC=vPMC)
 
                     nLote: str = Element(str)
-                    qLote: TDec_0803v = Element(TDec_0803v)
+                    qLote: TDec_0803v = Element(TDec_0803v, tipo="N", tam=(8, 3))
                     dFab: TData = Element(TData)
                     dVal: TData = Element(TData)
-                    vPMC: TDec_1302 = Element(TDec_1302)
+                    vPMC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                 med: List[med] = Element(med, max_occurs=500)
 
                 class arma(ComplexType):
@@ -410,16 +410,16 @@ class TNFe(Element):
                 class comb(ComplexType):
                     """Informar apenas para operações com combustíveis líquidos"""
                     cProdANP: str = Element(str)
-                    pMixGN: TDec_0204v = Element(TDec_0204v)
+                    pMixGN: TDec_0204v = Element(TDec_0204v, tipo="N", tam=(2, 4))
                     CODIF: str = Element(str)
-                    qTemp: TDec_1204temperatura = Element(TDec_1204temperatura)
+                    qTemp: TDec_1204temperatura = Element(TDec_1204temperatura, tipo="N", tam=(12, 4))
                     UFCons: TUf = Element(TUf)
 
                     class CIDE(ComplexType):
                         """CIDE Combustíveis"""
-                        qBCProd: TDec_1204v = Element(TDec_1204v)
-                        vAliqProd: TDec_1104 = Element(TDec_1104)
-                        vCIDE: TDec_1302 = Element(TDec_1302)
+                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4))
+                        vAliqProd: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4))
+                        vCIDE: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     CIDE: CIDE = Element(CIDE)
 
                     class encerrante(ComplexType):
@@ -427,8 +427,8 @@ class TNFe(Element):
                         nBico: str = Element(str)
                         nBomba: str = Element(str)
                         nTanque: str = Element(str)
-                        vEncIni: TDec_1203 = Element(TDec_1203)
-                        vEncFin: TDec_1203 = Element(TDec_1203)
+                        vEncIni: TDec_1203 = Element(TDec_1203, tipo="N", tam=(12, 3))
+                        vEncFin: TDec_1203 = Element(TDec_1203, tipo="N", tam=(12, 3))
                     encerrante: encerrante = Element(encerrante)
                 comb: comb = Element(comb)
                 nRECOPI: str = Element(str)
@@ -437,7 +437,7 @@ class TNFe(Element):
             class imposto(ComplexType):
                 """Tributos incidentes nos produtos ou serviços da NF-e"""
                 _choice = [[]]
-                vTotTrib: TDec_1302 = Element(TDec_1302)
+                vTotTrib: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
 
                 class ICMS(ComplexType):
                     """Dados do ICMS Normal e ST"""
@@ -449,9 +449,9 @@ class TNFe(Element):
                         orig: Torig = Element(Torig)
                         CST: str = Element(str)
                         modBC: str = Element(str)
-                        vBC: TDec_1302 = Element(TDec_1302)
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMS: TDec_1302 = Element(TDec_1302)
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     ICMS00: ICMS00 = Element(ICMS00)
 
                     class ICMS10(ComplexType):
@@ -460,15 +460,15 @@ class TNFe(Element):
                         orig: Torig = Element(Torig)
                         CST: str = Element(str)
                         modBC: str = Element(str)
-                        vBC: TDec_1302 = Element(TDec_1302)
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMS: TDec_1302 = Element(TDec_1302)
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                         modBCST: str = Element(str)
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        vBCST: TDec_1302 = Element(TDec_1302)
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMSST: TDec_1302 = Element(TDec_1302)
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     ICMS10: ICMS10 = Element(ICMS10)
 
                     class ICMS20(ComplexType):
@@ -477,11 +477,11 @@ class TNFe(Element):
                         orig: Torig = Element(Torig)
                         CST: str = Element(str)
                         modBC: str = Element(str)
-                        pRedBC: TDec_0302a04 = Element(TDec_0302a04)
-                        vBC: TDec_1302 = Element(TDec_1302)
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMS: TDec_1302 = Element(TDec_1302)
-                        vICMSDeson: TDec_1302 = Element(TDec_1302)
+                        pRedBC: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                         motDesICMS: str = Element(str)
                     ICMS20: ICMS20 = Element(ICMS20)
 
@@ -491,12 +491,12 @@ class TNFe(Element):
                         orig: Torig = Element(Torig)
                         CST: str = Element(str)
                         modBCST: str = Element(str)
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        vBCST: TDec_1302 = Element(TDec_1302)
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMSST: TDec_1302 = Element(TDec_1302)
-                        vICMSDeson: TDec_1302 = Element(TDec_1302)
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                         motDesICMS: str = Element(str)
                     ICMS30: ICMS30 = Element(ICMS30)
 
@@ -507,7 +507,7 @@ class TNFe(Element):
 50 - Suspensão"""
                         orig: Torig = Element(Torig)
                         CST: str = Element(str)
-                        vICMSDeson: TDec_1302 = Element(TDec_1302)
+                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                         motDesICMS: str = Element(str)
                     ICMS40: ICMS40 = Element(ICMS40)
 
@@ -518,13 +518,13 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
                         orig: Torig = Element(Torig)
                         CST: str = Element(str)
                         modBC: str = Element(str)
-                        pRedBC: TDec_0302a04 = Element(TDec_0302a04)
-                        vBC: TDec_1302 = Element(TDec_1302)
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMSOp: TDec_1302 = Element(TDec_1302)
-                        pDif: TDec_0302a04Max100 = Element(TDec_0302a04Max100)
-                        vICMSDif: TDec_1302 = Element(TDec_1302)
-                        vICMS: TDec_1302 = Element(TDec_1302)
+                        pRedBC: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMSOp: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pDif: TDec_0302a04Max100 = Element(TDec_0302a04Max100, tipo="N", tam=(3, 2))
+                        vICMSDif: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     ICMS51: ICMS51 = Element(ICMS51)
 
                     class ICMS60(ComplexType):
@@ -532,8 +532,8 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 60 - ICMS cobrado anteriormente por substituição tributária"""
                         orig: Torig = Element(Torig)
                         CST: str = Element(str)
-                        vBCSTRet: TDec_1302 = Element(TDec_1302)
-                        vICMSSTRet: TDec_1302 = Element(TDec_1302)
+                        vBCSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        vICMSSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     ICMS60: ICMS60 = Element(ICMS60)
 
                     class ICMS70(ComplexType):
@@ -542,17 +542,17 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
                         orig: Torig = Element(Torig)
                         CST: str = Element(str)
                         modBC: str = Element(str)
-                        pRedBC: TDec_0302a04 = Element(TDec_0302a04)
-                        vBC: TDec_1302 = Element(TDec_1302)
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMS: TDec_1302 = Element(TDec_1302)
+                        pRedBC: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                         modBCST: str = Element(str)
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        vBCST: TDec_1302 = Element(TDec_1302)
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMSST: TDec_1302 = Element(TDec_1302)
-                        vICMSDeson: TDec_1302 = Element(TDec_1302)
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                         motDesICMS: str = Element(str)
                     ICMS70: ICMS70 = Element(ICMS70)
 
@@ -562,17 +562,17 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
                         orig: Torig = Element(Torig)
                         CST: str = Element(str)
                         modBC: str = Element(str)
-                        vBC: TDec_1302 = Element(TDec_1302)
-                        pRedBC: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMS: TDec_1302 = Element(TDec_1302)
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pRedBC: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                         modBCST: str = Element(str)
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        vBCST: TDec_1302 = Element(TDec_1302)
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMSST: TDec_1302 = Element(TDec_1302)
-                        vICMSDeson: TDec_1302 = Element(TDec_1302)
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                         motDesICMS: str = Element(str)
                     ICMS90: ICMS90 = Element(ICMS90)
 
@@ -582,17 +582,17 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                         orig: Torig = Element(Torig)
                         CST: str = Element(str)
                         modBC: str = Element(str)
-                        vBC: TDec_1302 = Element(TDec_1302)
-                        pRedBC: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMS: TDec_1302 = Element(TDec_1302)
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pRedBC: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                         modBCST: str = Element(str)
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        vBCST: TDec_1302 = Element(TDec_1302)
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMSST: TDec_1302 = Element(TDec_1302)
-                        pBCOp: TDec_0302a04Opc = Element(TDec_0302a04Opc)
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pBCOp: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
                         UFST: TUf = Element(TUf)
                     ICMSPart: ICMSPart = Element(ICMSPart)
 
@@ -600,18 +600,18 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                         """Grupo de informação do ICMSST devido para a UF de destino, nas operações interestaduais de produtos que tiveram retenção antecipada de ICMS por ST na UF do remetente. Repasse via Substituto Tributário."""
                         orig: Torig = Element(Torig)
                         CST: str = Element(str)
-                        vBCSTRet: TDec_1302 = Element(TDec_1302)
-                        vICMSSTRet: TDec_1302 = Element(TDec_1302)
-                        vBCSTDest: TDec_1302 = Element(TDec_1302)
-                        vICMSSTDest: TDec_1302 = Element(TDec_1302)
+                        vBCSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        vICMSSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        vBCSTDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        vICMSSTDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     ICMSST: ICMSST = Element(ICMSST)
 
                     class ICMSSN101(ComplexType):
                         """Tributação do ICMS pelo SIMPLES NACIONAL e CSOSN=101 (v.2.0)"""
                         orig: Torig = Element(Torig)
                         CSOSN: str = Element(str)
-                        pCredSN: TDec_0302a04 = Element(TDec_0302a04)
-                        vCredICMSSN: TDec_1302 = Element(TDec_1302)
+                        pCredSN: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vCredICMSSN: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     ICMSSN101: ICMSSN101 = Element(ICMSSN101)
 
                     class ICMSSN102(ComplexType):
@@ -625,13 +625,13 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                         orig: Torig = Element(Torig)
                         CSOSN: str = Element(str)
                         modBCST: str = Element(str)
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        vBCST: TDec_1302 = Element(TDec_1302)
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMSST: TDec_1302 = Element(TDec_1302)
-                        pCredSN: TDec_0302a04 = Element(TDec_0302a04)
-                        vCredICMSSN: TDec_1302 = Element(TDec_1302)
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pCredSN: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vCredICMSSN: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     ICMSSN201: ICMSSN201 = Element(ICMSSN201)
 
                     class ICMSSN202(ComplexType):
@@ -639,19 +639,19 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                         orig: Torig = Element(Torig)
                         CSOSN: str = Element(str)
                         modBCST: str = Element(str)
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        vBCST: TDec_1302 = Element(TDec_1302)
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMSST: TDec_1302 = Element(TDec_1302)
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     ICMSSN202: ICMSSN202 = Element(ICMSSN202)
 
                     class ICMSSN500(ComplexType):
                         """Tributação do ICMS pelo SIMPLES NACIONAL,CRT=1 – Simples Nacional e CSOSN=500 (v.2.0)"""
                         orig: Torig = Element(Torig)
                         CSOSN: str = Element(str)
-                        vBCSTRet: TDec_1302 = Element(TDec_1302)
-                        vICMSSTRet: TDec_1302 = Element(TDec_1302)
+                        vBCSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        vICMSSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     ICMSSN500: ICMSSN500 = Element(ICMSSN500)
 
                     class ICMSSN900(ComplexType):
@@ -659,43 +659,43 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                         orig: Torig = Element(Torig)
                         CSOSN: str = Element(str)
                         modBC: str = Element(str)
-                        vBC: TDec_1302 = Element(TDec_1302)
-                        pRedBC: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMS: TDec_1302 = Element(TDec_1302)
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pRedBC: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                         modBCST: str = Element(str)
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc)
-                        vBCST: TDec_1302 = Element(TDec_1302)
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04)
-                        vICMSST: TDec_1302 = Element(TDec_1302)
-                        pCredSN: TDec_0302a04 = Element(TDec_0302a04)
-                        vCredICMSSN: TDec_1302 = Element(TDec_1302)
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2))
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pCredSN: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vCredICMSSN: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     ICMSSN900: ICMSSN900 = Element(ICMSSN900)
                 ICMS: ICMS = Element(ICMS)
                 IPI: TIpi = Element(TIpi)
 
                 class II(ComplexType):
                     """Dados do Imposto de Importação"""
-                    vBC: TDec_1302 = Element(TDec_1302)
-                    vDespAdu: TDec_1302 = Element(TDec_1302)
-                    vII: TDec_1302 = Element(TDec_1302)
-                    vIOF: TDec_1302 = Element(TDec_1302)
+                    vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                    vDespAdu: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                    vII: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                    vIOF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                 II: II = Element(II)
                 IPI: TIpi = Element(TIpi)
 
                 class ISSQN(ComplexType):
                     """ISSQN"""
-                    vBC: TDec_1302 = Element(TDec_1302)
-                    vAliq: TDec_0302a04 = Element(TDec_0302a04)
-                    vISSQN: TDec_1302 = Element(TDec_1302)
+                    vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                    vAliq: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                    vISSQN: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     cMunFG: TCodMunIBGE = Element(TCodMunIBGE)
                     cListServ: TCListServ = Element(TCListServ)
-                    vDeducao: TDec_1302Opc = Element(TDec_1302Opc)
-                    vOutro: TDec_1302Opc = Element(TDec_1302Opc)
-                    vDescIncond: TDec_1302Opc = Element(TDec_1302Opc)
-                    vDescCond: TDec_1302Opc = Element(TDec_1302Opc)
-                    vISSRet: TDec_1302Opc = Element(TDec_1302Opc)
+                    vDeducao: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                    vOutro: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                    vDescIncond: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                    vDescCond: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                    vISSRet: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
                     indISS: str = Element(str)
                     cServico: str = Element(str)
                     cMun: TCodMunIBGE = Element(TCodMunIBGE)
@@ -713,18 +713,18 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
  01 – Operação Tributável - Base de Cálculo = Valor da Operação Alíquota Normal (Cumulativo/Não Cumulativo);
 02 - Operação Tributável - Base de Calculo = Valor da Operação (Alíquota Diferenciada);"""
                         CST: str = Element(str)
-                        vBC: TDec_1302 = Element(TDec_1302)
-                        pPIS: TDec_0302a04 = Element(TDec_0302a04)
-                        vPIS: TDec_1302 = Element(TDec_1302)
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pPIS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     PISAliq: PISAliq = Element(PISAliq)
 
                     class PISQtde(ComplexType):
                         """Código de Situação Tributária do PIS.
 03 - Operação Tributável - Base de Calculo = Quantidade Vendida x Alíquota por Unidade de Produto;"""
                         CST: str = Element(str)
-                        qBCProd: TDec_1204v = Element(TDec_1204v)
-                        vAliqProd: TDec_1104v = Element(TDec_1104v)
-                        vPIS: TDec_1302 = Element(TDec_1302)
+                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4))
+                        vAliqProd: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4))
+                        vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     PISQtde: PISQtde = Element(PISQtde)
 
                     class PISNT(ComplexType):
@@ -742,22 +742,22 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 99 - Outras Operações."""
                         _choice = [[]]
                         CST: str = Element(str)
-                        vBC: TDec_1302 = Element(TDec_1302)
-                        pPIS: TDec_0302a04 = Element(TDec_0302a04)
-                        qBCProd: TDec_1204v = Element(TDec_1204v)
-                        vAliqProd: TDec_1104v = Element(TDec_1104v)
-                        vPIS: TDec_1302 = Element(TDec_1302)
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pPIS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4))
+                        vAliqProd: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4))
+                        vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     PISOutr: PISOutr = Element(PISOutr)
                 PIS: PIS = Element(PIS)
 
                 class PISST(ComplexType):
                     """Dados do PIS Substituição Tributária"""
                     _choice = [[]]
-                    vBC: TDec_1302Opc = Element(TDec_1302Opc)
-                    pPIS: TDec_0302a04 = Element(TDec_0302a04)
-                    qBCProd: TDec_1204 = Element(TDec_1204)
-                    vAliqProd: TDec_1104 = Element(TDec_1104)
-                    vPIS: TDec_1302 = Element(TDec_1302)
+                    vBC: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                    pPIS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                    qBCProd: TDec_1204 = Element(TDec_1204, tipo="N", tam=(12, 4))
+                    vAliqProd: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4))
+                    vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                 PISST: PISST = Element(PISST)
 
                 class COFINS(ComplexType):
@@ -769,18 +769,18 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
  01 – Operação Tributável - Base de Cálculo = Valor da Operação Alíquota Normal (Cumulativo/Não Cumulativo);
 02 - Operação Tributável - Base de Calculo = Valor da Operação (Alíquota Diferenciada);"""
                         CST: str = Element(str)
-                        vBC: TDec_1302 = Element(TDec_1302)
-                        pCOFINS: TDec_0302a04 = Element(TDec_0302a04)
-                        vCOFINS: TDec_1302 = Element(TDec_1302)
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pCOFINS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     COFINSAliq: COFINSAliq = Element(COFINSAliq)
 
                     class COFINSQtde(ComplexType):
                         """Código de Situação Tributária do COFINS.
 03 - Operação Tributável - Base de Calculo = Quantidade Vendida x Alíquota por Unidade de Produto;"""
                         CST: str = Element(str)
-                        qBCProd: TDec_1204v = Element(TDec_1204v)
-                        vAliqProd: TDec_1104v = Element(TDec_1104v)
-                        vCOFINS: TDec_1302 = Element(TDec_1302)
+                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4))
+                        vAliqProd: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4))
+                        vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     COFINSQtde: COFINSQtde = Element(COFINSQtde)
 
                     class COFINSNT(ComplexType):
@@ -821,11 +821,11 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 99 - Outras Operações."""
                         _choice = [[]]
                         CST: str = Element(str)
-                        vBC: TDec_1302 = Element(TDec_1302)
-                        pCOFINS: TDec_0302a04 = Element(TDec_0302a04)
-                        qBCProd: TDec_1204v = Element(TDec_1204v)
-                        vAliqProd: TDec_1104v = Element(TDec_1104v)
-                        vCOFINS: TDec_1302 = Element(TDec_1302)
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                        pCOFINS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4))
+                        vAliqProd: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4))
+                        vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                     COFINSOutr: COFINSOutr = Element(COFINSOutr)
                 COFINS: COFINS = Element(COFINS)
 
@@ -833,32 +833,32 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                     """Dados do COFINS da
 Substituição Tributaria;"""
                     _choice = [[]]
-                    vBC: TDec_1302 = Element(TDec_1302)
-                    pCOFINS: TDec_0302a04 = Element(TDec_0302a04)
-                    qBCProd: TDec_1204 = Element(TDec_1204)
-                    vAliqProd: TDec_1104 = Element(TDec_1104)
-                    vCOFINS: TDec_1302 = Element(TDec_1302)
+                    vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                    pCOFINS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                    qBCProd: TDec_1204 = Element(TDec_1204, tipo="N", tam=(12, 4))
+                    vAliqProd: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4))
+                    vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                 COFINSST: COFINSST = Element(COFINSST)
 
                 class ICMSUFDest(ComplexType):
                     """Grupo a ser informado nas vendas interestarduais para consumidor final, não contribuinte de ICMS"""
-                    vBCUFDest: TDec_1302 = Element(TDec_1302)
-                    pFCPUFDest: TDec_0302a04 = Element(TDec_0302a04)
-                    pICMSUFDest: TDec_0302a04 = Element(TDec_0302a04)
+                    vBCUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                    pFCPUFDest: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                    pICMSUFDest: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
                     pICMSInter: str = Element(str)
-                    pICMSInterPart: TDec_0302a04 = Element(TDec_0302a04)
-                    vFCPUFDest: TDec_1302 = Element(TDec_1302)
-                    vICMSUFDest: TDec_1302 = Element(TDec_1302)
-                    vICMSUFRemet: TDec_1302 = Element(TDec_1302)
+                    pICMSInterPart: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                    vFCPUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                    vICMSUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                    vICMSUFRemet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                 ICMSUFDest: ICMSUFDest = Element(ICMSUFDest)
             imposto: imposto = Element(imposto)
 
             class impostoDevol(ComplexType):
-                pDevol: TDec_0302Max100 = Element(TDec_0302Max100)
+                pDevol: TDec_0302Max100 = Element(TDec_0302Max100, tipo="N", tam=(3, 2))
 
                 class IPI(ComplexType):
                     """Informação de IPI devolvido"""
-                    vIPIDevol: TDec_1302 = Element(TDec_1302)
+                    vIPIDevol: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                 IPI: IPI = Element(IPI)
             impostoDevol: impostoDevol = Element(impostoDevol)
             infAdProd: str = Element(str)
@@ -870,52 +870,52 @@ Substituição Tributaria;"""
 
             class ICMSTot(ComplexType):
                 """Totais referentes ao ICMS"""
-                vBC: TDec_1302 = Element(TDec_1302)
-                vICMS: TDec_1302 = Element(TDec_1302)
-                vICMSDeson: TDec_1302 = Element(TDec_1302)
-                vFCPUFDest: TDec_1302 = Element(TDec_1302)
-                vICMSUFDest: TDec_1302 = Element(TDec_1302)
-                vICMSUFRemet: TDec_1302 = Element(TDec_1302)
-                vBCST: TDec_1302 = Element(TDec_1302)
-                vST: TDec_1302 = Element(TDec_1302)
-                vProd: TDec_1302 = Element(TDec_1302)
-                vFrete: TDec_1302 = Element(TDec_1302)
-                vSeg: TDec_1302 = Element(TDec_1302)
-                vDesc: TDec_1302 = Element(TDec_1302)
-                vII: TDec_1302 = Element(TDec_1302)
-                vIPI: TDec_1302 = Element(TDec_1302)
-                vPIS: TDec_1302 = Element(TDec_1302)
-                vCOFINS: TDec_1302 = Element(TDec_1302)
-                vOutro: TDec_1302 = Element(TDec_1302)
-                vNF: TDec_1302 = Element(TDec_1302)
-                vTotTrib: TDec_1302 = Element(TDec_1302)
+                vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vFCPUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vICMSUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vICMSUFRemet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vProd: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vFrete: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vSeg: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vDesc: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vII: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vIPI: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vOutro: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vNF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vTotTrib: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
             ICMSTot: ICMSTot = Element(ICMSTot)
 
             class ISSQNtot(ComplexType):
                 """Totais referentes ao ISSQN"""
-                vServ: TDec_1302Opc = Element(TDec_1302Opc)
-                vBC: TDec_1302Opc = Element(TDec_1302Opc)
-                vISS: TDec_1302Opc = Element(TDec_1302Opc)
-                vPIS: TDec_1302Opc = Element(TDec_1302Opc)
-                vCOFINS: TDec_1302Opc = Element(TDec_1302Opc)
+                vServ: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vBC: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vISS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vPIS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vCOFINS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
                 dCompet: TData = Element(TData)
-                vDeducao: TDec_1302Opc = Element(TDec_1302Opc)
-                vOutro: TDec_1302Opc = Element(TDec_1302Opc)
-                vDescIncond: TDec_1302Opc = Element(TDec_1302Opc)
-                vDescCond: TDec_1302Opc = Element(TDec_1302Opc)
-                vISSRet: TDec_1302Opc = Element(TDec_1302Opc)
+                vDeducao: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vOutro: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vDescIncond: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vDescCond: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vISSRet: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
                 cRegTrib: str = Element(str)
             ISSQNtot: ISSQNtot = Element(ISSQNtot)
 
             class retTrib(ComplexType):
                 """Retenção de Tributos Federais"""
-                vRetPIS: TDec_1302Opc = Element(TDec_1302Opc)
-                vRetCOFINS: TDec_1302Opc = Element(TDec_1302Opc)
-                vRetCSLL: TDec_1302Opc = Element(TDec_1302Opc)
-                vBCIRRF: TDec_1302Opc = Element(TDec_1302Opc)
-                vIRRF: TDec_1302Opc = Element(TDec_1302Opc)
-                vBCRetPrev: TDec_1302Opc = Element(TDec_1302Opc)
-                vRetPrev: TDec_1302Opc = Element(TDec_1302Opc)
+                vRetPIS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vRetCOFINS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vRetCSLL: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vBCIRRF: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vIRRF: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vBCRetPrev: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vRetPrev: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
             retTrib: retTrib = Element(retTrib)
         total: total = Element(total)
 
@@ -938,10 +938,10 @@ Substituição Tributaria;"""
 
             class retTransp(ComplexType):
                 """Dados da retenção  ICMS do Transporte"""
-                vServ: TDec_1302 = Element(TDec_1302)
-                vBCRet: TDec_1302 = Element(TDec_1302)
-                pICMSRet: TDec_0302a04 = Element(TDec_0302a04)
-                vICMSRet: TDec_1302 = Element(TDec_1302)
+                vServ: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                vBCRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+                pICMSRet: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2))
+                vICMSRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
                 CFOP: str = Element(str)
                 cMunFG: TCodMunIBGE = Element(TCodMunIBGE)
             retTransp: retTransp = Element(retTransp)
@@ -961,8 +961,8 @@ Substituição Tributaria;"""
                 esp: str = Element(str)
                 marca: str = Element(str)
                 nVol: str = Element(str)
-                pesoL: TDec_1203 = Element(TDec_1203)
-                pesoB: TDec_1203 = Element(TDec_1203)
+                pesoL: TDec_1203 = Element(TDec_1203, tipo="N", tam=(12, 3))
+                pesoB: TDec_1203 = Element(TDec_1203, tipo="N", tam=(12, 3))
 
                 class lacres(ComplexType):
                     _max_occurs = 5000
@@ -981,9 +981,9 @@ Substituição Tributaria;"""
             class fat(ComplexType):
                 """Dados da fatura"""
                 nFat: str = Element(str)
-                vOrig: TDec_1302Opc = Element(TDec_1302Opc)
-                vDesc: TDec_1302Opc = Element(TDec_1302Opc)
-                vLiq: TDec_1302Opc = Element(TDec_1302Opc)
+                vOrig: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vDesc: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
+                vLiq: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
             fat: fat = Element(fat)
 
             class dup(ComplexType):
@@ -995,7 +995,7 @@ Substituição Tributaria;"""
 
                 nDup: str = Element(str)
                 dVenc: TData = Element(TData)
-                vDup: TDec_1302Opc = Element(TDec_1302Opc)
+                vDup: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2))
             dup: List[dup] = Element(dup, max_occurs=120)
         cobr: cobr = Element(cobr)
 
@@ -1007,7 +1007,7 @@ Substituição Tributaria;"""
                 return super().add(tPag=tPag, vPag=vPag, card=card)
 
             tPag: str = Element(str)
-            vPag: TDec_1302 = Element(TDec_1302)
+            vPag: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
 
             class card(ComplexType):
                 """Grupo de Cartões"""
@@ -1087,12 +1087,12 @@ e o conteúdo do campo no xTexto"""
                 def add(self, qtde=None, dia=None) -> TNFe.infNFe.cana.forDia:
                     return super().add(qtde=qtde, dia=dia)
 
-                qtde: TDec_1110v = Element(TDec_1110v)
+                qtde: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10))
                 dia: str = Attribute(None)
             forDia: List[forDia] = Element(forDia, max_occurs=31)
-            qTotMes: TDec_1110v = Element(TDec_1110v)
-            qTotAnt: TDec_1110v = Element(TDec_1110v)
-            qTotGer: TDec_1110v = Element(TDec_1110v)
+            qTotMes: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10))
+            qTotAnt: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10))
+            qTotGer: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10))
 
             class deduc(ComplexType):
                 """Deduções - Taxas e Contribuições"""
@@ -1102,11 +1102,11 @@ e o conteúdo do campo no xTexto"""
                     return super().add(xDed=xDed, vDed=vDed)
 
                 xDed: str = Element(str)
-                vDed: TDec_1302 = Element(TDec_1302)
+                vDed: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
             deduc: List[deduc] = Element(deduc, max_occurs=10)
-            vFor: TDec_1302 = Element(TDec_1302)
-            vTotDed: TDec_1302 = Element(TDec_1302)
-            vLiqFor: TDec_1302 = Element(TDec_1302)
+            vFor: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+            vTotDed: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
+            vLiqFor: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
         cana: cana = Element(cana)
         versao: str = Attribute(TVerNFe)
         Id: str = Attribute(None)

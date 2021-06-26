@@ -22,7 +22,7 @@ class evGTV(ComplexType):
         subserie: str = Element(str)
         dEmi: TData = Element(TData)
         nDV: str = Element(str)
-        qCarga: TDec_1104 = Element(TDec_1104)
+        qCarga: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4))
 
         class infEspecie(ComplexType):
             """Informações das Espécies transportadas"""
@@ -32,7 +32,7 @@ class evGTV(ComplexType):
                 return super().add(tpEspecie=tpEspecie, vEspecie=vEspecie)
 
             tpEspecie: str = Element(str)
-            vEspecie: TDec_1302 = Element(TDec_1302)
+            vEspecie: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
         infEspecie: List[infEspecie] = Element(infEspecie, max_occurs=-1)
 
         class rem(ComplexType):

@@ -31,7 +31,7 @@ class ferrov(ComplexType):
     trafMut: trafMut = Element(trafMut)
     fluxo: str = Element(str)
     idTrem: str = Element(str)
-    vFrete: TDec_1302 = Element(TDec_1302)
+    vFrete: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2))
 
     class ferroEnv(ComplexType):
         """Informações das Ferrovias Envolvidas"""
@@ -55,10 +55,10 @@ class ferrov(ComplexType):
             return super().add(nVag=nVag, cap=cap, tpVag=tpVag, pesoR=pesoR, pesoBC=pesoBC)
 
         nVag: str = Element(str)
-        cap: TDec_0303 = Element(TDec_0303)
+        cap: TDec_0303 = Element(TDec_0303, tipo="N", tam=(3, 3))
         tpVag: str = Element(str)
-        pesoR: TDec_0303 = Element(TDec_0303)
-        pesoBC: TDec_0303 = Element(TDec_0303)
+        pesoR: TDec_0303 = Element(TDec_0303, tipo="N", tam=(3, 3))
+        pesoBC: TDec_0303 = Element(TDec_0303, tipo="N", tam=(3, 3))
     detVag: List[detVag] = Element(detVag, max_occurs=-1)
 
 ferrov: ferrov = Element(ferrov)
