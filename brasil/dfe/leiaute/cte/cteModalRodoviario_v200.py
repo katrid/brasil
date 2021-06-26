@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .tiposGeralCTe_v200 import *
@@ -31,7 +33,7 @@ class TCIOT(str):
 class rodo(ComplexType):
     """Informações do modal Rodoviário"""
     RNTRC: str = Element(str, documentation=['Registro Nacional de Transportadores Rodoviários de Carga', 'Registro obrigatório do emitente do CT-e junto à ANTT para exercer a atividade de transportador rodoviário de cargas por conta de terceiros e mediante remuneração.\n\t\t\t\t\t\t'])
-    dPrev: TData = Element(TData, documentation=['Data prevista para entrega da carga no Recebedor', 'Formato AAAA-MM-DD'])
+    dPrev: TData = Element(TData, base_type=date, documentation=['Data prevista para entrega da carga no Recebedor', 'Formato AAAA-MM-DD'])
     lota: str = Element(str, documentation=['Indicador de Lotação\n', 'Preencher com: 0 - Não; 1 - Sim \n\t\t\t\t\t\tSerá lotação quando houver um único conhecimento de transporte por veículo, ou combinação veicular, e por viagem'])
     CIOT: str = Element(str, documentation=['Código Identificador da Operação de Transporte', 'Também Conhecido como conta frete'])
 
@@ -44,7 +46,7 @@ class rodo(ComplexType):
 
         serie: str = Element(str, documentation=['Série da OCC'])
         nOcc: str = Element(str, documentation=['Número da Ordem de coleta'])
-        dEmi: TData = Element(TData, documentation=['Data de emissão da ordem de coleta', 'Formato AAAA-MM-DD'])
+        dEmi: TData = Element(TData, base_type=date, documentation=['Data de emissão da ordem de coleta', 'Formato AAAA-MM-DD'])
 
         class emiOcc(ComplexType):
             CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['Número do CNPJ', 'Informar os zeros não significativos.'])
@@ -66,7 +68,7 @@ Outras informações sobre Vale-Pedágio obrigatório que não tenham campos esp
         CNPJForn: str = Element(str, documentation=['CNPJ da empresa fornecedora do Vale-Pedágio', '- CNPJ da Empresa Fornecedora do Vale-Pedágio, ou seja, empresa que fornece ao Responsável pelo Pagamento do Vale-Pedágio os dispositivos do Vale-Pedágio.\n\t\t\t\t\t\t\t\t\t- Informar os zeros não significativos.'])
         nCompra: str = Element(str, documentation=['Número do comprovante de compra', 'Número de ordem do comprovante de compra do Vale-Pedágio fornecido para cada veículo ou combinação veicular, por viagem.'])
         CNPJPg: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['CNPJ do responsável pelo pagamento do Vale-Pedágio', '- responsável pelo pagamento do Vale Pedágio. Informar somente quando o responsável não for o emitente do CT-e.\n\t\t\t\t\t\t\t\t\t- Informar os zeros não significativos.'])
-        vValePed: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do Vale-Pedagio', 'Número de ordem do comprovante de compra do Vale-Pedágio fornecido para cada veículo ou combinação veicular, por viagem.'])
+        vValePed: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do Vale-Pedagio', 'Número de ordem do comprovante de compra do Vale-Pedágio fornecido para cada veículo ou combinação veicular, por viagem.'])
     valePed: List[valePed] = Element(valePed, max_occurs=-1, documentation=['Informações de Vale Pedágio', 'Outras informações sobre Vale-Pedágio obrigatório que não tenham campos específicos devem ser informadas no campo de observações gerais de uso livre pelo contribuinte, visando atender as determinações legais vigentes.'])
 
     class veic(ComplexType):
@@ -94,6 +96,17 @@ Um CT-e poderá ter vários veículos associados, ex.: cavalo + reboque.
             """Proprietários do Veículo.
 									Só preenchido quando o veículo não pertencer à empresa emitente do CT-e"""
             _choice = [['CPF', 'CNPJ']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
             CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Informar os zeros não significativos.'])
             RNTRC: TRNTRC = Element(TRNTRC, documentation=['Registro Nacional dos Transportadores Rodoviários de Carga', 'Registro obrigatório do proprietário, co-proprietário ou arrendatário do veículo junto à ANTT para exercer a atividade de transportador rodoviário de cargas por conta de terceiros e mediante remuneração.'])

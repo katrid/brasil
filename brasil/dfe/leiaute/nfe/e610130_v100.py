@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .tiposBasico_v103 import *
@@ -15,13 +17,13 @@ class detEvento(ComplexType):
     class CTe(ComplexType):
         chCTe: str = Element(str)
         nProtCTe: str = Element(str)
-        dhEntrega: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora do final da entrega. Formato AAAA-MMDDThh:mm:ssTZD.'])
+        dhEntrega: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e hora do final da entrega. Formato AAAA-MMDDThh:mm:ssTZD.'])
         nDoc: str = Element(str)
         xNome: str = Element(str, documentation=['Nome da pessoa que assinou o Comprovante de Entrega da NF-e'])
         latGPS: TLatitude = Element(TLatitude, documentation=['Latitude do ponto de entrega'])
         longGPS: TLongitude = Element(TLongitude, documentation=['Longitude do ponto de entrega'])
         hashEntregaCTe: str = Element(str, documentation=['Hash (SHA1) no formato Base64 resultante da concatenação: Chave de acesso do CT-e + Base64 da imagem capturada da entrega (Exemplo: imagem capturada da assinatura eletrônica, digital do recebedor, foto, etc)', 'O hashCSRT é o resultado das funções SHA-1 e base64 do token CSRT fornecido pelo fisco + chave de acesso do DF-e. (Implementação em futura NT)\nObservação: 28 caracteres são representados no schema como 20 bytes do tipo base64Binary'])
-        dhHashEntregaCTe: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora da geração do hash do Comprovante de Entrega do CT-e Formato AAAA-MMDDThh:mm:ssTZD.'])
+        dhHashEntregaCTe: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e hora da geração do hash do Comprovante de Entrega do CT-e Formato AAAA-MMDDThh:mm:ssTZD.'])
     CTe: CTe = Element(CTe)
     versao: str = Attribute(None)
 

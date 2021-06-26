@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .tiposGeralCTe_v300 import *
@@ -20,7 +22,7 @@ class rodo(ComplexType):
 
         serie: str = Element(str, documentation=['Série da OCC'])
         nOcc: str = Element(str, documentation=['Número da Ordem de coleta'])
-        dEmi: TData = Element(TData, documentation=['Data de emissão da ordem de coleta', 'Formato AAAA-MM-DD'])
+        dEmi: TData = Element(TData, base_type=date, documentation=['Data de emissão da ordem de coleta', 'Formato AAAA-MM-DD'])
 
         class emiOcc(ComplexType):
             CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['Número do CNPJ', 'Informar os zeros não significativos.'])

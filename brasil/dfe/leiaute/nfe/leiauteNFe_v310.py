@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .xmldsig_core_schema_v101 import *
@@ -42,6 +44,17 @@ class TEnderEmi(Element):
 class TLocal(Element):
     """Tipo Dados do Local de Retirada ou Entrega // 24/10/08 - tamanho mínimo // v2.0"""
     _choice = [['CNPJ', 'CPF']]
+    @property
+    def CNPJCPF(self):
+        return self.CPF or self.CNPJ
+
+    @CNPJCPF.setter
+    def CNPJCPF(self, value):
+        value = "".join(filter(str.isdigit, value))
+        if len(value) == 11:
+            self.CPF = value
+        else:
+            self.CNPJ = value
     CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['CNPJ'])
     CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF (v2.0)'])
     xLgr: str = Element(str, documentation=['Logradouro'])
@@ -117,11 +130,11 @@ class TIpi(Element):
     class IPITrib(ComplexType):
         _choice = [[]]
         CST: str = Element(str, documentation=['Código da Situação Tributária do IPI:\n00-Entrada com recuperação de crédito\n49 - Outras entradas\n50-Saída tributada\n99-Outras saídas'])
-        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do IPI'])
-        pIPI: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do IPI'])
-        qUnid: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4), documentation=['Quantidade total na unidade padrão para tributação '])
-        vUnid: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4), documentation=['Valor por Unidade Tributável. Informar o valor do imposto Pauta por unidade de medida.'])
-        vIPI: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do IPI'])
+        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do IPI'])
+        pIPI: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do IPI'])
+        qUnid: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4), base_type=Decimal, documentation=['Quantidade total na unidade padrão para tributação '])
+        vUnid: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Valor por Unidade Tributável. Informar o valor do imposto Pauta por unidade de medida.'])
+        vIPI: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do IPI'])
     IPITrib: IPITrib = Element(IPITrib)
 
     class IPINT(ComplexType):
@@ -145,8 +158,8 @@ class TNFe(Element):
             mod: TMod = Element(TMod, documentation=['Código do modelo do Documento Fiscal. 55 = NF-e; 65 = NFC-e.'])
             serie: TSerie = Element(TSerie, documentation=['Série do Documento Fiscal\nsérie normal 0-889\nAvulsa Fisco 890-899\nSCAN 900-999'])
             nNF: TNF = Element(TNF, documentation=['Número do Documento Fiscal'])
-            dhEmi: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e Hora de emissão do Documento Fiscal (AAAA-MM-DDThh:mm:ssTZD) ex.: 2012-09-01T13:00:00-03:00'])
-            dhSaiEnt: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e Hora da saída ou de entrada da mercadoria / produto (AAAA-MM-DDTHH:mm:ssTZD)'])
+            dhEmi: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e Hora de emissão do Documento Fiscal (AAAA-MM-DDThh:mm:ssTZD) ex.: 2012-09-01T13:00:00-03:00'])
+            dhSaiEnt: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e Hora da saída ou de entrada da mercadoria / produto (AAAA-MM-DDTHH:mm:ssTZD)'])
             tpNF: str = Element(str, documentation=['Tipo do Documento Fiscal (0 - entrada; 1 - saída)'])
             idDest: str = Element(str, documentation=['Identificador de Local de destino da operação (1-Interna;2-Interestadual;3-Exterior)'])
             cMunFG: TCodMunIBGE = Element(TCodMunIBGE, documentation=['Código do Município de Ocorrência do Fato Gerador (utilizar a tabela do IBGE)'])
@@ -159,7 +172,7 @@ class TNFe(Element):
             indPres: str = Element(str, documentation=['Indicador de presença do comprador no estabelecimento comercial no momento da oepração\n\t\t\t\t\t\t\t\t\t\t\t(0-Não se aplica (ex.: Nota Fiscal complementar ou de ajuste;1-Operação presencial;2-Não presencial, internet;3-Não presencial, teleatendimento;4-NFC-e entrega em domicílio;9-Não presencial, outros)'])
             procEmi: TProcEmi = Element(TProcEmi, documentation=['Processo de emissão utilizado com a seguinte codificação:\n0 - emissão de NF-e com aplicativo do contribuinte;\n1 - emissão de NF-e avulsa pelo Fisco;\n2 - emissão de NF-e avulsa, pelo contribuinte com seu certificado digital, através do site\ndo Fisco;\n3- emissão de NF-e pelo contribuinte com aplicativo fornecido pelo Fisco.'])
             verProc: str = Element(str, documentation=['versão do aplicativo utilizado no processo de\nemissão'])
-            dhCont: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Informar a data e hora de entrada em contingência contingência no formato  (AAAA-MM-DDThh:mm:ssTZD) ex.: 2012-09-01T13:00:00-03:00.'])
+            dhCont: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Informar a data e hora de entrada em contingência contingência no formato  (AAAA-MM-DDThh:mm:ssTZD) ex.: 2012-09-01T13:00:00-03:00.'])
             xJust: str = Element(str, documentation=['Informar a Justificativa da entrada'])
 
             class NFref(ComplexType):
@@ -185,6 +198,17 @@ class TNFe(Element):
                 class refNFP(ComplexType):
                     """Grupo com as informações NF de produtor referenciada"""
                     _choice = [['CNPJ', 'CPF']]
+                    @property
+                    def CNPJCPF(self):
+                        return self.CPF or self.CNPJ
+
+                    @CNPJCPF.setter
+                    def CNPJCPF(self, value):
+                        value = "".join(filter(str.isdigit, value))
+                        if len(value) == 11:
+                            self.CPF = value
+                        else:
+                            self.CNPJ = value
                     cUF: TCodUfIBGE = Element(TCodUfIBGE, documentation=['Código da UF do emitente do Documento FiscalUtilizar a Tabela do IBGE (Anexo IV - Tabela de UF, Município e País)'])
                     AAMM: str = Element(str, documentation=['AAMM da emissão da NF de produtor'])
                     CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['CNPJ do emitente da NF de produtor'])
@@ -208,6 +232,17 @@ class TNFe(Element):
         class emit(ComplexType):
             """Identificação do emitente"""
             _choice = [['CNPJ', 'CPF']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
             CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['Número do CNPJ do emitente'])
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF do emitente'])
             xNome: str = Element(str, documentation=['Razão Social ou Nome do emitente'])
@@ -229,10 +264,10 @@ class TNFe(Element):
             fone: str = Element(str, documentation=['Telefone'])
             UF: TUfEmi = Element(TUfEmi, documentation=['Sigla da Unidade da Federação'])
             nDAR: str = Element(str, documentation=['Número do Documento de Arrecadação de Receita'])
-            dEmi: TData = Element(TData, documentation=['Data de emissão do DAR (AAAA-MM-DD)'])
-            vDAR: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total constante no DAR'])
+            dEmi: TData = Element(TData, base_type=date, documentation=['Data de emissão do DAR (AAAA-MM-DD)'])
+            vDAR: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total constante no DAR'])
             repEmi: str = Element(str, documentation=['Repartição Fiscal emitente'])
-            dPag: TData = Element(TData, documentation=['Data de pagamento do DAR (AAAA-MM-DD)'])
+            dPag: TData = Element(TData, base_type=date, documentation=['Data de pagamento do DAR (AAAA-MM-DD)'])
         avulsa: avulsa = Element(avulsa, documentation=['Emissão de avulsa, informar os dados do Fisco emitente'])
 
         class dest(ComplexType):
@@ -256,6 +291,17 @@ class TNFe(Element):
             """Pessoas autorizadas para o download do XML da NF-e"""
             _max_occurs = 10
             _choice = [['CNPJ', 'CPF']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
 
             def add(self, CNPJ=None, CPF=None) -> TNFe.infNFe.autXML:
                 return super().add(CNPJ=CNPJ, CPF=CPF)
@@ -284,17 +330,17 @@ class TNFe(Element):
                 EXTIPI: str = Element(str, documentation=['Código EX TIPI (3 posições)'])
                 CFOP: str = Element(str, documentation=['Cfop'])
                 uCom: str = Element(str, documentation=['Unidade comercial'])
-                qCom: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), documentation=['Quantidade Comercial  do produto, alterado para aceitar de 0 a 4 casas decimais e 11 inteiros.'])
-                vUnCom: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10), documentation=['Valor unitário de comercialização  - alterado para aceitar 0 a 10 casas decimais e 11 inteiros '])
-                vProd: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor bruto do produto ou serviço.'])
+                qCom: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Quantidade Comercial  do produto, alterado para aceitar de 0 a 4 casas decimais e 11 inteiros.'])
+                vUnCom: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10), base_type=Decimal, documentation=['Valor unitário de comercialização  - alterado para aceitar 0 a 10 casas decimais e 11 inteiros '])
+                vProd: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor bruto do produto ou serviço.'])
                 cEANTrib: str = Element(str, documentation=['GTIN (Global Trade Item Number) da unidade tributável, antigo código EAN ou código de barras'])
                 uTrib: str = Element(str, documentation=['Unidade Tributável'])
-                qTrib: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), documentation=['Quantidade Tributável - alterado para aceitar de 0 a 4 casas decimais e 11 inteiros '])
-                vUnTrib: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10), documentation=['Valor unitário de tributação - - alterado para aceitar 0 a 10 casas decimais e 11 inteiros '])
-                vFrete: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor Total do Frete'])
-                vSeg: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor Total do Seguro'])
-                vDesc: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor do Desconto'])
-                vOutro: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Outras despesas acessórias'])
+                qTrib: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Quantidade Tributável - alterado para aceitar de 0 a 4 casas decimais e 11 inteiros '])
+                vUnTrib: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10), base_type=Decimal, documentation=['Valor unitário de tributação - - alterado para aceitar 0 a 10 casas decimais e 11 inteiros '])
+                vFrete: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor Total do Frete'])
+                vSeg: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor Total do Seguro'])
+                vDesc: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor do Desconto'])
+                vOutro: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Outras despesas acessórias'])
                 indTot: str = Element(str, documentation=['Este campo deverá ser preenchido com:\n 0 – o valor do item (vProd) não compõe o valor total da NF-e (vProd)\n 1  – o valor do item (vProd) compõe o valor total da NF-e (vProd)\n'])
 
                 class DI(ComplexType):
@@ -306,12 +352,12 @@ class TNFe(Element):
                         return super().add(nDI=nDI, dDI=dDI, xLocDesemb=xLocDesemb, UFDesemb=UFDesemb, dDesemb=dDesemb, tpViaTransp=tpViaTransp, vAFRMM=vAFRMM, tpIntermedio=tpIntermedio, CNPJ=CNPJ, UFTerceiro=UFTerceiro, cExportador=cExportador, adi=adi)
 
                     nDI: str = Element(str, documentation=['Numero do Documento de Importação DI/DSI/DA/DRI-E (DI/DSI/DA/DRI-E) (NT2011/004)'])
-                    dDI: TData = Element(TData, documentation=['Data de registro da DI/DSI/DA (AAAA-MM-DD)'])
+                    dDI: TData = Element(TData, base_type=date, documentation=['Data de registro da DI/DSI/DA (AAAA-MM-DD)'])
                     xLocDesemb: str = Element(str, documentation=['Local do desembaraço aduaneiro'])
                     UFDesemb: TUfEmi = Element(TUfEmi, documentation=['UF onde ocorreu o desembaraço aduaneiro'])
-                    dDesemb: TData = Element(TData, documentation=['Data do desembaraço aduaneiro (AAAA-MM-DD)'])
+                    dDesemb: TData = Element(TData, base_type=date, documentation=['Data do desembaraço aduaneiro (AAAA-MM-DD)'])
                     tpViaTransp: str = Element(str, documentation=['Via de transporte internacional informada na DI\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t1-Maritima;2-Fluvial;3-Lacustre;4-Aerea;5-Postal;6-Ferroviaria;7-Rodoviaria;8-Conduto;9-Meios Proprios;10-Entrada/Saida Ficta.'])
-                    vAFRMM: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Adicional ao frete para renovação de marinha mercante'])
+                    vAFRMM: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Adicional ao frete para renovação de marinha mercante'])
                     tpIntermedio: str = Element(str, documentation=['Forma de Importação quanto a intermediação \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t1-por conta propria;2-por conta e ordem;3-encomenda'])
                     CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['CNPJ do adquirente ou do encomendante'])
                     UFTerceiro: TUfEmi = Element(TUfEmi, documentation=['Sigla da UF do adquirente ou do encomendante'])
@@ -327,7 +373,7 @@ class TNFe(Element):
                         nAdicao: str = Element(str, documentation=['Número da Adição'])
                         nSeqAdic: str = Element(str, documentation=['Número seqüencial do item dentro da Adição'])
                         cFabricante: str = Element(str, documentation=['Código do fabricante estrangeiro (usado nos sistemas internos de informação do emitente da NF-e)'])
-                        vDescDI: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor do desconto do item da DI – adição'])
+                        vDescDI: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor do desconto do item da DI – adição'])
                         nDraw: str = Element(str, documentation=['Número do ato concessório de Drawback'])
                     adi: List[adi] = Element(adi, max_occurs=100, documentation=['Adições (NT 2011/004)'])
                 DI: List[DI] = Element(DI, max_occurs=100, documentation=['Delcaração de Importação\n(NT 2011/004)'])
@@ -345,7 +391,7 @@ class TNFe(Element):
                         """Exportação indireta"""
                         nRE: str = Element(str, documentation=['Registro de exportação'])
                         chNFe: TChNFe = Element(TChNFe, documentation=['Chave de acesso da NF-e recebida para exportação'])
-                        qExport: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), documentation=['Quantidade do item efetivamente exportado'])
+                        qExport: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Quantidade do item efetivamente exportado'])
                     exportInd: exportInd = Element(exportInd, documentation=['Exportação indireta'])
                 detExport: List[detExport] = Element(detExport, max_occurs=500, documentation=['Detalhe da exportação'])
                 xPed: str = Element(str, documentation=['pedido de compra - Informação de interesse do emissor para controle do B2B.'])
@@ -388,10 +434,10 @@ class TNFe(Element):
                         return super().add(nLote=nLote, qLote=qLote, dFab=dFab, dVal=dVal, vPMC=vPMC)
 
                     nLote: str = Element(str, documentation=['Número do lote do medicamento'])
-                    qLote: TDec_0803v = Element(TDec_0803v, tipo="N", tam=(8, 3), documentation=['Quantidade de produtos no lote'])
-                    dFab: TData = Element(TData, documentation=['Data de Fabricação do medicamento (AAAA-MM-DD)'])
-                    dVal: TData = Element(TData, documentation=['Data de validade do medicamento (AAAA-MM-DD)'])
-                    vPMC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Preço Máximo ao Consumidor'])
+                    qLote: TDec_0803v = Element(TDec_0803v, tipo="N", tam=(8, 3), base_type=Decimal, documentation=['Quantidade de produtos no lote'])
+                    dFab: TData = Element(TData, base_type=date, documentation=['Data de Fabricação do medicamento (AAAA-MM-DD)'])
+                    dVal: TData = Element(TData, base_type=date, documentation=['Data de validade do medicamento (AAAA-MM-DD)'])
+                    vPMC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Preço Máximo ao Consumidor'])
                 med: List[med] = Element(med, max_occurs=500, documentation=['grupo do detalhamento de Medicamentos e de matérias-primas farmacêuticas'])
 
                 class arma(ComplexType):
@@ -410,16 +456,16 @@ class TNFe(Element):
                 class comb(ComplexType):
                     """Informar apenas para operações com combustíveis líquidos"""
                     cProdANP: str = Element(str, documentation=['Código de produto da ANP. codificação de produtos do SIMP (http://www.anp.gov.br)'])
-                    pMixGN: TDec_0204v = Element(TDec_0204v, tipo="N", tam=(2, 4), documentation=['Percentual de gas natural para o produto GLP'])
+                    pMixGN: TDec_0204v = Element(TDec_0204v, tipo="N", tam=(2, 4), base_type=Decimal, documentation=['Percentual de gas natural para o produto GLP'])
                     CODIF: str = Element(str, documentation=['Código de autorização / registro do CODIF. Informar apenas quando a UF utilizar o CODIF (Sistema de Controle do \t\t\tDiferimento do Imposto nas Operações com AEAC - Álcool Etílico Anidro Combustível).'])
-                    qTemp: TDec_1204temperatura = Element(TDec_1204temperatura, tipo="N", tam=(12, 4), documentation=['Quantidade de combustível\nfaturada à temperatura ambiente.\nInformar quando a quantidade\nfaturada informada no campo\nqCom (I10) tiver sido ajustada para\numa temperatura diferente da\nambiente.'])
+                    qTemp: TDec_1204temperatura = Element(TDec_1204temperatura, tipo="N", tam=(12, 4), base_type=Decimal, documentation=['Quantidade de combustível\nfaturada à temperatura ambiente.\nInformar quando a quantidade\nfaturada informada no campo\nqCom (I10) tiver sido ajustada para\numa temperatura diferente da\nambiente.'])
                     UFCons: TUf = Element(TUf, documentation=['Sigla da UF de Consumo'])
 
                     class CIDE(ComplexType):
                         """CIDE Combustíveis"""
-                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4), documentation=['BC do CIDE ( Quantidade comercializada) '])
-                        vAliqProd: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4), documentation=['Alíquota do CIDE  (em reais)'])
-                        vCIDE: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do CIDE'])
+                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4), base_type=Decimal, documentation=['BC do CIDE ( Quantidade comercializada) '])
+                        vAliqProd: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Alíquota do CIDE  (em reais)'])
+                        vCIDE: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do CIDE'])
                     CIDE: CIDE = Element(CIDE, documentation=['CIDE Combustíveis'])
 
                     class encerrante(ComplexType):
@@ -427,8 +473,8 @@ class TNFe(Element):
                         nBico: str = Element(str, documentation=['Numero de identificação do Bico utilizado no abastecimento'])
                         nBomba: str = Element(str, documentation=['Numero de identificação da bomba ao qual o bico está interligado'])
                         nTanque: str = Element(str, documentation=['Numero de identificação do tanque ao qual o bico está interligado'])
-                        vEncIni: TDec_1203 = Element(TDec_1203, tipo="N", tam=(12, 3), documentation=['Valor do Encerrante no ínicio do abastecimento'])
-                        vEncFin: TDec_1203 = Element(TDec_1203, tipo="N", tam=(12, 3), documentation=['Valor do Encerrante no final do abastecimento'])
+                        vEncIni: TDec_1203 = Element(TDec_1203, tipo="N", tam=(12, 3), base_type=Decimal, documentation=['Valor do Encerrante no ínicio do abastecimento'])
+                        vEncFin: TDec_1203 = Element(TDec_1203, tipo="N", tam=(12, 3), base_type=Decimal, documentation=['Valor do Encerrante no final do abastecimento'])
                     encerrante: encerrante = Element(encerrante, documentation=['Informações do grupo de "encerrante"'])
                 comb: comb = Element(comb, documentation=['Informar apenas para operações com combustíveis líquidos'])
                 nRECOPI: str = Element(str, documentation=['Número do RECOPI'])
@@ -437,7 +483,7 @@ class TNFe(Element):
             class imposto(ComplexType):
                 """Tributos incidentes nos produtos ou serviços da NF-e"""
                 _choice = [[]]
-                vTotTrib: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor estimado total de impostos federais, estaduais e municipais'])
+                vTotTrib: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor estimado total de impostos federais, estaduais e municipais'])
 
                 class ICMS(ComplexType):
                     """Dados do ICMS Normal e ST"""
@@ -449,9 +495,9 @@ class TNFe(Element):
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n'])
                         CST: str = Element(str, documentation=['Tributção pelo ICMS\n00 - Tributada integralmente\n'])
                         modBC: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS:\n0 - Margem Valor Agregado (%);\n1 - Pauta (valor);\n2 - Preço Tabelado Máximo (valor);\n3 - Valor da Operação.'])
-                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS'])
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS'])
-                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS'])
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS'])
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS'])
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS'])
                     ICMS00: ICMS00 = Element(ICMS00, documentation=['Tributação pelo ICMS\n00 - Tributada integralmente'])
 
                     class ICMS10(ComplexType):
@@ -460,15 +506,15 @@ class TNFe(Element):
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n'])
                         CST: str = Element(str, documentation=['10 - Tributada e com cobrança do ICMS por substituição tributária '])
                         modBC: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS:\n0 - Margem Valor Agregado (%);\n1 - Pauta (valor);\n2 - Preço Tabelado Máximo (valor);\n3 - Valor da Operação.'])
-                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS'])
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS'])
-                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS'])
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS'])
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS'])
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS'])
                         modBCST: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS ST:\n0 – Preço tabelado ou máximo  sugerido;\n1 - Lista Negativa (valor);\n2 - Lista Positiva (valor);\n3 - Lista Neutra (valor);\n4 - Margem Valor Agregado (%);\n5 - Pauta (valor);'])
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual da Margem de Valor Adicionado ICMS ST'])
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC ICMS ST '])
-                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS ST'])
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS ST'])
-                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS ST'])
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual da Margem de Valor Adicionado ICMS ST'])
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC ICMS ST '])
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS ST'])
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS ST'])
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS ST'])
                     ICMS10: ICMS10 = Element(ICMS10, documentation=['Tributação pelo ICMS\n10 - Tributada e com cobrança do ICMS por substituição tributária '])
 
                     class ICMS20(ComplexType):
@@ -477,11 +523,11 @@ class TNFe(Element):
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n'])
                         CST: str = Element(str, documentation=['Tributção pelo ICMS\n20 - Com redução de base de cálculo'])
                         modBC: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS:\n0 - Margem Valor Agregado (%);\n1 - Pauta (valor);\n2 - Preço Tabelado Máximo (valor);\n3 - Valor da Operação.'])
-                        pRedBC: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC'])
-                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS'])
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS'])
-                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS'])
-                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS de desoneração'])
+                        pRedBC: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Percentual de redução da BC'])
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS'])
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS'])
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS'])
+                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS de desoneração'])
                         motDesICMS: str = Element(str, documentation=['Motivo da desoneração do ICMS:3-Uso na agropecuária;9-Outros;12-Fomento agropecuário'])
                     ICMS20: ICMS20 = Element(ICMS20, documentation=['Tributção pelo ICMS\n20 - Com redução de base de cálculo '])
 
@@ -491,12 +537,12 @@ class TNFe(Element):
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n'])
                         CST: str = Element(str, documentation=['Tributção pelo ICMS\n30 - Isenta ou não tributada e com cobrança do ICMS por substituição tributária '])
                         modBCST: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS ST:\n0 – Preço tabelado ou máximo  sugerido;\n1 - Lista Negativa (valor);\n2 - Lista Positiva (valor);\n3 - Lista Neutra (valor);\n4 - Margem Valor Agregado (%);\n5 - Pauta (valor).'])
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual da Margem de Valor Adicionado ICMS ST'])
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC ICMS ST '])
-                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS ST'])
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS ST'])
-                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS ST'])
-                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS de desoneração'])
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual da Margem de Valor Adicionado ICMS ST'])
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC ICMS ST '])
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS ST'])
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS ST'])
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS ST'])
+                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS de desoneração'])
                         motDesICMS: str = Element(str, documentation=['Motivo da desoneração do ICMS:6-Utilitários Motocicleta AÁrea Livre;7-SUFRAMA;9-Outros'])
                     ICMS30: ICMS30 = Element(ICMS30, documentation=['Tributação pelo ICMS\n30 - Isenta ou não tributada e com cobrança do ICMS por substituição tributária'])
 
@@ -507,7 +553,7 @@ class TNFe(Element):
 50 - Suspensão"""
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n'])
                         CST: str = Element(str, documentation=['Tributação pelo ICMS \n40 - Isenta \n41 - Não tributada \n50 - Suspensão \n51 - Diferimento '])
-                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['O valor do ICMS será informado apenas nas operações com veículos beneficiados com a desoneração condicional do ICMS.'])
+                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['O valor do ICMS será informado apenas nas operações com veículos beneficiados com a desoneração condicional do ICMS.'])
                         motDesICMS: str = Element(str, documentation=['Este campo será preenchido quando o campo anterior estiver preenchido.\nInformar o motivo da desoneração:\n1 – Táxi;\n3 – Produtor Agropecuário;\n4 – Frotista/Locadora;\n5 – Diplomático/Consular;\n6 – Utilitários e Motocicletas da Amazônia Ocidental e Áreas de Livre Comércio (Resolução 714/88 e 790/94 – CONTRAN e suas alterações);\n7 – SUFRAMA;\n8 - Venda a órgão Público;\n9 – Outros\n10- Deficiente Condutor\n11- Deficiente não condutor\n16 - Olimpíadas Rio 2016\n\t\t\t\t\t\t\t'])
                     ICMS40: ICMS40 = Element(ICMS40, documentation=['Tributação pelo ICMS\n40 - Isenta \n41 - Não tributada \n50 - Suspensão  '])
 
@@ -518,13 +564,13 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n'])
                         CST: str = Element(str, documentation=['Tributção pelo ICMS\n20 - Com redução de base de cálculo'])
                         modBC: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS:\n0 - Margem Valor Agregado (%);\n1 - Pauta (valor);\n2 - Preço Tabelado Máximo (valor);\n3 - Valor da Operação.'])
-                        pRedBC: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC'])
-                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS'])
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS'])
-                        vICMSOp: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS da Operação'])
-                        pDif: TDec_0302a04Max100 = Element(TDec_0302a04Max100, tipo="N", tam=(3, 2), documentation=['Percentual do diferemento'])
-                        vICMSDif: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS da diferido'])
-                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS'])
+                        pRedBC: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Percentual de redução da BC'])
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS'])
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS'])
+                        vICMSOp: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS da Operação'])
+                        pDif: TDec_0302a04Max100 = Element(TDec_0302a04Max100, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Percentual do diferemento'])
+                        vICMSDif: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS da diferido'])
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS'])
                     ICMS51: ICMS51 = Element(ICMS51, documentation=['Tributção pelo ICMS\n51 - Diferimento\nA exigência do preenchimento das informações do ICMS diferido fica à critério de cada UF.'])
 
                     class ICMS60(ComplexType):
@@ -532,8 +578,8 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 60 - ICMS cobrado anteriormente por substituição tributária"""
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n'])
                         CST: str = Element(str, documentation=['Tributação pelo ICMS \n60 - ICMS cobrado anteriormente por substituição tributária '])
-                        vBCSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS ST retido anteriormente'])
-                        vICMSSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS ST retido anteriormente'])
+                        vBCSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS ST retido anteriormente'])
+                        vICMSSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS ST retido anteriormente'])
                     ICMS60: ICMS60 = Element(ICMS60, documentation=['Tributação pelo ICMS\n60 - ICMS cobrado anteriormente por substituição tributária '])
 
                     class ICMS70(ComplexType):
@@ -542,17 +588,17 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n'])
                         CST: str = Element(str, documentation=['Tributção pelo ICMS\n70 - Com redução de base de cálculo e cobrança do ICMS por substituição tributária '])
                         modBC: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS:\n0 - Margem Valor Agregado (%);\n1 - Pauta (valor);\n2 - Preço Tabelado Máximo (valor);\n3 - Valor da Operação.'])
-                        pRedBC: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC'])
-                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS'])
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS'])
-                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS'])
+                        pRedBC: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Percentual de redução da BC'])
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS'])
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS'])
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS'])
                         modBCST: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS ST:\n0 – Preço tabelado ou máximo  sugerido;\n1 - Lista Negativa (valor);\n2 - Lista Positiva (valor);\n3 - Lista Neutra (valor);\n4 - Margem Valor Agregado (%);\n5 - Pauta (valor).'])
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual da Margem de Valor Adicionado ICMS ST'])
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC ICMS ST '])
-                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS ST'])
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS ST'])
-                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS ST'])
-                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS de desoneração'])
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual da Margem de Valor Adicionado ICMS ST'])
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC ICMS ST '])
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS ST'])
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS ST'])
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS ST'])
+                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS de desoneração'])
                         motDesICMS: str = Element(str, documentation=['Motivo da desoneração do ICMS:3-Uso na agropecuária;9-Outros;12-Fomento agropecuário'])
                     ICMS70: ICMS70 = Element(ICMS70, documentation=['Tributação pelo ICMS \n70 - Com redução de base de cálculo e cobrança do ICMS por substituição tributária '])
 
@@ -562,17 +608,17 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n'])
                         CST: str = Element(str, documentation=['Tributção pelo ICMS\n90 - Outras'])
                         modBC: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS: \n0 - Margem Valor Agregado (%);\n1 - Pauta (valor);\n2 - Preço Tabelado Máximo (valor);\n3 - Valor da Operação.'])
-                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS'])
-                        pRedBC: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC'])
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS'])
-                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS'])
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS'])
+                        pRedBC: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC'])
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS'])
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS'])
                         modBCST: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS ST:\n0 – Preço tabelado ou máximo  sugerido;\n1 - Lista Negativa (valor);\n2 - Lista Positiva (valor);\n3 - Lista Neutra (valor);\n4 - Margem Valor Agregado (%);\n5 - Pauta (valor).'])
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual da Margem de Valor Adicionado ICMS ST'])
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC ICMS ST '])
-                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS ST'])
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS ST'])
-                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS ST'])
-                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS de desoneração'])
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual da Margem de Valor Adicionado ICMS ST'])
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC ICMS ST '])
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS ST'])
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS ST'])
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS ST'])
+                        vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS de desoneração'])
                         motDesICMS: str = Element(str, documentation=['Motivo da desoneração do ICMS:3-Uso na agropecuária;9-Outros;12-Fomento agropecuário'])
                     ICMS90: ICMS90 = Element(ICMS90, documentation=['Tributação pelo ICMS\n90 - Outras'])
 
@@ -582,17 +628,17 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n'])
                         CST: str = Element(str, documentation=['Tributação pelo ICMS \n10 - Tributada e com cobrança do ICMS por substituição tributária;\n90 – Outros.'])
                         modBC: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS: \n0 - Margem Valor Agregado (%);\n1 - Pauta (valor);\n2 - Preço Tabelado Máximo (valor);\n3 - Valor da Operação.'])
-                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS'])
-                        pRedBC: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC'])
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS'])
-                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS'])
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS'])
+                        pRedBC: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC'])
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS'])
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS'])
                         modBCST: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS ST:\n0 – Preço tabelado ou máximo  sugerido;\n1 - Lista Negativa (valor);\n2 - Lista Positiva (valor);\n3 - Lista Neutra (valor);\n4 - Margem Valor Agregado (%);\n5 - Pauta (valor).'])
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual da Margem de Valor Adicionado ICMS ST'])
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC ICMS ST'])
-                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS ST'])
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS ST'])
-                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS ST'])
-                        pBCOp: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual para determinação do valor  da Base de Cálculo da operação própria.'])
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual da Margem de Valor Adicionado ICMS ST'])
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC ICMS ST'])
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS ST'])
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS ST'])
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS ST'])
+                        pBCOp: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual para determinação do valor  da Base de Cálculo da operação própria.'])
                         UFST: TUf = Element(TUf, documentation=['Sigla da UF para qual é devido o ICMS ST da operação.'])
                     ICMSPart: ICMSPart = Element(ICMSPart, documentation=['Partilha do ICMS entre a UF de origem e UF de destino ou a UF definida na legislação\nOperação interestadual para consumidor final com partilha do ICMS  devido na operação entre a UF de origem e a UF do destinatário ou ou a UF definida na legislação. (Ex. UF da concessionária de entrega do  veículos)'])
 
@@ -600,18 +646,18 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                         """Grupo de informação do ICMSST devido para a UF de destino, nas operações interestaduais de produtos que tiveram retenção antecipada de ICMS por ST na UF do remetente. Repasse via Substituto Tributário."""
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n'])
                         CST: str = Element(str, documentation=['Tributção pelo ICMS\n41-Não Tributado'])
-                        vBCSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Informar o valor da BC do ICMS ST retido na UF remetente'])
-                        vICMSSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=[' Informar o valor do ICMS ST retido na UF remetente (iv2.0))'])
-                        vBCSTDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=[' Informar o valor da BC do ICMS ST da UF destino'])
-                        vICMSSTDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Informar o valor da BC do ICMS ST da UF destino (v2.0)'])
+                        vBCSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Informar o valor da BC do ICMS ST retido na UF remetente'])
+                        vICMSSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=[' Informar o valor do ICMS ST retido na UF remetente (iv2.0))'])
+                        vBCSTDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=[' Informar o valor da BC do ICMS ST da UF destino'])
+                        vICMSSTDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Informar o valor da BC do ICMS ST da UF destino (v2.0)'])
                     ICMSST: ICMSST = Element(ICMSST, documentation=['Grupo de informação do ICMSST devido para a UF de destino, nas operações interestaduais de produtos que tiveram retenção antecipada de ICMS por ST na UF do remetente. Repasse via Substituto Tributário.'])
 
                     class ICMSSN101(ComplexType):
                         """Tributação do ICMS pelo SIMPLES NACIONAL e CSOSN=101 (v.2.0)"""
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n(v2.0)'])
                         CSOSN: str = Element(str, documentation=['101- Tributada pelo Simples Nacional com permissão de crédito. (v.2.0)'])
-                        pCredSN: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota aplicável de cálculo do crédito (Simples Nacional). (v2.0)'])
-                        vCredICMSSN: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (Simples Nacional) (v2.0)'])
+                        pCredSN: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota aplicável de cálculo do crédito (Simples Nacional). (v2.0)'])
+                        vCredICMSSN: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (Simples Nacional) (v2.0)'])
                     ICMSSN101: ICMSSN101 = Element(ICMSSN101, documentation=['Tributação do ICMS pelo SIMPLES NACIONAL e CSOSN=101 (v.2.0)'])
 
                     class ICMSSN102(ComplexType):
@@ -625,13 +671,13 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                         orig: Torig = Element(Torig, documentation=['Origem da mercadoria:\n0 – Nacional;\n1 – Estrangeira – Importação direta;\n2 – Estrangeira – Adquirida no mercado interno. (v2.0)'])
                         CSOSN: str = Element(str, documentation=['201- Tributada pelo Simples Nacional com permissão de crédito e com cobrança do ICMS por Substituição Tributária (v.2.0)'])
                         modBCST: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS ST:\n0 – Preço tabelado ou máximo  sugerido;\n1 - Lista Negativa (valor);\n2 - Lista Positiva (valor);\n3 - Lista Neutra (valor);\n4 - Margem Valor Agregado (%);\n5 - Pauta (valor). (v2.0)'])
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual da Margem de Valor Adicionado ICMS ST (v2.0)'])
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC ICMS ST  (v2.0)'])
-                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS ST (v2.0)'])
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS ST (v2.0)'])
-                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS ST (v2.0)'])
-                        pCredSN: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota aplicável de cálculo do crédito (Simples Nacional). (v2.0)'])
-                        vCredICMSSN: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (Simples Nacional) (v2.0)'])
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual da Margem de Valor Adicionado ICMS ST (v2.0)'])
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC ICMS ST  (v2.0)'])
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS ST (v2.0)'])
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS ST (v2.0)'])
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS ST (v2.0)'])
+                        pCredSN: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota aplicável de cálculo do crédito (Simples Nacional). (v2.0)'])
+                        vCredICMSSN: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (Simples Nacional) (v2.0)'])
                     ICMSSN201: ICMSSN201 = Element(ICMSSN201, documentation=['Tributação do ICMS pelo SIMPLES NACIONAL e CSOSN=201 (v.2.0)'])
 
                     class ICMSSN202(ComplexType):
@@ -639,19 +685,19 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                         orig: Torig = Element(Torig, documentation=['Origem da mercadoria:\n0 – Nacional;\n1 – Estrangeira – Importação direta;\n2 – Estrangeira – Adquirida no mercado interno. (v2.0)'])
                         CSOSN: str = Element(str, documentation=['202- Tributada pelo Simples Nacional sem permissão de crédito e com cobrança do ICMS por Substituição Tributária;\n203-  Isenção do ICMS nos Simples Nacional para faixa de receita bruta e com cobrança do ICMS por Substituição Tributária (v.2.0)'])
                         modBCST: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS ST:\n0 – Preço tabelado ou máximo  sugerido;\n1 - Lista Negativa (valor);\n2 - Lista Positiva (valor);\n3 - Lista Neutra (valor);\n4 - Margem Valor Agregado (%);\n5 - Pauta (valor). (v2.0)'])
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual da Margem de Valor Adicionado ICMS ST (v2.0)'])
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC ICMS ST  (v2.0)'])
-                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS ST (v2.0)'])
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS ST (v2.0)'])
-                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS ST (v2.0)'])
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual da Margem de Valor Adicionado ICMS ST (v2.0)'])
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC ICMS ST  (v2.0)'])
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS ST (v2.0)'])
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS ST (v2.0)'])
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS ST (v2.0)'])
                     ICMSSN202: ICMSSN202 = Element(ICMSSN202, documentation=['Tributação do ICMS pelo SIMPLES NACIONAL e CSOSN=202 ou 203 (v.2.0)'])
 
                     class ICMSSN500(ComplexType):
                         """Tributação do ICMS pelo SIMPLES NACIONAL,CRT=1 – Simples Nacional e CSOSN=500 (v.2.0)"""
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n'])
                         CSOSN: str = Element(str, documentation=['500 – ICMS cobrado anterirmente por substituição tributária (substituído) ou por antecipação\n(v.2.0)'])
-                        vBCSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS ST retido anteriormente (v2.0) '])
-                        vICMSSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS ST retido anteriormente  (v2.0)'])
+                        vBCSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS ST retido anteriormente (v2.0) '])
+                        vICMSSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS ST retido anteriormente  (v2.0)'])
                     ICMSSN500: ICMSSN500 = Element(ICMSSN500, documentation=['Tributação do ICMS pelo SIMPLES NACIONAL,CRT=1 – Simples Nacional e CSOSN=500 (v.2.0)'])
 
                     class ICMSSN900(ComplexType):
@@ -659,43 +705,43 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                         orig: Torig = Element(Torig, documentation=['origem da mercadoria: 0 - Nacional \n1 - Estrangeira - Importação direta \n2 - Estrangeira - Adquirida no mercado interno \n'])
                         CSOSN: str = Element(str, documentation=['Tributação pelo ICMS 900 - Outros(v2.0)'])
                         modBC: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS: \n0 - Margem Valor Agregado (%);\n1 - Pauta (valor);\n2 - Preço Tabelado Máximo (valor);\n3 - Valor da Operação.'])
-                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS'])
-                        pRedBC: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC'])
-                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS'])
-                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS'])
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS'])
+                        pRedBC: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC'])
+                        pICMS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS'])
+                        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS'])
                         modBCST: str = Element(str, documentation=['Modalidade de determinação da BC do ICMS ST:\n0 – Preço tabelado ou máximo  sugerido;\n1 - Lista Negativa (valor);\n2 - Lista Positiva (valor);\n3 - Lista Neutra (valor);\n4 - Margem Valor Agregado (%);\n5 - Pauta (valor).'])
-                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual da Margem de Valor Adicionado ICMS ST'])
-                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC ICMS ST '])
-                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS ST'])
-                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS ST'])
-                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS ST'])
-                        pCredSN: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota aplicável de cálculo do crédito (Simples Nacional). (v2.0)'])
-                        vCredICMSSN: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (Simples Nacional) (v2.0)'])
+                        pMVAST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual da Margem de Valor Adicionado ICMS ST'])
+                        pRedBCST: TDec_0302a04Opc = Element(TDec_0302a04Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC ICMS ST '])
+                        vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS ST'])
+                        pICMSST: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS ST'])
+                        vICMSST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS ST'])
+                        pCredSN: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota aplicável de cálculo do crédito (Simples Nacional). (v2.0)'])
+                        vCredICMSSN: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (Simples Nacional) (v2.0)'])
                     ICMSSN900: ICMSSN900 = Element(ICMSSN900, documentation=['Tributação do ICMS pelo SIMPLES NACIONAL, CRT=1 – Simples Nacional e CSOSN=900 (v2.0)'])
                 ICMS: ICMS = Element(ICMS, documentation=['Dados do ICMS Normal e ST'])
                 IPI: TIpi = Element(TIpi)
 
                 class II(ComplexType):
                     """Dados do Imposto de Importação"""
-                    vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Base da BC do Imposto de Importação'])
-                    vDespAdu: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor das despesas aduaneiras'])
-                    vII: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do Imposto de Importação'])
-                    vIOF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do Imposto sobre Operações Financeiras'])
+                    vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Base da BC do Imposto de Importação'])
+                    vDespAdu: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor das despesas aduaneiras'])
+                    vII: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do Imposto de Importação'])
+                    vIOF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do Imposto sobre Operações Financeiras'])
                 II: II = Element(II, documentation=['Dados do Imposto de Importação'])
                 IPI: TIpi = Element(TIpi)
 
                 class ISSQN(ComplexType):
                     """ISSQN"""
-                    vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ISSQN'])
-                    vAliq: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do ISSQN'])
-                    vISSQN: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da do ISSQN'])
+                    vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ISSQN'])
+                    vAliq: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ISSQN'])
+                    vISSQN: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da do ISSQN'])
                     cMunFG: TCodMunIBGE = Element(TCodMunIBGE, documentation=['Informar o município de ocorrência do fato gerador do ISSQN. Utilizar a Tabela do IBGE (Anexo VII - Tabela de UF, Município e País). “Atenção, não vincular com os campos B12, C10 ou E10” v2.0'])
                     cListServ: TCListServ = Element(TCListServ, documentation=['Informar o Item da lista de serviços da LC 116/03 em que se classifica o serviço.'])
-                    vDeducao: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor dedução para redução da base de cálculo'])
-                    vOutro: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor outras retenções'])
-                    vDescIncond: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor desconto incondicionado'])
-                    vDescCond: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor desconto condicionado'])
-                    vISSRet: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor Retenção ISS'])
+                    vDeducao: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor dedução para redução da base de cálculo'])
+                    vOutro: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor outras retenções'])
+                    vDescIncond: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor desconto incondicionado'])
+                    vDescCond: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor desconto condicionado'])
+                    vISSRet: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor Retenção ISS'])
                     indISS: str = Element(str, documentation=['Exibilidade do ISS:1-Exigível;2-Não incidente;3-Isenção;4-Exportação;5-Imunidade;6-Exig.Susp. Judicial;7-Exig.Susp. ADM'])
                     cServico: str = Element(str, documentation=['Código do serviço prestado dentro do município'])
                     cMun: TCodMunIBGE = Element(TCodMunIBGE, documentation=['Código do Município de Incidência do Imposto'])
@@ -713,18 +759,18 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
  01 – Operação Tributável - Base de Cálculo = Valor da Operação Alíquota Normal (Cumulativo/Não Cumulativo);
 02 - Operação Tributável - Base de Calculo = Valor da Operação (Alíquota Diferenciada);"""
                         CST: str = Element(str, documentation=['Código de Situação Tributária do PIS.\n 01 – Operação Tributável - Base de Cálculo = Valor da Operação Alíquota Normal (Cumulativo/Não Cumulativo);\n02 - Operação Tributável - Base de Calculo = Valor da Operação (Alíquota Diferenciada);'])
-                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do PIS'])
-                        pPIS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do PIS (em percentual)'])
-                        vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do PIS'])
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do PIS'])
+                        pPIS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do PIS (em percentual)'])
+                        vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do PIS'])
                     PISAliq: PISAliq = Element(PISAliq, documentation=['Código de Situação Tributária do PIS.\n 01 – Operação Tributável - Base de Cálculo = Valor da Operação Alíquota Normal (Cumulativo/Não Cumulativo);\n02 - Operação Tributável - Base de Calculo = Valor da Operação (Alíquota Diferenciada);'])
 
                     class PISQtde(ComplexType):
                         """Código de Situação Tributária do PIS.
 03 - Operação Tributável - Base de Calculo = Quantidade Vendida x Alíquota por Unidade de Produto;"""
                         CST: str = Element(str, documentation=['Código de Situação Tributária do PIS.\n03 - Operação Tributável - Base de Calculo = Quantidade Vendida x Alíquota por Unidade de Produto;'])
-                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4), documentation=['Quantidade Vendida  (NT2011/004)'])
-                        vAliqProd: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), documentation=['Alíquota do PIS (em reais) (NT2011/004)'])
-                        vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do PIS'])
+                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4), base_type=Decimal, documentation=['Quantidade Vendida  (NT2011/004)'])
+                        vAliqProd: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Alíquota do PIS (em reais) (NT2011/004)'])
+                        vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do PIS'])
                     PISQtde: PISQtde = Element(PISQtde, documentation=['Código de Situação Tributária do PIS.\n03 - Operação Tributável - Base de Calculo = Quantidade Vendida x Alíquota por Unidade de Produto;'])
 
                     class PISNT(ComplexType):
@@ -742,22 +788,22 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 99 - Outras Operações."""
                         _choice = [[]]
                         CST: str = Element(str, documentation=['Código de Situação Tributária do PIS.\n99 - Outras Operações.'])
-                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do PIS'])
-                        pPIS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do PIS (em percentual)'])
-                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4), documentation=['Quantidade Vendida (NT2011/004) '])
-                        vAliqProd: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), documentation=['Alíquota do PIS (em reais) (NT2011/004)'])
-                        vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do PIS'])
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do PIS'])
+                        pPIS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do PIS (em percentual)'])
+                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4), base_type=Decimal, documentation=['Quantidade Vendida (NT2011/004) '])
+                        vAliqProd: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Alíquota do PIS (em reais) (NT2011/004)'])
+                        vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do PIS'])
                     PISOutr: PISOutr = Element(PISOutr, documentation=['Código de Situação Tributária do PIS.\n99 - Outras Operações.'])
                 PIS: PIS = Element(PIS, documentation=['Dados do PIS'])
 
                 class PISST(ComplexType):
                     """Dados do PIS Substituição Tributária"""
                     _choice = [[]]
-                    vBC: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor da BC do PIS ST'])
-                    pPIS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do PIS ST (em percentual)'])
-                    qBCProd: TDec_1204 = Element(TDec_1204, tipo="N", tam=(12, 4), documentation=['Quantidade Vendida '])
-                    vAliqProd: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4), documentation=['Alíquota do PIS ST (em reais)'])
-                    vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do PIS ST'])
+                    vBC: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor da BC do PIS ST'])
+                    pPIS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do PIS ST (em percentual)'])
+                    qBCProd: TDec_1204 = Element(TDec_1204, tipo="N", tam=(12, 4), base_type=Decimal, documentation=['Quantidade Vendida '])
+                    vAliqProd: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Alíquota do PIS ST (em reais)'])
+                    vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do PIS ST'])
                 PISST: PISST = Element(PISST, documentation=['Dados do PIS Substituição Tributária'])
 
                 class COFINS(ComplexType):
@@ -769,18 +815,18 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
  01 – Operação Tributável - Base de Cálculo = Valor da Operação Alíquota Normal (Cumulativo/Não Cumulativo);
 02 - Operação Tributável - Base de Calculo = Valor da Operação (Alíquota Diferenciada);"""
                         CST: str = Element(str, documentation=['Código de Situação Tributária do COFINS.\n 01 – Operação Tributável - Base de Cálculo = Valor da Operação Alíquota Normal (Cumulativo/Não Cumulativo);\n02 - Operação Tributável - Base de Calculo = Valor da Operação (Alíquota Diferenciada);'])
-                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do COFINS'])
-                        pCOFINS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do COFINS (em percentual)'])
-                        vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do COFINS'])
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do COFINS'])
+                        pCOFINS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do COFINS (em percentual)'])
+                        vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do COFINS'])
                     COFINSAliq: COFINSAliq = Element(COFINSAliq, documentation=['Código de Situação Tributária do COFINS.\n 01 – Operação Tributável - Base de Cálculo = Valor da Operação Alíquota Normal (Cumulativo/Não Cumulativo);\n02 - Operação Tributável - Base de Calculo = Valor da Operação (Alíquota Diferenciada);'])
 
                     class COFINSQtde(ComplexType):
                         """Código de Situação Tributária do COFINS.
 03 - Operação Tributável - Base de Calculo = Quantidade Vendida x Alíquota por Unidade de Produto;"""
                         CST: str = Element(str, documentation=['Código de Situação Tributária do COFINS.\n03 - Operação Tributável - Base de Calculo = Quantidade Vendida x Alíquota por Unidade de Produto;'])
-                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4), documentation=['Quantidade Vendida (NT2011/004)'])
-                        vAliqProd: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), documentation=['Alíquota do COFINS (em reais) (NT2011/004)'])
-                        vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do COFINS'])
+                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4), base_type=Decimal, documentation=['Quantidade Vendida (NT2011/004)'])
+                        vAliqProd: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Alíquota do COFINS (em reais) (NT2011/004)'])
+                        vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do COFINS'])
                     COFINSQtde: COFINSQtde = Element(COFINSQtde, documentation=['Código de Situação Tributária do COFINS.\n03 - Operação Tributável - Base de Calculo = Quantidade Vendida x Alíquota por Unidade de Produto;'])
 
                     class COFINSNT(ComplexType):
@@ -821,11 +867,11 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
 99 - Outras Operações."""
                         _choice = [[]]
                         CST: str = Element(str, documentation=['Código de Situação Tributária do COFINS:\n49 - Outras Operações de Saída\n50 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno\n51 - Operação com Direito a Crédito – Vinculada Exclusivamente a Receita Não Tributada no Mercado Interno\n52 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação\n53 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno\n54 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação\n55 - Operação com Direito a Crédito - Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação\n56 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação\n60 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno\n61 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno\n62 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação\n63 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno\n64 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação\n65 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação\n66 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação\n67 - Crédito Presumido - Outras Operações\n70 - Operação de Aquisição sem Direito a Crédito\n71 - Operação de Aquisição com Isenção\n72 - Operação de Aquisição com Suspensão\n73 - Operação de Aquisição a Alíquota Zero\n74 - Operação de Aquisição sem Incidência da Contribuição\n75 - Operação de Aquisição por Substituição Tributária\n98 - Outras Operações de Entrada\n99 - Outras Operações.'])
-                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do COFINS'])
-                        pCOFINS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do COFINS (em percentual)'])
-                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4), documentation=['Quantidade Vendida (NT2011/004) '])
-                        vAliqProd: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), documentation=['Alíquota do COFINS (em reais) (NT2011/004)'])
-                        vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do COFINS'])
+                        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do COFINS'])
+                        pCOFINS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do COFINS (em percentual)'])
+                        qBCProd: TDec_1204v = Element(TDec_1204v, tipo="N", tam=(12, 4), base_type=Decimal, documentation=['Quantidade Vendida (NT2011/004) '])
+                        vAliqProd: TDec_1104v = Element(TDec_1104v, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Alíquota do COFINS (em reais) (NT2011/004)'])
+                        vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do COFINS'])
                     COFINSOutr: COFINSOutr = Element(COFINSOutr, documentation=['Código de Situação Tributária do COFINS:\n49 - Outras Operações de Saída\n50 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno\n51 - Operação com Direito a Crédito – Vinculada Exclusivamente a Receita Não Tributada no Mercado Interno\n52 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação\n53 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno\n54 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação\n55 - Operação com Direito a Crédito - Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação\n56 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação\n60 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno\n61 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno\n62 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação\n63 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno\n64 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação\n65 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação\n66 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação\n67 - Crédito Presumido - Outras Operações\n70 - Operação de Aquisição sem Direito a Crédito\n71 - Operação de Aquisição com Isenção\n72 - Operação de Aquisição com Suspensão\n73 - Operação de Aquisição a Alíquota Zero\n74 - Operação de Aquisição sem Incidência da Contribuição\n75 - Operação de Aquisição por Substituição Tributária\n98 - Outras Operações de Entrada\n99 - Outras Operações.'])
                 COFINS: COFINS = Element(COFINS, documentation=['Dados do COFINS'])
 
@@ -833,32 +879,32 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                     """Dados do COFINS da
 Substituição Tributaria;"""
                     _choice = [[]]
-                    vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do COFINS ST'])
-                    pCOFINS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota do COFINS ST(em percentual)'])
-                    qBCProd: TDec_1204 = Element(TDec_1204, tipo="N", tam=(12, 4), documentation=['Quantidade Vendida '])
-                    vAliqProd: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4), documentation=['Alíquota do COFINS ST(em reais)'])
-                    vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do COFINS ST'])
+                    vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do COFINS ST'])
+                    pCOFINS: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do COFINS ST(em percentual)'])
+                    qBCProd: TDec_1204 = Element(TDec_1204, tipo="N", tam=(12, 4), base_type=Decimal, documentation=['Quantidade Vendida '])
+                    vAliqProd: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Alíquota do COFINS ST(em reais)'])
+                    vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do COFINS ST'])
                 COFINSST: COFINSST = Element(COFINSST, documentation=['Dados do COFINS da\nSubstituição Tributaria;'])
 
                 class ICMSUFDest(ComplexType):
                     """Grupo a ser informado nas vendas interestarduais para consumidor final, não contribuinte de ICMS"""
-                    vBCUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da Base de Cálculo do ICMS na UF do destinatário. '])
-                    pFCPUFDest: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Percentual adicional inserido na alíquota interna da UF de destino, relativo ao Fundo de Combate à Pobreza (FCP) naquela UF. '])
-                    pICMSUFDest: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota adotada nas operações internas na UF do destinatário para o produto / mercadoria.'])
+                    vBCUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da Base de Cálculo do ICMS na UF do destinatário. '])
+                    pFCPUFDest: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Percentual adicional inserido na alíquota interna da UF de destino, relativo ao Fundo de Combate à Pobreza (FCP) naquela UF. '])
+                    pICMSUFDest: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota adotada nas operações internas na UF do destinatário para o produto / mercadoria.'])
                     pICMSInter: str = Element(str, documentation=['Alíquota interestadual das UF envolvidas: - 4% alíquota interestadual para produtos importados; - 7% para os Estados de origem do Sul e Sudeste (exceto ES), destinado para os Estados do Norte e Nordeste  ou ES; - 12% para os demais casos.'])
-                    pICMSInterPart: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Percentual de partilha para a UF do destinatário: - 40% em 2016; - 60% em 2017; - 80% em 2018; - 100% a partir de 2019.'])
-                    vFCPUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino.'])
-                    vICMSUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS de partilha para a UF do destinatário. '])
-                    vICMSUFRemet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS de partilha para a UF do remetente. Nota: A partir de 2019, este valor será zero.'])
+                    pICMSInterPart: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Percentual de partilha para a UF do destinatário: - 40% em 2016; - 60% em 2017; - 80% em 2018; - 100% a partir de 2019.'])
+                    vFCPUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino.'])
+                    vICMSUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS de partilha para a UF do destinatário. '])
+                    vICMSUFRemet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS de partilha para a UF do remetente. Nota: A partir de 2019, este valor será zero.'])
                 ICMSUFDest: ICMSUFDest = Element(ICMSUFDest, documentation=['Grupo a ser informado nas vendas interestarduais para consumidor final, não contribuinte de ICMS'])
             imposto: imposto = Element(imposto, documentation=['Tributos incidentes nos produtos ou serviços da NF-e'])
 
             class impostoDevol(ComplexType):
-                pDevol: TDec_0302Max100 = Element(TDec_0302Max100, tipo="N", tam=(3, 2), documentation=['Percentual de mercadoria devolvida'])
+                pDevol: TDec_0302Max100 = Element(TDec_0302Max100, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Percentual de mercadoria devolvida'])
 
                 class IPI(ComplexType):
                     """Informação de IPI devolvido"""
-                    vIPIDevol: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do IPI devolvido'])
+                    vIPIDevol: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do IPI devolvido'])
                 IPI: IPI = Element(IPI, documentation=['Informação de IPI devolvido'])
             impostoDevol: impostoDevol = Element(impostoDevol)
             infAdProd: str = Element(str, documentation=['Informações adicionais do produto (norma referenciada, informações complementares, etc)'])
@@ -870,52 +916,52 @@ Substituição Tributaria;"""
 
             class ICMSTot(ComplexType):
                 """Totais referentes ao ICMS"""
-                vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['BC do ICMS'])
-                vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total do ICMS'])
-                vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total do ICMS desonerado'])
-                vFCPUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor total do ICMS relativo ao Fundo de Combate à Pobreza (FCP) para a UF de destino.'])
-                vICMSUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor total do ICMS de partilha para a UF do destinatário'])
-                vICMSUFRemet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor total do ICMS de partilha para a UF do remetente'])
-                vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['BC do ICMS ST'])
-                vST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total do ICMS ST'])
-                vProd: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total dos produtos e serviços'])
-                vFrete: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total do Frete'])
-                vSeg: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total do Seguro'])
-                vDesc: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total do Desconto'])
-                vII: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total do II'])
-                vIPI: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total do IPI'])
-                vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do PIS'])
-                vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do COFINS'])
-                vOutro: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Outras Despesas acessórias'])
-                vNF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total da NF-e'])
-                vTotTrib: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor estimado total de impostos federais, estaduais e municipais'])
+                vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['BC do ICMS'])
+                vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total do ICMS'])
+                vICMSDeson: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total do ICMS desonerado'])
+                vFCPUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor total do ICMS relativo ao Fundo de Combate à Pobreza (FCP) para a UF de destino.'])
+                vICMSUFDest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor total do ICMS de partilha para a UF do destinatário'])
+                vICMSUFRemet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor total do ICMS de partilha para a UF do remetente'])
+                vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['BC do ICMS ST'])
+                vST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total do ICMS ST'])
+                vProd: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total dos produtos e serviços'])
+                vFrete: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total do Frete'])
+                vSeg: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total do Seguro'])
+                vDesc: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total do Desconto'])
+                vII: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total do II'])
+                vIPI: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total do IPI'])
+                vPIS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do PIS'])
+                vCOFINS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do COFINS'])
+                vOutro: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Outras Despesas acessórias'])
+                vNF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total da NF-e'])
+                vTotTrib: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor estimado total de impostos federais, estaduais e municipais'])
             ICMSTot: ICMSTot = Element(ICMSTot, documentation=['Totais referentes ao ICMS'])
 
             class ISSQNtot(ComplexType):
                 """Totais referentes ao ISSQN"""
-                vServ: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor Total dos Serviços sob não-incidência ou não tributados pelo ICMS '])
-                vBC: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Base de Cálculo do ISS'])
-                vISS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor Total do ISS'])
-                vPIS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor do PIS sobre serviços'])
-                vCOFINS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor do COFINS sobre serviços'])
-                dCompet: TData = Element(TData, documentation=['Data da prestação do serviço  (AAAA-MM-DD)'])
-                vDeducao: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor dedução para redução da base de cálculo'])
-                vOutro: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor outras retenções'])
-                vDescIncond: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor desconto incondicionado'])
-                vDescCond: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor desconto condicionado'])
-                vISSRet: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor Total Retenção ISS'])
+                vServ: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor Total dos Serviços sob não-incidência ou não tributados pelo ICMS '])
+                vBC: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Base de Cálculo do ISS'])
+                vISS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor Total do ISS'])
+                vPIS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor do PIS sobre serviços'])
+                vCOFINS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor do COFINS sobre serviços'])
+                dCompet: TData = Element(TData, base_type=date, documentation=['Data da prestação do serviço  (AAAA-MM-DD)'])
+                vDeducao: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor dedução para redução da base de cálculo'])
+                vOutro: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor outras retenções'])
+                vDescIncond: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor desconto incondicionado'])
+                vDescCond: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor desconto condicionado'])
+                vISSRet: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor Total Retenção ISS'])
                 cRegTrib: str = Element(str, documentation=['Código do regime especial de tributação'])
             ISSQNtot: ISSQNtot = Element(ISSQNtot, documentation=['Totais referentes ao ISSQN'])
 
             class retTrib(ComplexType):
                 """Retenção de Tributos Federais"""
-                vRetPIS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor Retido de PIS'])
-                vRetCOFINS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor Retido de COFINS'])
-                vRetCSLL: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor Retido de CSLL'])
-                vBCIRRF: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Base de Cálculo do IRRF'])
-                vIRRF: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor Retido de IRRF'])
-                vBCRetPrev: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Base de Cálculo da Retenção da Previdêncica Social'])
-                vRetPrev: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor da Retenção da Previdêncica Social'])
+                vRetPIS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor Retido de PIS'])
+                vRetCOFINS: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor Retido de COFINS'])
+                vRetCSLL: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor Retido de CSLL'])
+                vBCIRRF: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Base de Cálculo do IRRF'])
+                vIRRF: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor Retido de IRRF'])
+                vBCRetPrev: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Base de Cálculo da Retenção da Previdêncica Social'])
+                vRetPrev: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor da Retenção da Previdêncica Social'])
             retTrib: retTrib = Element(retTrib, documentation=['Retenção de Tributos Federais'])
         total: total = Element(total, documentation=['Dados dos totais da NF-e'])
 
@@ -927,6 +973,17 @@ Substituição Tributaria;"""
             class transporta(ComplexType):
                 """Dados do transportador"""
                 _choice = [['CNPJ', 'CPF']]
+                @property
+                def CNPJCPF(self):
+                    return self.CPF or self.CNPJ
+
+                @CNPJCPF.setter
+                def CNPJCPF(self, value):
+                    value = "".join(filter(str.isdigit, value))
+                    if len(value) == 11:
+                        self.CPF = value
+                    else:
+                        self.CNPJ = value
                 CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['CNPJ do transportador'])
                 CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF do transportador'])
                 xNome: str = Element(str, documentation=['Razão Social ou nome do transportador'])
@@ -938,10 +995,10 @@ Substituição Tributaria;"""
 
             class retTransp(ComplexType):
                 """Dados da retenção  ICMS do Transporte"""
-                vServ: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do Serviço'])
-                vBCRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['BC da Retenção do ICMS'])
-                pICMSRet: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), documentation=['Alíquota da Retenção'])
-                vICMSRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS Retido'])
+                vServ: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do Serviço'])
+                vBCRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['BC da Retenção do ICMS'])
+                pICMSRet: TDec_0302a04 = Element(TDec_0302a04, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota da Retenção'])
+                vICMSRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS Retido'])
                 CFOP: str = Element(str, documentation=['Código Fiscal de Operações e Prestações'])
                 cMunFG: TCodMunIBGE = Element(TCodMunIBGE, documentation=['Código do Município de Ocorrência do Fato Gerador (utilizar a tabela do IBGE)'])
             retTransp: retTransp = Element(retTransp, documentation=['Dados da retenção  ICMS do Transporte'])
@@ -961,8 +1018,8 @@ Substituição Tributaria;"""
                 esp: str = Element(str, documentation=['Espécie dos volumes transportados'])
                 marca: str = Element(str, documentation=['Marca dos volumes transportados'])
                 nVol: str = Element(str, documentation=['Numeração dos volumes transportados'])
-                pesoL: TDec_1203 = Element(TDec_1203, tipo="N", tam=(12, 3), documentation=['Peso líquido (em kg)'])
-                pesoB: TDec_1203 = Element(TDec_1203, tipo="N", tam=(12, 3), documentation=['Peso bruto (em kg)'])
+                pesoL: TDec_1203 = Element(TDec_1203, tipo="N", tam=(12, 3), base_type=Decimal, documentation=['Peso líquido (em kg)'])
+                pesoB: TDec_1203 = Element(TDec_1203, tipo="N", tam=(12, 3), base_type=Decimal, documentation=['Peso bruto (em kg)'])
 
                 class lacres(ComplexType):
                     _max_occurs = 5000
@@ -981,9 +1038,9 @@ Substituição Tributaria;"""
             class fat(ComplexType):
                 """Dados da fatura"""
                 nFat: str = Element(str, documentation=['Número da fatura'])
-                vOrig: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor original da fatura'])
-                vDesc: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor do desconto da fatura'])
-                vLiq: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor líquido da fatura'])
+                vOrig: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor original da fatura'])
+                vDesc: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor do desconto da fatura'])
+                vLiq: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor líquido da fatura'])
             fat: fat = Element(fat, documentation=['Dados da fatura'])
 
             class dup(ComplexType):
@@ -994,8 +1051,8 @@ Substituição Tributaria;"""
                     return super().add(nDup=nDup, dVenc=dVenc, vDup=vDup)
 
                 nDup: str = Element(str, documentation=['Número da duplicata'])
-                dVenc: TData = Element(TData, documentation=['Data de vencimento da duplicata (AAAA-MM-DD)'])
-                vDup: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor da duplicata'])
+                dVenc: TData = Element(TData, base_type=date, documentation=['Data de vencimento da duplicata (AAAA-MM-DD)'])
+                vDup: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor da duplicata'])
             dup: List[dup] = Element(dup, max_occurs=120, documentation=['Dados das duplicatas NT 2011/004'])
         cobr: cobr = Element(cobr, documentation=['Dados da cobrança da NF-e'])
 
@@ -1007,7 +1064,7 @@ Substituição Tributaria;"""
                 return super().add(tPag=tPag, vPag=vPag, card=card)
 
             tPag: str = Element(str, documentation=['Forma de Pagamento:01-Dinheiro;02-Cheque;03-Cartão de Crédito;04-Cartão de Débito;05-Crédito Loja;10-Vale Alimentação;11-Vale Refeição;12-Vale Presente;13-Vale Combustível;99 - Outros'])
-            vPag: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do Pagamento'])
+            vPag: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do Pagamento'])
 
             class card(ComplexType):
                 """Grupo de Cartões"""
@@ -1087,12 +1144,12 @@ e o conteúdo do campo no xTexto"""
                 def add(self, qtde=None, dia=None) -> TNFe.infNFe.cana.forDia:
                     return super().add(qtde=qtde, dia=dia)
 
-                qtde: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10), documentation=['Quantidade em quilogramas - peso líquido'])
+                qtde: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10), base_type=Decimal, documentation=['Quantidade em quilogramas - peso líquido'])
                 dia: str = Attribute(None)
             forDia: List[forDia] = Element(forDia, max_occurs=31, documentation=['Fornecimentos diários'])
-            qTotMes: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10), documentation=['Total do mês'])
-            qTotAnt: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10), documentation=['Total Anterior'])
-            qTotGer: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10), documentation=['Total Geral'])
+            qTotMes: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10), base_type=Decimal, documentation=['Total do mês'])
+            qTotAnt: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10), base_type=Decimal, documentation=['Total Anterior'])
+            qTotGer: TDec_1110v = Element(TDec_1110v, tipo="N", tam=(11, 10), base_type=Decimal, documentation=['Total Geral'])
 
             class deduc(ComplexType):
                 """Deduções - Taxas e Contribuições"""
@@ -1102,11 +1159,11 @@ e o conteúdo do campo no xTexto"""
                     return super().add(xDed=xDed, vDed=vDed)
 
                 xDed: str = Element(str, documentation=['Descrição da Dedução'])
-                vDed: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['valor da dedução'])
+                vDed: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['valor da dedução'])
             deduc: List[deduc] = Element(deduc, max_occurs=10, documentation=['Deduções - Taxas e Contribuições'])
-            vFor: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor  dos fornecimentos'])
-            vTotDed: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total das Deduções'])
-            vLiqFor: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Líquido dos fornecimentos'])
+            vFor: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor  dos fornecimentos'])
+            vTotDed: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total das Deduções'])
+            vLiqFor: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Líquido dos fornecimentos'])
         cana: cana = Element(cana, documentation=['Informações de registro aquisições de cana'])
         versao: str = Attribute(TVerNFe)
         Id: str = Attribute(None)
@@ -1128,7 +1185,7 @@ class TProtNFe(Element):
         tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
         verAplic: TVerAplic = Element(TVerAplic, documentation=['Versão do Aplicativo que processou a NF-e'])
         chNFe: TChNFe = Element(TChNFe, documentation=['Chaves de acesso da NF-e, compostas por: UF do emitente, AAMM da emissão da NFe, CNPJ do emitente, modelo, série e número da NF-e e código numérico+DV.'])
-        dhRecbto: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora de processamento, no formato AAAA-MM-DDTHH:MM:SSTZD. Deve ser preenchida com data e hora da gravação no Banco em caso de Confirmação. Em caso de Rejeição, com data e hora do recebimento do Lote de NF-e enviado.'])
+        dhRecbto: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e hora de processamento, no formato AAAA-MM-DDTHH:MM:SSTZD. Deve ser preenchida com data e hora da gravação no Banco em caso de Confirmação. Em caso de Rejeição, com data e hora do recebimento do Lote de NF-e enviado.'])
         nProt: TProt = Element(TProt, documentation=['Número do Protocolo de Status da NF-e. 1 posição (1 – Secretaria de Fazenda Estadual 2 – Receita Federal); 2 - códiga da UF - 2 posições ano; 10 seqüencial no ano.'])
         digVal: DigestValueType = Element(DigestValueType, documentation=['Digest Value da NF-e processada. Utilizado para conferir a integridade da NF-e original.'])
         cStat: TStat = Element(TStat, documentation=['Código do status da mensagem enviada.'])
@@ -1164,7 +1221,7 @@ class TRetEnviNFe(Element):
     cStat: TStat = Element(TStat, documentation=['Código do status da mensagem enviada.'])
     xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do serviço solicitado.'])
     cUF: TCodUfIBGE = Element(TCodUfIBGE, documentation=['código da UF de atendimento'])
-    dhRecbto: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora do recebimento, no formato AAAA-MM-DDTHH:MM:SSTZD'])
+    dhRecbto: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e hora do recebimento, no formato AAAA-MM-DDTHH:MM:SSTZD'])
 
     class infRec(ComplexType):
         """Dados do Recibo do Lote"""
@@ -1192,7 +1249,7 @@ class TRetConsReciNFe(Element):
     cStat: TStat = Element(TStat, documentation=['Código do status da mensagem enviada.'])
     xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do serviço solicitado.'])
     cUF: TCodUfIBGE = Element(TCodUfIBGE, documentation=['código da UF de atendimento'])
-    dhRecbto: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora de processamento, no formato AAAA-MM-DDTHH:MM:SSTZD. Em caso de Rejeição, com data e hora do recebimento do Lote de NF-e enviado.\n\t\t\t\t\t'])
+    dhRecbto: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e hora de processamento, no formato AAAA-MM-DDTHH:MM:SSTZD. Em caso de Rejeição, com data e hora do recebimento do Lote de NF-e enviado.\n\t\t\t\t\t'])
     cMsg: str = Element(str, documentation=['Código da Mensagem (v2.0) \nalterado para tamanho variavel 1-4. (NT2011/004)'])
     xMsg: str = Element(str, documentation=['Mensagem da SEFAZ para o emissor. (v2.0)'])
     protNFe: List[TProtNFe] = Element(TProtNFe, max_occurs=50, documentation=['Protocolo de status resultado do processamento da NF-e'])

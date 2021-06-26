@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .xmldsig_core_schema_v101 import *
@@ -47,7 +49,7 @@ class retEnvEvento(ComplexType):
             xEvento: str = Element(str, documentation=['\x93EPEC autorizado\x94'])
             nSeqEvento: str = Element(str, documentation=['Sequencial do evento, conforme a mensagem de entrada.'])
             cOrgaoAutor: TCodUfIBGE = Element(TCodUfIBGE, documentation=['Idem a mensagem de entrada.'])
-            dhRegEvento: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora de registro do evento no formato AAAA-MM-DDTHH:MM:SSTZD (formato UTC, onde TZD é +HH:MM ou \x96HH:MM). Se o evento for rejeitado informar a data e hora de recebimento do evento.'])
+            dhRegEvento: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e hora de registro do evento no formato AAAA-MM-DDTHH:MM:SSTZD (formato UTC, onde TZD é +HH:MM ou \x96HH:MM). Se o evento for rejeitado informar a data e hora de recebimento do evento.'])
             nProt: TProt = Element(TProt, documentation=['Número do Protocolo do Evento'])
             chNFePend: List[TChNFe] = Element(TChNFe, max_occurs=50, documentation=['Relação de Chaves de Acesso de EPEC pendentes de'])
             Id: str = Attribute(None)

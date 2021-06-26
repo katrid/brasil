@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .xmldsig_core_schema_v101 import *
@@ -26,12 +28,23 @@ class TEvento(Element):
 
     class infEvento(ComplexType):
         _choice = [['CNPJ', 'CPF']]
+        @property
+        def CNPJCPF(self):
+            return self.CPF or self.CNPJ
+
+        @CNPJCPF.setter
+        def CNPJCPF(self, value):
+            value = "".join(filter(str.isdigit, value))
+            if len(value) == 11:
+                self.CPF = value
+            else:
+                self.CNPJ = value
         cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar o Ambiente Nacional'])
         tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
         CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['CNPJ'])
         CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF'])
         chNFe: TChNFe = Element(TChNFe, documentation=['Chave de Acesso da NF-e vinculada ao evento'])
-        dhEvento: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data de emissão no formato UTC.  AAAA-MM-DDThh:mm:ssTZD'])
+        dhEvento: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data de emissão no formato UTC.  AAAA-MM-DDThh:mm:ssTZD'])
         tpEvento: str = Element(str, documentation=['Tipo do Evento'])
         nSeqEvento: str = Element(str, documentation=['Seqüencial do evento para o mesmo tipo de evento.  Para maioria dos eventos será 1, nos casos em que possa existir mais de um evento, como é o caso da carta de correção, o autor do evento deve numerar de forma seqüencial.'])
         verEvento: str = Element(str, documentation=['Versão do Tipo do Evento'])
@@ -40,7 +53,7 @@ class TEvento(Element):
             """Schema XML de validação do evento do Confirmação de Internalização da Mercadoria na SUFRAMA 990910"""
             descEvento: str = Element(str, documentation=['Descrição do Evento - “Confirmação de Internalização da Mercadoria na SUFRAMA”'])
             PINe: str = Element(str, documentation=['Número do PIN-e -  Protocolo de Internalização de Mercadoria Nacional eletronico'])
-            dVistoria: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data de ocorrência da vistoria, formato UTC (AAAA-MM-DDThh:mm:ssTZD, onde TZD = +hh:mm ou -hh:mm)'])
+            dVistoria: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data de ocorrência da vistoria, formato UTC (AAAA-MM-DDThh:mm:ssTZD, onde TZD = +hh:mm ou -hh:mm)'])
             locVistoria: str = Element(str, documentation=['Localidade onde ocorreu a vistoria'])
             postoVistoria: str = Element(str, documentation=['Nome Posto do ponto onde ocorreu a vistoria'])
             xHistorico: str = Element(str, documentation=['Histórico da ocorrência, se existir.'])

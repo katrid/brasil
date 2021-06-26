@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .tiposGeralCTe_v300 import *
@@ -28,7 +30,7 @@ class ferrov(ComplexType):
         """Detalhamento de informações para o tráfego mútuo"""
         respFat: str = Element(str, documentation=['Responsável pelo Faturamento', 'Preencher com: \n\t\t\t\t\t\t\t\t\t1-Ferrovia de origem; \n\t\t\t\t\t\t\t\t\t2-Ferrovia de destino'])
         ferrEmi: str = Element(str, documentation=['Ferrovia Emitente do CTe', 'Preencher com: \n\t\t\t\t\t\t\t\t\t1-Ferrovia de origem; \n\t\t\t\t\t\t\t\t\t2-Ferrovia de destino'])
-        vFrete: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do Frete do Tráfego Mútuo'])
+        vFrete: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do Frete do Tráfego Mútuo'])
         chCTeFerroOrigem: TChNFe = Element(TChNFe, documentation=['Chave de acesso do CT-e emitido pelo ferrovia de origem'])
 
         class ferroEnv(ComplexType):

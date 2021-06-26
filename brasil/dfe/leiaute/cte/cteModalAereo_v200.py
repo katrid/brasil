@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .tiposGeralCTe_v200 import *
@@ -9,7 +11,7 @@ class aereo(ComplexType):
     """Informações do modal Aéreo"""
     nMinu: str = Element(str, documentation=['Número da Minuta', 'Documento que precede o CT-e, assinado pelo expedidor, espécie de pedido de serviço'])
     nOCA: str = Element(str, documentation=['Número Operacional do Conhecimento Aéreo', 'Os três primeiros dígitos representam um código que os operadores de transporte aéreo associados à IATA possuem. Em seguida um número de série de sete dígitos determinados pelo operador de tansporte aéreo. Para finalizar, um dígito verificador'])
-    dPrevAereo: TData = Element(TData, documentation=['Data prevista da entrega', 'Formato AAAA-MM-DD'])
+    dPrevAereo: TData = Element(TData, base_type=date, documentation=['Data prevista da entrega', 'Formato AAAA-MM-DD'])
     xLAgEmi: str = Element(str, documentation=['Identificação do Emissor', 'Preencher com o nome da filial, da franquia ou da representante legal emissora do CT-e da empresa de transporte aéreo. '])
     IdT: str = Element(str, documentation=['Identificação Interna do Tomador', 'Preencher com o código identificador entre o cliente tomador e a empresa aérea. Exemplo: CNPJ, conta corrente, etc.'])
 
@@ -17,7 +19,7 @@ class aereo(ComplexType):
         """Informações de tarifa"""
         CL: str = Element(str, documentation=['Classe', 'Preencher com:\n\t\t\t\t\t\t\t\t\tM - Tarifa Mínima;\n\t\t\t\t\t\t\t\t\tG - Tarifa Geral;\n\t\t\t\t\t\t\t\t\tE - Tarifa Específica'])
         cTar: str = Element(str, documentation=['Código da Tarifa', 'Deverão ser incluídos os códigos de três dígitos, correspondentes à tarifa.'])
-        vTar: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da Tarifa', 'Valor da tarifa por kg quando for o caso.'])
+        vTar: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da Tarifa', 'Valor da tarifa por kg quando for o caso.'])
     tarifa: tarifa = Element(tarifa, documentation=['Informações de tarifa'])
 
     class natCarga(ComplexType):

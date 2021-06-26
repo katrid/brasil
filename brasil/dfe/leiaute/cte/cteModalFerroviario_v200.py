@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .tiposGeralCTe_v200 import *
@@ -31,7 +33,7 @@ class ferrov(ComplexType):
     trafMut: trafMut = Element(trafMut, documentation=['Detalhamento de informações para o tráfego mútuo'])
     fluxo: str = Element(str, documentation=['Fluxo Ferroviário', 'Trata-se de um número identificador do contrato firmado com o cliente '])
     idTrem: str = Element(str, documentation=['Identificação do trem.'])
-    vFrete: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do Frete'])
+    vFrete: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do Frete'])
 
     class ferroEnv(ComplexType):
         """Informações das Ferrovias Envolvidas"""
@@ -55,10 +57,10 @@ class ferrov(ComplexType):
             return super().add(nVag=nVag, cap=cap, tpVag=tpVag, pesoR=pesoR, pesoBC=pesoBC)
 
         nVag: str = Element(str, documentation=['Número de Identificação do vagão'])
-        cap: TDec_0303 = Element(TDec_0303, tipo="N", tam=(3, 3), documentation=['Capacidade em Toneladas'])
+        cap: TDec_0303 = Element(TDec_0303, tipo="N", tam=(3, 3), base_type=Decimal, documentation=['Capacidade em Toneladas'])
         tpVag: str = Element(str, documentation=['Tipo de Vagão'])
-        pesoR: TDec_0303 = Element(TDec_0303, tipo="N", tam=(3, 3), documentation=['Peso Real em Toneladas'])
-        pesoBC: TDec_0303 = Element(TDec_0303, tipo="N", tam=(3, 3), documentation=['Peso Base de Cálculo de Frete em Toneladas'])
+        pesoR: TDec_0303 = Element(TDec_0303, tipo="N", tam=(3, 3), base_type=Decimal, documentation=['Peso Real em Toneladas'])
+        pesoBC: TDec_0303 = Element(TDec_0303, tipo="N", tam=(3, 3), base_type=Decimal, documentation=['Peso Base de Cálculo de Frete em Toneladas'])
     detVag: List[detVag] = Element(detVag, max_occurs=-1, documentation=['informações de detalhes dos Vagões'])
 
 ferrov: ferrov = Element(ferrov, documentation=['Informações do modal Ferroviário'])

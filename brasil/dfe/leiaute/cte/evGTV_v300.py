@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .eventoCTeTiposBasico_v300 import *
@@ -20,9 +22,9 @@ class evGTV(ComplexType):
         id: str = Element(str, documentation=['Identificador para diferenciar GTV de mesmo número (Usar número do AIDF ou  identificador interno da empresa),'])
         serie: str = Element(str, documentation=['Série'])
         subserie: str = Element(str, documentation=['Subsérie'])
-        dEmi: TData = Element(TData, documentation=['Data de Emissão', 'Formato AAAA-MM-DD'])
+        dEmi: TData = Element(TData, base_type=date, documentation=['Data de Emissão', 'Formato AAAA-MM-DD'])
         nDV: str = Element(str, documentation=['Número Dígito Verificador '])
-        qCarga: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4), documentation=['Quantidade de volumes/malotes'])
+        qCarga: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Quantidade de volumes/malotes'])
 
         class infEspecie(ComplexType):
             """Informações das Espécies transportadas"""
@@ -32,12 +34,23 @@ class evGTV(ComplexType):
                 return super().add(tpEspecie=tpEspecie, vEspecie=vEspecie)
 
             tpEspecie: str = Element(str, documentation=['Tipo da Espécie', '1 - Numerário\n2 - Cheque\n3 - Moeda\n4 - Outros'])
-            vEspecie: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Transportada em Espécie indicada'])
+            vEspecie: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Transportada em Espécie indicada'])
         infEspecie: List[infEspecie] = Element(infEspecie, max_occurs=-1, documentation=['Informações das Espécies transportadas'])
 
         class rem(ComplexType):
             """Informações do Remetente da GTV"""
             _choice = [['CNPJ', 'CPF']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
             CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.\n\t\t\t\t\t\t\t\t\t\t\t\tInformar os zeros não significativos.'])
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
             IE: str = Element(str, documentation=['Inscrição Estadual', 'Informar a IE do remetente ou ISENTO se remetente é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o remetente não seja contribuinte do ICMS não informar o conteúdo.'])
@@ -48,6 +61,17 @@ class evGTV(ComplexType):
         class dest(ComplexType):
             """Informações do Destinatário da GTV"""
             _choice = [['CNPJ', 'CPF']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
             CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.\n\t\t\t\t\t\t\tInformar os zeros não significativos.'])
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
             IE: str = Element(str, documentation=['Inscrição Estadual', 'Informar a IE do destinatário ou ISENTO se remetente é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o remetente não seja contribuinte do ICMS não informar o conteúdo.'])

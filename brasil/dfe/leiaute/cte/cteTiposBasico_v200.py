@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .xmldsig_core_schema_v101 import *
@@ -43,18 +45,18 @@ class TImp(Element):
     class ICMS00(ComplexType):
         """Prestação sujeito à tributação normal do ICMS"""
         CST: str = Element(str, documentation=['classificação Tributária do Serviço', '00 - tributação normal ICMS'])
-        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS'])
-        pICMS: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS'])
-        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS'])
+        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS'])
+        pICMS: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS'])
+        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS'])
     ICMS00: ICMS00 = Element(ICMS00, documentation=['Prestação sujeito à tributação normal do ICMS'])
 
     class ICMS20(ComplexType):
         """Prestação sujeito à tributação com redução de BC do ICMS"""
         CST: str = Element(str, documentation=['Classificação Tributária do serviço', '20 - tributação com BC reduzida do ICMS'])
-        pRedBC: TDec_0302Opc = Element(TDec_0302Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC'])
-        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS'])
-        pICMS: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS'])
-        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS'])
+        pRedBC: TDec_0302Opc = Element(TDec_0302Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC'])
+        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS'])
+        pICMS: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS'])
+        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS'])
     ICMS20: ICMS20 = Element(ICMS20, documentation=['Prestação sujeito à tributação com redução de BC do ICMS'])
 
     class ICMS45(ComplexType):
@@ -65,29 +67,29 @@ class TImp(Element):
     class ICMS60(ComplexType):
         """Tributação pelo ICMS60 - ICMS cobrado por substituição tributária.Responsabilidade do recolhimento do ICMS atribuído ao tomador ou 3º por ST"""
         CST: str = Element(str, documentation=['Classificação Tributária do Serviço', '60 - ICMS cobrado anteriormente por substituição tributária '])
-        vBCSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS ST retido'])
-        vICMSSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS ST retido'])
-        pICMSSTRet: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS'])
-        vCred: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do Crédito outorgado/Presumido'])
+        vBCSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS ST retido'])
+        vICMSSTRet: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS ST retido'])
+        pICMSSTRet: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS'])
+        vCred: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do Crédito outorgado/Presumido'])
     ICMS60: ICMS60 = Element(ICMS60, documentation=['Tributação pelo ICMS60 - ICMS cobrado por substituição tributária.Responsabilidade do recolhimento do ICMS atribuído ao tomador ou 3º por ST'])
 
     class ICMS90(ComplexType):
         """ICMS Outros"""
         CST: str = Element(str, documentation=['Classificação Tributária do Serviço', ' 90 - Outros'])
-        pRedBC: TDec_0302Opc = Element(TDec_0302Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC'])
-        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS'])
-        pICMS: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS'])
-        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS'])
-        vCred: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do Crédito Outorgado/Presumido'])
+        pRedBC: TDec_0302Opc = Element(TDec_0302Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC'])
+        vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS'])
+        pICMS: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS'])
+        vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS'])
+        vCred: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do Crédito Outorgado/Presumido'])
     ICMS90: ICMS90 = Element(ICMS90, documentation=['ICMS Outros'])
 
     class ICMSOutraUF(ComplexType):
         """ICMS devido à UF de origem da prestação, quando  diferente da UF do emitente"""
         CST: str = Element(str, documentation=['Classificação Tributária do Serviço', '90 - ICMS Outra UF'])
-        pRedBCOutraUF: TDec_0302Opc = Element(TDec_0302Opc, tipo="N", tam=(3, 2), documentation=['Percentual de redução da BC'])
-        vBCOutraUF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS'])
-        pICMSOutraUF: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), documentation=['Alíquota do ICMS'])
-        vICMSOutraUF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS devido outra UF'])
+        pRedBCOutraUF: TDec_0302Opc = Element(TDec_0302Opc, tipo="N", tam=(3, 2), base_type=Decimal, optional=True, documentation=['Percentual de redução da BC'])
+        vBCOutraUF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS'])
+        pICMSOutraUF: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota do ICMS'])
+        vICMSOutraUF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS devido outra UF'])
     ICMSOutraUF: ICMSOutraUF = Element(ICMSOutraUF, documentation=['ICMS devido à UF de origem da prestação, quando  diferente da UF do emitente'])
 
     class ICMSSN(ComplexType):
@@ -118,7 +120,7 @@ class TUnidCarga(Element):
 
         nLacre: str = Element(str, documentation=['Número do lacre'])
     lacUnidCarga: List[lacUnidCarga] = Element(lacUnidCarga, max_occurs=-1, documentation=['Lacres das Unidades de Carga'])
-    qtdRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2), documentation=['Quantidade rateada (Peso,Volume)'])
+    qtdRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Quantidade rateada (Peso,Volume)'])
 
 
 
@@ -137,7 +139,7 @@ class TUnidadeTransp(Element):
         nLacre: str = Element(str, documentation=['Número do lacre'])
     lacUnidTransp: List[lacUnidTransp] = Element(lacUnidTransp, max_occurs=-1, documentation=['Lacres das Unidades de Transporte'])
     infUnidCarga: List[TUnidCarga] = Element(TUnidCarga, max_occurs=-1, documentation=['Informações das Unidades de Carga (Containeres/ULD/Outros)', 'Dispositivo de carga utilizada (Unit Load Device - ULD) significa todo tipo de contêiner de carga, vagão, contêiner de avião, palete de aeronave com rede ou palete de aeronave com rede sobre um iglu. '])
-    qtdRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2), documentation=['Quantidade rateada (Peso,Volume)'])
+    qtdRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Quantidade rateada (Peso,Volume)'])
 
 
 
@@ -246,6 +248,17 @@ class TCTe(Element):
             class toma4(ComplexType):
                 """Indicador do \"papel\" do tomador do serviço no CT-e"""
                 _choice = [['CNPJ', 'CPF']]
+                @property
+                def CNPJCPF(self):
+                    return self.CPF or self.CNPJ
+
+                @CNPJCPF.setter
+                def CNPJCPF(self, value):
+                    value = "".join(filter(str.isdigit, value))
+                    if len(value) == 11:
+                        self.CPF = value
+                    else:
+                        self.CNPJ = value
                 toma: str = Element(str, documentation=['Tomador do Serviço', 'Preencher com: \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t4 - Outros\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tObs: Informar os dados cadastrais do tomador do serviço'])
                 CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\nInformar os zeros não significativos.'])
                 CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
@@ -296,14 +309,14 @@ Esta opção é proibida para o modal aéreo."""
                 class comData(ComplexType):
                     """Entrega com data definida"""
                     tpPer: str = Element(str, documentation=['Tipo de data/período programado para entrega', 'Preencher com:\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t1-Na data;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t2-Até a data;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t3-A partir da data'])
-                    dProg: TData = Element(TData, documentation=['Data programada ', 'Formato AAAA-MM-DD'])
+                    dProg: TData = Element(TData, base_type=date, documentation=['Data programada ', 'Formato AAAA-MM-DD'])
                 comData: comData = Element(comData, documentation=['Entrega com data definida'])
 
                 class noPeriodo(ComplexType):
                     """Entrega no período definido"""
                     tpPer: str = Element(str, documentation=['Tipo período', '4-no período'])
-                    dIni: TData = Element(TData, documentation=['Data inicial ', 'Formato AAAA-MM-DD'])
-                    dFim: TData = Element(TData, documentation=['Data final ', 'Formato AAAA-MM-DD'])
+                    dIni: TData = Element(TData, base_type=date, documentation=['Data inicial ', 'Formato AAAA-MM-DD'])
+                    dFim: TData = Element(TData, base_type=date, documentation=['Data final ', 'Formato AAAA-MM-DD'])
                 noPeriodo: noPeriodo = Element(noPeriodo, documentation=['Entrega no período definido'])
 
                 class semHora(ComplexType):
@@ -366,6 +379,17 @@ Informar o nome do campo no atributo xCampo e o conteúdo do campo no XTexto"""
             """Informações do Remetente das mercadorias transportadas pelo CT-e
 Poderá não ser informado para os CT-e de redespacho intermediário. Nos demais casos deverá sempre ser informado."""
             _choice = [['CNPJ', 'CPF']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
             CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.\n\t\t\t\t\t\t\t\t\t\t\t\tInformar os zeros não significativos.'])
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
             IE: TIeDest = Element(TIeDest, documentation=['Inscrição Estadual', 'Informar a IE do remetente ou ISENTO se remetente é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o remetente não seja contribuinte do ICMS não informar o conteúdo.'])
@@ -379,6 +403,17 @@ Poderá não ser informado para os CT-e de redespacho intermediário. Nos demais
         class exped(ComplexType):
             """Informações do Expedidor da Carga"""
             _choice = [['CNPJ', 'CPF']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
             CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.\n\t\t\t\t\t\t\t\t\t\t\t\tInformar os zeros não significativos.'])
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
             IE: TIeDest = Element(TIeDest, documentation=['Inscrição Estadual', 'Informar a IE do expedidor ou ISENTO se expedidor é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o expedidor não seja contribuinte do ICMS não informar o conteúdo.'])
@@ -391,6 +426,17 @@ Poderá não ser informado para os CT-e de redespacho intermediário. Nos demais
         class receb(ComplexType):
             """Informações do Recebedor da Carga"""
             _choice = [['CNPJ', 'CPF']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
             CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.\n\t\t\t\t\t\t\t\t\t\t\t\tInformar os zeros não significativos.'])
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
             IE: TIeDest = Element(TIeDest, documentation=['Inscrição Estadual', 'Informar a IE do recebedor ou ISENTO se recebedor é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o recebedor não seja contribuinte do ICMS não informar o conteúdo.'])
@@ -404,6 +450,17 @@ Poderá não ser informado para os CT-e de redespacho intermediário. Nos demais
             """Informações do Destinatário do CT-e
 Só pode ser omitido em caso de redespacho intermediário"""
             _choice = [['CNPJ', 'CPF']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
             CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.\n\t\t\t\t\t\t\t\t\t\t\t\tInformar os zeros não significativos.'])
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
             IE: str = Element(str, documentation=['Inscrição Estadual', 'Informar a IE do destinatário ou ISENTO se destinatário é contribuinte do ICMS isento de inscrição no cadastro de contribuintes do ICMS. Caso o destinatário não seja contribuinte do ICMS não informar o conteúdo.'])
@@ -416,8 +473,8 @@ Só pode ser omitido em caso de redespacho intermediário"""
 
         class vPrest(ComplexType):
             """Valores da Prestação de Serviço"""
-            vTPrest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total da Prestação do Serviço', 'Pode conter zeros quando o CT-e for de complemento de ICMS'])
-            vRec: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor a Receber'])
+            vTPrest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total da Prestação do Serviço', 'Pode conter zeros quando o CT-e for de complemento de ICMS'])
+            vRec: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor a Receber'])
 
             class Comp(ComplexType):
                 """Componentes do Valor da Prestação"""
@@ -427,27 +484,27 @@ Só pode ser omitido em caso de redespacho intermediário"""
                     return super().add(xNome=xNome, vComp=vComp)
 
                 xNome: str = Element(str, documentation=['Nome do componente', 'Exxemplos: FRETE PESO, FRETE VALOR, SEC/CAT, ADEME, AGENDAMENTO, etc'])
-                vComp: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do componente'])
+                vComp: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do componente'])
             Comp: List[Comp] = Element(Comp, max_occurs=-1, documentation=['Componentes do Valor da Prestação'])
         vPrest: vPrest = Element(vPrest, documentation=['Valores da Prestação de Serviço'])
 
         class imp(ComplexType):
             """Informações relativas aos Impostos"""
             ICMS: TImp = Element(TImp, documentation=['Informações relativas ao ICMS', None])
-            vTotTrib: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total dos Tributos'])
+            vTotTrib: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total dos Tributos'])
             infAdFisco: str = Element(str, documentation=['Informações adicionais de interesse do Fisco', 'Norma referenciada, informações complementares, etc'])
 
             class ICMSUFFim(ComplexType):
                 """Informações do ICMS de partilha com a UF de término do serviço de transporte na operação interestadual
 Grupo a ser informado nas prestações interestaduais para consumidor final, não contribuinte do ICMS"""
-                vBCUFFim: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da BC do ICMS na UF de término da prestação do serviço de transporte'])
-                pFCPUFFim: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), documentation=['Percentual do ICMS relativo ao Fundo de Combate à pobreza (FCP) na UF de término da prestação do serviço de transporte', 'Alíquota adotada nas operações internas na UF do destinatário'])
-                pICMSUFFim: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), documentation=['Alíquota interna da UF de término da prestação do serviço de transporte', 'Alíquota adotada nas operações internas na UF do destinatário'])
-                pICMSInter: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), documentation=['Alíquota interestadual das UF envolvidas', 'Alíquota interestadual das UF envolvidas\n'])
-                pICMSInterPart: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), documentation=['Percentual provisório de partilha entre os estados', 'Percentual de partilha para a UF do destinatário:\n- 40% em 2016;\n- 60% em 2017;\n- 80% em 2018;\n- 100% a partir de 2019.'])
-                vFCPUFFim: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS relativo ao Fundo de Combate á Pobreza (FCP) da UF de término da prestação'])
-                vICMSUFFim: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS de partilha para a UF de término da prestação do serviço de transporte'])
-                vICMSUFIni: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do ICMS de partilha para a UF de início da prestação do serviço de transporte'])
+                vBCUFFim: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da BC do ICMS na UF de término da prestação do serviço de transporte'])
+                pFCPUFFim: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Percentual do ICMS relativo ao Fundo de Combate à pobreza (FCP) na UF de término da prestação do serviço de transporte', 'Alíquota adotada nas operações internas na UF do destinatário'])
+                pICMSUFFim: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota interna da UF de término da prestação do serviço de transporte', 'Alíquota adotada nas operações internas na UF do destinatário'])
+                pICMSInter: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Alíquota interestadual das UF envolvidas', 'Alíquota interestadual das UF envolvidas\n'])
+                pICMSInterPart: TDec_0302 = Element(TDec_0302, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Percentual provisório de partilha entre os estados', 'Percentual de partilha para a UF do destinatário:\n- 40% em 2016;\n- 60% em 2017;\n- 80% em 2018;\n- 100% a partir de 2019.'])
+                vFCPUFFim: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS relativo ao Fundo de Combate á Pobreza (FCP) da UF de término da prestação'])
+                vICMSUFFim: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS de partilha para a UF de término da prestação do serviço de transporte'])
+                vICMSUFIni: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do ICMS de partilha para a UF de início da prestação do serviço de transporte'])
             ICMSUFFim: ICMSUFFim = Element(ICMSUFFim, documentation=['Informações do ICMS de partilha com a UF de término do serviço de transporte na operação interestadual', 'Grupo a ser informado nas prestações interestaduais para consumidor final, não contribuinte do ICMS'])
         imp: imp = Element(imp, documentation=['Informações relativas aos Impostos'])
 
@@ -456,7 +513,7 @@ Grupo a ser informado nas prestações interestaduais para consumidor final, nã
 
             class infCarga(ComplexType):
                 """Informações da Carga do CT-e"""
-                vCarga: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor total da carga', 'Dever ser informado para todos os modais, com exceção para o Dutoviário.'])
+                vCarga: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor total da carga', 'Dever ser informado para todos os modais, com exceção para o Dutoviário.'])
                 proPred: str = Element(str, documentation=['Produto predominante', 'Informar a descrição do produto predominante'])
                 xOutCat: str = Element(str, documentation=['Outras características da carga', '"FRIA", "GRANEL", "REFRIGERADA", "Medidas: 12X12X12"'])
 
@@ -474,7 +531,7 @@ Para o Aéreo é obrigatório o preenchimento desse campo da seguinte forma.
 
                     cUnid: str = Element(str, documentation=['Código da Unidade de Medida ', 'Preencher com:\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t00-M3;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t01-KG;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t02-TON;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t03-UNIDADE;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t04-LITROS;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t05-MMBTU'])
                     tpMed: str = Element(str, documentation=['Tipo da Medida', 'Exemplos:\nPESO BRUTO, PESO DECLARADO, PESO CUBADO, PESO AFORADO, PESO AFERIDO, PESO BASE DE CÁLCULO, LITRAGEM, CAIXAS e etc'])
-                    qCarga: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4), documentation=['Quantidade'])
+                    qCarga: TDec_1104 = Element(TDec_1104, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Quantidade'])
                 infQ: List[infQ] = Element(infQ, max_occurs=-1, documentation=['Informações de quantidades da Carga do CT-e', 'Para o Aéreo é obrigatório o preenchimento desse campo da seguinte forma.\n1 - Peso Bruto, sempre em quilogramas (obrigatório);\n2 - Peso Cubado; sempre em quilogramas;\n3 - Quantidade de volumes, sempre em unidades (obrigatório);\n4 - Cubagem, sempre em metros cúbicos (obrigatório apenas quando for impossível preencher as dimensões da(s) embalagem(ens) na tag xDime do leiaute do Aéreo).'])
             infCarga: infCarga = Element(infCarga, documentation=['Informações da Carga do CT-e'])
 
@@ -498,17 +555,17 @@ Este grupo deve ser informado quando o documento originário for NF"""
                     mod: TModNF = Element(TModNF, documentation=['Modelo da Nota Fiscal', 'Preencher com: \n01 - NF Modelo 01/1A e Avulsa; \n04 - NF de Produtor'])
                     serie: str = Element(str, documentation=['Série'])
                     nDoc: str = Element(str, documentation=['Número '])
-                    dEmi: TData = Element(TData, documentation=['Data de Emissão', 'Formato AAAA-MM-DD'])
-                    vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da Base de Cálculo do ICMS'])
-                    vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total do ICMS'])
-                    vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da Base de Cálculo do ICMS ST'])
-                    vST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total do ICMS ST'])
-                    vProd: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total dos Produtos'])
-                    vNF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total da NF'])
+                    dEmi: TData = Element(TData, base_type=date, documentation=['Data de Emissão', 'Formato AAAA-MM-DD'])
+                    vBC: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da Base de Cálculo do ICMS'])
+                    vICMS: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total do ICMS'])
+                    vBCST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da Base de Cálculo do ICMS ST'])
+                    vST: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total do ICMS ST'])
+                    vProd: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total dos Produtos'])
+                    vNF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total da NF'])
                     nCFOP: TCfop = Element(TCfop, documentation=['CFOP Predominante', 'CFOP da NF ou, na existência de mais de um, predominância pelo critério de valor econômico.'])
-                    nPeso: TDec_1203Opc = Element(TDec_1203Opc, tipo="N", tam=(12, 3), documentation=['Peso total em Kg'])
+                    nPeso: TDec_1203Opc = Element(TDec_1203Opc, tipo="N", tam=(12, 3), base_type=Decimal, optional=True, documentation=['Peso total em Kg'])
                     PIN: str = Element(str, documentation=['PIN SUFRAMA', 'PIN atribuído pela SUFRAMA para a operação.'])
-                    dPrev: TData = Element(TData, documentation=['Data prevista de entrega', 'Formato AAAA-MM-DD'])
+                    dPrev: TData = Element(TData, base_type=date, documentation=['Data prevista de entrega', 'Formato AAAA-MM-DD'])
                     infUnidTransp: List[TUnidadeTransp] = Element(TUnidadeTransp, max_occurs=-1, documentation=['Informações das Unidades de Transporte (Carreta/Reboque/Vagão)', 'Deve ser preenchido com as informações das unidades de transporte utilizadas.'])
                     infUnidCarga: List[TUnidCarga] = Element(TUnidCarga, max_occurs=-1, documentation=['Informações das Unidades de Carga (Containeres/ULD/Outros)', 'Dispositivo de carga utilizada (Unit Load Device - ULD) significa todo tipo de contêiner de carga, vagão, contêiner de avião, palete de aeronave com rede ou palete de aeronave com rede sobre um iglu. '])
                 infNF: List[infNF] = Element(infNF, max_occurs=-1, documentation=['Informações das NF', 'Este grupo deve ser informado quando o documento originário for NF '])
@@ -523,7 +580,7 @@ Este grupo deve ser informado quando o documento originário for NF"""
 
                     chave: TChNFe = Element(TChNFe, documentation=['Chave de acesso da NF-e'])
                     PIN: str = Element(str, documentation=['PIN SUFRAMA', 'PIN atribuído pela SUFRAMA para a operação.'])
-                    dPrev: TData = Element(TData, documentation=['Data prevista de entrega', 'Formato AAAA-MM-DD'])
+                    dPrev: TData = Element(TData, base_type=date, documentation=['Data prevista de entrega', 'Formato AAAA-MM-DD'])
                     infUnidTransp: List[TUnidadeTransp] = Element(TUnidadeTransp, max_occurs=-1, documentation=['Informações das Unidades de Transporte (Carreta/Reboque/Vagão)', 'Deve ser preenchido com as informações das unidades de transporte utilizadas.'])
                     infUnidCarga: List[TUnidCarga] = Element(TUnidCarga, max_occurs=-1, documentation=['Informações das Unidades de Carga (Containeres/ULD/Outros)', 'Dispositivo de carga utilizada (Unit Load Device - ULD) significa todo tipo de contêiner de carga, vagão, contêiner de avião, palete de aeronave com rede ou palete de aeronave com rede sobre um iglu. '])
                 infNFe: List[infNFe] = Element(infNFe, max_occurs=-1, documentation=['Informações das NF-e'])
@@ -539,9 +596,9 @@ Este grupo deve ser informado quando o documento originário for NF"""
                     tpDoc: str = Element(str, documentation=['Tipo de documento originário', 'Preencher com:\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t00 - Declaração;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t10 - Dutoviário;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t99 - Outros'])
                     descOutros: str = Element(str, documentation=['Descrição quando se tratar de 99-Outros'])
                     nDoc: str = Element(str, documentation=['Número '])
-                    dEmi: TData = Element(TData, documentation=['Data de Emissão', 'Formato AAAA-MM-DD'])
-                    vDocFisc: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor do documento'])
-                    dPrev: TData = Element(TData, documentation=['Data prevista de entrega', 'Formato AAAA-MM-DD'])
+                    dEmi: TData = Element(TData, base_type=date, documentation=['Data de Emissão', 'Formato AAAA-MM-DD'])
+                    vDocFisc: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor do documento'])
+                    dPrev: TData = Element(TData, base_type=date, documentation=['Data prevista de entrega', 'Formato AAAA-MM-DD'])
                     infUnidTransp: List[TUnidadeTransp] = Element(TUnidadeTransp, max_occurs=-1, documentation=['Informações das Unidades de Transporte (Carreta/Reboque/Vagão)', 'Deve ser preenchido com as informações das unidades de transporte utilizadas.'])
                     infUnidCarga: List[TUnidCarga] = Element(TUnidCarga, max_occurs=-1, documentation=['Informações das Unidades de Carga (Containeres/ULD/Outros)', 'Dispositivo de carga utilizada (Unit Load Device - ULD) significa todo tipo de contêiner de carga, vagão, contêiner de avião, palete de aeronave com rede ou palete de aeronave com rede sobre um iglu. '])
                 infOutros: List[infOutros] = Element(infOutros, max_occurs=-1, documentation=['Informações dos demais documentos'])
@@ -554,6 +611,17 @@ Este grupo deve ser informado quando o documento originário for NF"""
                     """Emissor do documento anterior"""
                     _max_occurs = -1
                     _choice = [['CNPJ', 'CPF']]
+                    @property
+                    def CNPJCPF(self):
+                        return self.CPF or self.CNPJ
+
+                    @CNPJCPF.setter
+                    def CNPJCPF(self, value):
+                        value = "".join(filter(str.isdigit, value))
+                        if len(value) == 11:
+                            self.CPF = value
+                        else:
+                            self.CNPJ = value
 
                     def add(self, CNPJ=None, CPF=None, IE=None, UF=None, xNome=None, idDocAnt=None) -> TCTe.infCte.infCTeNorm.docAnt.emiDocAnt:
                         return super().add(CNPJ=CNPJ, CPF=CPF, IE=IE, UF=UF, xNome=xNome, idDocAnt=idDocAnt)
@@ -584,7 +652,7 @@ Este grupo deve ser informado quando o documento originário for NF"""
                             serie: str = Element(str, documentation=['Série do Documento Fiscal'])
                             subser: str = Element(str, documentation=['Série do Documento Fiscal'])
                             nDoc: str = Element(str, documentation=['Número do Documento Fiscal'])
-                            dEmi: TData = Element(TData, documentation=['Data de emissão (AAAA-MM-DD)'])
+                            dEmi: TData = Element(TData, base_type=date, documentation=['Data de emissão (AAAA-MM-DD)'])
                         idDocAntPap: List[idDocAntPap] = Element(idDocAntPap, max_occurs=-1, documentation=['Documentos de transporte anterior em papel'])
 
                         class idDocAntEle(ComplexType):
@@ -611,7 +679,7 @@ Este grupo deve ser informado quando o documento originário for NF"""
                 xSeg: str = Element(str, documentation=['Nome da Seguradora'])
                 nApol: str = Element(str, documentation=['Número da Apólice', 'Obrigatório pela lei 11.442/07 (RCTRC)'])
                 nAver: str = Element(str, documentation=['Número da Averbação', 'Não é obrigatório, pois muitas averbações ocorrem aapós a emissão do CT, mensalmente, por exemplo.'])
-                vCarga: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor da Carga para efeito de averbação', 'Normalmente igual ao valor declarado da mercadoria, diferente por exemplo, quando a mercadoria transportada é isenta de tributos nacionais para exportação, onde é preciso averbar um valor maior, pois no caso de indenização, o valor a ser pago será maior'])
+                vCarga: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor da Carga para efeito de averbação', 'Normalmente igual ao valor declarado da mercadoria, diferente por exemplo, quando a mercadoria transportada é isenta de tributos nacionais para exportação, onde é preciso averbar um valor maior, pois no caso de indenização, o valor a ser pago será maior'])
             seg: List[seg] = Element(seg, max_occurs=-1, documentation=['Informações de Seguro da Carga'])
 
             class infModal(ComplexType):
@@ -649,8 +717,8 @@ Não deve ser preenchido para modal dutoviário.
                 cCor: str = Element(str, documentation=['Cor do veículo', 'Código de cada montadora'])
                 xCor: str = Element(str, documentation=['Descrição da cor'])
                 cMod: str = Element(str, documentation=['Código Marca Modelo', 'Utilizar tabela RENAVAM'])
-                vUnit: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Unitário do Veículo'])
-                vFrete: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Frete Unitário'])
+                vUnit: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Unitário do Veículo'])
+                vFrete: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Frete Unitário'])
             veicNovos: List[veicNovos] = Element(veicNovos, max_occurs=-1, documentation=['informações dos veículos transportados'])
 
             class cobr(ComplexType):
@@ -659,9 +727,9 @@ Não deve ser preenchido para modal dutoviário.
                 class fat(ComplexType):
                     """Dados da fatura"""
                     nFat: str = Element(str, documentation=['Número da fatura'])
-                    vOrig: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor original da fatura'])
-                    vDesc: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor do desconto da fatura'])
-                    vLiq: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor líquido da fatura'])
+                    vOrig: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor original da fatura'])
+                    vDesc: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor do desconto da fatura'])
+                    vLiq: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor líquido da fatura'])
                 fat: fat = Element(fat, documentation=['Dados da fatura'])
 
                 class dup(ComplexType):
@@ -672,8 +740,8 @@ Não deve ser preenchido para modal dutoviário.
                         return super().add(nDup=nDup, dVenc=dVenc, vDup=vDup)
 
                     nDup: str = Element(str, documentation=['Número da duplicata'])
-                    dVenc: TData = Element(TData, documentation=['Data de vencimento da duplicata (AAAA-MM-DD)'])
-                    vDup: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), documentation=['Valor da duplicata'])
+                    dVenc: TData = Element(TData, base_type=date, documentation=['Data de vencimento da duplicata (AAAA-MM-DD)'])
+                    vDup: TDec_1302Opc = Element(TDec_1302Opc, tipo="N", tam=(13, 2), base_type=Decimal, optional=True, documentation=['Valor da duplicata'])
                 dup: List[dup] = Element(dup, max_occurs=-1, documentation=['Dados das duplicatas'])
             cobr: cobr = Element(cobr, documentation=['Dados da cobrança do CT-e'])
 
@@ -690,14 +758,25 @@ Não deve ser preenchido para modal dutoviário.
                     class refNF(ComplexType):
                         """Informação da NF ou CT emitido pelo Tomador"""
                         _choice = [['CNPJ', 'CPF']]
+                        @property
+                        def CNPJCPF(self):
+                            return self.CPF or self.CNPJ
+
+                        @CNPJCPF.setter
+                        def CNPJCPF(self, value):
+                            value = "".join(filter(str.isdigit, value))
+                            if len(value) == 11:
+                                self.CPF = value
+                            else:
+                                self.CNPJ = value
                         CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['CNPJ do Emitente', 'Informar o CNPJ do emitente do Documento Fiscal'])
                         CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar o CPF do emitente do documento fiscal'])
                         mod: TModDoc = Element(TModDoc, documentation=['Modelo do Documento Fiscal'])
                         serie: TSerie = Element(TSerie, documentation=['Serie do documento fiscal'])
                         subserie: TSerie = Element(TSerie, documentation=['Subserie do documento fiscal'])
                         nro: str = Element(str, documentation=['Número do documento fiscal'])
-                        valor: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor do documento fiscal.'])
-                        dEmi: TData = Element(TData, documentation=['Data de emissão do documento fiscal.'])
+                        valor: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor do documento fiscal.'])
+                        dEmi: TData = Element(TData, base_type=date, documentation=['Data de emissão do documento fiscal.'])
                     refNF: refNF = Element(refNF, documentation=['Informação da NF ou CT emitido pelo Tomador'])
                     refCte: TChNFe = Element(TChNFe, documentation=['Chave de acesso do CT-e emitido pelo Tomador'])
                 tomaICMS: tomaICMS = Element(tomaICMS, documentation=['Tomador é contribuinte do ICMS'])
@@ -717,7 +796,7 @@ Não deve ser preenchido para modal dutoviário.
         class infCteAnu(ComplexType):
             """Detalhamento do CT-e do tipo Anulação"""
             chCte: str = Element(str, documentation=['Chave de acesso do CT-e original a ser anulado e substituído'])
-            dEmi: TData = Element(TData, documentation=['Data de emissão da declaração do tomador não contribuinte do ICMS'])
+            dEmi: TData = Element(TData, base_type=date, documentation=['Data de emissão da declaração do tomador não contribuinte do ICMS'])
         infCteAnu: infCteAnu = Element(infCteAnu, documentation=['Detalhamento do CT-e do tipo Anulação'])
 
         class autXML(ComplexType):
@@ -725,6 +804,17 @@ Não deve ser preenchido para modal dutoviário.
 Informar CNPJ ou CPF. Preencher os zeros não significativos."""
             _max_occurs = 10
             _choice = [['CNPJ', 'CPF']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
 
             def add(self, CNPJ=None, CPF=None) -> TCTe.infCte.autXML:
                 return super().add(CNPJ=CNPJ, CPF=CPF)
@@ -819,6 +909,17 @@ class TLocal(Element):
 class TEndReEnt(Element):
     """Tipo Dados do Local de Retirada ou Entrega"""
     _choice = [['CNPJ', 'CPF']]
+    @property
+    def CNPJCPF(self):
+        return self.CPF or self.CNPJ
+
+    @CNPJCPF.setter
+    def CNPJCPF(self, value):
+        value = "".join(filter(str.isdigit, value))
+        if len(value) == 11:
+            self.CPF = value
+        else:
+            self.CNPJ = value
     CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['Número do CNPJ'])
     CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF'])
     xNome: str = Element(str, documentation=['Razão Social ou Nome'])

@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .xmldsig_core_schema_v101 import *
@@ -22,7 +24,7 @@ class TEvento(Element):
         tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
         CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['CNPJ do emissor do evento'])
         chCTe: TChNFe = Element(TChNFe, documentation=['Chave de Acesso do CT-e vinculado ao evento'])
-        dhEvento: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e Hora do Evento, formato UTC (AAAA-MM-DDThh:mm:ssTZD)'])
+        dhEvento: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e Hora do Evento, formato UTC (AAAA-MM-DDThh:mm:ssTZD)'])
         tpEvento: str = Element(str, documentation=['Tipo do Evento'])
         nSeqEvento: str = Element(str, documentation=['Seqüencial do evento para o mesmo tipo de evento.  Para maioria dos eventos será 1, nos casos em que possa existir mais de um evento o autor do evento deve numerar de forma seqüencial.'])
 
@@ -50,7 +52,7 @@ class TRetEvento(Element):
         tpEvento: str = Element(str, documentation=['Tipo do Evento vinculado'])
         xEvento: str = Element(str, documentation=['Descrição do Evento'])
         nSeqEvento: str = Element(str, documentation=['Seqüencial do evento'])
-        dhRegEvento: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e Hora de do recebimento do evento ou do registro do evento formato AAAA-MM-DDThh:mm:ssTZD'])
+        dhRegEvento: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e Hora de do recebimento do evento ou do registro do evento formato AAAA-MM-DDThh:mm:ssTZD'])
         nProt: TProt = Element(TProt, documentation=['Número do protocolo de registro do evento'])
         Id: str = Attribute(None)
     infEvento: infEvento = Element(infEvento)

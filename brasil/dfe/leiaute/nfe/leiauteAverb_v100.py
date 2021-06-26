@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .xmldsig_core_schema_v101 import *
@@ -22,7 +24,7 @@ class TEvento(Element):
         tpAmb: TAmb = Element(TAmb, documentation=['\n                  Identificação do Ambiente:\n                  1 - Produção\n                  2 - Homologação\n                '])
         CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['CNPJ do  autor do evento'])
         chNFe: TChNFe = Element(TChNFe, documentation=['Chave de Acesso da NF-e vinculada ao evento'])
-        dhEvento: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data de emissão no formato UTC.  AAAA-MM-DDThh:mm:ssTZD'])
+        dhEvento: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data de emissão no formato UTC.  AAAA-MM-DDThh:mm:ssTZD'])
         tpEvento: str = Element(str, documentation=['Tipo do Evento'])
         nSeqEvento: str = Element(str, documentation=['\n                  Seqüencial do evento para o mesmo tipo de evento. Para maioria dos eventos será 1, nos casos em que possa existir mais de um evento, como é o caso dos eventos de averbação, o autor do evento deve numerar de forma seqüencial\n                '])
         verEvento: str = Element(str, documentation=['Versão do Tipo do Evento'])
@@ -41,12 +43,12 @@ class TEvento(Element):
                 def add(self, dhEmbarque=None, dhAverbacao=None, nDue=None, nItem=None, nItemDue=None, qItem=None, motAlteracao=None) -> TEvento.infEvento.detEvento.itensAverbados:
                     return super().add(dhEmbarque=dhEmbarque, dhAverbacao=dhAverbacao, nDue=nDue, nItem=nItem, nItemDue=nItemDue, qItem=qItem, motAlteracao=motAlteracao)
 
-                dhEmbarque: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data do Embarque no formato AAAA-MM-DDThh:mm:ssTZD'])
-                dhAverbacao: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data da averbação no formato AAAA-MM-DDThh:mm:ssTZD'])
+                dhEmbarque: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data do Embarque no formato AAAA-MM-DDThh:mm:ssTZD'])
+                dhAverbacao: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data da averbação no formato AAAA-MM-DDThh:mm:ssTZD'])
                 nDue: str = Element(str, documentation=['Número Identificador da Declaração Única do Comércio Exterior associada'])
                 nItem: str = Element(str, documentation=['Número do item da NF-e averbada'])
                 nItemDue: str = Element(str, documentation=['Informação do número do item na Declaração de Exportação associada a averbação.'])
-                qItem: TDec_1104Neg = Element(TDec_1104Neg, tipo="N", tam=(11, 4), documentation=['Quantidade averbada do item na unidade tributária (campo uTrib)'])
+                qItem: TDec_1104Neg = Element(TDec_1104Neg, tipo="N", tam=(11, 4), base_type=Decimal, documentation=['Quantidade averbada do item na unidade tributária (campo uTrib)'])
                 motAlteracao: str = Element(str, documentation=['\n                              Motivo da Alteração\n                              1 - Exportação Averbada;\n                              2 - Retificação da Quantidade Averbada;\n                              3 - Cancelamento da Exportação;\n                            '])
             itensAverbados: List[itensAverbados] = Element(itensAverbados, min_occurs=1, max_occurs=990, documentation=['Informações dos itens da NF-e do evento.'])
             versao: str = Attribute(None)

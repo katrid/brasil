@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .tiposBasico_v310 import *
@@ -101,7 +103,7 @@ class TRetEvento(Element):
         CNPJDest: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['CNPJ Destinatário'])
         CPFDest: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF Destiantário'])
         emailDest: str = Element(str, documentation=['email do destinatário'])
-        dhRegEvento: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e Hora de registro do evento formato UTC AAAA-MM-DDTHH:MM:SSTZD'])
+        dhRegEvento: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e Hora de registro do evento formato UTC AAAA-MM-DDTHH:MM:SSTZD'])
         nProt: TProt = Element(TProt, documentation=['Número do protocolo de registro do evento'])
         Id: str = Attribute(None)
     infEvento: infEvento = Element(infEvento)
@@ -122,12 +124,23 @@ class TEvento(Element):
 
     class infEvento(ComplexType):
         _choice = [['CNPJ', 'CPF']]
+        @property
+        def CNPJCPF(self):
+            return self.CPF or self.CNPJ
+
+        @CNPJCPF.setter
+        def CNPJCPF(self, value):
+            value = "".join(filter(str.isdigit, value))
+            if len(value) == 11:
+                self.CPF = value
+            else:
+                self.CNPJ = value
         cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar o Ambiente Nacional'])
         tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
         CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['CNPJ'])
         CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF'])
         chNFe: TChNFe = Element(TChNFe, documentation=['Chave de Acesso da NF-e vinculada ao evento'])
-        dhEvento: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e Hora do Evento, formato UTC (AAAA-MM-DDThh:mm:ssTZD, onde TZD = +hh:mm ou -hh:mm)'])
+        dhEvento: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e Hora do Evento, formato UTC (AAAA-MM-DDThh:mm:ssTZD, onde TZD = +hh:mm ou -hh:mm)'])
         tpEvento: str = Element(str, documentation=['Tipo do Evento'])
         nSeqEvento: str = Element(str, documentation=['Seqüencial do evento para o mesmo tipo de evento.  Para maioria dos eventos será 1, nos casos em que possa existir mais de um evento, como é o caso da carta de correção, o autor do evento deve numerar de forma seqüencial.'])
         verEvento: str = Element(str, documentation=['Versão do Tipo do Evento'])
@@ -158,7 +171,7 @@ class TRetConsSitNFe(Element):
     cStat: TStat = Element(TStat, documentation=['Código do status da mensagem enviada.'])
     xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do serviço solicitado.'])
     cUF: TCodUfIBGE = Element(TCodUfIBGE, documentation=['código da UF de atendimento'])
-    dhRecbto: TDateTimeUTC = Element(TDateTimeUTC, documentation=['AAAA-MM-DDTHH:MM:SSTZD'])
+    dhRecbto: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['AAAA-MM-DDTHH:MM:SSTZD'])
     chNFe: TChNFe = Element(TChNFe, documentation=['Chaves de acesso da NF-e consultada'])
     protNFe: TProtNFe = Element(TProtNFe, documentation=['Protocolo de autorização de uso da NF-e'])
     retCancNFe: TRetCancNFe = Element(TRetCancNFe, documentation=['Protocolo de homologação de cancelamento de uso da NF-e'])

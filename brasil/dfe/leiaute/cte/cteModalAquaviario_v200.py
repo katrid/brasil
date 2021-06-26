@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .cteTiposBasico_v200 import *
@@ -7,8 +9,8 @@ from .cteTiposBasico_v200 import *
 
 class aquav(ComplexType):
     """Informações do modal Aquaviário"""
-    vPrest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor da Prestação Base de Cálculo do AFRMM'])
-    vAFRMM: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['AFRMM (Adicional de Frete para Renovação da Marinha Mercante)'])
+    vPrest: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor da Prestação Base de Cálculo do AFRMM'])
+    vAFRMM: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['AFRMM (Adicional de Frete para Renovação da Marinha Mercante)'])
     nBooking: str = Element(str, documentation=['Número do Booking (reserva)'])
     nCtrl: str = Element(str, documentation=['Número de Controle', 'campo para uso das empresas transportadoras'])
     xNavio: str = Element(str, documentation=['Identificação do Navio '])
@@ -63,7 +65,7 @@ class aquav(ComplexType):
 
                 serie: str = Element(str, documentation=['Série'])
                 nDoc: str = Element(str, documentation=['Número '])
-                unidRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2), documentation=['Unidade de medida rateada (Peso,Volume)'])
+                unidRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Unidade de medida rateada (Peso,Volume)'])
             infNF: List[infNF] = Element(infNF, max_occurs=-1, documentation=['Informações das NF'])
 
             class infNFe(ComplexType):
@@ -74,7 +76,7 @@ class aquav(ComplexType):
                     return super().add(chave=chave, unidRat=unidRat)
 
                 chave: TChNFe = Element(TChNFe, documentation=['Chave de acesso da NF-e'])
-                unidRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2), documentation=['Unidade de medida rateada (Peso,Volume)'])
+                unidRat: TDec_0302_0303 = Element(TDec_0302_0303, tipo="N", tam=(3, 2), base_type=Decimal, documentation=['Unidade de medida rateada (Peso,Volume)'])
             infNFe: List[infNFe] = Element(infNFe, max_occurs=-1, documentation=['Informações das NFe'])
         infDoc: infDoc = Element(infDoc, documentation=['Informações dos documentos dos conteiners'])
     detCont: List[detCont] = Element(detCont, max_occurs=-1, documentation=['Grupo de informações de detalhamento dos conteiners\n(Somente para Redespacho Intermediario)'])

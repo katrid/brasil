@@ -41,16 +41,12 @@ class CTe(brasil.dfe.leiaute.cte.cte_v300.CTe):
 
     @chave.setter
     def chave(self, value):
+        self.infCte.ide.cDV = value[-1]
         self.infCte.Id = 'CTe' + value
 
     @property
     def rodo(self) -> rodo:
         return self.infCte.infCTeNorm.infModal.rodo
 
-    def _prepare(self):
-        if isinstance(self.infCte.infCTeNorm.cobr.fat.vLiq, (float, decimal.Decimal)):
-            self.infCte.infCTeNorm.cobr.fat.vLiq = '{:.2f}'.format(self.infCte.infCTeNorm.cobr.fat.vLiq)
-
     def _xml(self, name=None):
-        self._prepare()
         return remover_acentos(super()._xml(name)).decode('utf-8')

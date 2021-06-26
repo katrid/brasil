@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .xmldsig_core_schema_v101 import *
@@ -44,7 +46,7 @@ class retEnvEvento(ComplexType):
             nSeqEvento: List[str] = Element(str, max_occurs=1, documentation=['Sequencial do evento para o mesmo tipo de evento. '])
             CNPJDest: List[TCnpjOpc] = Element(TCnpjOpc, max_occurs=1, filter=str.isdigit, documentation=['Informar o CNPJ do destinatário da NF-e.'])
             emailDest: List[str] = Element(str, max_occurs=1, documentation=['email do destinatário informado na NF-e.'])
-            dhRegEvento: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora de registro do evento no formato AAAA-MMDDTHH:MM:SSTZD (formato UTC, onde TZD é +HH:MM ou\n\t\x96\t\t\t\t\t\t\tHH:MM), se o evento for rejeitado informar a data e hora de recebimento do evento.'])
+            dhRegEvento: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e hora de registro do evento no formato AAAA-MMDDTHH:MM:SSTZD (formato UTC, onde TZD é +HH:MM ou\n\t\x96\t\t\t\t\t\t\tHH:MM), se o evento for rejeitado informar a data e hora de recebimento do evento.'])
             nProt: List[TProt] = Element(TProt, max_occurs=1, documentation=['Número do Protocolo do Evento 1 posição (1-Secretaria da Fazenda Estadual, 2-RFB), 2 posições para o código da UF, 2 posições para o ano e 10 posições para o sequencial no ano.'])
             Id: str = Attribute(None)
         infEvento: infEvento = Element(infEvento, documentation=['Grupo de informações do registro do Evento'])

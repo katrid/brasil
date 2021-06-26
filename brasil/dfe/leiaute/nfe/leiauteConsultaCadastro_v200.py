@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .tiposBasico_v103 import *
@@ -67,6 +69,17 @@ class TRetConsCad(Element):
             """Informações cadastrais do contribuinte consultado"""
             _max_occurs = -1
             _choice = [['CNPJ', 'CPF']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
 
             def add(self, IE=None, CNPJ=None, CPF=None, UF=None, cSit=None, indCredNFe=None, indCredCTe=None, xNome=None, xFant=None, xRegApur=None, CNAE=None, dIniAtiv=None, dUltSit=None, dBaixa=None, IEUnica=None, IEAtual=None, ender=None) -> TRetConsCad.infCons.infCad:
                 return super().add(IE=IE, CNPJ=CNPJ, CPF=CPF, UF=UF, cSit=cSit, indCredNFe=indCredNFe, indCredCTe=indCredCTe, xNome=xNome, xFant=xFant, xRegApur=xRegApur, CNAE=CNAE, dIniAtiv=dIniAtiv, dUltSit=dUltSit, dBaixa=dBaixa, IEUnica=IEUnica, IEAtual=IEAtual, ender=ender)

@@ -1,4 +1,5 @@
 import re
+import datetime
 from decimal import Decimal
 from lxml import etree
 from .utils.xml_utils import tag
@@ -27,12 +28,21 @@ class ComplexType(SimpleType, metaclass=ElementType):
     _xmlns: str = None
     _xml_props: dict = None
     _cls: 'ComplexType' = None
+    _xmltmp = None
 
     def __init__(self, cls=None,  min_occurs=None, max_occurs=None):
         self._cls = cls
         self.min_occurs = min_occurs
         self.max_occurs = max_occurs
         self._list = []
+
+        if self._xml_props:
+            for k, v in self._xml_props.items():
+                if v._cls and issubclass(v._cls, ComplexType):
+                    v = v._cls()
+                else:
+                    v = None
+                setattr(self, k, v)
 
     def _add_to_class(self, name, obj):
         self._cls._xml_props[name] = obj
@@ -41,7 +51,8 @@ class ComplexType(SimpleType, metaclass=ElementType):
     def add(self, **kwargs):
         new_obj = self.__class__()
         for k, v in kwargs.items():
-            setattr(new_obj, k, v)
+            if v is not None:
+                setattr(new_obj, k, v)
         self._list.append(new_obj)
         return new_obj
 
@@ -61,8 +72,21 @@ class ComplexType(SimpleType, metaclass=ElementType):
                 v = getattr(self, k, None)
                 if v is None:
                     continue
-                if isinstance(v, (int, Decimal)):
+                if prop._base_type is datetime.datetime and isinstance(v, datetime.datetime):
+                    v = v.strftime('%Y-%m-%dT%H:%M:%S+03:00')
+                elif prop._base_type is datetime.date and isinstance(v, datetime.date):
+                    v = v.strftime('%Y-%m-%d')
+                elif prop._base_type is Decimal and v == 0 and prop._optional:
+                    continue
+                elif prop._base_type is Decimal and isinstance(v, Decimal) and prop._tam:
+                    fmt = '{:.%sf}' % prop._tam[1]
+                    v = string.format(fmt, v)
+                elif isinstance(v, (int, Decimal)):
                     v = str(v)
+                elif isinstance(v, datetime.datetime):
+                    v = v.strftime('%Y-%m-%dT%H:%M:%S+03:00')
+                if prop._filter:
+                    v = ''.join(filter(prop._filter, v))
                 if isinstance(prop, Attribute):
                     kwargs[k] = v
                 elif issubclass(prop._cls, str):
@@ -76,7 +100,11 @@ class ComplexType(SimpleType, metaclass=ElementType):
                             args.append(xml)
         if not args:
             return ''
-        return tag(name or self.__class__.__name__, *args, **kwargs)
+        self._xmltmp = tag(name or self.__class__.__name__, *args, **kwargs)
+        return self._xmltmp
+
+    def _clear(self):
+        self._xmltmp = None
 
     def _read_xml(self, xml):
         if isinstance(xml, (str, bytes)):
@@ -103,33 +131,47 @@ class ComplexType(SimpleType, metaclass=ElementType):
         if cls._xml_props:
             for k, prop in cls._xml_props.items():
                 v = getattr(self, k, None)
+                if getattr(prop, '_choice', None):
+                    print(prop._choice)
                 if v is None:
                     continue
                 if isinstance(prop, Element) and (restriction := getattr(prop._cls, '_restriction', None)):
                     if msg := restriction.validate(v):
                         res.append(k + ': ' + msg)
                 if isinstance(v, ComplexType):
-                    res.extend(v._validar())
+                    if isinstance(prop, Element) and not prop._required and self._xml(k):
+                        res.extend(v._validar())
         return res
 
 
 class Element(ComplexType):
     _restriction = None
+    _caption: str = None
+    _tipo: str = None
+    _parent = None
 
-    def __init__(self, cls=None, min_occurs=None, max_occurs=None, *args, **kwargs):
+    def __init__(self, cls=None, min_occurs=None, max_occurs=None, documentation: list[str]=None, *args, **kwargs):
         if min_occurs is None:
             min_occurs = 1
         super().__init__(cls, min_occurs=min_occurs, max_occurs=max_occurs)
+        self.documentation = documentation
+        if documentation:
+            self._caption = documentation[0]
+        self._tipo = kwargs.get('tipo')
+        self._tam = kwargs.get('tam')
+        self._base_type = kwargs.get('base_type')
+        self._optional = kwargs.get('optional')
+        self._filter = kwargs.get('filter')
         self.min_occurs = min_occurs
         self.max_occurs = max_occurs
         self._values = {}
-        if cls is None and self._xml_props:
-            for k, v in self._xml_props.items():
-                v = getattr(self, k)
-                if isinstance(v, Element):
-                    setattr(self, k, v())
-                else:
-                    setattr(self, k, None)
+        # if cls is None and self._xml_props:
+        #     for k, v in self._xml_props.items():
+        #         v = getattr(self, k)
+        #         if isinstance(v, Element):
+        #             setattr(self, k, v())
+        #         else:
+        #             setattr(self, k, None)
 
     def __getattr__(self, item):
         return getattr(self._cls, item)
@@ -144,17 +186,24 @@ class Element(ComplexType):
             _kwargs['max_occurs'] = self.max_occurs
         new_obj = self._cls(**_kwargs)
         if isinstance(new_obj, ComplexType):
-            for k, v in new_obj._xml_props.items():
-                v = getattr(self, k)
+            for k, prop in new_obj._xml_props.items():
                 if isinstance(v, Element):
-                    if v._cls is str or issubclass(v._cls, str):
+                    if issubclass(prop._cls, str):
                         v = None
                     else:
-                        v = v()
+                        v = prop()
                 elif isinstance(v, Attribute):
                     v = None
-                setattr(new_obj, k, v)
+                if v is not None:
+                    setattr(new_obj, k, v)
         return new_obj
+
+    def __set_name__(self, owner, name):
+        self._parent = owner
+
+    @property
+    def _required(self):
+        return self.min_occurs > 0
 
 
 class Alias:
@@ -163,6 +212,10 @@ class Alias:
 
 
 class Attribute:
+    _base_type = None
+    _filter = None
+    _cls = None
+
     def __init__(self, type):
         self.type = type
 

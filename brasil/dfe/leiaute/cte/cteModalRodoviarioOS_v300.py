@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .tiposGeralCTe_v300 import *
@@ -36,6 +38,17 @@ class rodoOS(ComplexType):
             """Proprietários do Veículo.
 Só preenchido quando o veículo não pertencer à empresa emitente do CT-e OS"""
             _choice = [['CPF', 'CNPJ'], ['TAF', 'NroRegEstadual']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['Número do CPF', 'Informar os zeros não significativos.'])
             CNPJ: TCnpjOpc = Element(TCnpjOpc, filter=str.isdigit, documentation=['Número do CNPJ', 'Informar os zeros não significativos.'])
             TAF: TTermoAutFreta = Element(TTermoAutFreta, documentation=['Termo de Autorização de Fretamento – TAF', 'De acordo com a Resolução ANTT nº 4.777/2015\t\t\t\t\t\t'])
@@ -51,7 +64,7 @@ Só preenchido quando o veículo não pertencer à empresa emitente do CT-e OS""
     class infFretamento(ComplexType):
         """Dados do fretamento (apenas para Transporte de Pessoas)"""
         tpFretamento: str = Element(str, documentation=['Tipo Fretamento', 'Preencher com:\n 1 - Eventual 2 - Continuo\t\t\t\t\t\t\t\t'])
-        dhViagem: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora da viagem (Apenas para fretamento eventual)', 'Formato AAAA-MM-DDTHH:MM:DD TZD'])
+        dhViagem: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e hora da viagem (Apenas para fretamento eventual)', 'Formato AAAA-MM-DDTHH:MM:DD TZD'])
     infFretamento: infFretamento = Element(infFretamento, documentation=['Dados do fretamento (apenas para Transporte de Pessoas)'])
 
 rodoOS: rodoOS = Element(rodoOS, documentation=['Informações do modal Rodoviário'])

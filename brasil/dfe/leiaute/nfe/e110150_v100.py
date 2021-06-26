@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .tiposBasico_v103 import *
@@ -15,6 +17,17 @@ class detEvento(ComplexType):
     class autXML(ComplexType):
         """Pessoas autorizadas a acessar o XML da NF-e"""
         _choice = [['CNPJ', 'CPF']]
+        @property
+        def CNPJCPF(self):
+            return self.CPF or self.CNPJ
+
+        @CNPJCPF.setter
+        def CNPJCPF(self, value):
+            value = "".join(filter(str.isdigit, value))
+            if len(value) == 11:
+                self.CPF = value
+            else:
+                self.CNPJ = value
         CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit)
         CPF: TCpf = Element(TCpf, filter=str.isdigit)
     autXML: autXML = Element(autXML, documentation=['Pessoas autorizadas a acessar o XML da NF-e'])

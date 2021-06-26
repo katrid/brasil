@@ -33,7 +33,7 @@ class BaseConfig:
             self, xml_path: str=None, cert_file: str=None, cert_senha: str=None, uf: str=None, versao=None, tp_amb=2
     ):
         self.uf = uf
-        if versao and not self.versao:
+        if versao:
             self.versao = versao
         self.amb = tp_amb
         self.xml_path = xml_path

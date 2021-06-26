@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .tiposBasico_v103 import *
@@ -53,14 +55,25 @@ class TRetConsNFeDest(Element):
         class resNFe(ComplexType):
             """Informações resumo da NF-e localizadas"""
             _choice = [['CNPJ', 'CPF']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
             chNFe: TChNFe = Element(TChNFe, documentation=['Chaves de acesso da NF-e consultada'])
             CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['CNPJ do Remetente da NF-e'])
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF do Remetente da NF-e'])
             xNome: str = Element(str, documentation=['Razão Social ou Nome do Remetente'])
             IE: TIe = Element(TIe, filter=str.isdigit, documentation=['IE do Remetente. Valores válidos: vazio (não contribuinte do ICMS), ISENTO (contribuinte  do ICMS ISENTO de Inscrição no Cadastro de Contribuintes) ou IE (Contribuinte do ICMS)'])
-            dEmi: TData = Element(TData, documentation=['Data de Emissão da NF-e'])
+            dEmi: TData = Element(TData, base_type=date, documentation=['Data de Emissão da NF-e'])
             tpNF: str = Element(str, documentation=['Tipo do Documento Fiscal (0 - entrada; 1 - saída)'])
-            vNF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total da NF-e'])
+            vNF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total da NF-e'])
             digVal: str = Element(str, documentation=['Digest Value da NF-e na base de dados da SEFAZ '])
             dhRecbto: dateTime = Element(dateTime, documentation=['Data e hora de processamento de autorização, no formato AAAA-MM-DDTHH:MM:SS.'])
             cSitNFe: str = Element(str, documentation=['Situação da NF-e\n1-Uso autorizado no momento da consulta;\n2-Uso denegado;\n3-NF-e cancelada;'])
@@ -71,14 +84,25 @@ class TRetConsNFeDest(Element):
         class resCanc(ComplexType):
             """Informações resumo da NF-e canceladas localizadas"""
             _choice = [['CNPJ', 'CPF']]
+            @property
+            def CNPJCPF(self):
+                return self.CPF or self.CNPJ
+
+            @CNPJCPF.setter
+            def CNPJCPF(self, value):
+                value = "".join(filter(str.isdigit, value))
+                if len(value) == 11:
+                    self.CPF = value
+                else:
+                    self.CNPJ = value
             chNFe: TChNFe = Element(TChNFe, documentation=['Chaves de acesso da NF-e consultada'])
             CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['CNPJ do Remetente da NF-e'])
             CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF do Remetente da NF-e'])
             xNome: str = Element(str, documentation=['Razão Social ou Nome do Remetente'])
             IE: TIe = Element(TIe, filter=str.isdigit, documentation=['IE do Remetente. Valores válidos: vazio (não contribuinte do ICMS), ISENTO (contribuinte  do ICMS ISENTO de Inscrição no Cadastro de Contribuintes) ou IE (Contribuinte do ICMS)'])
-            dEmi: TData = Element(TData, documentation=['Data de Emissão da NF-e'])
+            dEmi: TData = Element(TData, base_type=date, documentation=['Data de Emissão da NF-e'])
             tpNF: str = Element(str, documentation=['Tipo do Documento Fiscal (0 - entrada; 1 - saída)'])
-            vNF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), documentation=['Valor Total da NF-e'])
+            vNF: TDec_1302 = Element(TDec_1302, tipo="N", tam=(13, 2), base_type=Decimal, documentation=['Valor Total da NF-e'])
             digVal: str = Element(str, documentation=['Digest Value da NF-e na base de dados da SEFAZ '])
             dhRecbto: dateTime = Element(dateTime, documentation=['Data e hora de processamento de autorização, no formato AAAA-MM-DDTHH:MM:SS.'])
             cSitNFe: str = Element(str, documentation=['Situação da NF-e\n3-NF-e cancelada;'])

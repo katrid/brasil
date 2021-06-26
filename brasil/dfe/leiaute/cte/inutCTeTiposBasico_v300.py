@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import date, datetime
+from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .xmldsig_core_schema_v101 import *
@@ -52,7 +54,7 @@ class TRetInutCTe(Element):
         serie: TSerie = Element(TSerie, documentation=['Série da CT-e'])
         nCTIni: TNF = Element(TNF, documentation=['Número da CT-e inicial'])
         nCTFin: TNF = Element(TNF, documentation=['Número da CT-e final'])
-        dhRecbto: TDateTimeUTC = Element(TDateTimeUTC, documentation=['Data e hora de recebimento, no formato AAAA-MM-DDTHH:MM:SS TZD. Deve ser preenchida com data e hora da gravação no Banco em caso de Confirmação. Em caso de Rejeição, com data e hora do recebimento do Pedido de Inutilização.'])
+        dhRecbto: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e hora de recebimento, no formato AAAA-MM-DDTHH:MM:SS TZD. Deve ser preenchida com data e hora da gravação no Banco em caso de Confirmação. Em caso de Rejeição, com data e hora do recebimento do Pedido de Inutilização.'])
         nProt: TProt = Element(TProt, documentation=['Número do Protocolo de Status do CT-e. 1 posição (1 – Secretaria de Fazenda Estadual , 3 - SEFAZ Virtual RS, 5 - SEFAZ Virtual SP); 2 - código da UF - 2 posições ano; 10 seqüencial no ano.'])
         Id: str = Attribute(ID)
     infInut: infInut = Element(infInut, documentation=['Dados do Retorno do Pedido de Inutilização de Numeração do Conhecimento de Transporte eletrônico'])
