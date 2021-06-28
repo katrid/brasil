@@ -7,7 +7,7 @@ from .tiposBasico_v400 import *
 
 
 
-class TVerConsStatServ(token):
+class TVerConsStatServ(str):
     """Tipo versão do leiuate da Consulta Status do Serviço 4.00"""
     _restriction = Restriction(base=r"xs:token", pattern=r"4\.00", enumeration=[])
     pass

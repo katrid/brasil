@@ -66,6 +66,7 @@ class BaseService:
     xmlattrs = 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://www.w3.org/2003/05/soap-envelope"'
     _xmlresp: etree.Element
     response: requests.Response
+    ok = None
 
     def __init__(self, config: BaseConfig):
         self.config = config
@@ -103,7 +104,8 @@ class BaseService:
         envelope = self.envelope()
         self.enviar(envelope)
         self.finalizar()
-        return self.response.status_code == 200
+        self.ok = self.response.status_code == 200
+        return self.ok
 
     def preparar(self):
         from brasil.consts import CODIGO_UF

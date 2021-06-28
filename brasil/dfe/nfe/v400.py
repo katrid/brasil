@@ -4,6 +4,15 @@ from lxml import etree
 
 from brasil.utils.text import remover_acentos
 import brasil.dfe.leiaute.nfe.nfe_v400
+from brasil.dfe.leiaute.nfe.procNFe_v400 import nfeProc, TNFe
+from brasil.dfe.leiaute.nfe.consStatServ_v400 import consStatServ
+from brasil.dfe.leiaute.nfe.retConsStatServ_v400 import retConsStatServ
+from brasil.dfe.leiaute.nfe.enviNFe_v400 import enviNFe
+from brasil.dfe.leiaute.nfe.retEnviNFe_v400 import retEnviNFe
+from brasil.dfe.leiaute.nfe.consReciNFe_v400 import consReciNFe
+from brasil.dfe.leiaute.nfe.retConsReciNFe_v400 import retConsReciNFe
+from brasil.dfe.leiaute.nfe.consSitNFe_v400 import consSitNFe
+from brasil.dfe.leiaute.nfe.retConsSitNFe_v400 import retConsSitNFe
 
 
 class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
@@ -27,7 +36,7 @@ class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
     @property
     def chave(self):
         if self.infNFe.Id:
-            return self.infCte.Id[3:]
+            return self.infNFe.Id[3:]
 
     @chave.setter
     def chave(self, value):
@@ -38,3 +47,4 @@ class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
         for i, det in enumerate(self.infNFe.det._list):
             det.nItem = i + 1
         return remover_acentos(super()._xml(name)).decode('utf-8')
+
