@@ -22,7 +22,7 @@ class TInutNFe(Element):
     class infInut(ComplexType):
         """Dados do Pedido de Inutilização de Numeração da Nota Fiscal Eletrônica"""
         tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
-        xServ: str = Element(str, documentation=['Serviço Solicitado'])
+        xServ: str = Element(str, documentation=['Serviço Solicitado'], default='INUTILIZAR')
         cUF: TCodUfIBGE = Element(TCodUfIBGE, documentation=['Código da UF do emitente'])
         ano: Tano = Element(Tano, documentation=['Ano de inutilização da numeração'])
         CNPJ: TCnpj = Element(TCnpj, filter=str.isdigit, documentation=['CNPJ do emitente'])
@@ -34,7 +34,7 @@ class TInutNFe(Element):
         Id: str = Attribute(None)
     infInut: infInut = Element(infInut, documentation=['Dados do Pedido de Inutilização de Numeração da Nota Fiscal Eletrônica'])
     Signature: Signature = Element(Signature)
-    versao: str = Attribute(TVerInutNFe)
+    versao: str = Attribute(TVerInutNFe, default='4.00')
 
 
 

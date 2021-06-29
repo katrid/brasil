@@ -1,3 +1,7 @@
+import os
+from logging import getLogger
+
+from brasil.consts import CODIGO_UF
 from brasil.dfe.utils.certs import Certificado
 
 
@@ -28,11 +32,13 @@ class BaseConfig:
     certificado: Certificado
     services: Services
     versao: str = None
+    log = getLogger('DFe')
 
     def __init__(
             self, xml_path: str=None, cert_file: str=None, cert_senha: str=None, uf: str=None, versao=None, tp_amb=2
     ):
         self.uf = uf
+        self.orgao = CODIGO_UF[uf]
         if versao:
             self.versao = versao
         self.amb = tp_amb
@@ -40,3 +46,10 @@ class BaseConfig:
         self.cert_file = cert_file
         self.cert_senha = cert_senha
         self.certificado = Certificado(cert_file, cert_senha)
+        self.salvar_arquivos = True
+        self.salvar_soap = True
+
+    def salvar_arquivo(self, xml, arquivo):
+        with open(os.path.join(self.xml_path, arquivo), 'w') as f:
+            self.log.debug('Salvar arquivo', arquivo)
+            f.write(xml)

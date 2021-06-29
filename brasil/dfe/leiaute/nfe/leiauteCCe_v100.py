@@ -45,21 +45,21 @@ class TEvento(Element):
         CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF'])
         chNFe: TChNFe = Element(TChNFe, documentation=['Chave de Acesso da NF-e vinculada ao evento'])
         dhEvento: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data de emissão no formato UTC.  AAAA-MM-DDThh:mm:ssTZD'])
-        tpEvento: str = Element(str, documentation=['Tipo do Evento'])
+        tpEvento: str = Element(str, documentation=['Tipo do Evento'], default='110110')
         nSeqEvento: str = Element(str, documentation=['Seqüencial do evento para o mesmo tipo de evento.  Para maioria dos eventos será 1, nos casos em que possa existir mais de um evento, como é o caso da carta de correção, o autor do evento deve numerar de forma seqüencial.'])
-        verEvento: str = Element(str, documentation=['Versão do Tipo do Evento'])
+        verEvento: str = Element(str, documentation=['Versão do Tipo do Evento'], default='1.00')
 
         class detEvento(ComplexType):
             """Evento do carta de correção e1101110"""
-            descEvento: str = Element(str, documentation=['Descrição do Evento - “Carta de Correção”'])
+            descEvento: str = Element(str, documentation=['Descrição do Evento - “Carta de Correção”'], default='Carta de Correcao')
             xCorrecao: str = Element(str, documentation=['Correção a ser considerada'])
-            xCondUso: str = Element(str, documentation=['Texto Fixo com as condições de uso da Carta de Correção'])
-            versao: str = Attribute(None)
+            xCondUso: str = Element(str, documentation=['Texto Fixo com as condições de uso da Carta de Correção'], default='A Carta de Correcao e disciplinada pelo paragrafo 1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 e pode ser utilizada para regularizacao de erro ocorrido na emissao de documento fiscal, desde que o erro nao esteja relacionado com: I - as variaveis que determinam o valor do imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, valor da operacao ou da prestacao; II - a correcao de dados cadastrais que implique mudanca do remetente ou do destinatario; III - a data de emissao ou de saida.')
+            versao: str = Attribute(None, default='1.00')
         detEvento: detEvento = Element(detEvento, documentation=['Evento do carta de correção e1101110'])
         Id: str = Attribute(None)
     infEvento: infEvento = Element(infEvento)
     Signature: Signature = Element(Signature)
-    versao: str = Attribute(TVerEvento)
+    versao: str = Attribute(TVerEvento, default='1.00')
 
 
 

@@ -7,5 +7,5 @@ from .leiauteNFe_v400 import *
 
 
 class enviNFe(TEnviNFe):
-    pass
+    _xmlns = 'http://www.portalfiscal.inf.br/nfe'
 

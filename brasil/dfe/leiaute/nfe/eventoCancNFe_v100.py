@@ -7,5 +7,5 @@ from .leiauteEventoCancNFe_v100 import *
 
 
 class evento(TEvento):
-    pass
+    _xmlns = 'http://www.portalfiscal.inf.br/nfe'
 

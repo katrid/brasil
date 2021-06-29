@@ -7,5 +7,5 @@ from .leiauteConsStatServ_v400 import *
 
 
 class consStatServ(TConsStatServ):
-    pass
+    _xmlns = 'http://www.portalfiscal.inf.br/nfe'
 

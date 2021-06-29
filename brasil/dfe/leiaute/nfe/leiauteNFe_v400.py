@@ -162,6 +162,7 @@ class TIpi(Element):
 
 class TNFe(Element):
     """Tipo Nota Fiscal Eletrônica"""
+    _xmlns = 'http://www.portalfiscal.inf.br/nfe'
 
     class infNFe(ComplexType):
         """Informações da Nota Fiscal eletrônica"""

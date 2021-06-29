@@ -13,6 +13,10 @@ from brasil.dfe.leiaute.nfe.consReciNFe_v400 import consReciNFe
 from brasil.dfe.leiaute.nfe.retConsReciNFe_v400 import retConsReciNFe
 from brasil.dfe.leiaute.nfe.consSitNFe_v400 import consSitNFe
 from brasil.dfe.leiaute.nfe.retConsSitNFe_v400 import retConsSitNFe
+from brasil.dfe.leiaute.nfe.envEvento_v100 import envEvento
+from brasil.dfe.leiaute.nfe.retEnvEvento_v100 import retEnvEvento
+from brasil.dfe.leiaute.nfe.inutNFe_v400 import inutNFe
+from brasil.dfe.leiaute.nfe.retInutNFe_v400 import retInutNFe
 
 
 class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):

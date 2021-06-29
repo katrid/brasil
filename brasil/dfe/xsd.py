@@ -41,6 +41,8 @@ class ComplexType(SimpleType, metaclass=ElementType):
             for k, v in self._xml_props.items():
                 if v._cls and issubclass(v._cls, ComplexType):
                     v = v._cls()
+                elif v._default:
+                    v = v._default
                 # elif self._required() and v._base_type is Decimal:
                 #     v = 0
                 else:
@@ -67,8 +69,6 @@ class ComplexType(SimpleType, metaclass=ElementType):
             return ''.join([child._xml(name) for child in self._list])
         kwargs = {}
         args = []
-        if self._xmlns:
-            kwargs['xmlns'] = self._xmlns
         cls = self._cls or self
         if cls._xml_props:
             for k, prop in cls._xml_props.items():
@@ -76,7 +76,7 @@ class ComplexType(SimpleType, metaclass=ElementType):
                 if v is None:
                     continue
                 if prop._base_type is datetime.datetime and isinstance(v, datetime.datetime):
-                    v = v.strftime('%Y-%m-%dT%H:%M:%S+03:00')
+                    v = v.strftime('%Y-%m-%dT%H:%M:%S-03:00')
                 elif prop._base_type is datetime.date and isinstance(v, datetime.date):
                     v = v.strftime('%Y-%m-%d')
                 elif prop._base_type is Decimal and v == 0 and prop._optional:
@@ -87,7 +87,7 @@ class ComplexType(SimpleType, metaclass=ElementType):
                 elif isinstance(v, (int, Decimal)):
                     v = str(v)
                 elif isinstance(v, datetime.datetime):
-                    v = v.strftime('%Y-%m-%dT%H:%M:%S+03:00')
+                    v = v.strftime('%Y-%m-%dT%H:%M:%S-03:00')
                 if prop._filter:
                     v = ''.join(filter(prop._filter, v))
                 if isinstance(prop, Attribute):
@@ -103,6 +103,8 @@ class ComplexType(SimpleType, metaclass=ElementType):
                             args.append(xml)
         if not args:
             return ''
+        if self._xmlns:
+            kwargs['xmlns'] = self._xmlns
         self._xmltmp = tag(name or self.__class__.__name__, *args, **kwargs)
         return self._xmltmp
 
@@ -170,6 +172,7 @@ class Element(ComplexType):
         self._base_type = kwargs.get('base_type')
         self._optional = kwargs.get('optional')
         self._filter = kwargs.get('filter')
+        self._default = kwargs.get('default')
         self.min_occurs = min_occurs
         self.max_occurs = max_occurs
         self._values = {}
@@ -194,11 +197,17 @@ class Element(ComplexType):
             for k, prop in new_obj._xml_props.items():
                 if isinstance(v, Element):
                     if issubclass(prop._cls, str):
-                        v = None
+                        if prop._default:
+                            v = prop._default
+                        else:
+                            v = None
                     else:
                         v = prop()
                 elif isinstance(v, Attribute):
-                    v = None
+                    if v._default:
+                        v = v._default
+                    else:
+                        v = None
                 if v is not None:
                     setattr(new_obj, k, v)
         return new_obj
@@ -218,8 +227,9 @@ class Attribute:
     _cls = None
     _required = None
 
-    def __init__(self, type):
+    def __init__(self, type, default=None):
         self.type = type
+        self._default = default
 
 
 class TString(str):

@@ -7,5 +7,5 @@ from .leiauteConsSitNFe_v400 import *
 
 
 class consSitNFe(TConsSitNFe):
-    pass
+    _xmlns = 'http://www.portalfiscal.inf.br/nfe'
 

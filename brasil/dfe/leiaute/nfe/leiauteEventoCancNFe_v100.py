@@ -38,16 +38,16 @@ class TEvento(Element):
         CPF: TCpf = Element(TCpf, filter=str.isdigit, documentation=['CPF'])
         chNFe: TChNFe = Element(TChNFe, documentation=['Chave de Acesso da NF-e vinculada ao evento'])
         dhEvento: TDateTimeUTC = Element(TDateTimeUTC, base_type=datetime, documentation=['Data e Hora do Evento, formato UTC (AAAA-MM-DDThh:mm:ssTZD, onde TZD = +hh:mm ou -hh:mm)'])
-        tpEvento: str = Element(str, documentation=['Tipo do Evento'])
+        tpEvento: str = Element(str, documentation=['Tipo do Evento'], default='110111')
         nSeqEvento: str = Element(str, documentation=['Seqüencial do evento para o mesmo tipo de evento.  Para maioria dos eventos será 1, nos casos em que possa existir mais de um evento, como é o caso da carta de correção, o autor do evento deve numerar de forma seqüencial.'])
         verEvento: str = Element(str, documentation=['Versão do Tipo do Evento'])
 
         class detEvento(ComplexType):
             """Schema XML de validação do evento do cancelamento 1101111"""
-            descEvento: str = Element(str, documentation=['Descrição do Evento - “Cancelamento”'])
+            descEvento: str = Element(str, documentation=['Descrição do Evento - “Cancelamento”'], default='Cancelamento')
             nProt: TProt = Element(TProt, documentation=['Número do Protocolo de Status da NF-e. 1 posição (1 – Secretaria de Fazenda Estadual 2 – Receita Federal); 2 posições ano; 10 seqüencial no ano.'])
             xJust: TJust = Element(TJust, documentation=['Justificativa do cancelamento'])
-            versao: str = Attribute(None)
+            versao: str = Attribute(None, default='1.00')
         detEvento: detEvento = Element(detEvento, documentation=['Schema XML de validação do evento do cancelamento 1101111'])
         Id: str = Attribute(None)
     infEvento: infEvento = Element(infEvento)

@@ -7,5 +7,4 @@ from .leiauteEvento_v100 import *
 
 
 class procEventoNFe(TProcEvento):
-    pass
-
+    xmlns = "http://www.portalfiscal.inf.br/nfe"

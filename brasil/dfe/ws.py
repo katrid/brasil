@@ -8,7 +8,7 @@ from .services import BaseConfig
 
 
 class Header:
-    soapVersion: str = None
+    soapVersion: str = 'soap'
     element: str = None
     xmlns: str = None
     cUF: str = None
@@ -31,7 +31,7 @@ class Header:
 
 
 class Body:
-    soapVersion: str = None
+    soapVersion: str = 'soap'
     xmlns: str = None
     element: str = None
     xml: str = None
@@ -71,7 +71,6 @@ class BaseService:
     def __init__(self, config: BaseConfig):
         self.config = config
         self.uf = config.uf
-        self.versao = config.versao
         self.tpAmb = config.amb
         if self.header:
             self.header = self.header()
@@ -93,9 +92,12 @@ class BaseService:
         s = ''
         if self.header:
             s += str(self.header)
-        xml = etree.fromstring(self.xml._xml())
-        xml.attrib['xmlns'] = self.namespace
-        self.body.xml = etree.tostring(xml).decode('utf-8')
+        # xml = etree.fromstring(self.xml._xml())
+        # xml.attrib['xmlns'] = self.namespace
+        # self.body.xml = etree.tostring(xml).decode('utf-8').replace('versao="4.00" xmlns="http://www.portalfiscal.inf.br/nfe"', 'xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"')
+        self.body.xml = self.xml._xml()
+        if self.config.salvar_arquivos:
+            self.config.salvar_arquivo(self.body.xml, self.filename('env'))
         s += str(self.body)
         t = self.body.soapVersion + ':Envelope'
         return f'<?xml version="1.0" encoding="UTF-8"?><{t} {self.xmlattrs}>{s}</{t}>'.encode('utf-8')
@@ -114,20 +116,27 @@ class BaseService:
 
     def finalizar(self):
         if self.response.status_code == 200:
+            self.config.log.debug('HTTP Sucesso', self.response.status_code)
             self._xmlresp = etree.fromstring(self.response.content)
             ret = self.Retorno()
             xml = self.find(ret._name)
             ret._read_xml(xml)
             self.retorno = ret
+        else:
+            self.config.log.error('HTTP Error', self.response.status_code)
 
     def enviar(self, data):
         # salvar arquivo antes de prosseguir
-        if self.config.xml_path:
-            with open(os.path.join(self.config.xml_path, self.filename('env')), 'wb') as f:
+        self.config.log.debug('Enviando envelope...', self.tpAmb, self.uf)
+        if self.config.salvar_soap:
+            filename = self.filename('env')
+
+            with open(os.path.join(self.config.xml_path, ), 'wb') as f:
                 f.write(data)
         res = self._enviar(data)
+        self.config.log.debug('Envelope enviado...', self.tpAmb, self.uf)
         # salvar o arquivo de retorno
-        if self.config.xml_path:
+        if self.config.salvar_soap:
             with open(os.path.join(self.config.xml_path, self.filename('ret')), 'wb') as f:
                 f.write(res.content)
         self.response = res

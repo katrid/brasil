@@ -46,6 +46,10 @@ class TEvento(Element):
             pass
         detEvento: detEvento = Element(detEvento)
         Id: str = Attribute(None)
+
+    def add(self, **kwargs) -> TEvento:
+        return super.add(**kwargs)
+
     infEvento: infEvento = Element(infEvento)
     Signature: Signature = Element(Signature)
     versao: str = Attribute(TVerEvento)
@@ -111,6 +115,6 @@ class TProcEvento(Element):
     """Tipo procEvento"""
     evento: TEvento = Element(TEvento)
     retEvento: TRetEvento = Element(TRetEvento)
-    versao: str = Attribute(TVerEvento)
+    versao: str = Attribute(TVerEvento, default='1.00')
 
 
