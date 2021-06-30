@@ -33,4 +33,3 @@ class rodo(ComplexType):
         emiOcc: emiOcc = Element(emiOcc)
     occ: List[occ] = Element(occ, max_occurs=10, documentation=['Ordens de Coleta associados'])
 
-rodo: rodo = Element(rodo, documentation=['Informações do modal Rodoviário'])

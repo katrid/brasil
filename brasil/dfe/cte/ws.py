@@ -58,7 +58,6 @@ class Recepcao(WebService):
 
     def preparar(self):
         super().preparar()
-        self.xml.versao = self.versao
         self.xml.tpAmb = self.config.amb
 
 

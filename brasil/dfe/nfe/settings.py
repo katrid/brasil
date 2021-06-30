@@ -12,4 +12,4 @@ with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'services.jso
 class Config(BaseConfig):
     versao = '4.00'
     services = nfe_services
-    log = getLogger('NFe')
+    log = getLogger('SEFAZ-NFe')

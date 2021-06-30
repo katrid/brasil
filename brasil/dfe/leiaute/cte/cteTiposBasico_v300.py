@@ -759,7 +759,9 @@ Este grupo deve ser informado quando o documento originário for NF"""
 
             class infModal(ComplexType):
                 """Informações do modal"""
-                versaoModal: str = Attribute(None)
+                versaoModal: str = Attribute(None, default='3.00')
+                from .cteModalRodoviario_v300 import rodo
+                rodo: rodo = Element(rodo, documentation=['Informações do modal Rodoviário'])
             infModal: infModal = Element(infModal, documentation=['Informações do modal'])
 
             class veicNovos(ComplexType):
@@ -902,6 +904,7 @@ Informar CNPJ ou CPF. Preencher os zeros não significativos."""
     class infCTeSupl(ComplexType):
         """Informações suplementares do CT-e"""
         qrCodCTe: str = Element(str, documentation=['Texto com o QR-Code impresso no DACTE'])
+
     infCTeSupl: infCTeSupl = Element(infCTeSupl, documentation=['Informações suplementares do CT-e'])
     Signature: Signature = Element(Signature)
 
@@ -1173,7 +1176,7 @@ Para Transporte de Pessoas indicar número de passageiros, para excesso de bagag
             class infModal(ComplexType):
                 """Informações do modal
 Obrigatório para Pessoas e Bagagem"""
-                versaoModal: str = Attribute(None)
+                versaoModal: str = Attribute(None, default='3.00')
             infModal: infModal = Element(infModal, documentation=['Informações do modal\nObrigatório para Pessoas e Bagagem'])
 
             class infCteSub(ComplexType):
@@ -1299,7 +1302,7 @@ class TEnviCTe(Element):
     """Tipo Pedido de Concessão de Autorização da CT-e"""
     idLote: TIdLote = Element(TIdLote)
     CTe: List[TCTe] = Element(TCTe, max_occurs=50)
-    versao: str = Attribute(TVerCTe)
+    versao: str = Attribute(TVerCTe, default='3.00')
 
 
 
@@ -1344,8 +1347,8 @@ class TEndOrg(Element):
     xMun: str = Element(str, documentation=['Nome do município', 'Informar EXTERIOR para operações com o exterior.'])
     CEP: str = Element(str, filter=str.isdigit, documentation=['CEP'])
     UF: TUf = Element(TUf, documentation=['Sigla da UF', 'Informar EX para operações com o exterior.'])
-    cPais: str = Element(str, documentation=['Código do país'])
-    xPais: str = Element(str, documentation=['Nome do país'])
+    cPais: str = Element(str, documentation=['Código do país'], default=1058)
+    xPais: str = Element(str, documentation=['Nome do país'], default='BRASIL')
     fone: TFone = Element(TFone, filter=str.isdigit, documentation=['Telefone'])
 
 

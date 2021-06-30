@@ -39,7 +39,7 @@ class ComplexType(SimpleType, metaclass=ElementType):
 
         if self._xml_props:
             for k, v in self._xml_props.items():
-                if v._cls and issubclass(v._cls, ComplexType):
+                if v._cls and ((isinstance(v._cls, type) and issubclass(v._cls, ComplexType)) or isinstance(v._cls, ComplexType)):
                     v = v._cls()
                 elif v._default:
                     v = v._default
@@ -195,7 +195,7 @@ class Element(ComplexType):
         new_obj = self._cls(**_kwargs)
         if isinstance(new_obj, ComplexType):
             for k, prop in new_obj._xml_props.items():
-                if isinstance(v, Element):
+                if isinstance(prop, Element):
                     if issubclass(prop._cls, str):
                         if prop._default:
                             v = prop._default

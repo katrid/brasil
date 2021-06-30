@@ -130,15 +130,13 @@ class BaseService:
         self.config.log.debug('Enviando envelope...', self.tpAmb, self.uf)
         if self.config.salvar_soap:
             filename = self.filename('env')
-
-            with open(os.path.join(self.config.xml_path, ), 'wb') as f:
-                f.write(data)
+            self.config.salvar_arquivo(data, filename)
         res = self._enviar(data)
         self.config.log.debug('Envelope enviado...', self.tpAmb, self.uf)
         # salvar o arquivo de retorno
         if self.config.salvar_soap:
-            with open(os.path.join(self.config.xml_path, self.filename('ret')), 'wb') as f:
-                f.write(res.content)
+            filename = self.filename('res')
+            self.config.salvar_arquivo(res.content, filename)
         self.response = res
 
     def _enviar(self, data):

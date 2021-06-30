@@ -17,14 +17,15 @@ class Services:
                 svcs[k] = new_dict
                 del new_dict['Usar']
 
-    def get(self, servico: str, uf: str, amb: str, versao: str):
+    def get(self, servico: str, uf: str, amb: str, versao: str = None):
         amb = str(amb)
         if amb == '1':
             amb = 'P'
         elif amb == '2':
             amb = 'H'
         chave = f'{self.tipo}_{uf}_{amb}'
-        servico += '_' + versao
+        if versao:
+            servico += '_' + versao
         return self._svcs[chave][servico]
 
 
@@ -41,7 +42,7 @@ class BaseConfig:
         self.orgao = CODIGO_UF[uf]
         if versao:
             self.versao = versao
-        self.amb = tp_amb
+        self.amb = str(tp_amb)
         self.xml_path = xml_path
         self.cert_file = cert_file
         self.cert_senha = cert_senha
@@ -50,6 +51,9 @@ class BaseConfig:
         self.salvar_soap = True
 
     def salvar_arquivo(self, xml, arquivo):
-        with open(os.path.join(self.xml_path, arquivo), 'w') as f:
+        mode = 'w'
+        if isinstance(xml, bytes):
+            mode += 'b'
+        with open(os.path.join(self.xml_path, arquivo), mode) as f:
             self.log.debug('Salvar arquivo', arquivo)
             f.write(xml)

@@ -9,7 +9,7 @@ from .tiposBasico_v400 import *
 
 
 
-class TVerInutNFe(token):
+class TVerInutNFe(str):
     """Tipo Versão do leiaute de Inutilização 4.00"""
     _restriction = Restriction(base=r"xs:token", pattern=r"4\.00", enumeration=[])
     pass

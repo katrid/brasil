@@ -1,5 +1,6 @@
 import os
 import json
+from logging import getLogger
 from brasil.dfe.services import Services, BaseConfig
 
 
@@ -9,4 +10,4 @@ with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'services.jso
 
 class Config(BaseConfig):
     services = cte_services
-
+    log = getLogger('SEFAZ-CTe')

@@ -3,7 +3,7 @@ from lxml import etree
 from ..base import DocumentoFiscal
 from .settings import Config
 from .v400 import NFe, nfeProc
-from .ws import StatusServico, Autorizacao, RetAutorizacao, Consulta, RecepcaoEvento, inu
+from .ws import StatusServico, Autorizacao, RetAutorizacao, Consulta, RecepcaoEvento, inutNFe
 from brasil.dfe.leiaute.nfe.eventoCancNFe_v100 import evento as TEventoCanc
 from brasil.utils.text import remover_acentos
 
@@ -71,7 +71,7 @@ class NotaFiscal(DocumentoFiscal):
             nf = nota.NFe
             if amb == 2:
                 nf.infNFe.dest.xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
-            nf.Signature = self.assinar(nf._xml(), nf.infNFe.Id, self.config.certificado)
+            # nf.Signature = self.assinar(nf._xml(), nf.infNFe.Id, self.config.certificado)
             svc.xml.NFe.append(nf)
         svc.xml.idLote = str(lote)
         svc.xml.indSinc = '1' if sincrono else '0'
