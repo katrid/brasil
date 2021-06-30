@@ -25,6 +25,10 @@ class _NFe:
 
 
 class NotasFiscais(list):
+    def __init__(self, config: Config):
+        super().__init__()
+        self._config = config
+
     def add(self, xml=None):
         if xml:
             if isinstance(xml, str):
@@ -38,12 +42,14 @@ class NotasFiscais(list):
                 return item
             elif xml.tag == 'NFe':
                 nfe = NFe()
+                nfe._config = self._config
                 nfe._read_xml(xml)
                 item = _NFe(nfe=nfe)
                 self.append(item)
                 return item
             raise Exception('Impossível carregar os dados do xml')
         nfe = _NFe(nfe=NFe())
+        nfe.NFe._config = self._config
         self.append(nfe)
         return nfe
 
@@ -53,7 +59,7 @@ class NotaFiscal(DocumentoFiscal):
 
     def __init__(self, xml=None, config: Config = None):
         self.config: Config = config
-        self.notas = NotasFiscais()
+        self.notas = NotasFiscais(config)
         if xml:
             self.notas.add(xml)
 
@@ -69,8 +75,6 @@ class NotaFiscal(DocumentoFiscal):
         amb = self.config.amb
         for nota in self.notas:
             nf = nota.NFe
-            if amb == 2:
-                nf.infNFe.dest.xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
             # nf.Signature = self.assinar(nf._xml(), nf.infNFe.Id, self.config.certificado)
             svc.xml.NFe.append(nf)
         svc.xml.idLote = str(lote)
@@ -144,13 +148,9 @@ class NotaFiscal(DocumentoFiscal):
         inut.infInut.nNFFin = nf_fim
         inut.infInut.xJust = justificativa
 
-    @classmethod
-    def assinar(cls, root, ref, certificado):
-        if isinstance(root, str):
-            root = etree.fromstring(root)
-        for child in root:
-            if child.tag.endswith('infNFe'):
-                return certificado.assinar(child, ref)
+    def assinar(self):
+        for nota in self.notas:
+            nota.NFe.assinar()
 
     def status_servico(self, uf):
         st = StatusServico(self.config)

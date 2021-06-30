@@ -46,7 +46,7 @@ class CTe(brasil.dfe.leiaute.cte.cte_v300.CTe):
         if self._config:
             config = self._config
             if self.infCte.ide.tpAmb == '2':
-                if str(self.infCte.ide.tpEmis) == '8' and config.uf in (31, 41, 50, 51):
+                if str(self.infCte.ide.tpEmis) == '8' and config.orgao in (31, 41, 50, 51):
                     url = config.services.get('URL-QRCode', config.get_uf_emis(), config.amb)
                 else:
                     url = config.services.get('URL-QRCode', config.uf, config.amb)
