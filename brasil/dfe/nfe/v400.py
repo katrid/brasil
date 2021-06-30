@@ -21,6 +21,7 @@ from brasil.dfe.leiaute.nfe.retInutNFe_v400 import retInutNFe
 
 class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
     _xmlns = 'http://www.portalfiscal.inf.br/nfe'
+    _config = None
     schema = None
 
     def __init__(self, *args, **kwargs):
@@ -47,10 +48,19 @@ class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
         self.infNFe.ide.cDV = value[-1]
         self.infNFe.Id = 'NFe' + value
 
+    def _prepare(self):
+        if self.infNFe.ide.tpAmb == '2':
+            self.infNFe.dest.xNome = 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
+
     def _xml(self, name=None):
+        self._prepare()
         for i, det in enumerate(self.infNFe.det._list):
             det.nItem = i + 1
         return remover_acentos(super()._xml(name)).decode('utf-8')
+
+    def assinar(self):
+        self._prepare()
+        self.Signature = self._config.certificado.assinar(remover_acentos(self._xml()), self.infNFe.Id)
 
 
 class nfeProc(brasil.dfe.leiaute.nfe.procNFe_v400.nfeProc):
