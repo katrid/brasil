@@ -1,3 +1,4 @@
+import os
 import datetime
 from lxml import etree
 from ..base import DocumentoFiscal
@@ -117,7 +118,6 @@ class NotaFiscal(DocumentoFiscal):
         svc.xml.idLote = lote
         svc.xml.evento.append(evento)
         evento.Signature = self.config.certificado.assinar(etree.fromstring(evento._xml()), id_evento)
-        self.config.salvar_arquivo()
         # evento.Signature = '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></CanonicalizationMethod><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"></SignatureMethod><Reference URI="#ID1101112921060003314160690055920000000708123800195401"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></Transform><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></Transform></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></DigestMethod><DigestValue>hnfdfEXVzMEbJReFpOZFcskn4EE=</DigestValue></Reference></SignedInfo><SignatureValue>RVD6VYTf7D+c7xFFXpX1zSa33C4342FfJWMIQthdUMsN95Z9hw1Tf0Ic+5qfPtZd12femHrfKKLNoMlpDbuLX0RnmLxBU4RUQxqWUZOKq/4DxJJyfHteyay+I7DS/tvdmN6FMaOPT2DlFcRfb68P6zAFba0VVLpkXm9uJ+8RVZUIdLjljuGZNDJVgXku5tDYUYZ/5YJ6uRXvFAniSqd46sAcROUz7NsGkwCFSvOWJNLk3ewv1RNeD6Cxlg4HOKmn7MKNBVJzNrHgFYghhH4Wct2flRvV6RVgRblOaY0er9CpqFG+ujkGNnPY3XOQR/r3n8YYhp4+XODkkDYkC3AAfw==</SignatureValue><KeyInfo><X509Data><X509Certificate>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</X509Certificate></X509Data></KeyInfo></Signature>'
         svc.executar()
         return svc
@@ -157,6 +157,21 @@ class NotaFiscal(DocumentoFiscal):
         st.xml.cUF = uf
         st.executar()
         return st
+
+    def _imprimir_pdf(self, nfe: _NFe):
+        if nfe.nfeProc:
+            self.pdf_lib.nfePdf(nfe.nfeProc._xml().encode('utf-8'))
+        else:
+            self.pdf_lib.nfePdf(nfe.NFe._xml().encode('utf-8'))
+        pdf = os.path.join(self.pdf_output_path, nfe.chave + '-nfe.pdf')
+        if os.path.isfile(pdf):
+            return pdf
+
+    def _imprimir_evento_pdf(self, xml: str):
+        pdf = xml.split('Id="', 1)[1][2:54] + '-procEventoNFe.pdf'
+        self.pdf_lib.nfeEventoPdf(xml.encode('utf-8'))
+        if os.path.isfile(os.path.join(self.pdf_output_path, pdf)):
+            return pdf
 
 
 class WebServices:
