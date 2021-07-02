@@ -5,7 +5,8 @@ unit dmnfe;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, ACBrNFe, ACBrCTe, ACBrCTeDACTeRLClass, ACBrNFeDANFeRLClass;
+  Classes, SysUtils, Dialogs, ACBrNFe, ACBrCTe, ACBrCTeDACTeRLClass,
+  ACBrNFeDANFeRLClass, ACBrNFeDANFeLazReport;
 
 type
 
@@ -15,6 +16,7 @@ type
     ACBrCTe1: TACBrCTe;
     ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
     ACBrNFe1: TACBrNFe;
+    ACBrNFeDANFeLazReport1: TACBrNFeDANFeLazReport;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
   private
 
@@ -46,7 +48,7 @@ function nfePdf(xml: PChar): Integer; cdecl;
 begin
   try
     dm.ACBrNFe1.NotasFiscais.LoadFromString(xml);
-    dm.ACBrNFeDANFeRL1.PathPDF:=pathPdf;
+    dm.ACBrNFeDANFeLazReport1.PathPDF:=pathPdf;
     dm.ACBrNFe1.NotasFiscais.ImprimirPDF;
   finally
     dm.ACBrNFe1.NotasFiscais.Clear;
@@ -58,7 +60,7 @@ function nfeEventoPdf(xml: PChar): Integer; cdecl;
 begin
   try
     dm.ACBrNFe1.EventoNFe.LerXMLFromString(xml);
-    dm.ACBrNFeDANFeRL1.PathPDF:=pathPdf;
+    dm.ACBrNFeDANFeLazReport1.PathPDF:=pathPdf;
     dm.ACBrNFe1.ImprimirEventoPDF;
   finally
     dm.ACBrNFe1.NotasFiscais.Clear;

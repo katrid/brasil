@@ -25,19 +25,22 @@
       <FormatVersion Value="2"/>
       <Modes Count="0"/>
     </RunParams>
-    <RequiredPackages Count="4">
+    <RequiredPackages Count="5">
       <Item1>
-        <PackageName Value="ACBr_CTe_DACTeRL"/>
+        <PackageName Value="ACBr_NFe_Danfe_LazReport"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_CTe"/>
+        <PackageName Value="ACBr_CTe_DACTeRL"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="ACBr_CTe"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item4>
+      <Item5>
+        <PackageName Value="ACBr_NFe"/>
+      </Item5>
     </RequiredPackages>
     <Units Count="3">
       <Unit0>

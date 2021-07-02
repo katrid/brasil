@@ -1,7 +1,7 @@
 object NFeDM: TNFeDM
   OldCreateOrder = False
   Height = 337
-  HorizontalOffset = 4269
+  HorizontalOffset = 2972
   VerticalOffset = 344
   Width = 818
   object ACBrNFe1: TACBrNFe
@@ -15,7 +15,7 @@ object NFeDM: TNFeDM
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
-    DANFE = ACBrNFeDANFeRL1
+    DANFE = ACBrNFeDANFeLazReport1
     Left = 174
     Top = 91
   end
@@ -38,7 +38,6 @@ object NFeDM: TNFeDM
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
-    ACBrNFe = ACBrNFe1
     Left = 174
     Top = 152
   end
@@ -84,8 +83,29 @@ object NFeDM: TNFeDM
     ExibeResumoCanhoto = False
     EPECEnviado = False
     ImprimeDescPorc = False
-    PrintDialog = True
+    PrintDialog = False
     Left = 304
     Top = 152
+  end
+  object ACBrNFeDANFeLazReport1: TACBrNFeDANFeLazReport
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
+    MargemInferior = 8
+    MargemSuperior = 8
+    MargemEsquerda = 6
+    MargemDireita = 5.1
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrNFe = ACBrNFe1
+    Left = 472
+    Top = 80
   end
 end

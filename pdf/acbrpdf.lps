@@ -3,21 +3,20 @@
   <ProjectSession>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="5">
+    <Units Count="7">
       <Unit0>
         <Filename Value="acbrpdf.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <CursorPos X="16" Y="12"/>
-        <UsageCount Value="26"/>
+        <CursorPos X="52" Y="17"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="nfe.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="1"/>
-        <CursorPos X="21" Y="8"/>
-        <UsageCount Value="26"/>
+        <CursorPos X="57" Y="13"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
@@ -26,31 +25,52 @@
         <ComponentName Value="NFeDM"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="34"/>
-        <CursorPos X="5" Y="60"/>
-        <UsageCount Value="26"/>
+        <TopLine Value="35"/>
+        <CursorPos X="30" Y="63"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="../../ACBr/Fontes/ACBrDFe/ACBrNFe/ACBrNFeNotasFiscais.pas"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="75"/>
         <CursorPos X="15" Y="93"/>
-        <UsageCount Value="13"/>
+        <UsageCount Value="14"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="../../ACBr/Fontes/ACBrDFe/ACBrNFe/DANFE/NFe/Fortes/ACBrNFeDANFeRLClass.pas"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="245"/>
-        <CursorPos X="3" Y="269"/>
-        <UsageCount Value="11"/>
+        <TopLine Value="210"/>
+        <CursorPos X="3" Y="216"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="../../ACBr/Fontes/ACBrDFe/ACBrNFe/DANFE/NFe/Fortes/ACBrNFeDANFeRLPaisagem.pas"/>
+        <ComponentName Value="frlDANFeRLPaisagem"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="1501"/>
+        <CursorPos X="60" Y="1519"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="../../ACBr/Fontes/ACBrDFe/ACBrCTe/DACTE/Fortes/ACBrCTeDACTeRLClass.pas"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="71"/>
+        <CursorPos X="52" Y="88"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit6>
     </Units>
-    <JumpHistory Count="23" HistoryIndex="22">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="nfe.pas"/>
         <Caret Line="8" Column="8"/>
@@ -141,8 +161,32 @@
       </Position22>
       <Position23>
         <Filename Value="dmnfe.pas"/>
-        <Caret Line="48" Column="5" TopLine="29"/>
+        <Caret Line="48" Column="19" TopLine="28"/>
       </Position23>
+      <Position24>
+        <Filename Value="dmnfe.pas"/>
+        <Caret Line="18" Column="5" TopLine="10"/>
+      </Position24>
+      <Position25>
+        <Filename Value="../../ACBr/Fontes/ACBrDFe/ACBrNFe/DANFE/NFe/Fortes/ACBrNFeDANFeRLClass.pas"/>
+        <Caret Line="104" Column="21" TopLine="87"/>
+      </Position25>
+      <Position26>
+        <Filename Value="../../ACBr/Fontes/ACBrDFe/ACBrNFe/DANFE/NFe/Fortes/ACBrNFeDANFeRLClass.pas"/>
+        <Caret Line="216" Column="3" TopLine="210"/>
+      </Position26>
+      <Position27>
+        <Filename Value="../../ACBr/Fontes/ACBrDFe/ACBrNFe/DANFE/NFe/Fortes/ACBrNFeDANFeRLPaisagem.pas"/>
+        <Caret Line="1519" Column="61" TopLine="1501"/>
+      </Position27>
+      <Position28>
+        <Filename Value="../../ACBr/Fontes/ACBrDFe/ACBrCTe/DACTE/Fortes/ACBrCTeDACTeRLClass.pas"/>
+        <Caret Line="44" Column="29" TopLine="25"/>
+      </Position28>
+      <Position29>
+        <Filename Value="dmnfe.pas"/>
+        <Caret Line="18" Column="5" TopLine="10"/>
+      </Position29>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
