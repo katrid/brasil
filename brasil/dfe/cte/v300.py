@@ -9,7 +9,11 @@ from brasil.dfe.leiaute.cte.retConsStatServCTe_v300 import retConsStatServCte
 from brasil.dfe.leiaute.cte.consSitCTe_v300 import consSitCTe
 from brasil.dfe.leiaute.cte.retConsSitCTe_v300 import retConsSitCTe
 from brasil.dfe.leiaute.cte.enviCTe_v300 import enviCTe
+from brasil.dfe.leiaute.cte.eventoCTe_v300 import eventoCTe
+from brasil.dfe.leiaute.cte.retEventoCTe_v300 import retEventoCTe
 from brasil.dfe.leiaute.cte.retEnviCTe_v300 import retEnviCte
+from brasil.dfe.leiaute.cte.evPrestDesacordo_v300 import evPrestDesacordo
+
 from brasil.dfe.leiaute.cte.cteModalRodoviario_v300 import rodo
 from brasil.utils.text import remover_acentos
 

@@ -158,21 +158,22 @@ class NotaFiscal(DocumentoFiscal):
         st.executar()
         return st
 
-    def _imprimir_pdf(self, nfe: _NFe):
-        if nfe.nfeProc:
-            self.pdf_lib.nfePdf(nfe.nfeProc._xml().encode('utf-8'))
-        else:
-            self.pdf_lib.nfePdf(nfe.NFe._xml().encode('utf-8'))
-        pdf = os.path.join(self.pdf_output_path, nfe.chave + '-nfe.pdf')
-        if os.path.isfile(pdf):
-            return pdf
-
-    def _imprimir_evento_pdf(self, xml: str):
-        pdf = xml.split('Id="', 1)[1][2:54] + '-procEventoNFe.pdf'
-        self.pdf_lib.nfeEventoPdf(xml.encode('utf-8'))
-        if os.path.isfile(os.path.join(self.pdf_output_path, pdf)):
-            return pdf
-
+    # def _imprimir_pdf(self, nfe: _NFe):
+    #     fast_file = os.path.join(self._path_pdf_lib, '..', 'DANFeRetrato.fr3').encode('utf-8')
+    #     if nfe.nfeProc:
+    #         self.pdf_lib.nfePdf(fast_file, nfe.nfeProc._xml().encode('utf-8'))
+    #     else:
+    #         self.pdf_lib.nfePdf(fast_file, nfe.NFe._xml().encode('utf-8'))
+    #     pdf = os.path.join(self.pdf_output_path, nfe.chave + '-nfe.pdf')
+    #     if os.path.isfile(pdf):
+    #         return pdf
+    #
+    # def _imprimir_evento_pdf(self, xml: str):
+    #     pdf = xml.split('Id="', 1)[1][2:54] + '-procEventoNFe.pdf'
+    #     self.pdf_lib.nfeEventoPdf(xml.encode('utf-8'))
+    #     if os.path.isfile(os.path.join(self.pdf_output_path, pdf)):
+    #         return pdf
+    #
 
 class WebServices:
     pass

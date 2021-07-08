@@ -1,5 +1,5 @@
 import brasil.dfe.ws
-from .v300 import consStatServCte, retConsStatServCte, consSitCTe, retConsSitCTe, enviCTe, retEnviCte
+from .v300 import consStatServCte, retConsStatServCte, consSitCTe, retConsSitCTe, enviCTe, retEnviCte, eventoCTe, retEventoCTe
 
 
 class Header(brasil.dfe.ws.Header):
@@ -55,6 +55,22 @@ class Recepcao(WebService):
     xml: enviCTe
     Retorno = retEnviCte
     retorno: retEnviCte = None
+
+    def preparar(self):
+        super().preparar()
+        self.xml.tpAmb = self.config.amb
+
+
+class Evento(WebService):
+    versao = '3.00'
+    webservice = 'RecepcaoEvento'
+    namespace = 'http://www.portalfiscal.inf.br/cte'
+    wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento'
+    method = 'cteRecepcaoEvento'
+    Xml = eventoCTe
+    xml: eventoCTe
+    Retorno = retEventoCTe
+    retorno: retEventoCTe = None
 
     def preparar(self):
         super().preparar()
