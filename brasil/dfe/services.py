@@ -16,6 +16,8 @@ class Services:
                 new_dict.update(svcs[v['Usar']])
                 svcs[k] = new_dict
                 del new_dict['Usar']
+            for sk, sv in v.items():
+                v[sk.lower()] = sv
 
     def get(self, servico: str, uf: str, amb: str, versao: str = None):
         amb = str(amb)
@@ -23,7 +25,7 @@ class Services:
             amb = 'P'
         elif amb == '2':
             amb = 'H'
-        chave = f'{self.tipo}_{uf}_{amb}'
+        chave = f'{self.tipo}_{uf}_{amb}'.lower()
         if versao:
             servico += '_' + versao
         return self._svcs[chave][servico]
