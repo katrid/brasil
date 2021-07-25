@@ -25,10 +25,10 @@ class Services:
             amb = 'P'
         elif amb == '2':
             amb = 'H'
-        chave = f'{self.tipo}_{uf}_{amb}'.lower()
+        chave = f'{self.tipo}_{uf}_{amb}'
         if versao:
             servico += '_' + versao
-        return self._svcs[chave][servico]
+        return self._svcs[chave][servico.lower()]
 
 
 class BaseConfig:
