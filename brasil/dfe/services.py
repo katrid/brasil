@@ -16,7 +16,7 @@ class Services:
                 new_dict.update(svcs[v['Usar']])
                 svcs[k] = new_dict
                 del new_dict['Usar']
-            for sk, sv in v.items():
+            for sk, sv in tuple(v.items()):
                 v[sk.lower()] = sv
 
     def get(self, servico: str, uf: str, amb: str, versao: str = None):
