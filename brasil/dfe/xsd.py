@@ -54,12 +54,14 @@ class ComplexType(SimpleType, metaclass=ElementType):
         self._cls._xml_props[name] = obj
         setattr(self._cls, name, obj)
 
-    def add(self, **kwargs):
+    def add(self, *args, **kwargs):
         new_obj = self.__class__()
         for k, v in kwargs.items():
             if v is not None:
                 setattr(new_obj, k, v)
         self._list.append(new_obj)
+        if args:
+            new_obj._read_xml(args[0])
         return new_obj
 
     def append(self, obj):
@@ -128,7 +130,10 @@ class ComplexType(SimpleType, metaclass=ElementType):
                     v = child.text
                     setattr(self, tag, v)
                 else:
-                    getattr(self, tag)._read_xml(child)
+                    if self.max_occurs and (self.max_occurs > 1 or self.max_occurs == -1):
+                        getattr(self, tag).add(child)
+                    else:
+                        getattr(self, tag)._read_xml(child)
 
     def _validar(self):
         """Validar o conteúdo do elemento conforme regras especificadas no xsd"""
