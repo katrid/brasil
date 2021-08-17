@@ -1,5 +1,9 @@
 import brasil.dfe.ws
-from .v300 import consStatServCte, retConsStatServCte, consSitCTe, retConsSitCTe, enviCTe, retEnviCte, eventoCTe, retEventoCTe
+from brasil.dfe.utils.xml_utils import tag
+from .v300 import (
+    consStatServCte, retConsStatServCte, consSitCTe, retConsSitCTe, enviCTe, retEnviCte, eventoCTe, retEventoCTe,
+    distDFeInt, retDistDFeInt,
+)
 
 
 class Header(brasil.dfe.ws.Header):
@@ -14,13 +18,48 @@ class Body(brasil.dfe.ws.Body):
 
 
 class WebService(brasil.dfe.ws.BaseService):
+    versao = '3.00'
     namespace = 'http://www.portalfiscal.inf.br/cte'
     header = Header
     body = Body
 
 
+class Distribuicao(WebService):
+    class DistribuicaoBody(Body):
+        soapVersion = 'soap'
+        element = 'cteDadosMsg'
+
+        def __str__(self):
+            v = str(self.soapVersion) + ':' if self.soapVersion else ''
+            kwargs = {}
+            if self.xmlns:
+                kwargs['xmlns'] = self.xmlns
+            return tag(
+                v + 'Body',
+                tag(
+                    'cteDistDFeInteresse',
+                    tag(
+                        self.element,
+                        self.xml,
+                    ),
+                    **kwargs
+                ),
+            )
+
+    body = DistribuicaoBody
+    header = None
+    versao = '1.00'
+    webservice = 'CTeDistribuicaoDFe'
+    namespace = 'http://www.portalfiscal.inf.br/cte'
+    wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CTeDistribuicaoDFe'
+    method = 'cteDistDFeInteresse'
+    Xml = distDFeInt
+    xml: distDFeInt
+    Retorno = retDistDFeInt
+    retorno: retDistDFeInt = None
+
+
 class Consulta(WebService):
-    versao = '3.00'
     webservice = 'CTeConsultaProtocolo'
     namespace = 'http://www.portalfiscal.inf.br/cte'
     wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CteConsulta'

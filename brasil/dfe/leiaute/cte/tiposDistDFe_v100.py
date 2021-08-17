@@ -5,14 +5,14 @@ from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 
 
-class TNSU(token):
+class TNSU(str):
     """Tipo número sequencial único"""
     _restriction = Restriction(base=r"xs:token", pattern=r"[0-9]{15}", enumeration=[])
     pass
 
 
 
-class TQNSU(unsignedShort):
+class TQNSU(str):
     """Tipo quantidade de NSU"""
     _restriction = Restriction(base=r"xs:unsignedShort", enumeration=[])
     pass

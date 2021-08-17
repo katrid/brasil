@@ -3,6 +3,7 @@ from datetime import date, datetime
 from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
+from lxml import etree
 
 
 class SignatureValueType(Element):
@@ -72,10 +73,26 @@ class KeyInfoType(Element):
 
 
 class SignatureType(Element):
+    _xmlns = "http://www.w3.org/2000/09/xmldsig#"
     SignedInfo: SignedInfoType = Element(SignedInfoType)
     SignatureValue: SignatureValueType = Element(SignatureValueType)
     KeyInfo: KeyInfoType = Element(KeyInfoType)
     Id: str = Attribute(ID)
+    _value: str = None
+
+    def _read_xml(self, xml):
+        if isinstance(xml, etree._Element):
+            xml = etree.tostring(xml).decode('utf-8')
+        self._value = xml
+
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self
+        else:
+            return self._value
+
+    def _xml(self, name=None):
+        return self._value
 
 
 class Signature(SignatureType):

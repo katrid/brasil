@@ -10,6 +10,7 @@ from .tiposDistDFe_v100 import *
 class distDFeInt(ComplexType):
     """Schema de pedido de distribuição de DF-e de interesse"""
     _choice = [['CNPJ', 'CPF'], ['distNSU', 'consNSU']]
+    _xmlns = 'http://www.portalfiscal.inf.br/cte'
     @property
     def CNPJCPF(self):
         return self.CPF or self.CNPJ
@@ -37,4 +38,3 @@ class distDFeInt(ComplexType):
     consNSU: consNSU = Element(consNSU, documentation=['Grupo para consultar um DF-e a partir de um NSU específico'])
     versao: str = Attribute(TVerDistDFe)
 
-distDFeInt: distDFeInt = Element(distDFeInt, documentation=['Schema de pedido de distribuição de DF-e de interesse'])

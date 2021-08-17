@@ -2,7 +2,6 @@ import decimal
 import os
 from lxml import etree
 
-from brasil.dfe.xsd import Alias
 import brasil.dfe.leiaute.cte.cte_v300
 from brasil.dfe.leiaute.cte.consStatServCTe_v300 import consStatServCte
 from brasil.dfe.leiaute.cte.retConsStatServCTe_v300 import retConsStatServCte
@@ -13,6 +12,8 @@ from brasil.dfe.leiaute.cte.eventoCTe_v300 import eventoCTe
 from brasil.dfe.leiaute.cte.retEventoCTe_v300 import retEventoCTe
 from brasil.dfe.leiaute.cte.retEnviCTe_v300 import retEnviCte
 from brasil.dfe.leiaute.cte.evPrestDesacordo_v300 import evPrestDesacordo
+from brasil.dfe.leiaute.cte.distDFeInt_v100 import distDFeInt
+from brasil.dfe.leiaute.cte.retDistDFeInt_v100 import retDistDFeInt
 
 from brasil.dfe.leiaute.cte.cteModalRodoviario_v300 import rodo
 from brasil.utils.text import remover_acentos

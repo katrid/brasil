@@ -31,11 +31,14 @@ class ComplexType(SimpleType, metaclass=ElementType):
     _cls: 'ComplexType' = None
     _xmltmp = None
     _parent = None
+    _max_occurs = None
 
     def __init__(self, cls=None,  min_occurs=None, max_occurs=None):
         self._cls = cls
         self.min_occurs = min_occurs
         self.max_occurs = max_occurs
+        if max_occurs is None and self._max_occurs:
+            self.max_occurs = self._max_occurs
         self._list = []
 
         if self._xml_props:
@@ -130,10 +133,11 @@ class ComplexType(SimpleType, metaclass=ElementType):
                     v = child.text
                     setattr(self, tag, v)
                 else:
-                    if self.max_occurs and (self.max_occurs > 1 or self.max_occurs == -1):
-                        getattr(self, tag).add(child)
+                    sub = getattr(self, tag)
+                    if sub.max_occurs and (sub.max_occurs > 1 or self.max_occurs == -1):
+                        sub.add()._read_xml(child)
                     else:
-                        getattr(self, tag)._read_xml(child)
+                        sub._read_xml(child)
 
     def _validar(self):
         """Validar o conteúdo do elemento conforme regras especificadas no xsd"""

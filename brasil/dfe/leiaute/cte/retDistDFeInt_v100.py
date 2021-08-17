@@ -27,4 +27,3 @@ class retDistDFeInt(ComplexType):
     loteDistDFeInt: loteDistDFeInt = Element(loteDistDFeInt, documentation=['Conjunto de informações resumidas e documentos fiscais eletrônicos de interesse da pessoa ou empresa. '])
     versao: str = Attribute(TVerDistDFe)
 
-retDistDFeInt: retDistDFeInt = Element(retDistDFeInt, documentation=['Schema do resultado do pedido de distribuição de DF-e de interesse'])

@@ -524,6 +524,7 @@
     "RecepcaoEventoAN_3.00": "https://homologacao.nfe.fazenda.sp.gov.br/cteWEB/services/CteRecepcaoEvento.asmx"
   },
   "CTe_SVRS_P": {
+    "CTeDistribuicaoDFe_1.00": "https://www1.cte.fazenda.gov.br/CTeDistribuicaoDFe/CTeDistribuicaoDFe.asmx",
     "RecepcaoEvento_2.00": "https://cte.svrs.rs.gov.br/ws/cterecepcaoevento/CTeRecepcaoEvento.asmx",
     "CTeRecepcao_2.00": "https://cte.svrs.rs.gov.br/ws/cterecepcao/CTeRecepcao.asmx",
     "CTeRetRecepcao_2.00": "https://cte.svrs.rs.gov.br/ws/cteretrecepcao/CTeRetRecepcao.asmx",
@@ -545,6 +546,7 @@
     "CTeRecepcaoGTVe_3.00": "https://cte.svrs.rs.gov.br/ws/CTeRecepcaoGTVe/CTeRecepcaoGTVe.asmx"
   },
   "CTe_SVRS_H": {
+    "CTeDistribuicaoDFe_1.00": "https://hom1.cte.fazenda.gov.br/CTeDistribuicaoDFe/CTeDistribuicaoDFe.asmx",
     "RecepcaoEvento_2.00": "https://cte-homologacao.svrs.rs.gov.br/ws/cterecepcaoevento/CTeRecepcaoEvento.asmx",
     "CTeRecepcao_2.00": "https://cte-homologacao.svrs.rs.gov.br/ws/cterecepcao/CTeRecepcao.asmx",
     "CTeRetRecepcao_2.00": "https://cte-homologacao.svrs.rs.gov.br/ws/cteretrecepcao/CTeRetRecepcao.asmx",
