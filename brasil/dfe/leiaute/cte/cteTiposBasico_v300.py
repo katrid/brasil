@@ -290,6 +290,16 @@ class TTime(str):
 class TCTe(Element):
     """Tipo Conhecimento de Transporte Eletrônico (Modelo 57)"""
 
+    @property
+    def chave(self):
+        if self.infCte.Id:
+            return self.infCte.Id[3:]
+
+    @chave.setter
+    def chave(self, value):
+        self.infCte.ide.cDV = value[-1]
+        self.infCte.Id = 'CTe' + value
+
     class infCte(ComplexType):
         """Informações do CT-e"""
         _choice = [['infCTeNorm', 'infCteComp', 'infCteAnu']]

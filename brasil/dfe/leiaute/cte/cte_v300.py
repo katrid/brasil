@@ -8,4 +8,3 @@ from .cteTiposBasico_v300 import *
 
 class CTe(TCTe):
     pass
-

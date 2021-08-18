@@ -50,6 +50,10 @@ class Conhecimento(DocumentoFiscal):
             if child.tag.endswith('infCte'):
                 return self.config.certificado.assinar(child, ref)
 
+    def from_xml(self, xml: str):
+        doc = etree.fromstring(xml)
+        doc.tag.endswith('cteProc')
+
 
 class WebServices:
     pass

@@ -2,7 +2,9 @@ import decimal
 import os
 from lxml import etree
 
+from brasil.dfe.xsd import Element
 import brasil.dfe.leiaute.cte.cte_v300
+import brasil.dfe.leiaute.cte.procCTe_v300
 from brasil.dfe.leiaute.cte.consStatServCTe_v300 import consStatServCte
 from brasil.dfe.leiaute.cte.retConsStatServCTe_v300 import retConsStatServCte
 from brasil.dfe.leiaute.cte.consSitCTe_v300 import consSitCTe
@@ -34,16 +36,6 @@ class CTe(brasil.dfe.leiaute.cte.cte_v300.CTe):
             return self.schema.error_log.last_error.message
 
     @property
-    def chave(self):
-        if self.infCte.Id:
-            return self.infCte.Id[3:]
-
-    @chave.setter
-    def chave(self, value):
-        self.infCte.ide.cDV = value[-1]
-        self.infCte.Id = 'CTe' + value
-
-    @property
     def rodo(self) -> rodo:
         return self.infCte.infCTeNorm.infModal.rodo
 
@@ -65,3 +57,7 @@ class CTe(brasil.dfe.leiaute.cte.cte_v300.CTe):
     def _xml(self, name=None):
         self._prepare()
         return remover_acentos(super()._xml(name)).decode('utf-8')
+
+
+class cteProc(brasil.dfe.leiaute.cte.procCTe_v300.cteProc):
+    CTe = Element(CTe)
