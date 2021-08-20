@@ -98,6 +98,8 @@ class ComplexType(SimpleType, metaclass=ElementType):
                     v = ''.join(filter(prop._filter, v))
                 if isinstance(prop, Attribute):
                     kwargs[k] = v
+                elif isinstance(prop, TXML):
+                    args.append(prop._xml())
                 elif issubclass(prop._cls, str):
                     args.append(tag(k, v))
                 elif isinstance(prop, ComplexType):
@@ -292,3 +294,16 @@ class string(str):
 
 class dateTime(SimpleTypeElement):
     pass
+
+
+class TXML(SimpleTypeElement):
+    _value = None
+
+    def _xml(self, name=None):
+        if not self._value:
+            return ''
+        return self._value
+
+    def __set__(self, instance, value):
+        if instance is not None:
+            self._value = value

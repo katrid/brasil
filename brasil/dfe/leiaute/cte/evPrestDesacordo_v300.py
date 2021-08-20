@@ -9,7 +9,7 @@ from .eventoCTeTiposBasico_v300 import *
 
 class evPrestDesacordo(ComplexType):
     """Schema XML de validação do evento Prestação do Serviço em Desacordo 610110"""
-    descEvento: str = Element(str, documentation=['Descrição do Evento - “Prestação do Serviço em Desacordo”'])
-    indDesacordoOper: str = Element(str, documentation=['Indicador de operação em desacordo'])
+    descEvento: str = Element(str, documentation=['Descrição do Evento - “Prestação do Serviço em Desacordo”'], default='Prestação do Serviço em Desacordo')
+    indDesacordoOper: str = Element(str, documentation=['Indicador de operação em desacordo'], default='1')
     xObs: str = Element(str, documentation=['Observações do tomador'])
 

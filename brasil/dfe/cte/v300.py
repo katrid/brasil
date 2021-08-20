@@ -16,6 +16,7 @@ from brasil.dfe.leiaute.cte.retEnviCTe_v300 import retEnviCte
 from brasil.dfe.leiaute.cte.evPrestDesacordo_v300 import evPrestDesacordo
 from brasil.dfe.leiaute.cte.distDFeInt_v100 import distDFeInt
 from brasil.dfe.leiaute.cte.retDistDFeInt_v100 import retDistDFeInt
+from brasil.dfe.leiaute.cte.procCTe_v300 import cteProc
 
 from brasil.dfe.leiaute.cte.cteModalRodoviario_v300 import rodo
 from brasil.utils.text import remover_acentos
@@ -58,6 +59,3 @@ class CTe(brasil.dfe.leiaute.cte.cte_v300.CTe):
         self._prepare()
         return remover_acentos(super()._xml(name)).decode('utf-8')
 
-
-class cteProc(brasil.dfe.leiaute.cte.procCTe_v300.cteProc):
-    CTe = Element(CTe)

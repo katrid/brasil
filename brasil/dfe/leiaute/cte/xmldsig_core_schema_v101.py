@@ -72,10 +72,30 @@ class KeyInfoType(Element):
 
 
 class SignatureType(Element):
+    _xmlns = "http://www.w3.org/2000/09/xmldsig#"
     SignedInfo: SignedInfoType = Element(SignedInfoType)
     SignatureValue: SignatureValueType = Element(SignatureValueType)
     KeyInfo: KeyInfoType = Element(KeyInfoType)
     Id: str = Attribute(ID)
+    _value: str = None
+
+    def _read_xml(self, xml):
+        from lxml import etree
+        if isinstance(xml, etree._Element):
+            xml = etree.tostring(xml).decode('utf-8')
+        self._value = xml
+
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self
+        else:
+            return self.SignatureValue
+
+    def _xml(self, name=None):
+        return self._value
+
+    def __bool__(self):
+        return 'SignatureValue' in self._values
 
 
 class Signature(SignatureType):

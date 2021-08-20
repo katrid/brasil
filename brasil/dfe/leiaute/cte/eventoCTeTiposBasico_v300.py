@@ -2,7 +2,7 @@ from __future__ import annotations
 from datetime import date, datetime
 from decimal import Decimal
 from typing import List
-from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
+from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML
 from .xmldsig_core_schema_v101 import *
 
 from .tiposGeralCTe_v300 import *
@@ -18,6 +18,7 @@ class TVerEvento(str):
 
 class TEvento(Element):
     """Tipo Evento"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
 
     class infEvento(ComplexType):
         cOrgao: TCOrgaoIBGE = Element(TCOrgaoIBGE, documentation=['Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE extendida, utilizar 90 para identificar SUFRAMA'])
@@ -30,12 +31,14 @@ class TEvento(Element):
 
         class detEvento(ComplexType):
             """Detalhamento do evento específico"""
-            versaoEvento: str = Attribute(None)
+            from . import evPrestDesacordo_v300
+            versaoEvento: str = Attribute(None, default='3.00')
+            evPrestDesacordo = Element(evPrestDesacordo_v300.evPrestDesacordo)
         detEvento: detEvento = Element(detEvento, documentation=['Detalhamento do evento específico'])
         Id: str = Attribute(None)
     infEvento: infEvento = Element(infEvento)
     Signature: Signature = Element(Signature)
-    versao: str = Attribute(TVerEvento)
+    versao: str = Attribute(TVerEvento, default='3.00')
 
 
 

@@ -1,3 +1,5 @@
+from lxml import etree
+
 import brasil.dfe.ws
 from brasil.dfe.utils.xml_utils import tag
 from .v300 import (
@@ -113,6 +115,10 @@ class Evento(WebService):
 
     def preparar(self):
         super().preparar()
+        if not self.xml.infEvento.Id:
+            self.xml.infEvento.Id = f'ID{self.xml.infEvento.tpEvento}{self.xml.infEvento.chCTe}{str(self.xml.infEvento.nSeqEvento).zfill(2)}'
+        if not self.xml.Signature:
+            self.xml.Signature = self.config.certificado.assinar(etree.fromstring(self.xml._xml()), self.xml.infEvento.Id)
         self.xml.tpAmb = self.config.amb
 
 
