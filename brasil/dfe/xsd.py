@@ -101,7 +101,7 @@ class ComplexType(SimpleType, metaclass=ElementType):
                 elif isinstance(prop, TXML):
                     args.append(prop._xml())
                 elif issubclass(prop._cls, str):
-                    args.append(tag(k, v.replace('&', '&amp;')))
+                    args.append(tag(k, v))
                 elif isinstance(prop, ComplexType):
                     if isinstance(v, str):
                         args.append(v)
