@@ -95,7 +95,7 @@ class BaseService:
         # xml = etree.fromstring(self.xml._xml())
         # xml.attrib['xmlns'] = self.namespace
         # self.body.xml = etree.tostring(xml).decode('utf-8').replace('versao="4.00" xmlns="http://www.portalfiscal.inf.br/nfe"', 'xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"')
-        self.body.xml = self.xml._xml()
+        self.body.xml = self.xml._xml().replace('&', '&amp;')
         if self.config.salvar_arquivos:
             self.config.salvar_arquivo(self.body.xml, self.filename('env'))
         s += str(self.body)
