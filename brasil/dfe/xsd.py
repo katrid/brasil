@@ -114,7 +114,7 @@ class ComplexType(SimpleType, metaclass=ElementType):
         if self._xmlns:
             kwargs['xmlns'] = self._xmlns
         self._xmltmp = tag(name or self.__class__.__name__, *args, **kwargs)
-        return self._xmltmp
+        return self._xmltmp.replace('&', '&amp;')
 
     def _clear(self):
         self._xmltmp = None
