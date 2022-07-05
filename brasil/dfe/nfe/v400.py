@@ -29,13 +29,13 @@ class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
         self.infNFe.versao = '4.00'
         self.infNFe.emit.CRT = 3
 
-    def _validate_schema(self):
+    def _validate_schema(self, xml=None):
         if NFe.schema is None:
             NFe.schema = etree.XMLSchema(
                 file=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'schemas', 'nfe',
                                   'nfe_v4.00.xsd')
             )
-        if not self.schema.validate(etree.fromstring(self._xml())):
+        if not self.schema.validate(etree.fromstring(xml or self._xml())):
             return self.schema.error_log.last_error.message
 
     @property
@@ -60,7 +60,9 @@ class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
 
     def assinar(self):
         self._prepare()
-        self.Signature = self._config.certificado.assinar(self._xml(), self.infNFe.Id)
+        xml = self._xml()
+        self.Signature = self._config.certificado.assinar(xml, self.infNFe.Id)
+        return xml
 
 
 class nfeProc(brasil.dfe.leiaute.nfe.procNFe_v400.nfeProc):
