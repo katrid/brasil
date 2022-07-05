@@ -77,7 +77,6 @@ class NotaFiscal(DocumentoFiscal):
         amb = self.config.amb
         for nota in self.notas:
             nf = nota.NFe
-            # nf.Signature = self.assinar(nf._xml(), nf.infNFe.Id, self.config.certificado)
             svc.xml.NFe.append(nf)
         svc.xml.idLote = str(lote)
         svc.xml.indSinc = '1' if sincrono else '0'
