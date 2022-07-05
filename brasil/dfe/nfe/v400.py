@@ -56,13 +56,11 @@ class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
         self._prepare()
         for i, det in enumerate(self.infNFe.det._list):
             det.nItem = i + 1
-        return remover_acentos(super()._xml(name))
+        return remover_acentos(super()._xml(name)).decode('utf-8')
 
     def assinar(self):
         self._prepare()
-        xml = self._xml()
-        self.Signature = self._config.certificado.assinar(xml, self.infNFe.Id)
-        return self._xml()
+        self.Signature = self._config.certificado.assinar(self._xml(), self.infNFe.Id)
 
 
 class nfeProc(brasil.dfe.leiaute.nfe.procNFe_v400.nfeProc):
