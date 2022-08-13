@@ -103,6 +103,8 @@ class ComplexType(SimpleType, metaclass=ElementType):
                 elif issubclass(prop._cls, str):
                     if v and not v.startswith('<![CDATA['):
                         args.append(tag(k, v.replace('&', '&amp;')))
+                    else:
+                        args.append(tag(k, v))
                 elif isinstance(prop, ComplexType):
                     if isinstance(v, str):
                         args.append(v)
