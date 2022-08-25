@@ -24,3 +24,16 @@ def gerar_chave_acesso(uf: int, emis: datetime, cnpj: str, serie: int, numero: i
     res = f'{uf}{emis}{cnpj.zfill(14)}{str(modelo).zfill(2)}{str(serie).zfill(3)}{str(numero).zfill(9)}{tp_emi}{str(codigo).zfill(8)}'
     return res + str(modulo11(res))
 
+
+def parse_chave_acesso(chave: str):
+    return {
+        'uf': chave[:2],
+        'emissao': chave[2:6],
+        'cnpj': chave[6:20],
+        'modelo': chave[20:22],
+        'serie': chave[22:25],
+        'numero': chave[25:34],
+        'tp_emis': chave[34:35],
+        'codigo': chave[35:43],
+        'dv': chave[43:44],
+    }

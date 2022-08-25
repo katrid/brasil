@@ -4,7 +4,7 @@ import brasil.dfe.ws
 from brasil.dfe.utils.xml_utils import tag
 from .v300 import (
     consStatServCte, retConsStatServCte, consSitCTe, retConsSitCTe, enviCTe, retEnviCte, eventoCTe, retEventoCTe,
-    distDFeInt, retDistDFeInt,
+    distDFeInt, retDistDFeInt, consReciCTe, retConsReciCTe
 )
 
 
@@ -63,7 +63,6 @@ class Distribuicao(WebService):
 
 class Consulta(WebService):
     webservice = 'CTeConsultaProtocolo'
-    namespace = 'http://www.portalfiscal.inf.br/cte'
     wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CteConsulta'
     method = 'cteConsultaCT'
     Xml = consSitCTe
@@ -86,8 +85,30 @@ class Consulta(WebService):
         self.xml.chCTe = value
 
 
+class RetornoRecepcao(WebService):
+    webservice = 'CTeRetRecepcao'
+    wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CteRetRecepcao'
+    method = 'cteRetRecepcao'
+    Xml = consReciCTe
+    xml: consReciCTe
+    Retorno = retConsReciCTe
+    retorno: retConsReciCTe = None
+
+    def preparar(self):
+        super().preparar()
+        self.xml.versao = self.versao
+        self.xml.tpAmb = self.config.amb
+
+    @property
+    def recibo(self):
+        return self.xml.nRec
+
+    @recibo.setter
+    def recibo(self, value):
+        self.xml.nRec = value
+
+
 class Recepcao(WebService):
-    versao = '3.00'
     webservice = 'CTeRecepcao'
     namespace = 'http://www.portalfiscal.inf.br/cte'
     wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcao'

@@ -1,7 +1,6 @@
-from __future__ import annotations
 from datetime import date, datetime
 from decimal import Decimal
-from typing import List
+from typing import List, Union
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .xmldsig_core_schema_v101 import *
 
@@ -20,6 +19,7 @@ class TVerConsReciCTe(str):
 
 class TConsReciCTe(Element):
     """Tipo Pedido de Consulta do Recibo do Lote de CT-e"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     tpAmb: TAmb = Element(TAmb, documentation=['Identificação do Ambiente:\n1 - Produção\n2 - Homologação'])
     nRec: TRec = Element(TRec, documentation=['Número do Recibo do lote a ser consultado'])
     versao: str = Attribute(TVerConsReciCTe)
@@ -34,7 +34,7 @@ class TRetConsReciCTe(Element):
     cStat: TStat = Element(TStat, documentation=['código do status do retorno da consulta.'])
     xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do do retorno da consulta.'])
     cUF: TCodUfIBGE = Element(TCodUfIBGE, documentation=['Idntificação da UF'])
-    protCTe: List[TProtCTe] = Element(TProtCTe, max_occurs=50, documentation=['Conjunto de CT-es processados, só existe nos casos em que o lote consultado se encontra processado'])
+    protCTe: Union[TProtCTe, List[TProtCTe]] = Element(TProtCTe, max_occurs=50, documentation=['Conjunto de CT-es processados, só existe nos casos em que o lote consultado se encontra processado'])
     versao: str = Attribute(TVerConsReciCTe)
 
 

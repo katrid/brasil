@@ -9,3 +9,7 @@ from .consReciCTeTiposBasico_v300 import *
 class consReciCTe(TConsReciCTe):
     pass
 
+
+class retConsReciCTe(TRetConsReciCTe):
+    pass
+

@@ -2,7 +2,7 @@ from lxml import etree
 from ..base import DocumentoFiscal
 from .v300 import CTe
 from .settings import Config
-from .ws import Recepcao
+from .ws import Recepcao, Consulta, RetornoRecepcao
 
 
 class Conhecimentos(list):
@@ -53,6 +53,12 @@ class Conhecimento(DocumentoFiscal):
     def from_xml(self, xml: str):
         doc = etree.fromstring(xml)
         doc.tag.endswith('cteProc')
+
+    def consultar(self, recibo: str) -> RetornoRecepcao:
+        svc = RetornoRecepcao(self.config)
+        svc.recibo = recibo
+        svc.executar()
+        return svc
 
 
 class WebServices:

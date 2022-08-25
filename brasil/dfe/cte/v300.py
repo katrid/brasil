@@ -17,6 +17,7 @@ from brasil.dfe.leiaute.cte.evPrestDesacordo_v300 import evPrestDesacordo
 from brasil.dfe.leiaute.cte.distDFeInt_v100 import distDFeInt
 from brasil.dfe.leiaute.cte.retDistDFeInt_v100 import retDistDFeInt
 from brasil.dfe.leiaute.cte.procCTe_v300 import cteProc
+from brasil.dfe.leiaute.cte.consReciCTe_v300 import consReciCTe, retConsReciCTe
 
 from brasil.dfe.leiaute.cte.cteModalRodoviario_v300 import rodo
 from brasil.utils.text import remover_acentos
