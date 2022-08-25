@@ -7,5 +7,5 @@ from .cteTiposBasico_v300 import *
 
 
 class enviCTe(TEnviCTe):
-    pass
+    _xmlns = 'http://www.portalfiscal.inf.br/cte'
 
