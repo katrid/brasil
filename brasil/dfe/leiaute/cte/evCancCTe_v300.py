@@ -10,7 +10,7 @@ from .eventoCTeTiposBasico_v300 import *
 class evCancCTe(ComplexType):
     """Schema XML de validação do evento do cancelamento 
 110111"""
-    descEvento: str = Element(str, documentation=['Descrição do Evento - “Cancelamento”'])
+    descEvento: str = Element(str, documentation=['Descrição do Evento - “Cancelamento”'], default='Cancelamento')
     nProt: TProt = Element(TProt, documentation=['Número do Protocolo de Status do CT-e. 1 posição tipo de autorizador (1 – Secretaria de Fazenda Estadual,  3 - SEFAZ Virtual RS, 5 - SEFAZ Virtual SP ); 2 posições ano; 10 seqüencial no ano.'])
     xJust: TJust = Element(TJust, documentation=['Justificativa do Cancelamento'])
 

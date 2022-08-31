@@ -109,6 +109,7 @@ class RetornoRecepcao(WebService):
 
 
 class Recepcao(WebService):
+    versao = '3.00'
     webservice = 'CTeRecepcao'
     namespace = 'http://www.portalfiscal.inf.br/cte'
     wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcao'
@@ -123,7 +124,7 @@ class Recepcao(WebService):
         self.xml.tpAmb = self.config.amb
 
 
-class Evento(WebService):
+class RecepcaoEvento(WebService):
     versao = '3.00'
     webservice = 'RecepcaoEvento'
     namespace = 'http://www.portalfiscal.inf.br/cte'
@@ -138,7 +139,7 @@ class Evento(WebService):
         super().preparar()
         if not self.xml.infEvento.Id:
             self.xml.infEvento.Id = f'ID{self.xml.infEvento.tpEvento}{self.xml.infEvento.chCTe}{str(self.xml.infEvento.nSeqEvento).zfill(2)}'
-        if not self.xml.Signature:
+        if self.xml.Signature is None:
             self.xml.Signature = self.config.certificado.assinar(etree.fromstring(self.xml._xml()), self.xml.infEvento.Id)
         self.xml.tpAmb = self.config.amb
 

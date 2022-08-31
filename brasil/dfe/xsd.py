@@ -100,7 +100,7 @@ class ComplexType(SimpleType, metaclass=ElementType):
                     kwargs[k] = v
                 elif isinstance(prop, TXML):
                     args.append(prop._xml())
-                elif issubclass(prop._cls, str):
+                elif isinstance(prop._cls, type) and issubclass(prop._cls, str):
                     if v and not v.startswith('<![CDATA['):
                         args.append(tag(k, v.replace('&', '&amp;')))
                     else:
