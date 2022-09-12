@@ -11,9 +11,9 @@ class _CTe:
     CTe: CTe = None
     cteProc: cteProc = None
 
-    def __init__(self, nfe=None, proc=None):
-        if nfe:
-            self.NFe = nfe
+    def __init__(self, cte=None, proc=None):
+        if cte:
+            self.CTe = cte
         elif proc:
             self.cteProc = proc
             self.CTe = self.cteProc.CTe
