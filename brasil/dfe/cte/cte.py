@@ -66,7 +66,7 @@ class Conhecimento(DocumentoFiscal):
     def enviar(self, lote: int):
         svc = Recepcao(self.config)
         for ct in self.conhecimentos:
-            svc.xml.CTe.append(ct)
+            svc.xml.CTe.append(ct.CTe)
         svc.xml.idLote = lote
         svc.executar()
         return svc
