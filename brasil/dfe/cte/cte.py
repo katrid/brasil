@@ -38,10 +38,10 @@ class Conhecimentos(list):
                 self.append(item)
                 return item
             elif xml.tag == '{http://www.portalfiscal.inf.br/cte}CTe':
-                nfe = CTe()
-                nfe._config = self._config
-                nfe._read_xml(xml)
-                item = _CTe(nfe=nfe)
+                cte = CTe()
+                cte._config = self._config
+                cte._read_xml(xml)
+                item = _CTe(cte=cte)
                 self.append(item)
                 return item
             raise Exception('Impossível carregar os dados do xml')
