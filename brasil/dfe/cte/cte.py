@@ -46,7 +46,7 @@ class Conhecimentos(list):
                 return item
             raise Exception('Impossível carregar os dados do xml')
         cte = _CTe(nfe=CTe())
-        cte.cteProc._config = self._config
+        cte.CTe._config = self._config
         self.append(cte)
         return cte
 
