@@ -34,8 +34,8 @@ class TEvento(Element):
             from . import evPrestDesacordo_v300
             from . import evCancCTe_v300
             versaoEvento: str = Attribute(None, default='3.00')
-            # evPrestDesacordo: evPrestDesacordo_v300.evPrestDesacordo = Element(evPrestDesacordo_v300.evPrestDesacordo)
-            evPrestDesacordo: evPrestDesacordo_v300.evPrestDesacordo = None
+            evPrestDesacordo: evPrestDesacordo_v300.evPrestDesacordo = Element(evPrestDesacordo_v300.evPrestDesacordo)
+            # evPrestDesacordo: evPrestDesacordo_v300.evPrestDesacordo = None
             evCancCTe: evCancCTe_v300.evCancCTe = None
             # evCancCTe: evCancCTe_v300.evCancCTe = None
         detEvento: detEvento = Element(detEvento, documentation=['Detalhamento do evento específico'])
