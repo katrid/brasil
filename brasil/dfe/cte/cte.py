@@ -93,11 +93,13 @@ class Conhecimento(DocumentoFiscal):
         return svc
 
     def cancelar(self, justificativa: str, lote, seq="1", cnpjcpf=None, dh=None, chave=None, orgao=None, protocolo=None, amb=2) -> RecepcaoEvento:
+        from brasil.dfe.leiaute.cte.evCancCTe_v300 import evCancCTe
         if dh is None:
             dh = datetime.datetime.now()
         evento = eventoCTe()
         inf = evento.infEvento
         inf.tpEvento = '110111'
+        inf.detEvento.evCancCTe = evCancCTe()
         inf.detEvento.evCancCTe.xJust = remover_acentos(justificativa).decode('utf-8')
         inf.dhEvento = dh
         inf.tpAmb = amb
