@@ -99,7 +99,7 @@ class Conhecimento(DocumentoFiscal):
         evento = eventoCTe()
         inf = evento.infEvento
         inf.tpEvento = '110111'
-        inf.detEvento.evCancCTe = evCancCTe()
+        # inf.detEvento.evCancCTe = evCancCTe()
         inf.detEvento.evCancCTe.xJust = remover_acentos(justificativa).decode('utf-8')
         inf.dhEvento = dh
         inf.tpAmb = amb
