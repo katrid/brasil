@@ -1,10 +1,13 @@
 import os
+import base64
+import gzip
 import datetime
 import requests
 from lxml import etree
 
 from .utils.xml_utils import tag
 from .services import BaseConfig
+from .ws import *
 
 
 class Header:
@@ -36,11 +39,15 @@ class Body:
     element: str = None
     xml: str = None
 
-    def __str__(self):
+    def parse_body(self):
         v = str(self.soapVersion) + ':' if self.soapVersion else ''
         kwargs = {}
         if self.xmlns:
             kwargs['xmlns'] = self.xmlns
+        return v, kwargs
+
+    def __str__(self):
+        v, kwargs = self.parse_body()
         return tag(
             v + 'Body',
             tag(
@@ -50,6 +57,16 @@ class Body:
             ),
         )
 
+    @property
+    def encoded_body(self):
+        v, kwargs = self.parse_body()
+        compressed_content = base64.b64encode((gzip.compress(self.xml.encode('utf-8')))).decode('utf-8')
+        body_tag = tag(self.element, compressed_content, **kwargs)
+        return tag(
+            v + 'Body',
+            body_tag
+        )
+         
 
 class BaseService:
     header: Header
@@ -87,10 +104,11 @@ class BaseService:
     def url(self):
         return self.config.services.get(self.webservice, self.uf, self.tpAmb, self.versao)
 
-    def envelope(self):
+    def envelope(self, encoded=False):
         self.preparar()
         s = ''
-        if self.header:
+        # na versão 4.00 não é necessario enviar soap header
+        if self.header and self.versao == '3.00':
             s += str(self.header)
         # xml = etree.fromstring(self.xml._xml())
         # xml.attrib['xmlns'] = self.namespace
@@ -98,7 +116,7 @@ class BaseService:
         self.body.xml = self.xml._xml()
         if self.config.salvar_arquivos:
             self.config.salvar_arquivo(self.body.xml, self.filename('env'))
-        s += str(self.body)
+        s += (self.body.encoded_body if encoded else str(self.body))
         t = self.body.soapVersion + ':Envelope'
         return f'<?xml version="1.0" encoding="UTF-8"?><{t} {self.xmlattrs}>{s}</{t}>'.encode('utf-8')
 

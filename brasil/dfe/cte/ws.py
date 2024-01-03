@@ -2,15 +2,15 @@ from lxml import etree
 
 import brasil.dfe.ws
 from brasil.dfe.utils.xml_utils import tag
-from .v300 import (
-    consStatServCte, retConsStatServCte, consSitCTe, retConsSitCTe, enviCTe, retEnviCte, eventoCTe, retEventoCTe,
-    distDFeInt, retDistDFeInt, consReciCTe, retConsReciCTe
+from .v400 import (
+    consStatServCTe, retConsStatServCTe, consSitCTe, retConsSitCTe, enviCTe, retEnviCte, eventoCTe, retEventoCTe,
+    distDFeInt, retDistDFeInt, consReciCTe, retConsReciCTe, retCTe, CTe
 )
 
 
 class Header(brasil.dfe.ws.Header):
     soapVersion = 'soap'
-    versaoDados = '3.00'
+    versaoDados = '4.00'
     element = 'cteCabecMsg'
 
 
@@ -20,7 +20,7 @@ class Body(brasil.dfe.ws.Body):
 
 
 class WebService(brasil.dfe.ws.BaseService):
-    versao = '3.00'
+    versao = '4.00'
     namespace = 'http://www.portalfiscal.inf.br/cte'
     header = Header
     body = Body
@@ -109,23 +109,31 @@ class RetornoRecepcao(WebService):
 
 
 class Recepcao(WebService):
-    versao = '3.00'
-    webservice = 'CTeRecepcao'
+    versao = '4.00'
+    # webservice = 'CTeRecepcao'
+    webservice = 'CTeRecepcaoSinc' # mudança de nome na versão 4.00
     namespace = 'http://www.portalfiscal.inf.br/cte'
-    wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcao'
-    method = 'cteRecepcaoLote'
-    Xml = enviCTe
-    xml: enviCTe
-    Retorno = retEnviCte
-    retorno: retEnviCte = None
+    wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CTeRecepcaoSincV4'
+    method = 'cteRecepcao'
+    Xml = CTe
+    xml: CTe
+    Retorno = retCTe
+    retorno: retCTe = None
 
     def preparar(self):
         super().preparar()
         self.xml.tpAmb = self.config.amb
 
+    def executar(self):
+        envelope = self.envelope(encoded=True)
+        self.enviar(envelope)
+        self.finalizar()
+        self.ok = self.response.status_code == 200
+        return self.ok
+
 
 class RecepcaoEvento(WebService):
-    versao = '3.00'
+    versao = '4.00'
     webservice = 'RecepcaoEvento'
     namespace = 'http://www.portalfiscal.inf.br/cte'
     wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento'
@@ -145,15 +153,15 @@ class RecepcaoEvento(WebService):
 
 
 class StatusServico(WebService):
-    versao = '3.00'
+    versao = '4.00'
     webservice = 'CTeStatusServico'
     namespace = 'http://www.portalfiscal.inf.br/cte'
     wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CteStatusServico'
     method = 'cteStatusServicoCT'
-    Xml = consStatServCte
-    xml: consStatServCte
-    Retorno = retConsStatServCte
-    retorno: retConsStatServCte = None
+    Xml = consStatServCTe
+    xml: consStatServCTe
+    Retorno = retConsStatServCTe
+    retorno: retConsStatServCTe = None
 
     def preparar(self):
         super().preparar()
