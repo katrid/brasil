@@ -1,7 +1,7 @@
 import datetime
 from lxml import etree
 from ..base import DocumentoFiscal
-from .v300 import CTe, TCancCTe, cteProc, Element
+from .v400 import CTe, TCancCTe, cteProc, Element
 from .settings import Config
 from .ws import Recepcao, Consulta, RetornoRecepcao, RecepcaoEvento, eventoCTe
 from brasil.utils.text import remover_acentos
@@ -63,11 +63,18 @@ class Conhecimento(DocumentoFiscal):
     def to_xml(self, doc: CTe=None):
         return doc._xml()
 
-    def enviar(self, lote: int):
+    # versao 4.0 nao utiliza mais lotes
+    def enviar_(self, lote: int):
         svc = Recepcao(self.config)
         for ct in self.conhecimentos:
             svc.xml.CTe.append(ct.CTe)
         svc.xml.idLote = lote
+        svc.executar()
+        return svc
+
+    def enviar(self):
+        svc = Recepcao(self.config)
+        svc.xml = self.conhecimento.CTe
         svc.executar()
         return svc
 
