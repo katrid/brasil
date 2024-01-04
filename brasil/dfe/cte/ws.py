@@ -2,6 +2,7 @@ from lxml import etree
 
 import brasil.dfe.ws
 from brasil.dfe.utils.xml_utils import tag
+from brasil.consts import CODIGO_UF
 from .v400 import (
     consStatServCTe, retConsStatServCTe, consSitCTe, retConsSitCTe, enviCTe, retEnviCte, eventoCTe, retEventoCTe,
     distDFeInt, retDistDFeInt, consReciCTe, retConsReciCTe, retCTe, CTe
@@ -156,15 +157,17 @@ class StatusServico(WebService):
     versao = '4.00'
     webservice = 'CTeStatusServico'
     namespace = 'http://www.portalfiscal.inf.br/cte'
-    wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CteStatusServico'
+    wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CTeStatusServicoV4'
     method = 'cteStatusServicoCT'
     Xml = consStatServCTe
     xml: consStatServCTe
     Retorno = retConsStatServCTe
     retorno: retConsStatServCTe = None
+    header = None
 
     def preparar(self):
         super().preparar()
         self.xml.versao = self.versao
         self.xml.tpAmb = self.config.amb
+        self.xml.cUF = CODIGO_UF[self.config.uf]
         self.xml.xServ = 'STATUS'

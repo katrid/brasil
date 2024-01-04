@@ -6,7 +6,7 @@ import os
 from math import isclose
 from lxml import etree
 from brasil.dfe.base import Validator
-from brasil.consts import UF, CIDADES, CODIGO_UF
+from brasil.consts import UF, CODIGO_UF
 from .rejections import rejections
 from brasil.utils.formulas import modulo11
 from brasil.dfe.utils.dfe_utils import parse_chave_acesso, validar_cnpj, validar_cpf
@@ -71,8 +71,7 @@ class CTeValidator(Validator):
         uf = ender.cUF if hasattr(ender, 'cUF') else CODIGO_UF.get(ender.UF)
         assert uf == ender.cMun[0:2]
         self.codigo = cods[3]
-        mun = CIDADES.get(ender.cMun)
-        assert mun is not None
+        assert bool(ender.cMun)
         # TODO verificar validação da IE, varia de acordo com a UF
 
     def _validate_modal_xml(self):
@@ -361,17 +360,17 @@ class CTeValidator(Validator):
         def validate_uf_env(self):
             self.codigo = 'G178'
             assert self.documento.infCte.ide.cMunEnv[0:2] == CODIGO_UF.get(self.documento.infCte.ide.UFEnv)
-            self.codigo = 'G179'
-            assert CIDADES.get(self.documento.infCte.ide.cMunEnv) is not None
+            # self.codigo = 'G179'
+            # assert CIDADES.get(self.documento.infCte.ide.cMunEnv) is not None
         
         def validate_uf_ini(self):
             self.codigo = 'G180'
             assert self.documento.infCte.ide.cMunIni[0:2] == CODIGO_UF.get(self.documento.infCte.ide.UFIni)
-            self.codigo = 'G181'
-            assert CIDADES.get(self.documento.infCte.ide.cMunIni) is not None
+            # self.codigo = 'G181'
+            # assert CIDADES.get(self.documento.infCte.ide.cMunIni) is not None
 
         def validate_uf_fim(self):
             self.codigo = 'G182'
             assert self.documento.infCte.ide.cMunFim[0:2] == CODIGO_UF.get(self.documento.infCte.ide.UFFim)
-            self.codigo = 'G183'
-            assert CIDADES.get(self.documento.infCte.ide.cMunFim) is not None
+            # self.codigo = 'G183'
+            # assert CIDADES.get(self.documento.infCte.ide.cMunFim) is not None

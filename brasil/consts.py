@@ -32,7 +32,3 @@ UF = {
 }
 
 CODIGO_UF = dict(zip(UF.values(), UF.keys()))
-
-CIDADES = {}
-with open(os.path.dirname(__file__) + '/utils/cidades.json', 'r') as f:
-    CIDADES = json.load(f)

@@ -7,5 +7,6 @@ from .consStatServTiposBasico_v400 import *
 
 
 class consStatServCTe(TConsStatServ):
+    _xmlns = 'http://www.portalfiscal.inf.br/cte'
     pass
 
