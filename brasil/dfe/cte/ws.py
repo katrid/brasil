@@ -156,9 +156,8 @@ class RecepcaoEvento(WebService):
         self.xml.tpAmb = self.config.amb
 
     def cancelar(
-            self, protocolo: str, justificativa: str, orgao=None, seq=1, amp=2, cpf=None, cnpj=None,
-            chave=None,
-            dh=None
+            self, protocolo: str, justificativa: str, orgao=None, seq=1, amp=2, cnpj=None,
+            chave=None, dh=None
     ):
         from brasil.dfe.cte.v400 import eventoCTe, evCancCTe
         evento = eventoCTe()
@@ -166,8 +165,7 @@ class RecepcaoEvento(WebService):
         inf.tpAmb = amp
         inf.cOrgao = orgao or self.config.orgao
         inf.nSeqEvento = seq
-        inf.CPF = cpf
-        inf.CNPJ = cnpj
+        inf.CNPJCPF = cnpj
         inf.chCTe = chave
         inf.tpEvento = '110111'
         inf.dhEvento = dh or datetime.datetime.now()
@@ -175,11 +173,12 @@ class RecepcaoEvento(WebService):
         canc.descEvento = 'Cancelamento'
         canc.nProt = protocolo
         canc.xJust = justificativa
-        xml = evento._xml()
         id_evento = evento.infEvento.Id = 'ID' + inf.tpEvento + inf.chCTe + str(inf.nSeqEvento).zfill(2)
+        xml = evento._xml()
         evento.Signature = self.config.certificado.assinar(xml, id_evento)
-        self.xml = xml
-        return self.executar()
+        self.xml = evento
+        self.executar()
+        return self
 
 
 class StatusServico(WebService):
