@@ -63,13 +63,15 @@ class Distribuicao(WebService):
 
 
 class Consulta(WebService):
+    versao = '4.00'
     webservice = 'CTeConsultaProtocolo'
-    wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CteConsulta'
+    wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CTeConsultaV4'
     method = 'cteConsultaCT'
     Xml = consSitCTe
     xml: consSitCTe
     Retorno = retConsSitCTe
     retorno: retConsSitCTe = None
+    header = None
 
     def preparar(self):
         super().preparar()
@@ -111,8 +113,7 @@ class RetornoRecepcao(WebService):
 
 class Recepcao(WebService):
     versao = '4.00'
-    # webservice = 'CTeRecepcao'
-    webservice = 'CTeRecepcaoSinc' # mudança de nome na versão 4.00
+    webservice = 'CTeRecepcaoSinc'  # mudança de nome na versão 4.00
     namespace = 'http://www.portalfiscal.inf.br/cte'
     wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CTeRecepcaoSincV4'
     method = 'cteRecepcao'

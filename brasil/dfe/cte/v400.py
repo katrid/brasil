@@ -73,4 +73,3 @@ class CTe(brasil.dfe.leiaute.cte.cte_v400.CTe):
     def _xml(self, name=None):
         self._prepare()
         return remover_acentos(super()._xml(name)).decode('utf-8')
-

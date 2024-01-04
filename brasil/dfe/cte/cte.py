@@ -93,9 +93,9 @@ class Conhecimento(DocumentoFiscal):
         doc = etree.fromstring(xml)
         doc.tag.endswith('cteProc')
 
-    def consultar(self, recibo: str) -> RetornoRecepcao:
-        svc = RetornoRecepcao(self.config)
-        svc.recibo = recibo
+    def consultar(self, chave: str) -> RetornoRecepcao:
+        svc = Consulta(self.config)
+        svc.chave = chave
         svc.executar()
         return svc
 

@@ -7,5 +7,6 @@ from .consSitCTeTiposBasico_v400 import *
 
 
 class consSitCTe(TConsSitCTe):
+    _xmlns = 'http://www.portalfiscal.inf.br/cte'
     pass
 

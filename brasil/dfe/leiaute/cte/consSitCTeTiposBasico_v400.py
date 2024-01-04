@@ -4,6 +4,7 @@ from decimal import Decimal
 from typing import List
 from brasil.dfe.xsd import SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime
 from .tiposGeralCTe_v400 import *
+from .cteTiposBasico_v400 import TProtCTe
 
 from .xmldsig_core_schema_v101 import *
 
@@ -33,9 +34,7 @@ class TRetConsSitCTe(Element):
     xMotivo: TMotivo = Element(TMotivo, documentation=['Descrição literal do status do serviço solicitado.'])
     cUF: TCodUfIBGE = Element(TCodUfIBGE, documentation=['código da UF de atendimento'])
 
-    class protCTe(ComplexType):
-        versao: str = Attribute(None)
-    protCTe: protCTe = Element(protCTe)
+    protCTe: protCTe = Element(TProtCTe)
 
     class procEventoCTe(ComplexType):
         _max_occurs = -1
