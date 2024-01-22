@@ -1,3 +1,4 @@
+from typing import Iterable
 import re
 from lxml import etree
 
@@ -55,7 +56,7 @@ TAG_ENVINFE = '{http://www.portalfiscal.inf.br/nfe}enviNFe'
 TAG_PROTNFE = '{http://www.portalfiscal.inf.br/nfe}protNFe'
 
 
-class NotaFiscais:
+class NotasFiscais:
     def __init__(self, xml=None):
         if (xml is not None) and xml.tag == TAG_ENVINFE:
             self._docs = [NodeProxy(n) for n in xml.findall(TAG_NFE)]
@@ -75,5 +76,5 @@ class NotaFiscais:
         return self._docs[item]
 
     @classmethod
-    def fromstring(cls, xml: bytes):
+    def fromstring(cls, xml: bytes) -> Iterable[NodeProxy]:
         return cls(etree.fromstring(xml))

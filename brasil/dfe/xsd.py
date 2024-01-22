@@ -169,13 +169,22 @@ class ComplexType(SimpleType, metaclass=ElementType):
             req = req and self._parent._required()
         return req
 
+    @classmethod
+    def fromstring(cls, s: str):
+        obj = cls()
+        obj._read_xml(s)
+        return obj
+
+    def __iter__(self):
+        return iter(self._list)
+
 
 class Element(ComplexType):
     _restriction = None
     _caption: str = None
     _tipo: str = None
 
-    def __init__(self, cls=None, min_occurs=None, max_occurs=None, documentation: list[str]=None, *args, **kwargs):
+    def __init__(self, cls=None, min_occurs=None, max_occurs=None, documentation: list[str]=None, xml=None, **kwargs):
         if min_occurs is None:
             min_occurs = 1
         super().__init__(cls, min_occurs=min_occurs, max_occurs=max_occurs)
@@ -191,13 +200,8 @@ class Element(ComplexType):
         self.min_occurs = min_occurs
         self.max_occurs = max_occurs
         self._values = {}
-        # if cls is None and self._xml_props:
-        #     for k, v in self._xml_props.items():
-        #         v = getattr(self, k)
-        #         if isinstance(v, Element):
-        #             setattr(self, k, v())
-        #         else:
-        #             setattr(self, k, None)
+        if xml:
+            self._read_xml(xml)
 
     def __call__(self, *args, **kwargs):
         if issubclass(self._cls, str):

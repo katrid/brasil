@@ -7,5 +7,5 @@ from .eventoCTeTiposBasico_v400 import *
 
 
 class eventoCTe(TEvento):
-    pass
+    _xmlns = 'http://www.portalfiscal.inf.br/cte'
 
