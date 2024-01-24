@@ -49,14 +49,41 @@ class NodeProxy:
                     ret[tag] = subdict
         return ret
 
-
+# Tags NFE
 TAG_NFEPROC = '{http://www.portalfiscal.inf.br/nfe}nfeProc'
 TAG_NFE = '{http://www.portalfiscal.inf.br/nfe}NFe'
 TAG_ENVINFE = '{http://www.portalfiscal.inf.br/nfe}enviNFe'
 TAG_PROTNFE = '{http://www.portalfiscal.inf.br/nfe}protNFe'
 
+# Tags CTe
+TAG_CTEPROC = '{http://www.portalfiscal.inf.br/cte}cteProc'
+TAG_CTE = '{http://www.portalfiscal.inf.br/cte}CTe'
+TAG_PROTCTE = '{http://www.portalfiscal.inf.br/cte}protCTe'
 
-class NotasFiscais:
+
+class Documento:
+    """
+    Classe para parsing de documentos fiscais a partir de string XML retornando uma árvore
+    de nós estruturados utilizando LXML.
+    """
+    _docs: [NodeProxy] = None
+    
+    def __iter__(self):
+        return iter(self._docs)
+
+    def __getitem__(self, item):
+        return self._docs[item]
+
+    @classmethod
+    def fromstring(cls, xml: bytes) -> Iterable[NodeProxy]:
+        return cls(etree.fromstring(xml))
+
+
+class NotasFiscais(Documento):
+    """
+    Classe para parsing de notas fiscais a partir da string do XML retornando uma árvore de nós
+    estruturados no padrão lxml Element
+    """
     def __init__(self, xml=None):
         if (xml is not None) and xml.tag == TAG_ENVINFE:
             self._docs = [NodeProxy(n) for n in xml.findall(TAG_NFE)]
@@ -69,12 +96,18 @@ class NotasFiscais:
         else:
             self._docs = []
 
-    def __iter__(self):
-        return iter(self._docs)
 
-    def __getitem__(self, item):
-        return self._docs[item]
-
-    @classmethod
-    def fromstring(cls, xml: bytes) -> Iterable[NodeProxy]:
-        return cls(etree.fromstring(xml))
+class CTe(Documento):
+    """
+    Classe para parsing de CTe a partir da string do XML retornando uma árvore de nós
+    estruturados no padrão lxml Element
+    """
+    def __init__(self, xml=None):
+        if (xml is not None) and xml.tag == TAG_CTEPROC:
+            cte_el = xml.findall(TAG_CTE)
+            prot_el = xml.findall(TAG_PROTCTE)
+            self._docs = [NodeProxy(n) for n in (cte_el, prot_el)]
+        elif (xml is not None) and xml.tag == TAG_CTE:
+            self._docs = [NodeProxy(xml)]
+        else:
+            self._docs = []

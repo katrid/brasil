@@ -1,0 +1,3634 @@
+{
+    "report": {
+        "type": "banded",
+        "pages": [
+            {
+                "bands": [
+                    {
+                        "name": "cabeçalho",
+                        "height": 224,
+                        "width": 600,
+                        "type": "DataBand",
+                        "autoSize": 0,
+                        "objects": [
+                            {
+                                "type": "text",
+                                "name": "text1",
+                                "left": 0,
+                                "top": 4,
+                                "height": 8,
+                                "width": 560,
+                                "text": "DECLARO QUE RECEBI OS VOLUMES DESTE CONHECIMENTO EM PERFEITO ESTADO PELO QUE DOU POR CUMPRIDO O PRESENTE CONTRATO DE TRANSPORTE",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text2",
+                                "left": 0,
+                                "top": 11,
+                                "height": 20,
+                                "width": 200,
+                                "text": "NOME:",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text3",
+                                "left": 0,
+                                "top": 31,
+                                "height": 24,
+                                "width": 200,
+                                "text": "RG:",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text4",
+                                "left": 200,
+                                "top": 31,
+                                "height": 24,
+                                "width": 156,
+                                "text": "ASSINATURA/CARIMBO",
+                                "hAlign": 1,
+                                "vAlign": 2,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text5",
+                                "left": 356,
+                                "top": 11,
+                                "height": 20,
+                                "width": 132,
+                                "text": "TÉRMINO DA PRESTAÇÃO - DATA/HORA",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text6",
+                                "left": 356,
+                                "top": 31,
+                                "height": 24,
+                                "width": 132,
+                                "text": "INÍCIO DA PRESTAÇÃO - DATA/HORA",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text7",
+                                "left": 488,
+                                "top": 11,
+                                "height": 12,
+                                "width": 72,
+                                "text": "CT-e",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text8",
+                                "left": 488,
+                                "top": 23,
+                                "height": 8,
+                                "width": 72,
+                                "text": "Nº DOCUMENTO",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text9",
+                                "left": 524,
+                                "top": 43,
+                                "height": 12,
+                                "width": 36,
+                                "text": "{{ dados.ide.serie }}",
+                                "hAlign": 2,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text10",
+                                "left": 488,
+                                "top": 31,
+                                "height": 12,
+                                "width": 72,
+                                "text": "{{ dados.ide.nCT }}",
+                                "hAlign": 2,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text11",
+                                "left": 488,
+                                "top": 43,
+                                "height": 12,
+                                "width": 36,
+                                "text": "SÉRIE:",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text12",
+                                "left": 0,
+                                "top": 65,
+                                "height": 88,
+                                "width": 232,
+                                "text": "",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "9pt",
+                                    "color": "#000000"
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text14",
+                                "left": 0,
+                                "top": 85,
+                                "height": 20,
+                                "width": 232,
+                                "text": "CNPJ: {{ dados.emit.CNPJ }}     IE: {{ dados.emit.IE }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "6",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": true,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text15",
+                                "left": 64,
+                                "top": 105,
+                                "height": 48,
+                                "width": 168,
+                                "text": "{{ dados.emit.enderEmit.xLgr }} - {{ dados.emit.enderEmit.xMun }} - {{ dados.emit.enderEmit.UF }}\nFone: {{ dados.emit.enderEmit.fone }} CEP: {{ dados.emit.enderEmit.CEP }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": true
+                            },
+                            {
+                                "type": "text",
+                                "name": "text13",
+                                "left": 0,
+                                "top": 65,
+                                "height": 20,
+                                "width": 232,
+                                "text": "{{ dados.emit.xNome }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": true,
+                                "wrap": true
+                            },
+                            {
+                                "type": "text",
+                                "name": "text17",
+                                "left": 234,
+                                "top": 65,
+                                "height": 12,
+                                "width": 100,
+                                "text": "DACTE",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text16",
+                                "left": 234,
+                                "top": 77,
+                                "height": 20,
+                                "width": 100,
+                                "text": "Documento Auxiliar do Conhecimento de Transporte Eletrônico",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": true
+                            },
+                            {
+                                "type": "text",
+                                "name": "text19",
+                                "left": 334,
+                                "top": 65,
+                                "height": 12,
+                                "width": 68,
+                                "text": "MODAL",
+                                "hAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text20",
+                                "left": 334,
+                                "top": 77,
+                                "height": 20,
+                                "width": 68,
+                                "text": "{{ dados.modal_name }}",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "6",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text21",
+                                "left": 402,
+                                "top": 65,
+                                "height": 12,
+                                "width": 28,
+                                "text": "FL",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text22",
+                                "left": 402,
+                                "top": 77,
+                                "height": 20,
+                                "width": 28,
+                                "text": "1/1",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "7",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text23",
+                                "left": 234,
+                                "top": 102,
+                                "height": 8,
+                                "width": 28,
+                                "text": "MODELO",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "3",
+                                    "color": "#000000",
+                                    "bold": false
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text24",
+                                "left": 262,
+                                "top": 102,
+                                "height": 8,
+                                "width": 20,
+                                "text": "SÉRIE",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "3",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text25",
+                                "left": 318,
+                                "top": 102,
+                                "height": 8,
+                                "width": 56,
+                                "text": "DATA E HORA EMISSÃO",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "3",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text26",
+                                "left": 374,
+                                "top": 102,
+                                "height": 8,
+                                "width": 56,
+                                "text": "INSC. SUFRAMA DEST",
+                                "hAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "3",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text18",
+                                "left": 234,
+                                "top": 110,
+                                "height": 20,
+                                "width": 28,
+                                "text": "{{ dados.ide.mod }}",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text27",
+                                "left": 262,
+                                "top": 110,
+                                "height": 20,
+                                "width": 20,
+                                "text": "{{ dados.ide.serie }}",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text28",
+                                "left": 282,
+                                "top": 102,
+                                "height": 8,
+                                "width": 36,
+                                "text": "NÚMERO",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "3",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text29",
+                                "left": 282,
+                                "top": 110,
+                                "height": 20,
+                                "width": 36,
+                                "text": "{{ dados.ide.nCT }}",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text30",
+                                "left": 318,
+                                "top": 110,
+                                "height": 20,
+                                "width": 56,
+                                "text": "{{ dados.dtEmi }} {{ dados.hEmi }}",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": true
+                            },
+                            {
+                                "type": "text",
+                                "name": "text31",
+                                "left": 374,
+                                "top": 110,
+                                "height": 20,
+                                "width": 56,
+                                "text": "{{ dados.dest.ISUF }}",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text32",
+                                "left": 430,
+                                "top": 77,
+                                "height": 144,
+                                "width": 132,
+                                "qrCode": true,
+                                "text": "{{ dados.qrcode }}",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "9pt",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text33",
+                                "left": 0,
+                                "top": 153,
+                                "height": 8,
+                                "width": 232,
+                                "text": "TIPO DO CT-E",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text34",
+                                "left": 0,
+                                "top": 161,
+                                "height": 8,
+                                "width": 232,
+                                "text": "{{ dados.tpCTe }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text35",
+                                "left": 0,
+                                "top": 169,
+                                "height": 8,
+                                "width": 232,
+                                "text": "TIPO DO SERVIÇO",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text36",
+                                "left": 0,
+                                "top": 177,
+                                "height": 8,
+                                "width": 232,
+                                "text": "{{ dados.tpServ }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text37",
+                                "left": 234,
+                                "top": 130,
+                                "height": 20,
+                                "width": 196,
+                                "text": "BARCODE",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "9pt",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text38",
+                                "left": 234,
+                                "top": 149,
+                                "height": 12,
+                                "width": 196,
+                                "text": "CHAVE DE ACESSO",
+                                "vAlign": 2,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text39",
+                                "left": 234,
+                                "top": 161,
+                                "height": 12,
+                                "width": 196,
+                                "text": "{{ dados.chave }}",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text40",
+                                "left": 0,
+                                "top": 185,
+                                "height": 8,
+                                "width": 76,
+                                "text": "IND. CT-E GLOBALIZADO",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text41",
+                                "left": 88,
+                                "top": 185,
+                                "height": 8,
+                                "width": 132,
+                                "text": "INFORMAÇÕES DO CT-E GLOBALIZADO",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text42",
+                                "left": 0,
+                                "top": 193,
+                                "height": 8,
+                                "width": 76,
+                                "text": "{{ dados.globalizado }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text43",
+                                "left": 88,
+                                "top": 197,
+                                "height": 8,
+                                "width": 132,
+                                "text": "{{ dados.obsGlobalizado }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text44",
+                                "left": 0,
+                                "top": 205,
+                                "height": 8,
+                                "width": 212,
+                                "text": "CFOP - NATUREZA DA OPERAÇÃO",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text45",
+                                "left": 0,
+                                "top": 213,
+                                "height": 8,
+                                "width": 236,
+                                "text": "{{ dados.ide.CFOP }} - {{ dados.ide.natOp }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text46",
+                                "left": 234,
+                                "top": 205,
+                                "height": 16,
+                                "width": 196,
+                                "text": "{{ dados.prot }}",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text47",
+                                "left": 234,
+                                "top": 172,
+                                "height": 12,
+                                "width": 196,
+                                "text": "Consulta em https://dfe-portal.svrs.rs.gov.br/CTE/Consulta",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            }
+                        ],
+                        "datasource": "dados"
+                    },
+                    {
+                        "name": "atores",
+                        "height": 140.99966430664062,
+                        "width": 600,
+                        "type": "DataBand",
+                        "autoSize": 0,
+                        "objects": [
+                            {
+                                "type": "text",
+                                "name": "text48",
+                                "left": 0,
+                                "top": 0.20001220703125,
+                                "height": 8,
+                                "width": 136,
+                                "text": "INÍCIO DA PRESTAÇÃO",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text49",
+                                "left": 0,
+                                "top": 8.20001220703125,
+                                "height": 8,
+                                "width": 300,
+                                "text": "{{ dados.ide.xMunIni }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text50",
+                                "left": 300,
+                                "top": 8.20001220703125,
+                                "height": 8,
+                                "width": 260,
+                                "text": "{{ dados.ide.xMunFim }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text51",
+                                "left": 300,
+                                "top": 0,
+                                "height": 8,
+                                "width": 248,
+                                "text": "TÉRMINO DA PRESTAÇÃO",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text52",
+                                "left": 0,
+                                "top": 16.399993896484375,
+                                "height": 8,
+                                "width": 300,
+                                "text": "REMETENTE: {{ atoresds.rem.xNome }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text53",
+                                "left": 0,
+                                "top": 24.399993896484375,
+                                "height": 8,
+                                "width": 300,
+                                "text": "ENDEREÇO: {{ atoresds.rem.enderReme.xLgr }} - {{ atoresds.rem.enderReme.nro }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text54",
+                                "left": 0,
+                                "top": 32.399993896484375,
+                                "height": 8,
+                                "width": 300,
+                                "text": "BAIRRO: {{ atoresds.rem.enderReme.xBairro }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text55",
+                                "left": 0,
+                                "top": 40.399993896484375,
+                                "height": 8,
+                                "width": 236,
+                                "text": "MUNICÍPIO: {{ atoresds.rem.enderReme.xMun }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text56",
+                                "left": 236,
+                                "top": 40.399993896484375,
+                                "height": 8,
+                                "width": 64,
+                                "text": "CEP: {{ atoresds.rem.enderReme.CEP }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text57",
+                                "left": 0,
+                                "top": 48.399993896484375,
+                                "height": 8,
+                                "width": 152,
+                                "text": "CPF/CNPJ: {{ atoresds.rem.CNPJ }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text58",
+                                "left": 152,
+                                "top": 48.399993896484375,
+                                "height": 8,
+                                "width": 148,
+                                "text": "INSCR.: {{ atoresds.rem.IE }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text59",
+                                "left": 0,
+                                "top": 56.399993896484375,
+                                "height": 8,
+                                "width": 100,
+                                "text": "UF: {{ atoresds.rem.enderReme.UF }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text60",
+                                "left": 100,
+                                "top": 56.399993896484375,
+                                "height": 8,
+                                "width": 112,
+                                "text": "PAÍS: {{ atoresds.rem.enderReme.xPais }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text52",
+                                "left": 300,
+                                "top": 16.399993896484375,
+                                "height": 8,
+                                "width": 260,
+                                "text": "DESTINATÁRIO: {{ atoresds.dest.xNome }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text53",
+                                "left": 300,
+                                "top": 24.399993896484375,
+                                "height": 8,
+                                "width": 260,
+                                "text": "ENDEREÇO: {{ atoresds.dest.enderDest.xLgr }} - {{ atoresds.dest.enderDest.nro }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text54",
+                                "left": 300,
+                                "top": 32.399993896484375,
+                                "height": 8,
+                                "width": 260,
+                                "text": "BAIRRO: {{ atoresds.dest.enderDest.xBairro }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text55",
+                                "left": 300,
+                                "top": 40.399993896484375,
+                                "height": 8,
+                                "width": 204,
+                                "text": "MUNICÍPIO: {{ atoresds.dest.enderDest.xMun }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text56",
+                                "left": 504,
+                                "top": 40.399993896484375,
+                                "height": 8,
+                                "width": 56,
+                                "text": "CEP: {{ atoresds.dest.enderDest.CEP }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text57",
+                                "left": 300,
+                                "top": 48.399993896484375,
+                                "height": 8,
+                                "width": 152,
+                                "text": "CPF/CNPJ: {{ atoresds.dest.CNPJ }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text58",
+                                "left": 452,
+                                "top": 48.399993896484375,
+                                "height": 8,
+                                "width": 108,
+                                "text": "INSCR.: {{ atoresds.dest.IE }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text59",
+                                "left": 300,
+                                "top": 56.399993896484375,
+                                "height": 8,
+                                "width": 100,
+                                "text": "UF: {{ atoresds.dest.enderDest.UF }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text60",
+                                "left": 400,
+                                "top": 56.399993896484375,
+                                "height": 8,
+                                "width": 92,
+                                "text": "PAÍS: {{ atoresds.dest.enderDest.xPais }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text61",
+                                "left": 212,
+                                "top": 56.79998779296875,
+                                "height": 8,
+                                "width": 88,
+                                "text": "FONE: {{ atoresds.rem.fone }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text62",
+                                "left": 492,
+                                "top": 56.79998779296875,
+                                "height": 8,
+                                "width": 68,
+                                "text": "FONE: {{ atoresds.dest.fone }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text52",
+                                "left": 0,
+                                "top": 65,
+                                "height": 8,
+                                "width": 300,
+                                "text": "EXPEDIDOR: {{ atoresds.exped.xNome }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text53",
+                                "left": 0,
+                                "top": 73,
+                                "height": 8,
+                                "width": 300,
+                                "text": "ENDEREÇO: {{ atoresds.exped.enderExped.xLgr }} - {{ atoresds.exped.enderExped.nro }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text54",
+                                "left": 0,
+                                "top": 81,
+                                "height": 8,
+                                "width": 300,
+                                "text": "BAIRRO: {{ atoresds.exped.enderExped.xBairro }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text55",
+                                "left": 0,
+                                "top": 89,
+                                "height": 8,
+                                "width": 236,
+                                "text": "MUNICÍPIO: {{ atoresds.exped.enderExped.xMun }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text56",
+                                "left": 236,
+                                "top": 89,
+                                "height": 8,
+                                "width": 64,
+                                "text": "CEP: {{ atoresds.exped.enderExped.CEP }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text57",
+                                "left": 0,
+                                "top": 97,
+                                "height": 8,
+                                "width": 152,
+                                "text": "CPF/CNPJ: {{ atoresds.exped.CNPJ }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text58",
+                                "left": 152,
+                                "top": 97,
+                                "height": 8,
+                                "width": 148,
+                                "text": "INSCR.: {{ atoresds.exped.IE }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text59",
+                                "left": 0,
+                                "top": 105,
+                                "height": 8,
+                                "width": 100,
+                                "text": "UF: {{ atoresds.exped.enderExped.UF }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text60",
+                                "left": 100,
+                                "top": 105,
+                                "height": 8,
+                                "width": 112,
+                                "text": "PAÍS: {{ atoresds.exped.enderExped.xPais }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text52",
+                                "left": 300,
+                                "top": 65,
+                                "height": 8,
+                                "width": 260,
+                                "text": "RECEBEDOR: {{ atoresds.receb.xNome }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text53",
+                                "left": 300,
+                                "top": 73,
+                                "height": 8,
+                                "width": 260,
+                                "text": "ENDEREÇO: {{ atoresds.receb.enderReceb.xLgr }} - {{ atoresds.receb.enderReceb.nro }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text54",
+                                "left": 300,
+                                "top": 81,
+                                "height": 8,
+                                "width": 260,
+                                "text": "BAIRRO: {{ atoresds.receb.enderReceb.xBairro }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text55",
+                                "left": 300,
+                                "top": 89,
+                                "height": 8,
+                                "width": 204,
+                                "text": "MUNICÍPIO: {{ atoresds.receb.enderReceb.xMun }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text56",
+                                "left": 504,
+                                "top": 89,
+                                "height": 8,
+                                "width": 56,
+                                "text": "CEP: {{ atoresds.receb.enderReceb.CEP }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text57",
+                                "left": 300,
+                                "top": 97,
+                                "height": 8,
+                                "width": 152,
+                                "text": "CPF/CNPJ: {{ atoresds.receb.CNPJ }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text58",
+                                "left": 452,
+                                "top": 97,
+                                "height": 8,
+                                "width": 108,
+                                "text": "INSCR.: {{ atoresds.receb.IE }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text59",
+                                "left": 300,
+                                "top": 105,
+                                "height": 8,
+                                "width": 100,
+                                "text": "UF: {{ atoresds.receb.enderReceb.UF }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text60",
+                                "left": 400,
+                                "top": 105,
+                                "height": 8,
+                                "width": 92,
+                                "text": "PAÍS: {{ atoresds.receb.enderReceb.xPais }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text61",
+                                "left": 212,
+                                "top": 105,
+                                "height": 8,
+                                "width": 88,
+                                "text": "FONE: {{ atoresds.exped.fone }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text62",
+                                "left": 492,
+                                "top": 105,
+                                "height": 8,
+                                "width": 68,
+                                "text": "FONE: {{ atoresds.receb.fone }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text63",
+                                "left": 0,
+                                "top": 112.79998779296875,
+                                "height": 8,
+                                "width": 300,
+                                "text": "TOMADOR DO SERVIÇO: {{ atoresds.toma.xNome }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text64",
+                                "left": 0,
+                                "top": 120.79998779296875,
+                                "height": 8,
+                                "width": 300,
+                                "text": "ENDEREÇO: {{ atoresds.toma.enderToma.xLgr }} - {{ atoresds.toma.enderToma.nro }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text65",
+                                "left": 0,
+                                "top": 128.79998779296875,
+                                "height": 8,
+                                "width": 164,
+                                "text": "CPF/CNPJ: {{ atoresds.toma.CNPJ }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text66",
+                                "left": 164,
+                                "top": 128.79998779296875,
+                                "height": 8,
+                                "width": 136,
+                                "text": "INSC. EST.: {{ atoresds.toma.IE }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text67",
+                                "left": 300,
+                                "top": 112.79998779296875,
+                                "height": 8,
+                                "width": 136,
+                                "text": "MUNICÍPIO: {{ atoresds.toma.enderToma.xMun }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text68",
+                                "left": 436,
+                                "top": 112.79998779296875,
+                                "height": 8,
+                                "width": 52,
+                                "text": "UF: {{ atoresds.toma.enderToma.UF }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text69",
+                                "left": 488,
+                                "top": 112.79998779296875,
+                                "height": 8,
+                                "width": 72,
+                                "text": "CEP: {{ atoresds.toma.enderToma.CEP }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text70",
+                                "left": 300,
+                                "top": 120.79998779296875,
+                                "height": 8,
+                                "width": 260,
+                                "text": "PAÍS: {{ atoresds.toma.enderToma.xPais }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text71",
+                                "left": 300,
+                                "top": 128.79998779296875,
+                                "height": 8,
+                                "width": 260,
+                                "text": "FONE: {{ atoresds.toma.enderToma.fone }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            }
+                        ],
+                        "datasource": "atoresds"
+                    },
+                    {
+                        "name": "carga",
+                        "height": 42.39984130859375,
+                        "width": 600,
+                        "type": "DataBand",
+                        "autoSize": 0,
+                        "objects": [
+                            {
+                                "type": "text",
+                                "name": "text72",
+                                "left": 4,
+                                "top": 0.400238037109375,
+                                "height": 8,
+                                "width": 220,
+                                "text": "PRODUTO PREDOMINANTE",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text73",
+                                "left": 220,
+                                "top": 0.400238037109375,
+                                "height": 8,
+                                "width": 168,
+                                "text": "OUTRAS CARACTERÍSTICAS DA CARGA",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text74",
+                                "left": 388,
+                                "top": 0.400238037109375,
+                                "height": 8,
+                                "width": 172,
+                                "text": "VALOR TOTAL DA MERCADORIA",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text75",
+                                "left": 0,
+                                "top": 8.400238037109375,
+                                "height": 12,
+                                "width": 220,
+                                "text": "{{ cargads.proPred }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text76",
+                                "left": 220,
+                                "top": 8.400238037109375,
+                                "height": 12,
+                                "width": 168,
+                                "text": "{{ cargads.xOutCat }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text77",
+                                "left": 388,
+                                "top": 8.400238037109375,
+                                "height": 12,
+                                "width": 172,
+                                "text": "{{ cargads.vCarga }}",
+                                "hAlign": 2,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text78",
+                                "left": 0,
+                                "top": 20.400238037109375,
+                                "height": 8,
+                                "width": 100,
+                                "text": "TIPO MEDIDA",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text79",
+                                "left": 100,
+                                "top": 20.400238037109375,
+                                "height": 8,
+                                "width": 84,
+                                "text": "QTD UN. MEDIDA",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text80",
+                                "left": 184,
+                                "top": 20.400238037109375,
+                                "height": 8,
+                                "width": 84,
+                                "text": "TIPO MEDIDA",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text81",
+                                "left": 268,
+                                "top": 20.400238037109375,
+                                "height": 8,
+                                "width": 84,
+                                "text": "QTD UN. MEDIDA",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text82",
+                                "left": 352,
+                                "top": 20.400238037109375,
+                                "height": 8,
+                                "width": 84,
+                                "text": "CUBAGEM (M³)",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text83",
+                                "left": 436,
+                                "top": 20.400238037109375,
+                                "height": 8,
+                                "width": 124,
+                                "text": "QUANTIDADE DE VOLUMES (UND)",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text84",
+                                "left": 0,
+                                "top": 28.400238037109375,
+                                "height": 12,
+                                "width": 100,
+                                "text": "{{ cargads.infQ.tpMed }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text85",
+                                "left": 100,
+                                "top": 28.400238037109375,
+                                "height": 12,
+                                "width": 84,
+                                "text": "{{ cargads.infQ.qCarga }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text86",
+                                "left": 184,
+                                "top": 28.400238037109375,
+                                "height": 12,
+                                "width": 168,
+                                "text": "",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "9pt",
+                                    "color": "#000000"
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text87",
+                                "left": 352,
+                                "top": 28.400238037109375,
+                                "height": 12,
+                                "width": 84,
+                                "text": "{{ cargads.cubagem }}",
+                                "hAlign": 2,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text88",
+                                "left": 436,
+                                "top": 28.400238037109375,
+                                "height": 12,
+                                "width": 124,
+                                "text": "{{ cargads.infQ.qCarga }}",
+                                "hAlign": 2,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            }
+                        ],
+                        "datasource": "cargads"
+                    },
+                    {
+                        "name": "prest",
+                        "height": 60.39996337890625,
+                        "width": 600,
+                        "type": "DataBand",
+                        "autoSize": "",
+                        "objects": [
+                            {
+                                "type": "text",
+                                "name": "text89",
+                                "left": 0,
+                                "top": 1.400360107421875,
+                                "height": 12,
+                                "width": 560,
+                                "text": "COMPONENTES DO VALOR DA PRESTAÇÃO DE SERVIÇO",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "border": {
+                                    "top": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text90",
+                                "left": 0,
+                                "top": 13.400360107421875,
+                                "height": 8,
+                                "width": 68,
+                                "text": "NOME",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text91",
+                                "left": 68,
+                                "top": 13.400360107421875,
+                                "height": 8,
+                                "width": 68,
+                                "text": "VALOR",
+                                "hAlign": 2,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text92",
+                                "left": 0,
+                                "top": 21.400360107421875,
+                                "height": 36,
+                                "width": 68,
+                                "text": "{{ prestds.Comp.xNome }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text93",
+                                "left": 68,
+                                "top": 21.400360107421875,
+                                "height": 36,
+                                "width": 68,
+                                "text": "{{ prestds.Comp.vComp }}",
+                                "hAlign": 2,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text90",
+                                "left": 140,
+                                "top": 13.400360107421875,
+                                "height": 8,
+                                "width": 64,
+                                "text": "NOME",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text91",
+                                "left": 208,
+                                "top": 13.400360107421875,
+                                "height": 8,
+                                "width": 68,
+                                "text": "VALOR",
+                                "hAlign": 2,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text92",
+                                "left": 140,
+                                "top": 21.400360107421875,
+                                "height": 36,
+                                "width": 64,
+                                "text": "{{ prestds.Comp1.xNome }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text93",
+                                "left": 204,
+                                "top": 21.400360107421875,
+                                "height": 36,
+                                "width": 68,
+                                "text": "{{ prestds.Comp1.vComp }}",
+                                "hAlign": 2,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text90",
+                                "left": 276,
+                                "top": 13.400360107421875,
+                                "height": 8,
+                                "width": 64,
+                                "text": "NOME",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text91",
+                                "left": 340,
+                                "top": 13.400360107421875,
+                                "height": 8,
+                                "width": 68,
+                                "text": "VALOR",
+                                "hAlign": 2,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text92",
+                                "left": 276,
+                                "top": 21.400360107421875,
+                                "height": 36,
+                                "width": 64,
+                                "text": "{{ prestds.Comp2.xNome }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text93",
+                                "left": 340,
+                                "top": 21.400360107421875,
+                                "height": 36,
+                                "width": 68,
+                                "text": "{{ prestds.Comp2.vComp }}",
+                                "hAlign": 2,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text94",
+                                "left": 412,
+                                "top": 13.400360107421875,
+                                "height": 8,
+                                "width": 148,
+                                "text": "VALOR TOTAL DA PRESTAÇÃO DO SERVIÇO",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text95",
+                                "left": 412,
+                                "top": 21.400360107421875,
+                                "height": 12,
+                                "width": 148,
+                                "text": "{{ prestds.vTPrest }}",
+                                "hAlign": 2,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text96",
+                                "left": 412,
+                                "top": 33.400360107421875,
+                                "height": 12,
+                                "width": 148,
+                                "text": "VALOR A RECEBER",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text97",
+                                "left": 412,
+                                "top": 45.400360107421875,
+                                "height": 12,
+                                "width": 148,
+                                "text": "{{ prestds.vRec }}",
+                                "hAlign": 2,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            }
+                        ],
+                        "datasource": "prestds"
+                    },
+                    {
+                        "name": "imposto",
+                        "height": 30.39990234375,
+                        "width": 600,
+                        "type": "DataBand",
+                        "autoSize": 0,
+                        "objects": [
+                            {
+                                "type": "text",
+                                "name": "text98",
+                                "left": 0,
+                                "top": 1.000396728515625,
+                                "height": 12,
+                                "width": 560,
+                                "text": "INFORMAÇÕES RELATIVAS AO IMPOSTO",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "border": {
+                                    "top": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text99",
+                                "left": 0,
+                                "top": 13.000396728515625,
+                                "height": 8,
+                                "width": 304,
+                                "text": "CLASSIFICAÇÃO TRIBUTÁRIA DO SERVIÇO",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text100",
+                                "left": 304,
+                                "top": 13.000396728515625,
+                                "height": 8,
+                                "width": 84,
+                                "text": "BASE DE CÁLCULO",
+                                "hAlign": 2,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text101",
+                                "left": 388,
+                                "top": 13.000396728515625,
+                                "height": 8,
+                                "width": 56,
+                                "text": "ALIQ. ICMS (%)",
+                                "hAlign": 2,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text102",
+                                "left": 444,
+                                "top": 13.000396728515625,
+                                "height": 8,
+                                "width": 52,
+                                "text": "VALOR ICMS",
+                                "hAlign": 2,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text103",
+                                "left": 496,
+                                "top": 13.000396728515625,
+                                "height": 8,
+                                "width": 64,
+                                "text": "% RED BC. CÁLC.",
+                                "hAlign": 2,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text104",
+                                "left": 0,
+                                "top": 21.000396728515625,
+                                "height": 8,
+                                "width": 304,
+                                "text": "{{ impostods.desc }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text105",
+                                "left": 304,
+                                "top": 21.000396728515625,
+                                "height": 8,
+                                "width": 84,
+                                "text": "{{ impostods.vBC }}",
+                                "hAlign": 2,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text106",
+                                "left": 388,
+                                "top": 21.000396728515625,
+                                "height": 8,
+                                "width": 56,
+                                "text": "{{ impostods.pICMS }}",
+                                "hAlign": 2,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text107",
+                                "left": 444,
+                                "top": 21.000396728515625,
+                                "height": 8,
+                                "width": 52,
+                                "text": "{{ impostods.vICMS }}",
+                                "hAlign": 2,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text108",
+                                "left": 496,
+                                "top": 21.000396728515625,
+                                "height": 8,
+                                "width": 64,
+                                "text": "{{ impostods.pRedBC or '0,00' }}",
+                                "hAlign": 2,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            }
+                        ],
+                        "datasource": "impostods"
+                    },
+                    {
+                        "name": "headerBand2",
+                        "height": 12,
+                        "width": 600,
+                        "type": "HeaderBand",
+                        "autoSize": 0,
+                        "objects": []
+                    },
+                    {
+                        "name": "complemento",
+                        "height": 21.59991455078125,
+                        "width": 600,
+                        "type": "DataBand",
+                        "autoSize": 0,
+                        "objects": [
+                            {
+                                "type": "text",
+                                "name": "text125",
+                                "left": 0,
+                                "top": 0,
+                                "height": 12,
+                                "width": 560,
+                                "text": "CHAVE DO CT-E COMPLEMENTADO",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "border": {
+                                    "top": true,
+                                    "bottom": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text126",
+                                "left": 0,
+                                "top": 12,
+                                "height": 8,
+                                "width": 560,
+                                "text": "{{ compds.chCTe }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            }
+                        ],
+                        "datasource": "compds",
+                        "header": "headerBand2"
+                    },
+                    {
+                        "name": "headerBand1",
+                        "height": 20,
+                        "width": 600,
+                        "type": "HeaderBand",
+                        "autoSize": 0,
+                        "objects": [
+                            {
+                                "type": "text",
+                                "name": "text109",
+                                "left": 0,
+                                "top": 0,
+                                "height": 12,
+                                "width": 560,
+                                "text": "DOCUMENTOS ORIGINÁRIOS",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "border": {
+                                    "top": true,
+                                    "all": true,
+                                    "right": true,
+                                    "left": true,
+                                    "bottom": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text110",
+                                "left": 0,
+                                "top": 12,
+                                "height": 8,
+                                "width": 180,
+                                "text": "TIPO",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "left": true,
+                                    "all": true,
+                                    "bottom": true,
+                                    "right": true,
+                                    "top": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text111",
+                                "left": 180,
+                                "top": 12,
+                                "height": 8,
+                                "width": 180,
+                                "text": "NÚMERO NOTA",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "left": true,
+                                    "all": true,
+                                    "bottom": true,
+                                    "right": true,
+                                    "top": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text112",
+                                "left": 360,
+                                "top": 12,
+                                "height": 8,
+                                "width": 200,
+                                "text": "CHAVE DE ACESSO NFE",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "left": true,
+                                    "all": true,
+                                    "bottom": true,
+                                    "right": true,
+                                    "top": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": "docs",
+                        "height": 12,
+                        "width": 600,
+                        "type": "DataBand",
+                        "autoSize": 0,
+                        "objects": [
+                            {
+                                "type": "text",
+                                "name": "text113",
+                                "left": 0,
+                                "top": 0,
+                                "height": 12,
+                                "width": 180,
+                                "text": "{{ docsds.tipo }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "left": true,
+                                    "all": true,
+                                    "bottom": true,
+                                    "right": true,
+                                    "top": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text114",
+                                "left": 180,
+                                "top": 0,
+                                "height": 12,
+                                "width": 180,
+                                "text": "{{ docsds.numero }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true,
+                                    "all": true,
+                                    "left": true,
+                                    "right": true,
+                                    "top": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text115",
+                                "left": 360,
+                                "top": 0,
+                                "height": 12,
+                                "width": 200,
+                                "text": "{{ docsds.chave }}",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "right": true,
+                                    "all": true,
+                                    "bottom": true,
+                                    "left": true,
+                                    "top": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            }
+                        ],
+                        "datasource": "docsds",
+                        "header": "headerBand1"
+                    },
+                    {
+                        "name": "obs",
+                        "height": 48.2802734375,
+                        "width": 600,
+                        "type": "DataBand",
+                        "autoSize": 0,
+                        "objects": [
+                            {
+                                "type": "text",
+                                "name": "text116",
+                                "left": 0,
+                                "top": 0.55908203125,
+                                "height": 12,
+                                "width": 560,
+                                "text": "OBSERVAÇÕES",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "border": {
+                                    "all": true,
+                                    "left": true,
+                                    "bottom": true,
+                                    "right": true,
+                                    "top": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text117",
+                                "left": 0,
+                                "top": 12.55908203125,
+                                "height": 32,
+                                "width": 560,
+                                "text": "{{ obsds.xObs }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "all": true,
+                                    "left": true,
+                                    "bottom": true,
+                                    "right": true,
+                                    "top": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": true
+                            }
+                        ],
+                        "datasource": "obsds"
+                    },
+                    {
+                        "name": "modalrodo",
+                        "height": 30.9998779296875,
+                        "width": 600,
+                        "type": "DataBand",
+                        "autoSize": 0,
+                        "objects": [
+                            {
+                                "type": "text",
+                                "name": "text118",
+                                "left": 0,
+                                "top": 0.55914306640625,
+                                "height": 12,
+                                "width": 560,
+                                "text": "INFORMAÇÕES ESPECÍFICAS DO MODAL RODOVIÁRIO",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "border": {
+                                    "bottom": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text119",
+                                "left": 0,
+                                "top": 12.55914306640625,
+                                "height": 8,
+                                "width": 128,
+                                "text": "RNTRC DA EMPRESA",
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text120",
+                                "left": 0,
+                                "top": 20.55914306640625,
+                                "height": 8,
+                                "width": 336,
+                                "text": "{{ modalrodods.RNTRC }}",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "4",
+                                    "color": "#000000"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            }
+                        ],
+                        "datasource": "modalrodods"
+                    },
+                    {
+                        "name": "fisco",
+                        "height": 54.599853515625,
+                        "width": 600,
+                        "type": "DataBand",
+                        "autoSize": 0,
+                        "objects": [
+                            {
+                                "type": "text",
+                                "name": "text121",
+                                "left": 0,
+                                "top": 0.55926513671875,
+                                "height": 12,
+                                "width": 356,
+                                "text": "USO EXCLUSIVO DO EMISSOR DO CT-e",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "border": {
+                                    "top": true,
+                                    "all": true,
+                                    "right": true,
+                                    "left": true,
+                                    "bottom": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text122",
+                                "left": 356,
+                                "top": 0.55926513671875,
+                                "height": 12,
+                                "width": 204,
+                                "text": "RESERVADO AO FISCO",
+                                "hAlign": 1,
+                                "vAlign": 1,
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "5",
+                                    "color": "#000000",
+                                    "bold": true
+                                },
+                                "border": {
+                                    "top": true,
+                                    "all": true,
+                                    "right": true,
+                                    "left": true,
+                                    "bottom": true
+                                },
+                                "background": {
+                                    "color": "#f3f3f3"
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text123",
+                                "left": 0,
+                                "top": 12.55926513671875,
+                                "height": 40,
+                                "width": 356,
+                                "text": "",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "9pt",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "left": true,
+                                    "all": true,
+                                    "bottom": true,
+                                    "right": true,
+                                    "top": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            },
+                            {
+                                "type": "text",
+                                "name": "text124",
+                                "left": 356,
+                                "top": 12.55926513671875,
+                                "height": 40,
+                                "width": 204,
+                                "text": "",
+                                "font": {
+                                    "name": "Helvetica",
+                                    "size": "9pt",
+                                    "color": "#000000"
+                                },
+                                "border": {
+                                    "bottom": true,
+                                    "all": true,
+                                    "right": true,
+                                    "left": true,
+                                    "top": true
+                                },
+                                "allowExpression": true,
+                                "allowTags": false,
+                                "canGrow": false,
+                                "wrap": false
+                            }
+                        ],
+                        "datasource": "dados"
+                    }
+                ],
+                "height": 800,
+                "width": 600
+            }
+        ],
+        "datasources": [
+            {
+                "name": "dados",
+                "sql": "select col from tablename"
+            },
+            {
+                "name": "atoresds",
+                "sql": "select col from tablename"
+            },
+            {
+                "name": "remetenteds",
+                "sql": "select col from tablename"
+            },
+            {
+                "name": "cargads",
+                "sql": "select col from tablename"
+            },
+            {
+                "name": "prestds",
+                "sql": "select col from tablename"
+            },
+            {
+                "name": "impostods",
+                "sql": "select col from tablename"
+            },
+            {
+                "name": "docsds",
+                "sql": "select col from tablename"
+            },
+            {
+                "name": "obsds",
+                "sql": "select col from tablename"
+            },
+            {
+                "name": "modalrodods",
+                "sql": "select col from tablename"
+            },
+            {
+                "name": "compds",
+                "sql": "select col from tablename"
+            }
+        ],
+        "cache": {}
+    }
+}
