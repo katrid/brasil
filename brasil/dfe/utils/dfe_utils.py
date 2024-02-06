@@ -13,6 +13,49 @@ FRETE = {
     '9': '9 - Sem Frete'
 }
 
+TP_CTE ={
+    '0': 'CT-e Normal',
+    '1': 'CT-e de Complemento de Valores',
+    '2': 'CT-e de Anulação',
+    '3': 'CT-e Substituto',
+}
+
+CST_ICMS = {
+    '00': '00 - Tributação normal ICMS',
+    '20': '20 - Tributação com BC reduzida do ICMS',
+    '40': '40 - ICMS isenção',
+    '41': '41 - ICMS não tributada',
+    '51': '51 - ICMS diferido',
+    '60': '60 - ICMS cobrado por substituição tributária',
+    '90.1': '90 - ICMS outros',
+    '90.2': '90 - ICMS Outra UF',
+    '90.3': '90 - ICMS Simples Nacional',
+}
+
+CTE_TP_EMIS = {
+    '1': 'Normal',
+    '4': 'EPEC pela SVC',
+    '5': 'Contingência FSDA',
+    '7': 'Autorização pela SVC-RS',
+    '8': 'Autorização pela SVC-SP',
+}
+
+CTE_TP_MODAL = {
+    '01': 'Rodoviário',
+    '02': 'Aéreo',
+    '03': 'Ferroviário',
+    '05': 'Dutoviário',
+    '06': 'Multimodal',
+}
+
+CTE_TP_SERV = {
+    '0': 'Normal',
+    '1': 'Subcontratação',
+    '2': 'Redespacho',
+    '3': 'Redespacho Intermediário',
+    '4': 'Serviço Vinculado a Multimodal',
+}
+
 def gerar_codigo(num: int) -> int:
     INVALIDOS = (
         0, 11111111, 22222222,

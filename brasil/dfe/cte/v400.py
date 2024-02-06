@@ -48,6 +48,7 @@ class CTe(brasil.dfe.leiaute.cte.cte_v400.CTe):
                 file=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'schemas', 'cte',
                                   'cte_v4.00.xsd')
             )
+        xml = self._xml()
         if not self.schema.validate(etree.fromstring(self._xml())):
             return self.schema.error_log.last_error.message
 

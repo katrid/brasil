@@ -207,7 +207,7 @@ class SimpleType:
 
             stream.append(f'\n{level0}class {self.name}({base_type}):')
             if self.documentation:
-                doc = "\n".join([s.strip().replace('"', '\\"') for s in self.documentation])
+                doc = "\n".join([(s or '').strip().replace('"', '\\"') for s in self.documentation])
                 stream.append(f'{level1}"""{doc}"""')
 
             if self.min_occurs:
