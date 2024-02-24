@@ -33,9 +33,9 @@ class CTeTestCase(TestCase):
     #     print(recep.xml._xml())
     #     self.assertTrue(recep.executar())
     #     self.assertEqual(recep.retorno.cStat, '100')
-    #
-    # def _test_consulta(self):
-    #     consulta = Consulta(self.config)
-    #     consulta.chave = os.environ['CHAVE_CTE_TEST']
-    #     self.assertTrue(consulta.executar())
-    #     self.assertEqual(consulta.retorno.cStat, '100')
+
+    def test_consulta(self):
+        consulta = Consulta(self.config)
+        consulta.chave = os.environ['CHAVE_CTE_TEST']
+        self.assertTrue(consulta.executar())
+        self.assertEqual(consulta.retorno.cStat, '100')
