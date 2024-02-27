@@ -1,11 +1,13 @@
 from typing import List, Annotated, get_args, get_origin
 import re
+import unicodedata
 from datetime import date, datetime
 import inspect
 
 
 class Field:
     def __init__(self, name: str, definition: Annotated, default=None):
+        # transformar definição em fields
         meta = definition.__metadata__
         self.name = name
         self.type = definition.__origin__
@@ -29,7 +31,7 @@ class Field:
         if self.type is int:
             return str(value or 0).zfill(self.length)
         if self.type is str:
-            return str(value or '').ljust(self.length)
+            return unicodedata.normalize('NFD', str(value or '')).encode('ASCII', 'ignore').ljust(self.length)
         if self.type is date:
             if value is None:
                 return '0'.zfill(self.length)
@@ -125,6 +127,28 @@ class Arquivo(metaclass=DocumentoBase):
         annotations = inspect.get_annotations(cls).items()
         cls._defaults = {k: get_origin(a) or None for k, a in annotations}
         cls._type_map = {((args := get_args(a)) and args[0]) or a: k for k, a in annotations}
+        
+    def __str__(self) -> str:
+        res = []
+        trailers = []
+        lists = []
+        # encontrar registros
+        for r in self._records:
+            rec = getattr(self, self._type_map[r], None)
+            if isinstance(rec, list):
+                lists.append(rec)
+            elif lists:
+                # registrar trailers
+                trailers.append(rec)
+            else:
+                # gerar headers
+                res.append(str(rec))
+        # renderizar registros de movimento
+        for rec in [rec for rec in lists if isinstance(rec, list)]:
+            res.extend(rec)
+        for s in trailers:
+            res.append(str(s))
+        return '\n'.join(res)
 
     def fromstring(self, content: str):
         for i, s in enumerate(content.splitlines()):
@@ -138,9 +162,11 @@ class Arquivo(metaclass=DocumentoBase):
                 self.re_debug(s)
 
     def re_debug(self, line: str):
+        """Método utilizado para encontrar erros através da depuração das linhas usando regex"""
         pass
 
     def read_record(self, record: type[Record], line: str) -> Record:
+        """Ler registro e armazenar na instância do arquivo."""
         prop = self._type_map[record]
         attr = getattr(self, prop, None)
         rec = record(line)
@@ -151,6 +177,7 @@ class Arquivo(metaclass=DocumentoBase):
         return rec
 
     def print(self):
+        """Report simples do arquivo"""
         for t, k in self._type_map.items():
             rec = getattr(self, k)
             if isinstance(rec, list):
@@ -158,6 +185,7 @@ class Arquivo(metaclass=DocumentoBase):
                     r.print()
 
     def dict(self):
+        """Transformar arquivo em dicionário."""
         res = {}
         for t, k in self._type_map.items():
             rec = getattr(self, k)

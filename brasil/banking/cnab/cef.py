@@ -1,4 +1,6 @@
 from typing import Annotated, List
+from dataclasses import dataclass
+
 from .base import Record
 from .cnab240 import Arquivo240
 
@@ -19,13 +21,13 @@ class Cnab240:
             zeros2: Annotated[int, 6, "Zeros2"]
             caixa: Annotated[int, 1, "Caixa"]
             nome_empresa: Annotated[str, 30, "Nome Empresa"]
-            banco_beneficiario: Annotated[str, 30, "Banco Beneficiário"]
+            banco_beneficiario: Annotated[str, 30, "Banco Beneficiário"] = 'CAIXA ECONOMICA FEDERAL'
             cnab2: Annotated[str, 10, "CNAB2"]
             codigo_arquivo: Annotated[int, 1, "Código Arquivo"] = 1
             data_geracao: Annotated[int, 8, "Data Geração"]
             hora_geracao: Annotated[int, 6, "Hora Geração"]
             nsa: Annotated[int, 6, "NSA"]
-            versao_layout: Annotated[int, 3, "Versão Layout"]
+            versao_layout: Annotated[int, 3, "Versão Layout"] = 107
             gravacao_arquivo: Annotated[int, 5, "Gravação Arquivo"]
             brancos: Annotated[str, 20, "Brancos"]
             reservado_empresa: Annotated[str, 20, "Reservado Empresa"]
@@ -58,28 +60,29 @@ class Cnab240:
             data_credito: Annotated[int, 8, "Data Crédito"] = 0
             cnab2: Annotated[str, 33, "CNAB2"]
 
+        @dataclass
         class SegmentoP(Record):
             banco: Annotated[int, 3, "Banco"] = 104
             servico: Annotated[int, 4, "Serviço"]
             registro: Annotated[int, 1, "Registro"] = 3
-            sequencial_lote: Annotated[int, 5, "Sequencial Lote"]
+            sequencial: Annotated[int, 5, "Sequencial Lote"]
             segmento: Annotated[str, 1, "Segmento"] = "P"
             filler: Annotated[str, 1, "Filler"]
             codigo_movimento_remessa: Annotated[int, 2, "Código de Movimento Remessa"]
-            codigo_identificacao_beneficiario: Annotated[int, 5, "Código de Identificação do Beneficiário"]
-            digito_verificador_agencia: Annotated[str, 1, "Dígito Verificador da Agência"]
+            agencia_mantenedora: Annotated[int, 5, "Código de Identificação do Beneficiário"]
+            dv_agencia_mantenedora: Annotated[str, 1, "Dígito Verificador da Agência"]
             codigo_beneficiario: Annotated[int, 7, "Código do Beneficiário"]
             uso_exclusivo_caixa: Annotated[int, 7, "Uso Exclusivo CAIXA"]
             uso_exclusivo_caixa2: Annotated[int, 2, "Uso Exclusivo CAIXA2"]
             nosso_numero: Annotated[int, 1, "Nosso Número"]
             modalidade_carteira_sigcb: Annotated[int, 2, "Modalidade da Carteira (SIGCB)"]
             identificacao_titulo_no_banco: Annotated[int, 15, "Identificação do Título no Banco"]
-            caracteristicas_cobranca: Annotated[int, 1, "Características da Cobrança"]
+            codigo_carteira: Annotated[int, 1, "Código Carteira"] = 1
             forma_cadastramento_titulo_no_banco: Annotated[int, 1, "Forma de Cadastramento do Título no Banco"] = 1
             tipo_documento: Annotated[str, 1, "Tipo de Documento"] = 2
             identificacao_emissao_boleto: Annotated[int, 1, "Identificação da Emissão do Boleto"]
             identificacao_entrega_boleto: Annotated[str, 1, "Identificação da Entrega do Boleto"]
-            n_documento_seu_n: Annotated[str, 11, "Nº do Documento (Seu Nº)"]
+            num_documento: Annotated[str, 11, "Nº do Documento (Seu Nº)"]
             uso_exclusivo_caixa3: Annotated[str, 4, "Uso Exclusivo CAIXA3"]
             vencimento: Annotated[int, 8, "Vencimento"]
             valor_titulo: Annotated[float, 15, "Valor do Título"]
@@ -105,11 +108,12 @@ class Cnab240:
             uso_exclusivo_caixa4: Annotated[int, 10, "Uso Exclusivo CAIXA4"]
             uso_livre_bancoempresa: Annotated[str, 1, "Uso livre banco/empresa"]
 
+        @dataclass
         class SegmentoQ(Record):
             banco: Annotated[int, 3, "Banco"] = 104
             lote: Annotated[int, 4, "Lote"]
             tipo_registro: Annotated[int, 1, "Tipo de Registro"] = 3
-            servico: Annotated[int, 5, "Serviço"]
+            sequencial: Annotated[int, 5, "Sequencial"]
             segmento: Annotated[str, 1, "Segmento"] = "Q"
             filler: Annotated[str, 1, "Filler"]
             codigo_movimento_remessa: Annotated[int, 2, "Código de Movimento Remessa"]
@@ -128,6 +132,7 @@ class Cnab240:
             nosso_num_bco_correspondente: Annotated[str, 20, "Nosso Núm. Bco. Correspondente"]
             cnab: Annotated[str, 8, "CNAB"]
 
+        @dataclass
         class SegmentoR(Record):
             banco: Annotated[int, 3, "Banco"] = 104
             lote: Annotated[int, 4, "Lote"]
@@ -247,7 +252,7 @@ class Cnab240:
             banco: Annotated[int, 3, "Banco"] = 104
             lote: Annotated[int, 4, "Lote"]
             tipo_registro: Annotated[int, 1, "Tipo de Registro"] = 3
-            servico: Annotated[int, 5, "Serviço"]
+            sequencial: Annotated[int, 5, "Sequencial"]
             segmento: Annotated[str, 1, "Segmento"] = "T"
             filler: Annotated[str, 1, "Filler"]
             codigo_movimento_retorno: Annotated[int, 2, "Código de Movimento Retorno"]

@@ -7,6 +7,7 @@ from .base import Record, Arquivo
 class Arquivo240(Arquivo):
     def re_debug(self, line: str):
         # tentar determinar segmento objetivando depurar conteúdo
+        # exemplo de regex debug
         if len(line) == 240:
             seg = line[13]
             if seg:
