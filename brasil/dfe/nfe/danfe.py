@@ -117,6 +117,7 @@ class DANFE:
 
         if 'nfeProc' in formatted: # se nf transmitida
             chave = formatted['nfeProc']['protNFe']['infProt']['chNFe']
+            formatted['barcode'] = f'{chave}'
             formatted['chave'] = ' '.join([chave[i:i + 4] for i in range(0, len(chave), 4)])
             if 'dhRecbto' in formatted['nfeProc']['protNFe']['infProt']:
                 dhAut = dateutil.parser.isoparse(formatted['nfeProc']['protNFe']['infProt']['dhRecbto'])
@@ -126,24 +127,17 @@ class DANFE:
                 formatted['dtAut'] = None
                 formatted['hAut'] = None
 
-        # format numbers
-        impostos = infNFe['infNFe']['total']['ICMSTot']
-        for k, v in impostos.items():
-            if ',' not in v:
-                impostos[k] = format_number(v)
-
         itens = infNFe['infNFe']['det']
         if not isinstance(itens, list):
             itens = [itens]
         for item in itens:
-            for k, v in item['prod'].items():
-                if is_float(v) and k not in ('cProd', 'NCM', 'CFOP'):
-                    item['prod'][k] = format_number(v)
             item['imposto']['ICMS'] = self.get_icms(item)
             item['imposto']['IPI'] = self.get_ipi(item)
 
         formatted['resumo'] = f'Emissão: {formatted["dtEmi"]} Dest/Reme: {infNFe["infNFe"]["dest"]["xNome"]} Valor Total: {infNFe["infNFe"]["total"]["ICMSTot"]["vNF"]}'
-
+        
+        # format all number values
+        formatted = format_all_numbers(formatted)
         return formatted
         
     def get_icms(self, item: dict):

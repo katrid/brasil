@@ -133,10 +133,20 @@ def validar_cnpj(cnpj):
     return False
 
 def format_number(v: str) -> str:
-    return '{:,.2f}'.format(round(float(v), 2)).replace(',', '*').replace('.', ',').replace('*', '.')
+    new = '{:,.2f}'.format(round(float(v), 2)).replace(',', '*').replace('.', ',').replace('*', '.')
+    return new
+
+def format_all_numbers(struct: dict) -> dict:
+    for k, v in struct.items():
+        if isinstance(v, dict):
+            format_all_numbers(v)
+        elif isinstance(v, str):
+            if is_float(v):
+                struct[k] = format_number(v)
+    return struct
 
 def is_float(value: str) -> bool:
-    return value.replace('.', '').isnumeric()
+    return value.replace('.', '').isnumeric() and (value.count('.') == 1)
 
 def format_doc(ator: dict) -> str:
     if 'CNPJ' in ator:
