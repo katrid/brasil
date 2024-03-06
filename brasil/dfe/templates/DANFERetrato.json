@@ -380,13 +380,13 @@
                             {
                                 "type": "barcode",
                                 "name": "barcode1",
-                                "left": 374,
-                                "top": 76,
-                                "height": 35,
-                                "width": 190,
+                                "left": 385,
+                                "top": 80,
+                                "height": 25,
+                                "width": 170,
                                 "datasource": "dados",
                                 "barcodeType": "code128",
-                                "field": "chave",
+                                "field": "barcode",
                                 "hAlign": 1,
                                 "vAlign": 1,
                                 "font": {
