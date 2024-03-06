@@ -126,6 +126,10 @@ class DANFE:
             else:
                 formatted['dtAut'] = None
                 formatted['hAut'] = None
+        else:
+            chave = self.id.replace('NFe', '')
+            formatted['barcode'] = f'{chave}'
+            formatted['chave'] = ' '.join([chave[i:i + 4] for i in range(0, len(chave), 4)])
 
         itens = infNFe['infNFe']['det']
         if not isinstance(itens, list):
