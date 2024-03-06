@@ -7,7 +7,9 @@ from brasil.utils.xml import NotasFiscais, NodeProxy
 
 
 class DANFE:
-    def __init__(self, xml: str) -> None:
+    def __init__(self, xml: str | bytes) -> None:
+        if isinstance(xml, str):
+            xml = xml.encode()
         self._xml = NotasFiscais.fromstring(xml)
         self.id = self._xml._docs[0]._node[0].find('{http://www.portalfiscal.inf.br/nfe}infNFe').get('Id')
         self.xml = {}
