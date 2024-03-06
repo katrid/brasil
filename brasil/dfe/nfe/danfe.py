@@ -3,12 +3,12 @@ import json
 import dateutil.parser
 from reptile.bands import Report
 from brasil.dfe.utils.dfe_utils import *
-from brasil.utils.xml import NotaFiscais, NodeProxy 
+from brasil.utils.xml import NotasFiscais, NodeProxy 
 
 
 class DANFE:
     def __init__(self, xml: str) -> None:
-        self._xml = NotaFiscais.fromstring(xml)
+        self._xml = NotasFiscais.fromstring(xml)
         self.id = self._xml._docs[0]._node[0].find('{http://www.portalfiscal.inf.br/nfe}infNFe').get('Id')
         self.xml = {}
         for doc in self._xml._docs:

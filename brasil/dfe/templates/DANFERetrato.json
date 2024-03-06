@@ -378,13 +378,15 @@
                                 "wrap": false
                             },
                             {
-                                "type": "text",
-                                "name": "text17",
+                                "type": "barcode",
+                                "name": "barcode1",
                                 "left": 374,
                                 "top": 76,
-                                "height": 32,
-                                "width": 192,
-                                "text": "C{{ dados.nfeProc.protNFe.infProt.chNFe }}",
+                                "height": 35,
+                                "width": 190,
+                                "datasource": "dados",
+                                "barcodeType": "code128",
+                                "field": "chave",
                                 "hAlign": 1,
                                 "vAlign": 1,
                                 "font": {
