@@ -3,13 +3,17 @@ import json
 import dateutil.parser
 from reptile.bands import Report
 from brasil.dfe.utils.dfe_utils import *
+from brasil.dfe.retrato import DocumentoAuxiliar
 from brasil.utils.xml import NotasFiscais, NodeProxy 
 
 
-class DANFE:
-    def __init__(self, xml: str | bytes) -> None:
+class DANFE(DocumentoAuxiliar):
+    situacao: str = None
+
+    def __init__(self, xml: str | bytes, situacao: str='T') -> None:
         if isinstance(xml, str):
             xml = xml.encode()
+        self.situacao = situacao
         self._xml = NotasFiscais.fromstring(xml)
         self.id = self._xml._docs[0]._node[0].find('{http://www.portalfiscal.inf.br/nfe}infNFe').get('Id')
         self.xml = {}
@@ -18,32 +22,25 @@ class DANFE:
         if 'protNFe' in self.xml:
             self.xml = {'nfeProc': self.xml}
 
-    def export(self, output_path: str) -> str:
-        from reptile.exports.pdf import PDF
-        templ, filename = self.prepare()
-        rep = Report(templ)
-        doc = rep.prepare()
-        PDF(doc).export(os.path.join(output_path, filename))
-        return os.path.basename(filename)
-
     def prepare(self):
-        with open(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'templates', 'DANFERetrato.json'), 'r') as f:
-            templ = json.load(f)
-
+        self.load_template('DANFERetrato.json')
         prepared = self.prepared_xml
+        if self.situacao == 'C':
+            self.template['report']['watermark']['text'] = 'Documento Cancelado'
+            self.template['report']['watermark']['size'] = 40
         if 'nfeProc' in prepared:
             infNFe = prepared['nfeProc']['NFe']['infNFe']
-            del templ['report']['watermark']
+            del self.template['report']['watermark']
         else:
             infNFe = prepared['NFe']['infNFe']
-        
+
         infNFe['transp']['tp_frete'] = FRETE.get(infNFe['transp']['modFrete'])
-        templ['report']['datasources'] = [
-            { 
-                'name': 'dados', 
+        self.template['report']['datasources'] = [
+            {
+                'name': 'dados',
                 'data': [prepared] 
-            }, 
-            { 
+            },
+            {
                 'name': 'itens', 
                 'data': [] 
             },
@@ -64,23 +61,23 @@ class DANFE:
                 'data': [infNFe['infAdic']]
             }
         ]
-        templ['report']['datasources']
+
         if 'retirada' in infNFe:
-            templ['report']['datasources'].append(
+            self.template['report']['datasources'].append(
                 {
                     'name': 'retirada',
                     'data': [infNFe['retirada']]
                 },
             )
         if 'entrega' in infNFe:
-            templ['report']['datasources'].append(
+            self.template['report']['datasources'].append(
                 {
                     'name': 'entrega',
                     'data': [infNFe['entrega']]
                 },
             )
         if infNFe['transp'].get('vol'):
-            templ['report']['datasources'].append(
+            self.template['report']['datasources'].append(
                 {
                     'name': 'volumes',
                     'data': [infNFe['transp'].get('vol')]
@@ -91,9 +88,9 @@ class DANFE:
             infNFe['det'] = [infNFe['det']]
 
         for item in infNFe['det']:
-            templ['report']['datasources'][1]['data'].append(item)
+            self.template['report']['datasources'][1]['data'].append(item)
             
-        return templ, self.id + '.pdf'
+        return self.template, self.id + '.pdf'
     
     @property
     def prepared_xml(self):

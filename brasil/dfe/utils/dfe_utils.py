@@ -1,6 +1,7 @@
 import re
 from datetime import datetime
 import random
+from dateutil.parser import isoparse
 
 from brasil.utils.formulas import modulo11
 
@@ -155,3 +156,13 @@ def format_doc(ator: dict) -> str:
     elif 'CPF' in ator:
         doc = ator['CPF']
         return f'{doc[:3]}.{doc[3:6]}.{doc[6:9]}-{doc[9:]}'
+    
+def format_dfe_numero(numero: str) -> str:
+    res = numero.zfill(9)
+    return '.'.join([res[i:i + 3] for i in range(0, len(res), 3)])
+
+def format_iso_datetime(date_str: str) -> str:
+    date = isoparse(date_str)
+    dt = date.date().strftime('%d/%m/%Y')
+    hr = date.time().strftime('%H:%M:%S')
+    return dt + ' ' + hr

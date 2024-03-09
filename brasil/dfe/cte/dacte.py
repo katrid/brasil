@@ -1,23 +1,22 @@
 """
 Módulo para perparação de CTe em formato JSON compatível com reptile.
-Especificação do DACTE para NFe 4.00 de acordo com Anexo II MOC (ref: https://dfe-portal.svrs.rs.gov.br/Cte/Documentos#)
+Especificação do DACTE para NFe 4.00 de acordo com Anexo II MOC
+(ref: https://dfe-portal.svrs.rs.gov.br/Cte/Documentos#)
 """
-import os
-import json
+import datetime
+from typing import List
 from dateutil.parser import isoparse
-from reptile.bands import Report
-from brasil.utils.xml import CTe, NodeProxy
+from brasil.dfe.retrato import DocumentoAuxiliar
+from brasil.utils.xml import CTe, Documento, NodeProxy
 from brasil.dfe.utils.dfe_utils import *
 
 
-class DACTE:
+class DACTE(DocumentoAuxiliar):
     """
-    Converter XML em estrutura JSON compatível com reptile engine de acordo com a especificação oficial do DACTE
+    Converter XML em estrutura JSON compatível com reptile engine de acordo com a
+    especificação oficial do DACTE
     :param str xml: String contendo XML do CTe a ser convertido
     """
-    _xml: CTe = None
-    xml: dict = None
-    id: str = None
     prepared_xml: dict = None
     infcte: dict = None
 
@@ -25,40 +24,29 @@ class DACTE:
         self._xml = CTe.fromstring(xml)
         self.id = self._xml._docs[0].find('{http://www.portalfiscal.inf.br/cte}infCte').get('Id')
         self.xml = {}
-        for doc in self._xml._docs:
+        self.load_docs(self._xml)
+
+    def load_docs(self, xml: CTe):
+        for doc in xml._docs:
             self.xml = {**self.xml, **NodeProxy.to_dict(doc._node[0])}
         if 'protCTe' in self.xml:
             self.xml = { 'cteProc': self.xml }
 
-    def export(self, output_path: str) -> str:
-        """
-        Prepara a instância do documento para formato compatível com reptile e renderiza em PDF conforme especificado no template de retrato.
-        :param str output_path: Caminho em que o arquivo PDF será salvo após renderizado.
-        """
-        from reptile.exports.pdf import PDF
-        template, filename = self.prepare()
-        rep = Report(template)
-        doc = rep.prepare()
-        PDF(doc).export(os.path.join(output_path, filename))
-        return os.path.basename(filename)
-
     def prepare(self):
-        with open(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'templates', 'DACTERetrato.json'), 'r') as f:
-            template = json.load(f)
-        
+        self.load_template('DACTERetrato.json')
         # armazena tag com dados formatáveis do Cte
         if 'cteProc' in self.xml:
             self.infcte = self.xml['cteProc']['CTe']['infCte']
             # remove marca d'agua se documento estiver emitido
-            if 'watermark' in template['report']:
-                del template['report']['watermark']
+            if 'watermark' in self.template['report']:
+                del self.template['report']['watermark']
         else:
             self.infcte = self.xml['CTe']['infCte']
 
         self.prepare_xml()
         # prepara datasources
-        template['report']['datasources'] = self.get_datasources()
-        return template, self.id + '.pdf'
+        self.template['report']['datasources'] = self.get_datasources()
+        return self.template, self.id + '.pdf'
 
     def prepare_xml(self) -> None:
         """
@@ -70,17 +58,23 @@ class DACTE:
         if 'cteProc' in self.xml:
             self.infcte['chave'] = self.xml['cteProc']['protCTe']['infProt']['chCTe']
             self.infcte['prot'] = self.xml['cteProc']['protCTe']['infProt']['nProt']
-            self.infcte['qrcode'] = self.xml['cteProc']['CTe']['infCTeSupl']['qrCodCTe'].replace('<![CDATA[', '').replace(']]', '')
+            self.infcte["qrcode"] = (
+                self.xml["cteProc"]["CTe"]["infCTeSupl"]["qrCodCTe"]
+                .replace("<![CDATA[", "")
+                .replace("]]", "")
+            )
         else:
             self.infcte['chave'] = self.id[3:]
-            self.infcte['qrcode'] = self.xml['CTe']['infCTeSupl']['qrCodCTe'].replace('<![CDATA[', '').replace(']]', '')
-        dhEmi = isoparse(self.infcte['ide']['dhEmi'])
-        self.infcte['dtEmi'] = dhEmi.date().strftime('%d/%m/%Y')
-        self.infcte['hEmi'] = dhEmi.time().strftime('%H:%M:%S')
+            self.infcte["qrcode"] = (
+                self.xml["CTe"]["infCTeSupl"]["qrCodCTe"]
+                .replace("<![CDATA[", "")
+                .replace("]]", "")
+            )
+        self.infcte['ide']['dhEmi'] = datetime.fromisoformat(self.infcte['ide']['dhEmi'])
         self.infcte['tpEmis'] = CTE_TP_EMIS.get(self.infcte['ide']['tpEmis'])
         self.infcte['tpCTe'] = TP_CTE.get(self.infcte['ide']['tpCTe'])
-        
-    
+        self.infcte = format_all_numbers(self.infcte)
+
     def get_tomador(self, infcte: dict) -> dict:
         """
         Retorna o tomador correto de acordo com os contexto do CTe.
@@ -88,10 +82,11 @@ class DACTE:
         toma = infcte['emit']
         toma['enderToma'] = infcte['emit']['enderEmit']
         return toma
-    
-    def get_datasources(self) -> [dict]:
+
+    def get_datasources(self) -> List[dict]:
         """
-        Prepara dados do xml estruturados em dicionários compatíveis com reptile para renderização do PDF.
+        Prepara dados do xml estruturados em dicionários compatíveis com reptile para
+        renderização do PDF.
         """
         res =  [
             {
@@ -157,19 +152,22 @@ class DACTE:
         if carga['infQ']['cUnid'] == '00':
             carga['cubagem'] = carga['infQ']['qCarga']
         return carga
-    
+
     def get_componentes(self):
         # TODO preparar forma de renderizar quaisquer quantidade de componentes
-        # não encontrei no manual se ha algum numero maximo de componentes possiveis para composicao do valor da prestacao
-        # para permanecer no layout padrao do Acbr e sugerido no manual (tres "caixas" na horizontal exibindo os componentes)
-        # e como atualmente o reptile nao renderiza masterdata na horizontal, padronizarei apenas tres componentes por enquanto
+        # não encontrei no manual se ha algum numero maximo de componentes possiveis
+        # para composicao do valor da prestacao
+        # para permanecer no layout padrao do Acbr e sugerido no manual
+        # (tres "caixas" na horizontal exibindo os componentes)
+        # e como atualmente o reptile nao renderiza masterdata na horizontal,
+        # padronizarei apenas tres componentes por enquanto
         return self.infcte['vPrest']
-    
+
     def get_imposto(self):
         icms = list(self.infcte['imp']['ICMS'].items())[0][1]
         icms['desc'] = CST_ICMS.get(icms['CST'])
         return icms
-    
+
     def get_docs(self):
         res = []
         for k, v in self.infcte['infCTeNorm']['infDoc'].items():
@@ -178,4 +176,3 @@ class DACTE:
                 v['tipo'] = 'NF-e'
                 res.append(v)
         return res
-
