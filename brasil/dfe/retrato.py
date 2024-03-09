@@ -36,7 +36,7 @@ class DocumentoAuxiliar:
         :type xml: Documento
         :raises NotImplementedError: Sobrescrever em subclasse
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def load_template(self, template_name: str):
         with open(
@@ -53,16 +53,16 @@ class DocumentoAuxiliar:
         :param template_name: Nome do arquivo de template do retrato
         :raises NotImplementedError: Sobrescrever en subclasse
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def prepare_xml(self):
         """Formata dados de acordo com o manual para exibição no PDF
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_datasources(self) -> List[dict]:
         """
         Prepara dados do xml estruturados em dicionários compatíveis com
         reptile para renderização do PDF.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
