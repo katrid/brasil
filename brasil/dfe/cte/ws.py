@@ -1,3 +1,4 @@
+import os
 import datetime
 
 from lxml import etree
@@ -161,6 +162,7 @@ class RecepcaoEvento(WebService):
     ):
         from brasil.dfe.cte.v400 import eventoCTe, evCancCTe
         evento = eventoCTe()
+        evento.versao = '4.00'
         inf = evento.infEvento
         inf.tpAmb = amp
         inf.cOrgao = orgao or self.config.orgao
@@ -170,13 +172,18 @@ class RecepcaoEvento(WebService):
         inf.tpEvento = '110111'
         inf.dhEvento = dh or datetime.datetime.now()
         canc = inf.detEvento.evCancCTe = evCancCTe()
+        inf.detEvento._xml_props['evCancCTe'] = evCancCTe
+        inf.detEvento.versaoEvento = '4.00'
         canc.descEvento = 'Cancelamento'
         canc.nProt = protocolo
         canc.xJust = justificativa
-        id_evento = evento.infEvento.Id = 'ID' + inf.tpEvento + inf.chCTe + str(inf.nSeqEvento).zfill(2)
+        id_evento = evento.infEvento.Id = 'ID' + inf.tpEvento + inf.chCTe + str(inf.nSeqEvento).zfill(3)
         xml = evento._xml()
         evento.Signature = self.config.certificado.assinar(xml, id_evento)
         self.xml = evento
+        canc_schema = etree.XMLSchema(file=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'schemas', 'cte', 'eventoCTe_v4.00.xsd'))
+        if not canc_schema.validate(etree.fromstring(self.xml._xml())):
+            raise AssertionError(canc_schema.error_log.last_error.message)
         self.executar()
         return self
 
