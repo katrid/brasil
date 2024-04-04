@@ -634,7 +634,7 @@
                                 "top": 110,
                                 "height": 20,
                                 "width": 56,
-                                "text": "{{ dados.dtEmi }} {{ dados.hEmi }}",
+                                "text": "{{ dados.ide.dhEmi }}",
                                 "hAlign": 1,
                                 "vAlign": 1,
                                 "font": {
@@ -649,7 +649,11 @@
                                 "allowExpression": true,
                                 "allowTags": false,
                                 "canGrow": false,
-                                "wrap": true
+                                "wrap": true,
+                                "displayFormat": {
+                                    "type": "DateTime",
+                                    "format": "%d/%m/%Y %H:%M:%S"
+                                }
                             },
                             {
                                 "type": "text",
@@ -780,24 +784,17 @@
                                 "wrap": false
                             },
                             {
-                                "type": "text",
-                                "name": "text37",
+                                "type": "barcode",
+                                "name": "barcode1",
                                 "left": 234,
-                                "top": 130,
+                                "top": 133,
                                 "height": 20,
                                 "width": 196,
-                                "text": "BARCODE",
+                                "datasource": "dados",
+                                "field": "chave",
+                                "barcodeType": "code128",
                                 "hAlign": 1,
-                                "vAlign": 1,
-                                "font": {
-                                    "name": "Helvetica",
-                                    "size": "9pt",
-                                    "color": "#000000"
-                                },
-                                "allowExpression": true,
-                                "allowTags": false,
-                                "canGrow": false,
-                                "wrap": false
+                                "vAlign": 1
                             },
                             {
                                 "type": "text",
