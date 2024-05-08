@@ -52,7 +52,28 @@ class MDFe(brasil.dfe.leiaute.mdfe.mdfe_v300.MDFe):
     @property
     def rodo(self) -> rodo:
         return self.infMDFe.infModal.rodo
-    
+
+    def _get_sign(self) -> str:
+        from cryptography.hazmat.primitives import serialization
+        from cryptography.hazmat.backends import default_backend
+        from cryptography.hazmat.primitives.asymmetric import padding
+        from cryptography.hazmat.primitives import hashes
+        from base64 import b64encode
+
+        cert, private_key = self._config.certificado._get_cert()
+        private_key_obj = serialization.load_pem_private_key(
+            private_key, password=None, backend=default_backend()
+        )
+
+        signature = private_key_obj.sign(
+            self.chave.encode(),
+            padding.PKCS1v15(),
+            hashes.SHA1()
+        )
+
+        b64signature = b64encode(signature).decode('utf-8')
+        return b64signature
+
     def _prepare(self):
         if self._config:
             config = self._config
@@ -66,6 +87,8 @@ class MDFe(brasil.dfe.leiaute.mdfe.mdfe_v300.MDFe):
             if '?' not in url:
                 url += '?'
             url += f'chMDFe={self.chave}&tpAmb={config.amb}'
+            if str(self.infMDFe.ide.tpEmis) == '2':
+                url += f'&sign={self._get_sign()}'
             self.infMDFeSupl.qrCodMDFe = f'<![CDATA[{url.replace(" ", "")}]]>'
 
     def _xml(self, name=None):
