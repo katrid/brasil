@@ -123,7 +123,9 @@ class ComplexType(SimpleType, metaclass=ElementType):
         self._xmltmp = None
 
     def _read_xml(self, xml):
-        if isinstance(xml, (str, bytes)):
+        if isinstance(xml, str):
+            xml = xml.encode('utf-8')
+        if isinstance(xml, bytes):
             node = etree.fromstring(xml)
         else:
             node = xml
