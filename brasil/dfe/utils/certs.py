@@ -1,7 +1,18 @@
 import os
 from datetime import datetime
+
 from lxml import etree
 from OpenSSL import crypto
+
+try:
+    import signxml
+
+
+    class BrasilXMLSigner(signxml.XMLSigner):
+        def check_deprecated_methods(self):
+            pass
+except:
+    pass
 
 
 class Certificado(object):
@@ -107,10 +118,9 @@ class Certificado(object):
         return cert_file, key_file
 
     def assinar(self, xml, ref):
-        import signxml
         if isinstance(xml, (str, bytes)):
             xml = etree.fromstring(xml)
-        signer = signxml.XMLSigner(
+        signer = BrasilXMLSigner(
             method=signxml.methods.enveloped,
             signature_algorithm='rsa-sha1',
             digest_algorithm='sha1',

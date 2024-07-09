@@ -32,7 +32,7 @@ class WebService(brasil.dfe.ws.BaseService):
 
 class Distribuicao(WebService):
     class DistribuicaoBody(Body):
-        soapVersion = 'soap'
+        soapVersion = 'soap12'
         element = 'cteDadosMsg'
 
         def __str__(self):

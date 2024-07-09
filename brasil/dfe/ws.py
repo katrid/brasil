@@ -34,7 +34,7 @@ class Header:
 
 
 class Body:
-    soapVersion: str = 'soap'
+    soapVersion: str = 'soap12'
     xmlns: str = None
     element: str = None
     xml: str = None
@@ -80,14 +80,16 @@ class BaseService:
     namespace = 'http://www.portalfiscal.inf.br'
     campoRetorno: str = None
     wsdl = 'http://www.portalfiscal.inf.br/wsdl'
-    xmlattrs = 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://www.w3.org/2003/05/soap-envelope"'
+    xmlattrs = 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"'
     _xmlresp: etree.Element
     response: requests.Response
     ok = None
+    uf: str = None
 
     def __init__(self, config: BaseConfig):
         self.config = config
-        self.uf = config.uf
+        if self.uf is None:
+            self.uf = config.uf
         self.tpAmb = config.amb
         if self.header:
             self.header = self.header()
@@ -175,7 +177,7 @@ class BaseService:
     @property
     def headers(self):
         return {
-            'SOAPAction': '"%s"' % self.soapwsdl,
+            # 'SOAPAction': '"%s"' % self.soapwsdl,
             'Content-Type': self.contentType,
         }
 

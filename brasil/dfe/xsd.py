@@ -1,13 +1,56 @@
-from __future__ import annotations
+from inspect import get_annotations
+from typing import get_origin, get_args, Annotated, List, Self
 import re
 import datetime
 from decimal import Decimal
+
 from lxml import etree
+
 from .utils.xml_utils import tag
 
 
 class SimpleType:
-    pass
+    _tag: str = None
+
+    def __init__(self, min_occurs: int = None, max_occurs: int = None, enumeration: List[str] = None):
+        self.min_occurs = min_occurs
+        self.max_occurs = max_occurs
+        self.enumeration = enumeration
+        if self._tag is None:
+            self._tag = self.__class__.__name__
+
+
+class XmlProp:
+    type = None
+    origin = None
+    element = None
+
+    def __init__(self, name: str, annotations):
+        self.name = name
+        for i, arg in enumerate(get_args(annotations)):
+            if i == 0:
+                self.origin = get_origin(arg)
+                if self.origin:
+                    args = get_args(arg)
+                    if args:
+                        self.type = args[0]
+                else:
+                    self.type = arg
+            elif i == 1:
+                self.element = arg
+
+
+class ElementList(list):
+    def __init__(self, type):
+        super().__init__()
+        self.type = type
+
+    def add(self, *args, **kwargs):
+        item = self.type()
+        for k, v in kwargs.items():
+            setattr(item, k, v)
+        self.append(item)
+        return item
 
 
 class ElementType(type):
@@ -16,46 +59,35 @@ class ElementType(type):
         mod = attrs.get('__module__')
         if mod == 'brasil.dfe.xsd':
             return new_cls
-        old_props = new_cls._xml_props
-        new_cls._xml_props = {k: v for k, v in attrs.items() if isinstance(v, (Element, Attribute))}
-        if old_props:
-            new_cls._xml_props.update(old_props)
+
         new_cls._name = name
         return new_cls
 
 
 class ComplexType(SimpleType, metaclass=ElementType):
-    _name: str = None
     _xmlns: str = None
-    _xml_props: dict = None
+    _props: dict[str, XmlProp] = None
     _cls: 'ComplexType' = None
     _xmltmp = None
     _parent = None
     _max_occurs = None
 
-    def __init__(self, cls=None,  min_occurs=None, max_occurs=None):
-        self._cls = cls
-        self.min_occurs = min_occurs
-        self.max_occurs = max_occurs
-        if max_occurs is None and self._max_occurs:
-            self.max_occurs = self._max_occurs
-        self._list = []
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # inicializar elemento
+        if self._props:
+            for k, prop in self._props.items():
+                # init the list
+                if prop.origin is ElementList or prop.origin is list:
+                    setattr(self, prop.name, ElementList(prop.type))
+                elif issubclass(prop.type, ComplexType):
+                    setattr(self, prop.name, prop.type())
 
-        if self._xml_props:
-            for k, v in self._xml_props.items():
-                if v._cls and ((isinstance(v._cls, type) and issubclass(v._cls, ComplexType)) or isinstance(v._cls, ComplexType)):
-                    v = v._cls()
-                elif v._default:
-                    v = v._default
-                # elif self._required() and v._base_type is Decimal:
-                #     v = 0
-                else:
-                    v = None
-                setattr(self, k, v)
-
-    def _add_to_class(self, name, obj):
-        self._cls._xml_props[name] = obj
-        setattr(self._cls, name, obj)
+    def __init_subclass__(cls, **kwargs):
+        if cls.__module__ != 'brasil.dfe.xsd':
+            props = {k: XmlProp(k, a) for k, a in get_annotations(cls).items()}
+            if props:
+                cls._props = props
 
     def add(self, *args, **kwargs):
         new_obj = self.__class__()
@@ -71,47 +103,65 @@ class ComplexType(SimpleType, metaclass=ElementType):
         self._list.append(obj)
 
     def _xml(self, name=None):
-        if self._list:
-            return ''.join([child._xml(name) for child in self._list])
+        name = name or self._tag
         kwargs = {}
         args = []
-        cls = self._cls or self
-        if cls._xml_props:
-            for k, prop in cls._xml_props.items():
+        props = self._props
+        if props:
+            for k, prop in props.items():
                 v = getattr(self, k, None)
                 if v is None:
                     continue
-                if prop._base_type is datetime.datetime and isinstance(v, datetime.datetime):
-                    v = v.strftime('%Y-%m-%dT%H:%M:%S-03:00')
-                elif prop._base_type is datetime.date and isinstance(v, datetime.date):
-                    v = v.strftime('%Y-%m-%d')
-                elif prop._base_type is Decimal and v == 0 and prop._optional:
+                if isinstance(prop.element, Attribute):
+                    kwargs[k] = str(v)
                     continue
-                elif prop._base_type is Decimal and isinstance(v, Decimal) and prop._tam:
-                    fmt = '{:.%sf}' % prop._tam[1]
+                elif prop.type is XmlSignature:
+                    args.append(v)
+                    continue
+                elif prop.type is datetime.datetime and isinstance(v, datetime.datetime):
+                    v = v.strftime('%Y-%m-%dT%H:%M:%S-03:00')
+                elif prop.type is datetime.date and isinstance(v, datetime.date):
+                    v = v.strftime('%Y-%m-%d')
+                elif issubclass(prop.type, Decimal) and v == 0 and prop.type._xs_optional:
+                    continue
+                elif issubclass(prop.type, Decimal) and v is not None and prop.type._xs_dec:
+                    fmt = '{:.%sf}' % prop.type._xs_dec[1]
+                    if isinstance(v, str):
+                        v = float(v)
                     v = string.format(fmt, v)
+                    xml = tag(k, v)
+                    args.append(xml)
+                    continue
+                elif isinstance(v, ElementList):
+                    for item in v:
+                        if isinstance(item, ComplexType):
+                            xml = item._xml(k)
+                            if xml:
+                                args.append(xml)
+                        elif isinstance(item, str):
+                            args.append(item)
                 elif isinstance(v, (int, Decimal)):
                     v = str(v)
                 elif isinstance(v, datetime.datetime):
                     v = v.strftime('%Y-%m-%dT%H:%M:%S-03:00')
-                if prop._filter:
-                    v = ''.join(filter(prop._filter, v))
-                if isinstance(prop, Attribute):
+                if prop.element is Attribute:
                     kwargs[k] = v
                 elif isinstance(prop, TXML):
                     args.append(prop._xml())
-                elif isinstance(prop._cls, type) and issubclass(prop._cls, str):
-                    if v and not v.startswith('<![CDATA['):
-                        args.append(tag(k, v.replace('&', '&amp;')))
-                    else:
-                        args.append(tag(k, v))
-                elif isinstance(prop, ComplexType):
+                elif issubclass(prop.type, str):
+                    if v:
+                        v = str(v)
+                        if not v.startswith('<![CDATA['):
+                            args.append(tag(k, v.replace('&', '&amp;')))
+                        else:
+                            args.append(tag(k, v))
+                elif isinstance(v, (ComplexType, SimpleTypeElement)):
+                    xml = v._xml(k)
+                    if xml:
+                        args.append(xml)
+                elif issubclass(prop.type, ComplexType):
                     if isinstance(v, str):
                         args.append(v)
-                    else:
-                        xml = v._xml(k)
-                        if xml:
-                            args.append(xml)
         if not args:
             return ''
         if self._xmlns:
@@ -134,17 +184,31 @@ class ComplexType(SimpleType, metaclass=ElementType):
 
         for child in node:
             tag = child.tag.split('}', 1)[-1]
-            prop = self._xml_props.get(tag)
+            prop = self._props.get(tag)
             if prop:
-                if issubclass(prop._cls, str) or prop._cls is str:
+                if issubclass(prop.type, (ComplexType, ElementList)):
+                    sub = getattr(self, tag, None)
+                    if isinstance(sub, ElementList):
+                        if issubclass(prop.type, ComplexType):
+                            if prop.type._props:
+                                sub.add()._read_xml(child)
+                            else:
+                                sub.add()._read_xml(etree.tostring(child))
+                    elif isinstance(sub, ComplexType):
+                        if sub._props:
+                            sub._read_xml(child)
+                        else:
+                            setattr(self, tag, etree.tostring(child))
+                    else:
+                        raise NotImplementedError
+                elif issubclass(prop.type, (SimpleType, SimpleTypeElement, str)):
+                    setattr(self, tag, child.text)
+                elif issubclass(prop.type, (datetime.datetime, datetime.date, int, Decimal)):
                     v = child.text
+                    # conveter para datetime?
                     setattr(self, tag, v)
                 else:
-                    sub = getattr(self, tag)
-                    if sub.max_occurs and (sub.max_occurs > 1 or self.max_occurs == -1):
-                        sub.add()._read_xml(child)
-                    else:
-                        sub._read_xml(child)
+                    raise NotImplementedError
 
     def _validar(self):
         """Validar o conteúdo do elemento conforme regras especificadas no xsd"""
@@ -153,8 +217,6 @@ class ComplexType(SimpleType, metaclass=ElementType):
         if cls._xml_props:
             for k, prop in cls._xml_props.items():
                 v = getattr(self, k, None)
-                if getattr(prop, '_choice', None):
-                    print(prop._choice)
                 if v is None:
                     continue
                 if isinstance(prop, Element) and (restriction := getattr(prop._cls, '_restriction', None)):
@@ -172,7 +234,7 @@ class ComplexType(SimpleType, metaclass=ElementType):
         return req
 
     @classmethod
-    def fromstring(cls, s: str):
+    def fromstring(cls, s: str) -> Self:
         obj = cls()
         obj._read_xml(s)
         return obj
@@ -180,61 +242,43 @@ class ComplexType(SimpleType, metaclass=ElementType):
     def __iter__(self):
         return iter(self._list)
 
+    def __str__(self):
+        return self._xml()
 
-class Element(ComplexType):
+    def dict(self):
+        if self._props:
+            r = {}
+            for k, prop in self._props.items():
+                v = getattr(self, k, None)
+                if v is None:
+                    continue
+                if isinstance(v, ComplexType):
+                    v = v.dict()
+                    if not v:
+                        continue
+                elif isinstance(v, ElementList):
+                    v = [item.dict() if isinstance(item, ComplexType) else v for item in v if issubclass(prop.type, ComplexType)]
+                    if not v:
+                        continue
+                r[k] = v
+            return r
+
+
+class Element:
     _restriction = None
     _caption: str = None
     _tipo: str = None
+    _tag: str = None
 
-    def __init__(self, cls=None, min_occurs=None, max_occurs=None, documentation: list[str]=None, xml=None, **kwargs):
-        if min_occurs is None:
-            min_occurs = 1
-        super().__init__(cls, min_occurs=min_occurs, max_occurs=max_occurs)
-        self.documentation = documentation
-        if documentation:
-            self._caption = documentation[0]
-        self._tipo = kwargs.get('tipo')
-        self._tam = kwargs.get('tam')
-        self._base_type = kwargs.get('base_type')
-        self._optional = kwargs.get('optional')
-        self._filter = kwargs.get('filter')
-        self._default = kwargs.get('default')
-        self.min_occurs = min_occurs
-        self.max_occurs = max_occurs
-        self._values = {}
-        if xml:
-            self._read_xml(xml)
+    def __init__(self, *args, **kwargs):
+        pass
 
-    def __call__(self, *args, **kwargs):
-        if issubclass(self._cls, str):
-            return None
-        _kwargs = {}
-        if self.min_occurs:
-            _kwargs['min_occurs'] = self.min_occurs
-        if self.max_occurs:
-            _kwargs['max_occurs'] = self.max_occurs
-        new_obj = self._cls(**_kwargs)
-        if isinstance(new_obj, ComplexType):
-            for k, prop in new_obj._xml_props.items():
-                if isinstance(prop, Element):
-                    if issubclass(prop._cls, str):
-                        if prop._default:
-                            v = prop._default
-                        else:
-                            v = None
-                    else:
-                        v = prop()
-                elif isinstance(v, Attribute):
-                    if v._default:
-                        v = v._default
-                    else:
-                        v = None
-                if v is not None:
-                    setattr(new_obj, k, v)
-        return new_obj
+    def _xml(self):
+        raise NotImplemented
 
     def __set_name__(self, owner, name):
-        self._parent = owner
+        if not self._tag:
+            self._tag = name
 
 
 class Alias:
@@ -246,11 +290,19 @@ class Attribute:
     _base_type = None
     _filter = None
     _cls = None
+    _pattern: str = None
     _required = None
 
-    def __init__(self, type, default=None):
+    def __init__(
+            self, type=None, default=None, pattern: str = None, min_length=None, max_length=None, required=None,
+            enumeration=None
+    ):
         self.type = type
         self._default = default
+        self._pattern = pattern
+        self._min_length = min_length
+        self._max_length = max_length
+        self._required = required
 
 
 class TString(str):
@@ -282,14 +334,29 @@ class Restriction:
 
 
 class SimpleTypeElement(Element):
-    pass
+    _value = None
+
+    def __init__(self, value=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._value = value
+
+    def __set__(self, instance, value):
+        if instance is not None:
+            self._value = value
+
+    def _xml(self, t: str = None):
+        t = t or self._tag
+        return tag(t, self._value)
+
+    def __bool__(self):
+        return bool(self._value)
 
 
 class ID(SimpleTypeElement):
     pass
 
 
-class base64Binary(str):
+class base64Binary(SimpleTypeElement):
     pass
 
 
@@ -305,7 +372,7 @@ class dateTime(SimpleTypeElement):
     pass
 
 
-class TXML(SimpleTypeElement):
+class TXML(str):
     _value = None
 
     def _xml(self, name=None):
@@ -316,3 +383,29 @@ class TXML(SimpleTypeElement):
     def __set__(self, instance, value):
         if instance is not None:
             self._value = value
+
+
+class Choice:
+    def __init__(self, *args):
+        self.choices: list[str] = list(args)
+        # tratamento especial para CNPJ e CPF
+        self._cnpj_cpf = 'CNPJ' in self.choices and 'CPF' in self.choices
+
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self
+        if self._cnpj_cpf:
+            return instance.CNPJ or instance.CPF
+
+    def __set__(self, instance, value):
+        if instance is not None:
+            # decide automaticamente se CNPJ ou CPF
+            if self._cnpj_cpf:
+                if len(value) == 14:
+                    instance.CNPJ = value
+                else:
+                    instance.CPF = value
+
+
+class XmlSignature(str):
+    pass

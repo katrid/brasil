@@ -5,7 +5,7 @@ from lxml import etree
 from ..base import DocumentoFiscal
 from .settings import Config
 from .v400 import NFe, nfeProc
-from .ws import StatusServico, Autorizacao, RetAutorizacao, Consulta, RecepcaoEvento, inutNFe
+from .ws import StatusServico, Autorizacao, RetAutorizacao, Consulta, RecepcaoEvento
 from brasil.dfe.leiaute.nfe.eventoCancNFe_v100 import evento as TEventoCanc
 from brasil.utils.text import remover_acentos
 
@@ -94,11 +94,7 @@ class NotaFiscal(DocumentoFiscal):
         inf.dhEvento = dh
         inf.tpAmb = amb
         inf.nSeqEvento = seq
-        cnpjcpf = ''.join(filter(str.isdigit, cnpjcpf))
-        if len(cnpjcpf) == 11:
-            inf.CPF = cnpjcpf
-        else:
-            inf.CNPJ = cnpjcpf
+        inf.CNPJ_CPF = cnpjcpf
         inf.cOrgao = orgao or self.config.orgao
         inf.verEvento = '1.00'
         if chave:

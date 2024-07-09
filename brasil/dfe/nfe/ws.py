@@ -1,7 +1,9 @@
 import brasil.dfe.ws
+from brasil.dfe.utils.xml_utils import tag
 from .v400 import (
     consStatServ, retConsStatServ, enviNFe, retEnviNFe, consReciNFe, retConsReciNFe, consSitNFe, retConsSitNFe,
-    envEvento, retEnvEvento, inutNFe
+    envEvento, retEnvEvento,
+    # distDFeInt, retDistDFeInt,
 )
 
 
@@ -117,3 +119,40 @@ class StatusServico(WebService):
         self.xml.versao = self.versao
         self.xml.tpAmb = self.config.amb
         self.xml.xServ = 'STATUS'
+
+
+# class Distribuicao(WebService):
+#     class DistribuicaoBody(Body):
+#         soapVersion = 'soap12'
+#         element = 'nfeDadosMsg'
+#
+#         def __str__(self):
+#             v = str(self.soapVersion) + ':' if self.soapVersion else ''
+#             kwargs = {}
+#             if self.xmlns:
+#                 kwargs['xmlns'] = self.xmlns
+#             return tag(
+#                 v + 'Body',
+#                 tag(
+#                     'nfeDistDFeInteresse',
+#                     tag(
+#                         self.element,
+#                         self.xml,
+#                     ),
+#                     **kwargs
+#                 ),
+#                 )
+#
+#     body = DistribuicaoBody
+#     header = None
+#     versao = '1.01'
+#     webservice = 'NFeDistribuicaoDFe'
+#     namespace = 'http://www.portalfiscal.inf.br/nfe'
+#     wsdl = 'http://www.portalfiscal.inf.br/nfe/wsdl/NFeDistribuicaoDFe'
+#     method = 'nfeDistDFeInteresse'
+#     Xml = distDFeInt
+#     xml: distDFeInt
+#     Retorno = retDistDFeInt
+#     retorno: retDistDFeInt = None
+#     uf = 'AN'  # uf da distribuição é Ambiente Nacional
+

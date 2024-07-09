@@ -17,6 +17,8 @@ from brasil.dfe.leiaute.nfe.envEvento_v100 import envEvento
 from brasil.dfe.leiaute.nfe.retEnvEvento_v100 import retEnvEvento
 from brasil.dfe.leiaute.nfe.inutNFe_v400 import inutNFe
 from brasil.dfe.leiaute.nfe.retInutNFe_v400 import retInutNFe
+from brasil.dfe.leiaute.nfe.distDFeInt_v101 import distDFeInt
+from brasil.dfe.leiaute.nfe.retDistDFeInt_v101 import retDistDFeInt
 
 
 class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
@@ -54,7 +56,7 @@ class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
 
     def _xml(self, name=None):
         self._prepare()
-        for i, det in enumerate(self.infNFe.det._list):
+        for i, det in enumerate(self.infNFe.det):
             det.nItem = i + 1
         return remover_acentos(super()._xml(name)).decode('utf-8')
 
