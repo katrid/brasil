@@ -2,11 +2,9 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: tiposBasico_v1.03.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
-from datetime import date, datetime
 from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
+from brasil.dfe.xsd import TString
 
 
 class TCodUfIBGE(str):
@@ -279,4 +277,5 @@ class TTime(str):
 class TDateTimeUTC(str):
     """Data e Hora, formato UTC (AAAA-MM-DDThh:mm:ssTZD, onde TZD = +hh:mm ou -hh:mm)"""
     pass
+
 

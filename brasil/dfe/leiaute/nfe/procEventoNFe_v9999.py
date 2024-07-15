@@ -2,12 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: procEventoNFe_v99.99.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
-from .envCancelPProrrogNFe_v10 import *
 from .retEnvCancelPProrrogNFe_v10 import *
 
 
@@ -23,4 +18,5 @@ class procEventoNFe(ComplexType):
         retEnvEvento: Annotated[str, Element] = None
 
     retEvento: Annotated[_retEvento, Element] = None
+
 

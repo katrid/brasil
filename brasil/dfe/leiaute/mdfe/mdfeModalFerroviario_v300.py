@@ -2,11 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: mdfeModalFerroviario_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/mdfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .tiposGeralMDFe_v300 import *
 
 
@@ -34,4 +30,5 @@ class ferrov(ComplexType):
         TU: Annotated[TDec_0302_0303, Element] = None
 
     vag: Annotated[ElementList[_vag], Element] = None
+
 

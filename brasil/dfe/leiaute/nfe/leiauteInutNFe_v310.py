@@ -2,11 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: leiauteInutNFe_v3.10.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .tiposBasico_v310 import *
 
 
@@ -67,4 +63,5 @@ class TProcInutNFe(ComplexType):
     versao: Annotated[TVerInutNFe, Attribute] = None
     inutNFe: Annotated[TInutNFe, Element] = None
     retInutNFe: Annotated[TRetInutNFe, Element] = None
+
 

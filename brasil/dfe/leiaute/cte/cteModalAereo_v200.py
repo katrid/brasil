@@ -2,11 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: cteModalAereo_v2.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .tiposGeralCTe_v200 import *
 
 
@@ -33,4 +29,5 @@ class aereo(ComplexType):
         cIMP: Annotated[ElementList[str], Element] = None
 
     natCarga: Annotated[_natCarga, Element] = None
+
 

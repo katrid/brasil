@@ -2,15 +2,12 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: retInutNFe_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .leiauteInutNFe_v400 import *
 
 
 class retInutNFe(TRetInutNFe):
     """Schema XML de validação do retorno do Pedido de Inutilização de Numeração da Nota Fiscal Eletrônica"""
     _xmlns = "http://www.portalfiscal.inf.br/nfe"
+
 

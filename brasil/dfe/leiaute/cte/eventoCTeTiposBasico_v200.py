@@ -2,13 +2,9 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: eventoCTeTiposBasico_v2.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
-from .tiposGeralCTe_v200 import *
 from .evPrestDesacordo_v200 import *
+from .tiposGeralCTe_v200 import *
 
 
 class TVerEvento(str):
@@ -83,4 +79,5 @@ class TNSU(str):
 class TPlaca(str):
     """Tipo Placa """
     pass
+
 

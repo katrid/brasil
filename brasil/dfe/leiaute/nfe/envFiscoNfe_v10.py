@@ -2,11 +2,9 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: envFiscoNfe_v1.0.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
+from typing import Annotated
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
+from brasil.dfe.xsd import Choice, ComplexType, Attribute, Element, ElementList
 
 
 class TRespPedido(ComplexType):
@@ -38,4 +36,5 @@ class detEvento(ComplexType):
     respPedido: Annotated[TRespPedido, Element] = None
     respCancPedido: Annotated[TRespCancPedido, Element] = None
     respPedido_respCancPedido = Choice("respPedido", "respCancPedido")
+
 

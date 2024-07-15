@@ -2,15 +2,12 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: cteOS_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .cteTiposBasico_v300 import *
 
 
 class CTeOS(TCTeOS):
     """Conhecimento de Transporte Eletrônico Outros Serviços"""
     _xmlns = "http://www.portalfiscal.inf.br/cte"
+
 

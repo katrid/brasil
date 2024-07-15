@@ -2,11 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: resNFe_v1.01.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .tiposDistDFe_v101 import *
 
 
@@ -31,4 +27,5 @@ class resNFe(ComplexType):
     dhRecbto: Annotated[TDateTimeUTC, Element] = None
     nProt: Annotated[TProt, Element] = None
     cSitNFe: Annotated[str, Element] = None
+
 

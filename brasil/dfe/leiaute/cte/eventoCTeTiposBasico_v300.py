@@ -2,14 +2,9 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: eventoCTeTiposBasico_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
-from .tiposGeralCTe_v300 import *
-from .evPrestDesacordo_v300 import *
 from .evCancCTe_v300 import *
+from .evPrestDesacordo_v300 import *
 
 
 class TVerEvento(str):
@@ -81,4 +76,5 @@ class TModTransp(str):
 class TNSU(str):
     """ Tipo número sequencial único do AN"""
     pass
+
 

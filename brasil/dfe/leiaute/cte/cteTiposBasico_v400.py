@@ -2,14 +2,8 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: cteTiposBasico_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .tiposGeralCTe_v400 import *
-from .cteModalRodoviario_v400 import *
-from .cteModalAquaviario_v400 import *
 
 
 class TModTranspGTVe(str):
@@ -1386,3 +1380,6 @@ class TCIOT(str):
     """Tipo CIOT - Código Identificador da Operação de Transporte"""
     pass
 
+
+from .cteModalRodoviario_v400 import *
+from .cteModalAquaviario_v400 import *

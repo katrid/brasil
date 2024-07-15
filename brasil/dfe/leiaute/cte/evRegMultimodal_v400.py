@@ -2,12 +2,9 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: evRegMultimodal_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
+from typing import Annotated
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
-from .eventoCTeTiposBasico_v400 import *
+from brasil.dfe.xsd import ComplexType, Element
 
 
 class evRegMultimodal(ComplexType):
@@ -15,4 +12,5 @@ class evRegMultimodal(ComplexType):
     descEvento: Annotated[str, Element] = None
     xRegistro: Annotated[str, Element] = None
     nDoc: Annotated[str, Element] = None
+
 

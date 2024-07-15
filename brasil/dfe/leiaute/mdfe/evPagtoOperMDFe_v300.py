@@ -2,11 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: evPagtoOperMDFe_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/mdfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .eventoMDFeTiposBasico_v300 import *
 
 
@@ -63,4 +59,5 @@ Informar somente se indPag for à Prazo"""
         infBanc: Annotated[_infBanc, Element] = None
 
     infPag: Annotated[ElementList[_infPag], Element] = None
+
 

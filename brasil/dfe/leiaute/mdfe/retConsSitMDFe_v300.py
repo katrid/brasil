@@ -2,15 +2,12 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: retConsSitMDFe_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/mdfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .consSitMDFeTiposBasico_v300 import *
 
 
 class retConsSitMDFe(TRetConsSitMDFe):
     """Schema XML de validação do retorno da consulta da situação atual do MDF-e."""
     _xmlns = "http://www.portalfiscal.inf.br/mdfe"
+
 

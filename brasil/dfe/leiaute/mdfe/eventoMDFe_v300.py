@@ -2,15 +2,12 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: eventoMDFe_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/mdfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .eventoMDFeTiposBasico_v300 import *
 
 
 class eventoMDFe(TEvento):
     """Schema XML de validação do Pedido de Registro de Evento do MDF-e"""
     _xmlns = "http://www.portalfiscal.inf.br/mdfe"
+
 

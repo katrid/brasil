@@ -1,6 +1,6 @@
 from typing import List
 
-from brasil.utils.parser import Parser, XsBaseElement, XsElement, XsComplexType
+from brasil.utils.parser import Parser, XsBaseElement, XsElement
 
 
 class Compiler(Parser):
@@ -85,9 +85,9 @@ class Compiler(Parser):
                     XsElement(name='rodo', base='rodo'),
                     XsElement(name='aquav', base='aquav'),
                 ]
-                if 'cteModalRodoviario_v2.00.xsd' not in self.schema.includes:
-                    self.schema.includes.append('cteModalRodoviario_v2.00.xsd')
-                    self.schema.includes.append('cteModalAquaviario_v2.00.xsd')
+                if 'cteModalRodoviario_v2.00.xsd' not in self.schema.post_includes:
+                    self.schema.post_includes.append('cteModalRodoviario_v2.00.xsd')
+                    self.schema.post_includes.append('cteModalAquaviario_v2.00.xsd')
         elif self.schema.name == 'cteTiposBasico_v3.00.xsd':
             parent = element.parent
             if parent and parent.name == '_infModal':
@@ -96,9 +96,9 @@ class Compiler(Parser):
                     XsElement(name='rodo', base='rodo'),
                     XsElement(name='aquav', base='aquav'),
                 ]
-                if 'cteModalRodoviario_v3.00.xsd' not in self.schema.includes:
-                    self.schema.includes.append('cteModalRodoviario_v3.00.xsd')
-                    self.schema.includes.append('cteModalAquaviario_v3.00.xsd')
+                if 'cteModalRodoviario_v3.00.xsd' not in self.schema.post_includes:
+                    self.schema.post_includes.append('cteModalRodoviario_v3.00.xsd')
+                    self.schema.post_includes.append('cteModalAquaviario_v3.00.xsd')
         elif self.schema.name == 'cteTiposBasico_v4.00.xsd':
             parent = element.parent
             if parent and parent.name == '_infModal':
@@ -107,9 +107,9 @@ class Compiler(Parser):
                     XsElement(name='rodo', base='rodo'),
                     XsElement(name='aquav', base='aquav'),
                 ]
-                if 'cteModalRodoviario_v4.00.xsd' not in self.schema.includes:
-                    self.schema.includes.append('cteModalRodoviario_v4.00.xsd')
-                    self.schema.includes.append('cteModalAquaviario_v4.00.xsd')
+                if 'cteModalRodoviario_v4.00.xsd' not in self.schema.post_includes:
+                    self.schema.post_includes.append('cteModalRodoviario_v4.00.xsd')
+                    self.schema.post_includes.append('cteModalAquaviario_v4.00.xsd')
         elif self.schema.name == 'leiauteDistMDFe_v3.00.xsd':
             parent = element.parent
             if parent and parent.name == '_infMDFe':

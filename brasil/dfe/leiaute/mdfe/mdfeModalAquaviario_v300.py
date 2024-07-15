@@ -2,11 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: mdfeModalAquaviario_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/mdfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .mdfeTiposBasico_v300 import *
 
 
@@ -56,4 +52,5 @@ class aquav(ComplexType):
         tpUnidTranspVazia: Annotated[str, Element] = None
 
     infUnidTranspVazia: Annotated[ElementList[_infUnidTranspVazia], Element] = None
+
 

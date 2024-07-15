@@ -2,11 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: evEPECCTe_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .eventoCTeTiposBasico_v400 import *
 
 
@@ -35,4 +31,5 @@ class evEPECCTe(ComplexType):
     UFFim: Annotated[TUf, Element] = None
     tpCTe: Annotated[str, Element] = None
     dhEmi: Annotated[TDateTimeUTC, Element] = None
+
 

@@ -2,11 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: leiauteConsultaCadastro_v2.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .tiposBasico_v103 import *
 
 
@@ -88,4 +84,5 @@ class TRetConsCad(ComplexType):
         infCad: Annotated[ElementList[_infCad], Element] = None
 
     infCons: Annotated[_infCons, Element] = None
+
 

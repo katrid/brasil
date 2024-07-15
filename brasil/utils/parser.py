@@ -470,12 +470,14 @@ class XsSchema:
     xmlns: str = None
     elements: List[XsBaseElement]
     includes: List[str]
+    post_includes: List[str]
 
     def __init__(self):
         super().__init__()
         self.parser = None
         self.stream = []
         self.includes = []
+        self.post_includes = []
         self.elements = []
 
     def parse(self, xml: _Element):
@@ -524,6 +526,10 @@ class XsSchema:
         types = adjust_deps({s.name: s for s in self.elements if s.name})
         for el in types:
             el.compile(0, stream)
+        stream.append('')
+        for i in self.post_includes:
+            s = i.rsplit('.', 1)[0].replace('.', '')
+            stream.append(f'from .{s} import *')
         stream.append('')
 
     def to_python(self) -> str:

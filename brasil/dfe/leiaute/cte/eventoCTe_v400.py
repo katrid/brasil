@@ -2,15 +2,12 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: eventoCTe_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .eventoCTeTiposBasico_v400 import *
 
 
 class eventoCTe(TEvento):
     """Schema XML de validação do Pedido de Registro de Evento do CT-e"""
     _xmlns = "http://www.portalfiscal.inf.br/cte"
+
 

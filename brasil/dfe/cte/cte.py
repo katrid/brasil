@@ -1,10 +1,12 @@
 import datetime
+
 from lxml import etree
-from ..base import DocumentoFiscal
-from .v400 import CTe, TCancCTe, cteProc, Element
-from .settings import Config
-from .ws import Recepcao, Consulta, RetornoRecepcao, RecepcaoEvento, eventoCTe
+
 from brasil.utils.text import remover_acentos
+from .settings import Config
+from .v400 import CTe, cteProc
+from .ws import Recepcao, Consulta, RetornoRecepcao, RecepcaoEvento, eventoCTe
+from ..base import DocumentoFiscal
 
 
 class _CTe:
@@ -21,6 +23,18 @@ class _CTe:
     @property
     def chave(self):
         return self.CTe.infCte.Id[3:]
+
+    @chave.setter
+    def chave(self, valor):
+        self.CTe.infCte.Id = 'CTe' + valor
+
+    @property
+    def rodo(self):
+        return self.CTe.infCte.infCTeNorm.infModal.rodo
+
+    @property
+    def aquav(self):
+        return self.CTe.infCte.infCTeNorm.infModal.aquav
 
 
 class Conhecimentos(list):
@@ -100,7 +114,6 @@ class Conhecimento(DocumentoFiscal):
         return svc
 
     def cancelar(self, justificativa: str, lote, seq="1", cnpjcpf=None, dh=None, chave=None, orgao=None, protocolo=None, amb=2) -> RecepcaoEvento:
-        from brasil.dfe.leiaute.cte.evCancCTe_v300 import evCancCTe
         if dh is None:
             dh = datetime.datetime.now()
         evento = eventoCTe()

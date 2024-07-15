@@ -2,11 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: evCECTe_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .eventoCTeTiposBasico_v300 import *
 
 
@@ -29,4 +25,5 @@ Informar o grupo apenas para CT-e com tipo de serviço Normal"""
         chNFe: Annotated[TChNFe, Element] = None
 
     infEntrega: Annotated[ElementList[_infEntrega], Element] = None
+
 

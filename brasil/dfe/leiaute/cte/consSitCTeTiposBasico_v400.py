@@ -2,12 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: consSitCTeTiposBasico_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
-from .tiposGeralCTe_v400 import *
 from .procCTe_v400 import *
 
 
@@ -39,4 +34,5 @@ class TRetConsSitCTe(ComplexType):
         versao: Annotated[str, Attribute(enumeration=['1.04', '2.00', '3.00', '4.00'])] = None
 
     procEventoCTe: Annotated[ElementList[_procEventoCTe], Element] = None
+
 

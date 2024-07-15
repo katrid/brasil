@@ -1,8 +1,9 @@
-from inspect import get_annotations
-from typing import get_origin, get_args, Annotated, List, Self
-import re
 import datetime
+import re
 from decimal import Decimal
+from importlib import import_module
+from inspect import get_annotations
+from typing import get_origin, get_args, List, Self
 
 from lxml import etree
 
@@ -24,9 +25,11 @@ class XmlProp:
     type = None
     origin = None
     element = None
+    cls = None
 
-    def __init__(self, name: str, annotations):
+    def __init__(self, name: str, annotations, cls: type = None):
         self.name = name
+        self.cls = cls
         for i, arg in enumerate(get_args(annotations)):
             if i == 0:
                 self.origin = get_origin(arg)
@@ -38,6 +41,13 @@ class XmlProp:
                     self.type = arg
             elif i == 1:
                 self.element = arg
+
+    def find_on_module(self):
+        mod = import_module(self.cls.__module__)
+        cls = getattr(mod, self.name, None)
+        self.type = cls
+        if self.origin is None:
+            self.origin = cls
 
 
 class ElementList[T](list):
@@ -81,6 +91,8 @@ class ComplexType(SimpleType, metaclass=ElementType):
         # inicializar elemento
         if self._props:
             for k, prop in self._props.items():
+                if prop.origin is None and prop.cls is not None and prop.type is type(None):
+                    prop.find_on_module()
                 # init the list
                 if prop.origin is ElementList or prop.origin is list:
                     setattr(self, prop.name, ElementList(prop.type))
@@ -90,7 +102,7 @@ class ComplexType(SimpleType, metaclass=ElementType):
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
         if cls.__module__ != 'brasil.dfe.xsd':
-            props = {'pass' if k == 'pass_' else k: XmlProp(k, a) for k, a in get_annotations(cls).items()}
+            props = {'pass' if k == 'pass_' else k: XmlProp(k, a, cls) for k, a in get_annotations(cls).items()}
             if props:
                 if not cls._props:
                     cls._props = {}

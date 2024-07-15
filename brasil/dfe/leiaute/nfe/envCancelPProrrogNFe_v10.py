@@ -2,11 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: envCancelPProrrogNFe_v1.0.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .tiposBasico_v310 import *
 
 
@@ -16,4 +12,5 @@ class detEvento(ComplexType):
     descEvento: Annotated[str, Element] = None
     idPedidoCancelado: Annotated[str, Element] = None
     nProt: Annotated[TProt, Element] = None
+
 

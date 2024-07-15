@@ -2,11 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: evGTV_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .eventoCTeTiposBasico_v300 import *
 
 
@@ -57,4 +53,5 @@ class evGTV(ComplexType):
         RNTRC: Annotated[str, Element] = None
 
     infGTV: Annotated[ElementList[_infGTV], Element] = None
+
 

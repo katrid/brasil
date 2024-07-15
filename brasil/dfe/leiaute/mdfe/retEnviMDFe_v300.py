@@ -2,15 +2,12 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: retEnviMDFe_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/mdfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .mdfeTiposBasico_v300 import *
 
 
 class retEnviMDFe(TRetEnviMDFe):
     """Schema XML de validação do retorno do recibo de envio do lote de MDF-e"""
     _xmlns = "http://www.portalfiscal.inf.br/mdfe"
+
 

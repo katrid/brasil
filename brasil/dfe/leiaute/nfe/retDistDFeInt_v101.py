@@ -2,11 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: retDistDFeInt_v1.01.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
-from datetime import date, datetime
-from decimal import Decimal
 
-from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .tiposDistDFe_v101 import *
 
 
@@ -31,4 +27,5 @@ class retDistDFeInt(ComplexType):
         docZip: Annotated[ElementList[_docZip], Element] = None
 
     loteDistDFeInt: Annotated[_loteDistDFeInt, Element] = None
+
 
