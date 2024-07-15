@@ -19,12 +19,8 @@ class _MDFe:
             self.mdfeProc = proc
             self.MDFe = self.mdfeProc.MDFe
 
-    @property
-    def chave(self):
-        return self.MDFe.infMDFe.Id[3:]
 
-
-class Conhecimentos(list):
+class Manifestos(list):
     def __init__(self, config):
         super().__init__()
         self._config = config
@@ -52,21 +48,21 @@ class Conhecimentos(list):
         return mdfe
 
 
-class Conhecimento(DocumentoFiscal):
-    conhecimentos: Conhecimentos
+class Manifesto(DocumentoFiscal):
+    manifestos: Manifestos
 
     def __init__(self, xml=None, config: Config = None):
         self.config: Config = config
-        self.conhecimentos = Conhecimentos(config)
+        self.manifestos = Manifestos(config)
         if xml:
-            self.conhecimentos.add(xml)
+            self.manifestos.add(xml)
 
     def to_xml(self, doc: MDFe=None):
         return doc._xml()
 
     def enviar_(self, lote: int):
         svc = Recepcao(self.config)
-        for ct in self.conhecimentos:
+        for ct in self.manifestos:
             svc.xml.MDFe.append(ct.MDFe)
         svc.xml.idLote = lote
         svc.executar()
@@ -74,13 +70,13 @@ class Conhecimento(DocumentoFiscal):
 
     def enviar(self):
         svc = Recepcao(self.config)
-        svc.xml = self.conhecimento.MDFe
+        svc.xml = self.manifesto.MDFe
         svc.executar()
         return svc
 
     @property
-    def conhecimento(self):
-        return self.conhecimentos[0]
+    def manifesto(self):
+        return self.manifestos[0]
 
     def assinar(self, root, ref):
         if isinstance(root, str):
@@ -124,20 +120,17 @@ class Conhecimento(DocumentoFiscal):
         inf.dhEvento = dh_emis.strftime('%Y-%m-%dT%H:%M:%S') + '-03:00' if isinstance(dh_emis, datetime.datetime) else dh_emis
         inf.tpAmb = self.config.amb
         inf.nSeqEvento = seq
-        cnpjcpf = ''.join(filter(str.isdigit, cnpjcpf))
         if len(cnpjcpf) == 11:
             inf.CPF = cnpjcpf
         else:
             inf.CNPJ = cnpjcpf
         inf.cOrgao = orgao or self.config.orgao
-        inf.chMDFe = self.conhecimento.MDFe.chave
+        inf.chMDFe = self.manifesto.MDFe.chave
         inf.tpAmb = self.config.amb
         inf.Id = 'ID' + inf.tpEvento + inf.chMDFe + seq.zfill(2)
         inf.detEvento.evCancMDFe = evCancMDFe()
-        inf.detEvento._xml_props['evCancMDFe'] = evCancMDFe
         inf.detEvento.versaoEvento = '3.00'
         canc_ev = inf.detEvento.evCancMDFe
-        canc_ev._xmlns = "http://www.portalfiscal.inf.br/mdfe"
         canc_ev.xJust = remover_acentos(justificativa).decode('utf-8')
         canc_ev.nProt = protocolo
         canc_ev.descEvento = 'Cancelamento'
@@ -179,7 +172,6 @@ class Conhecimento(DocumentoFiscal):
         inf.detEvento.evEncMDFe = evEncMDFe()
         enc_ev = inf.detEvento.evEncMDFe
         enc_ev._xmlns = "http://www.portalfiscal.inf.br/mdfe"
-        inf.detEvento._xml_props['evEncMDFe'] = evEncMDFe
         inf.detEvento.versaoEvento = '3.00'
         inf.Id = 'ID' + inf.tpEvento + inf.chMDFe + seq.zfill(2)
         enc_ev.descEvento = 'Encerramento'
@@ -192,7 +184,6 @@ class Conhecimento(DocumentoFiscal):
         if not enc_schema.validate(etree.fromstring(enc_ev._xml())):
             raise AssertionError(enc_schema.error_log.last_error.message)
         return self.enviar_evento(ev)
-
 
     def enviar_evento(self, evento: eventoMDFe) -> RecepcaoEvento:
         """

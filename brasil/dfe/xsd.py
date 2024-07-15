@@ -40,13 +40,17 @@ class XmlProp:
                 self.element = arg
 
 
-class ElementList(list):
+class ElementList[T](list):
     def __init__(self, type):
         super().__init__()
         self.type = type
 
-    def add(self, *args, **kwargs):
+    def add(self, *args, **kwargs) -> T:
         item = self.type()
+        if args:
+            props = iter(item._props.keys())
+            for arg in args:
+                setattr(item, next(props), arg)
         for k, v in kwargs.items():
             setattr(item, k, v)
         self.append(item)
@@ -84,10 +88,13 @@ class ComplexType(SimpleType, metaclass=ElementType):
                     setattr(self, prop.name, prop.type())
 
     def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
         if cls.__module__ != 'brasil.dfe.xsd':
-            props = {k: XmlProp(k, a) for k, a in get_annotations(cls).items()}
+            props = {'pass' if k == 'pass_' else k: XmlProp(k, a) for k, a in get_annotations(cls).items()}
             if props:
-                cls._props = props
+                if not cls._props:
+                    cls._props = {}
+                cls._props = {**cls._props, **props}
 
     def add(self, *args, **kwargs):
         new_obj = self.__class__()

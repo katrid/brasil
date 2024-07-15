@@ -14,7 +14,7 @@ FRETE = {
     '9': '9 - Sem Frete'
 }
 
-TP_CTE ={
+TP_CTE = {
     '0': 'CT-e Normal',
     '1': 'CT-e de Complemento de Valores',
     '2': 'CT-e de Anulação',
@@ -57,6 +57,7 @@ CTE_TP_SERV = {
     '4': 'Serviço Vinculado a Multimodal',
 }
 
+
 def gerar_codigo(num: int) -> int:
     INVALIDOS = (
         0, 11111111, 22222222,
@@ -68,6 +69,7 @@ def gerar_codigo(num: int) -> int:
         pass
     return i
 
+
 def gerar_chave_acesso(uf: int, emis: datetime, cnpj: str, serie: int, numero: int, tp_emi: int, codigo: int,
                        modelo: int) -> str:
     if codigo == 0:
@@ -75,6 +77,7 @@ def gerar_chave_acesso(uf: int, emis: datetime, cnpj: str, serie: int, numero: i
     emis = emis.strftime("%y%m")
     res = f'{uf}{emis}{cnpj.zfill(14)}{str(modelo).zfill(2)}{str(serie).zfill(3)}{str(numero).zfill(9)}{tp_emi}{str(codigo).zfill(8)}'
     return res + str(modulo11(res))
+
 
 def parse_chave_acesso(chave: str):
     return {
@@ -89,6 +92,7 @@ def parse_chave_acesso(chave: str):
         'dv': chave[43:44],
     }
 
+
 def validar_cpf(cpf):
     cpf = ''.join(re.findall('\d', str(cpf)))
     if (not cpf) or (len(cpf) < 11):
@@ -99,7 +103,7 @@ def validar_cpf(cpf):
     novo = inteiros[:9]
 
     while len(novo) < 11:
-        r = sum([(len(novo)+1-i)*v for i,v in enumerate(novo)]) % 11
+        r = sum([(len(novo) + 1 - i) * v for i, v in enumerate(novo)]) % 11
 
         if r > 1:
             f = 11 - r
@@ -110,6 +114,7 @@ def validar_cpf(cpf):
     if novo == inteiros:
         return True
     return False
+
 
 def validar_cnpj(cnpj):
     cnpj = ''.join(re.findall('\d', str(cnpj)))
@@ -121,7 +126,7 @@ def validar_cnpj(cnpj):
 
     prod = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
     while len(novo) < 14:
-        r = sum([x*y for (x, y) in zip(novo, prod)]) % 11
+        r = sum([x * y for (x, y) in zip(novo, prod)]) % 11
         if r > 1:
             f = 11 - r
         else:
@@ -133,9 +138,11 @@ def validar_cnpj(cnpj):
         return True
     return False
 
+
 def format_number(v: str) -> str:
     new = '{:,.2f}'.format(round(float(v), 2)).replace(',', '*').replace('.', ',').replace('*', '.')
     return new
+
 
 def format_all_numbers(struct: dict) -> dict:
     for k, v in struct.items():
@@ -146,8 +153,10 @@ def format_all_numbers(struct: dict) -> dict:
                 struct[k] = format_number(v)
     return struct
 
+
 def is_float(value: str) -> bool:
     return value.replace('.', '').isnumeric() and (value.count('.') == 1)
+
 
 def format_doc(ator: dict) -> str:
     if 'CNPJ' in ator:
@@ -156,10 +165,12 @@ def format_doc(ator: dict) -> str:
     elif 'CPF' in ator:
         doc = ator['CPF']
         return f'{doc[:3]}.{doc[3:6]}.{doc[6:9]}-{doc[9:]}'
-    
+
+
 def format_dfe_numero(numero: str) -> str:
     res = numero.zfill(9)
     return '.'.join([res[i:i + 3] for i in range(0, len(res), 3)])
+
 
 def format_iso_datetime(date_str: str) -> str:
     date = isoparse(date_str)

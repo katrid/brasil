@@ -20,7 +20,8 @@ from brasil.dfe.leiaute.cte.retDistDFeInt_v100 import retDistDFeInt
 from brasil.dfe.leiaute.cte.procCTe_v400 import cteProc
 
 # schemas não constantes na versão 4.00
-from brasil.dfe.leiaute.cte.consReciCTe_v300 import consReciCTe, retConsReciCTe
+from brasil.dfe.leiaute.cte.consReciCTe_v300 import consReciCTe
+from brasil.dfe.leiaute.cte.retConsReciCTe_v300 import retConsReciCTe
 from brasil.dfe.leiaute.cte.cancCTeTiposBasico_v300 import TCancCTe, TRetCancCTe
 from brasil.dfe.leiaute.cte.retEnviCTe_v300 import retEnviCte
 from brasil.dfe.leiaute.cte.enviCTe_v300 import enviCTe
@@ -31,17 +32,14 @@ from brasil.dfe.cte.validations import CTeValidator
 
 
 class CTe(brasil.dfe.leiaute.cte.cte_v400.CTe):
-    _xmlns = 'http://www.portalfiscal.inf.br/cte'
     _config = None
-    schema = None
-    svc: bool = False
 
-    def validate(self, _nfe_config=None):
-        self._nfe_config = _nfe_config
-        validator = CTeValidator(self)
-        self._validate_schema()
-        validator.run_validations(_nfe_config=_nfe_config)
-
+    # def validate(self, _nfe_config=None):
+    #     self._nfe_config = _nfe_config
+    #     validator = CTeValidator(self)
+    #     self._validate_schema()
+    #     validator.run_validations(_nfe_config=_nfe_config)
+    #
     def _validate_schema(self):
         if CTe.schema is None:
             CTe.schema = etree.XMLSchema(
@@ -49,7 +47,7 @@ class CTe(brasil.dfe.leiaute.cte.cte_v400.CTe):
                                   'cte_v4.00.xsd')
             )
         xml = self._xml()
-        if not self.schema.validate(etree.fromstring(self._xml())):
+        if not self.schema.validate(etree.fromstring(xml)):
             return self.schema.error_log.last_error.message
 
     @property

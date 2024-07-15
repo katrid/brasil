@@ -12,13 +12,13 @@ from .v300 import (
 
 
 class Header(brasil.dfe.ws.Header):
-    soapVersion = 'soap'
+    soapVersion = 'soap12'
     versaoDados = '3.00'
     element = 'mdfeCabecMsg'
 
 
 class Body(brasil.dfe.ws.Body):
-    soapVersion = 'soap'
+    soapVersion = 'soap12'
     element = 'mdfeDadosMsg'
 
 
@@ -31,7 +31,7 @@ class WebService(brasil.dfe.ws.BaseService):
 
 class Distribuicao(WebService):
     class DistribuicaoBody(Body):
-        soapVersion = 'soap'
+        soapVersion = 'soap12'
         element = 'mdfeDadosMsg'
 
         def __str__(self):

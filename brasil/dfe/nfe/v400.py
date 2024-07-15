@@ -4,7 +4,7 @@ from lxml import etree
 
 from brasil.utils.text import remover_acentos
 import brasil.dfe.leiaute.nfe.nfe_v400
-import brasil.dfe.leiaute.nfe.procNFe_v400
+from brasil.dfe.leiaute.nfe.procNFe_v400 import nfeProc
 from brasil.dfe.leiaute.nfe.consStatServ_v400 import consStatServ
 from brasil.dfe.leiaute.nfe.retConsStatServ_v400 import retConsStatServ
 from brasil.dfe.leiaute.nfe.enviNFe_v400 import enviNFe
@@ -22,9 +22,7 @@ from brasil.dfe.leiaute.nfe.retDistDFeInt_v101 import retDistDFeInt
 
 
 class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
-    _xmlns = 'http://www.portalfiscal.inf.br/nfe'
     _config = None
-    schema = None
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -63,7 +61,3 @@ class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
     def assinar(self):
         self._prepare()
         self.Signature = self._config.certificado.assinar(self._xml(), self.infNFe.Id)
-
-
-class nfeProc(brasil.dfe.leiaute.nfe.procNFe_v400.nfeProc):
-    _xmlns = 'http://www.portalfiscal.inf.br/nfe'

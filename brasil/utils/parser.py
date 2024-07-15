@@ -12,11 +12,14 @@ class Parser:
 
     def __init__(self):
         self.schemas: dict[str, 'XsSchema'] = {}
+        self.schema = None  # current schema
 
     def parse(self, xml: _Element):
         tag = _get_tag(xml.tag)
         if tag == 'schema':
             schema = XsSchema()
+            schema.parser = self
+            self.schema = schema
             schema.name = self.current_file
             schema.parse(xml)
             self.schemas[schema.name] = schema
@@ -35,11 +38,12 @@ class Parser:
             if fname.endswith('.xsd'):
                 self.fromfile(os.path.join(dirname, fname))
 
-    def compile(self) -> str:
-        stream = []
+    def compile(self):
         for schema in self.schemas.values():
-            schema.compile(stream)
-        return '\n'.join(stream)
+            schema.compile()
+
+    def precompile_element(self, element: XsBaseElement):
+        pass
 
 
 class XsRestriction:
@@ -86,13 +90,16 @@ class XsBaseElement:
         if tag == 'annotation':
             self.read_node(child)
         elif tag == 'documentation':
-            self.documentation.append(child.text)
+            s = child.text
+            if s is not None:
+                self.documentation.append(s)
 
     def compile(self, indent: int, stream: List[str]):
         pass
 
-    def _prepare(self):
-        pass
+    def prepare(self, schema: XsSchema):
+        if schema.parser:
+            schema.parser.precompile_element(self)
 
     def get_deps(self):
         yield
@@ -133,13 +140,14 @@ class XsAttribute(XsBaseElement):
             ks = f'({_kwargs_to_str(kw)})'
         stream.append(f"""{indent_str}{self.name}: Annotated[{tp}, Attribute{ks}] = None""")
 
-    def _prepare(self):
+    def prepare(self, schema: XsSchema):
+        super().prepare(schema)
         if isinstance(self.type, XsSimpleType):
-            self.type._prepare()
+            self.type.prepare(schema)
 
     def get_deps(self):
         if isinstance(self.type, XsSimpleType):
-            yield self.type.name
+            yield self.type.name or self.type.type
         elif isinstance(self.type, str):
             yield self.type
 
@@ -150,12 +158,20 @@ class XsElement(XsBaseElement):
     max_occurs: int = None
     min_occurs: int = None
     sequence: List[XsSequence] = None
+    process_contents: str = None
+
+    def __init__(self, **kwargs):
+        super().__init__()
+        for k, v in kwargs.items():
+            setattr(self, k, v)
 
     def read_node(self, xml: _Element):
         super().read_node(xml)
         tag = _get_tag(xml.tag)
         if 'name' in xml.attrib:
             self.name = xml.attrib['name']
+        if 'processContents' in xml.attrib:
+            self.process_contents = xml.attrib.get('processContents')
         if 'ref' in xml.attrib:
             ref = xml.attrib['ref']
             # signature special case
@@ -226,12 +242,15 @@ class XsElement(XsBaseElement):
         elif self.base:
             tp = self.base
         tp = BASE_TYPE_MAP.get(tp, tp)
+        if tp is None:
+            # tipo deve ser automaticamente str caso None
+            tp = 'str'
         if self.max_occurs is not None and (self.max_occurs > 1 or self.max_occurs == -1):
-            tp = f'List[{tp}]'
+            tp = f'ElementList[{tp}]'
         stream.append(f'{indent_str}{self.name}: Annotated[{tp}, Element] = None')
 
-    def _prepare(self):
-        super()._prepare()
+    def prepare(self, schema: XsSchema):
+        super().prepare(schema)
         if isinstance(self.type, XsComplexType):
             if self.parent is None:
                 self.type.name = self.name
@@ -239,12 +258,15 @@ class XsElement(XsBaseElement):
                 self.type.name = f'_{self.name}'
             if not self.type.documentation:
                 self.type.documentation = self.documentation
-            self.type._prepare()
+            self.type.prepare(schema)
         elif isinstance(self.type, XsSimpleType):
-            self.type._prepare()
+            self.type.prepare(schema)
+        # pass special name
+        if self.name == 'pass':
+            self.name = 'pass_'
         if self.sequence:
             for seq in self.sequence:
-                seq._prepare()
+                seq.prepare(schema)
 
     def get_deps(self):
         if isinstance(self.type, XsComplexType):
@@ -294,11 +316,11 @@ class XsSimpleType(XsBaseElement):
                 kw['enumeration'] = r.enumeration
         return kw
 
-    def _prepare(self):
+    def prepare(self, schema: XsSchema):
         if not self.type:
             if self.restrictions:
                 self.type = self.restrictions[0].base
-        super()._prepare()
+        super().prepare(schema)
 
     def compile(self, indent: int, stream: List[str]):
         indent_str = '    ' * indent
@@ -351,14 +373,14 @@ class XsSequence(XsElement):
         # for el in self.elements:
         #     el.compile(indent, stream)
 
-    def _prepare(self):
+    def prepare(self, schema: XsSchema):
         for el in self.elements:
             if self.max_occurs is not None:
                 el.max_occurs = self.max_occurs
             if self.min_occurs is not None:
                 el.min_occurs = self.min_occurs
-            el._prepare()
-        super()._prepare()
+            el.prepare(schema)
+        super().prepare(schema)
 
     def get_deps(self):
         for seq in self.sequence:
@@ -414,14 +436,14 @@ class XsComplexType(XsElement):
             el.compile(indent + 1, stream)
         stream.append('')
 
-    def _prepare(self):
-        super()._prepare()
+    def prepare(self, schema: XsSchema):
+        super().prepare(schema)
         if not self.documentation and self.sequence:
             for seq in self.sequence:
                 if seq.documentation:
                     self.documentation = seq.documentation
         for attr in self.attributes:
-            attr._prepare()
+            attr.prepare(schema)
 
     def get_deps(self):
         for attr in self.attributes:
@@ -451,6 +473,8 @@ class XsSchema:
 
     def __init__(self):
         super().__init__()
+        self.parser = None
+        self.stream = []
         self.includes = []
         self.elements = []
 
@@ -476,12 +500,16 @@ class XsSchema:
                 elif tag == 'include':
                     self.includes.append(child.attrib.get('schemaLocation'))
 
-    def compile(self, stream: List[str]):
+    def compile(self):
+        stream = self.stream
         stream.append(f'# Generated by xsd2py.py')
+        stream.append(f'# DO NOT CHANGE THIS FILE (use compile override instead)')
+        stream.append(f'# xsd: {self.name}')
         stream.append(f'# xmlns: {self.xmlns}')
         # prepare symbols
+        self.parser.schema = self
         for el in self.elements:
-            el._prepare()
+            el.prepare(self)
         stream.extend([
             'from typing import List, Annotated',
             'from datetime import date, datetime',
@@ -499,9 +527,8 @@ class XsSchema:
         stream.append('')
 
     def to_python(self) -> str:
-        stream = []
-        self.compile(stream)
-        return '\n'.join(stream)
+        self.compile()
+        return '\n'.join(self.stream)
 
     @property
     def module_name(self):
@@ -517,7 +544,7 @@ def _get_tag(tag_name: str):
 
 
 def _kwargs_to_str(kwargs: dict):
-    return ', '.join([f"{k}={'\'' + v + '\'' if isinstance(v, str) else v}" for k, v in kwargs.items()])
+    return ', '.join([f"{k}={('r' if k == 'pattern' else '') + '\'' + v + '\'' if isinstance(v, str) else v}" for k, v in kwargs.items()])
 
 
 def adjust_deps(types):
@@ -535,7 +562,8 @@ def adjust_deps(types):
                     if v and v in res:
                         if res.index(v) > i:
                             res.pop(res.index(v))
-                        res.insert(i, v)
+                        if v not in res:
+                            res.insert(i, v)
                 break
         else:
             res.append(t)
@@ -560,6 +588,8 @@ BASE_TYPE_MAP = {
     'nfe:TString': 'TString',
     'xs:token': 'str',
     'xs:unsignedShort': 'int',
+    'xs:unsignedInt': 'int',
+    'xs:integer': 'int',
 }
 
 NAME_REF_MAP = {

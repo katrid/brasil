@@ -1,8 +1,9 @@
 import os
-import base64
+from inspect import get_annotations
+from typing import Annotated
 from lxml import etree
 
-from brasil.dfe.xsd import Element
+from brasil.dfe.xsd import Element, XmlProp
 import brasil.dfe.leiaute.mdfe.mdfe_v300
 import brasil.dfe.leiaute.mdfe.procMDFe_v300
 from brasil.dfe.leiaute.mdfe.consStatServMDFe_v300 import consStatServMDFe
@@ -23,56 +24,41 @@ from brasil.dfe.leiaute.mdfe.retConsReciMDFe_v300 import retConsReciMDFe
 from brasil.dfe.leiaute.mdfe.retEnviMDFe_v300 import retEnviMDFe
 from brasil.dfe.leiaute.mdfe.enviMDFe_v300 import enviMDFe
 
-from brasil.dfe.leiaute.mdfe.mdfeModalRodoviario_v300 import rodo
+import brasil.dfe.leiaute.mdfe.mdfeModalRodoviario_v300
+import brasil.dfe.leiaute.mdfe.mdfeModalAquaviario_v300
 from brasil.utils.text import remover_acentos
 # from brasil.dfe.mdfe.validations import MDFeValidator # TODO fazer validacoes
 
 
-class MDFe(brasil.dfe.leiaute.mdfe.mdfe_v300.MDFe):
-    _xmlns = 'http://www.portalfiscal.inf.br/mdfe'
-    _config = None
-    schema = None
-    svc: bool = False
+# adicionar modal (não é possível adicionar via interpretação do xsd)
+brasil.dfe.leiaute.mdfe.mdfe_v300.MDFe._infMDFe._infModal._props['rodo'] = XmlProp('rodo', Annotated[brasil.dfe.leiaute.mdfe.mdfeModalRodoviario_v300.rodo, Element])
+brasil.dfe.leiaute.mdfe.mdfe_v300.MDFe._infMDFe._infModal._props['aquav'] = XmlProp('aquav', Annotated[brasil.dfe.leiaute.mdfe.mdfeModalAquaviario_v300.aquav, Element])
 
-    def validate(self, _nfe_config=None):
-        self._nfe_config = _nfe_config
+
+class MDFe(brasil.dfe.leiaute.mdfe.mdfe_v300.MDFe):
+    _config = None
+    _schema = None
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # atribuir informação de versão
+        self.infMDFe.versao = '3.00'
+        self.infMDFe.infModal.versaoModal = '3.00'
+
+    def validate(self, config=None):
+        self._config = config
         # validator = MDFeValidator(self)
         self._validate_schema()
         # validator.run_validations(_nfe_config=_nfe_config)
 
     def _validate_schema(self):
-        if MDFe.schema is None:
-            MDFe.schema = etree.XMLSchema(
+        if MDFe._schema is None:
+            MDFe._schema = etree.XMLSchema(
                 file=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'schemas', 'mdfe',
                                   'mdfe_v3.00.xsd')
             )
-        if not self.schema.validate(etree.fromstring(self._xml())):
-            return self.schema.error_log.last_error.message
-
-    @property
-    def rodo(self) -> rodo:
-        return self.infMDFe.infModal.rodo
-
-    def _get_sign(self) -> str:
-        from cryptography.hazmat.primitives import serialization
-        from cryptography.hazmat.backends import default_backend
-        from cryptography.hazmat.primitives.asymmetric import padding
-        from cryptography.hazmat.primitives import hashes
-        from base64 import b64encode
-
-        cert, private_key = self._config.certificado._get_cert()
-        private_key_obj = serialization.load_pem_private_key(
-            private_key, password=None, backend=default_backend()
-        )
-
-        signature = private_key_obj.sign(
-            self.chave.encode(),
-            padding.PKCS1v15(),
-            hashes.SHA1()
-        )
-
-        b64signature = b64encode(signature).decode('utf-8')
-        return b64signature
+        if not self._schema.validate(etree.fromstring(self._xml())):
+            return self._schema.error_log.last_error.message
 
     def _prepare(self):
         if self._config:
@@ -94,3 +80,20 @@ class MDFe(brasil.dfe.leiaute.mdfe.mdfe_v300.MDFe):
     def _xml(self, name=None):
         self._prepare()
         return remover_acentos(super()._xml(name)).decode('utf-8')
+
+    @property
+    def rodo(self) -> brasil.dfe.leiaute.mdfe.mdfeModalRodoviario_v300.rodo:
+        return self.infMDFe.infModal.rodo
+
+    @property
+    def aquav(self) -> brasil.dfe.leiaute.mdfe.mdfeModalAquaviario_v300.aquav:
+        return self.infMDFe.infModal.aquav
+
+    @property
+    def chave(self):
+        return self.infMDFe.Id[4:]
+
+    @chave.setter
+    def chave(self, value):
+        self.infMDFe.ide.cDV = value[-1]
+        self.infMDFe.Id = 'MDFe' + value
