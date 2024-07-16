@@ -2,9 +2,14 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: consSitCTeTiposBasico_v2.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
+from typing import List, Annotated
+from datetime import date, datetime
+from decimal import Decimal
 
-from .cancCTeTiposBasico_v200 import *
+from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
+from .tiposGeralCTe_v200 import *
 from .consReciCTeTiposBasico_v200 import *
+from .cancCTeTiposBasico_v200 import *
 from .eventoCTeTiposBasico_v200 import *
 
 
