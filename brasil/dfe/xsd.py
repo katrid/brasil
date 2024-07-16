@@ -223,6 +223,9 @@ class ComplexType(SimpleType, metaclass=ElementType):
                             setattr(self, tag, etree.tostring(child))
                     else:
                         raise NotImplementedError
+                elif prop.type is XmlSignature:
+                    # carregar a assinatura como string
+                    setattr(self, tag, etree.tostring(child).decode('utf-8'))
                 elif issubclass(prop.type, (SimpleType, SimpleTypeElement, str)):
                     setattr(self, tag, child.text)
                 elif issubclass(prop.type, (datetime.datetime, datetime.date, int, Decimal)):
