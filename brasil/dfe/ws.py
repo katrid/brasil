@@ -1,6 +1,12 @@
+import os
+import base64
+import gzip
 import datetime
+import requests
+from lxml import etree
 
 from .utils.xml_utils import tag
+from .services import BaseConfig
 from .ws import *
 
 
