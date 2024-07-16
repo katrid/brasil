@@ -25,8 +25,9 @@ class _CTe:
         return self.CTe.infCte.Id[3:]
 
     @chave.setter
-    def chave(self, valor):
-        self.CTe.infCte.Id = 'CTe' + valor
+    def chave(self, value):
+        self.CTe.infCte.Id = 'CTe' + value
+        self.CTe.infCte.ide.cDV = value[-1]
 
     @property
     def rodo(self):
@@ -60,6 +61,9 @@ class Conhecimentos(list):
                 return item
             raise Exception('Impossível carregar os dados do xml')
         cte = _CTe(cte=CTe())
+        # automaticamente versão 4.00
+        cte.CTe.infCte.versao = '4.00'
+        cte.CTe.infCte.infCTeNorm.infModal.versaoModal = '4.00'
         cte.CTe._config = self._config
         self.append(cte)
         return cte

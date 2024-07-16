@@ -1,25 +1,26 @@
-import os
+import base64
 import datetime
+import gzip
+import os
 
 from lxml import etree
 
 import brasil.dfe.ws
-from brasil.dfe.utils.xml_utils import tag
 from brasil.consts import CODIGO_UF
+from brasil.dfe.utils.xml_utils import tag
 from .v400 import (
-    consStatServCTe, retConsStatServCTe, consSitCTe, retConsSitCTe, enviCTe, retEnviCte, eventoCTe, retEventoCTe,
-    distDFeInt, retDistDFeInt, consReciCTe, retConsReciCTe, retCTe, CTe
-)
+    consStatServCTe, retConsStatServCTe, consSitCTe, retConsSitCTe, eventoCTe, retEventoCTe,
+    distDFeInt, retDistDFeInt, consReciCTe, retConsReciCTe, retCTe, CTe, )
 
 
 class Header(brasil.dfe.ws.Header):
-    soapVersion = 'soap'
+    soapVersion = 'soap12'
     versaoDados = '4.00'
     element = 'cteCabecMsg'
 
 
 class Body(brasil.dfe.ws.Body):
-    soapVersion = 'soap'
+    soapVersion = 'soap12'
     element = 'cteDadosMsg'
 
 
@@ -114,8 +115,19 @@ class RetornoRecepcao(WebService):
         self.xml.nRec = value
 
 
+class RecepcaoBody(Body):
+    def __str__(self):
+        """Retornar os dados do corpo do XML compactados e codificados em base64."""
+        b = base64.b64encode((gzip.compress(self.xml.encode('utf-8')))).decode('utf-8')
+        return tag(
+            self.soapVersion + ':Body',
+            tag(self.element, b, xmlns=self.xmlns),
+        )
+
+
 class Recepcao(WebService):
     versao = '4.00'
+    body = RecepcaoBody
     webservice = 'CTeRecepcaoSinc'  # mudança de nome na versão 4.00
     namespace = 'http://www.portalfiscal.inf.br/cte'
     wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CTeRecepcaoSincV4'
@@ -124,17 +136,6 @@ class Recepcao(WebService):
     xml: CTe
     Retorno = retCTe
     retorno: retCTe = None
-
-    def preparar(self):
-        super().preparar()
-        self.xml.tpAmb = self.config.amb
-
-    def executar(self):
-        envelope = self.envelope(encoded=True)
-        self.enviar(envelope)
-        self.finalizar()
-        self.ok = self.response.status_code == 200
-        return self.ok
 
 
 class RecepcaoEvento(WebService):
@@ -160,19 +161,17 @@ class RecepcaoEvento(WebService):
             self, protocolo: str, justificativa: str, orgao=None, seq=1, amp=2, cnpj=None,
             chave=None, dh=None
     ):
-        from brasil.dfe.cte.v400 import eventoCTe, evCancCTe
         evento = eventoCTe()
         evento.versao = '4.00'
         inf = evento.infEvento
         inf.tpAmb = amp
         inf.cOrgao = orgao or self.config.orgao
         inf.nSeqEvento = seq
-        inf.CNPJCPF = cnpj
+        inf.CNPJ_CPF = cnpj
         inf.chCTe = chave
         inf.tpEvento = '110111'
         inf.dhEvento = dh or datetime.datetime.now()
-        canc = inf.detEvento.evCancCTe = evCancCTe()
-        inf.detEvento._xml_props['evCancCTe'] = evCancCTe
+        canc = inf.detEvento.evCancCTe
         inf.detEvento.versaoEvento = '4.00'
         canc.descEvento = 'Cancelamento'
         canc.nProt = protocolo

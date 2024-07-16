@@ -1,12 +1,14 @@
+import base64
 import datetime
+import gzip
 
 from lxml import etree
 
 import brasil.dfe.ws
-from brasil.dfe.utils.xml_utils import tag
 from brasil.consts import CODIGO_UF
+from brasil.dfe.utils.xml_utils import tag
 from .v300 import (
-    consStatServMDFe, retConsStatServMDFe, consSitMDFe, retConsSitMDFe, enviMDFe, retEnviMDFe, eventoMDFe, retEventoMDFe,
+    consStatServMDFe, retConsStatServMDFe, consSitMDFe, retConsSitMDFe, eventoMDFe, retEventoMDFe,
     distMDFe, retDistMDFe, consReciMDFe, retConsReciMDFe, retMDFe, MDFe
 )
 
@@ -114,12 +116,22 @@ class RetornoRecepcao(WebService):
         self.xml.nRec = value
 
 
+class RecepcaoBody(Body):
+    def __str__(self):
+        b = base64.b64encode((gzip.compress(self.xml.encode('utf-8')))).decode('utf-8')
+        return tag(
+            self.soapVersion + ':Body',
+            tag(self.element, b, xmlns=self.xmlns),
+        )
+
+
 class Recepcao(WebService):
     versao = '3.00'
     webservice = 'MDFeRecepcaoSinc'
     namespace = 'http://www.portalfiscal.inf.br/mdfe'
     wsdl = 'http://www.portalfiscal.inf.br/mdfe/wsdl/MDFeRecepcaoSinc'
     method = 'MDFeRecepcao'
+    body = RecepcaoBody
     Xml = MDFe
     xml: MDFe
     Retorno = retMDFe
@@ -130,7 +142,7 @@ class Recepcao(WebService):
         self.xml.tpAmb = self.config.amb
 
     def executar(self):
-        envelope = self.envelope(encoded=True)
+        envelope = self.envelope()
         self.enviar(envelope)
         self.finalizar()
         self.ok = self.response.status_code == 200

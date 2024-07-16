@@ -1,43 +1,26 @@
 import decimal
 import os
+
 from lxml import etree
 
-from brasil.dfe.xsd import Element
 import brasil.dfe.leiaute.cte.cte_v300
 import brasil.dfe.leiaute.cte.procCTe_v300
-from brasil.dfe.leiaute.cte.consStatServCTe_v300 import consStatServCte
-from brasil.dfe.leiaute.cte.retConsStatServCTe_v300 import retConsStatServCte
-from brasil.dfe.leiaute.cte.consSitCTe_v300 import consSitCTe
-from brasil.dfe.leiaute.cte.retConsSitCTe_v300 import retConsSitCTe
-from brasil.dfe.leiaute.cte.enviCTe_v300 import enviCTe
-from brasil.dfe.leiaute.cte.eventoCTe_v300 import eventoCTe
-from brasil.dfe.leiaute.cte.evCancCTe_v300 import evCancCTe
-from brasil.dfe.leiaute.cte.retEventoCTe_v300 import retEventoCTe
-from brasil.dfe.leiaute.cte.retEnviCTe_v300 import retEnviCte
-from brasil.dfe.leiaute.cte.evPrestDesacordo_v300 import evPrestDesacordo
-from brasil.dfe.leiaute.cte.distDFeInt_v100 import distDFeInt
-from brasil.dfe.leiaute.cte.retDistDFeInt_v100 import retDistDFeInt
-from brasil.dfe.leiaute.cte.procCTe_v300 import cteProc
-from brasil.dfe.leiaute.cte.consReciCTe_v300 import consReciCTe, retConsReciCTe
-from brasil.dfe.leiaute.cte.cancCTeTiposBasico_v300 import TCancCTe, TRetCancCTe
-
 from brasil.dfe.leiaute.cte.cteModalRodoviario_v300 import rodo
 from brasil.utils.text import remover_acentos
 
 
 class CTe(brasil.dfe.leiaute.cte.cte_v300.CTe):
-    _xmlns = 'http://www.portalfiscal.inf.br/cte'
     _config = None
-    schema = None
+    _schema = None
 
     def _validate_schema(self):
-        if CTe.schema is None:
-            CTe.schema = etree.XMLSchema(
+        if CTe._schema is None:
+            CTe._schema = etree.XMLSchema(
                 file=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'schemas', 'cte',
                                   'cte_v3.00.xsd')
             )
-        if not self.schema.validate(etree.fromstring(self._xml())):
-            return self.schema.error_log.last_error.message
+        if not self._schema.validate(etree.fromstring(self._xml())):
+            return self._schema.error_log.last_error.message
 
     @property
     def rodo(self) -> rodo:

@@ -7,7 +7,7 @@ from typing import get_origin, get_args, List, Self
 
 from lxml import etree
 
-from .utils.xml_utils import tag
+from .utils.xml_utils import tag, remover_acentos
 
 
 class SimpleType:
@@ -187,6 +187,9 @@ class ComplexType(SimpleType, metaclass=ElementType):
             kwargs['xmlns'] = self._xmlns
         self._xmltmp = tag(name or self.__class__.__name__, *args, **kwargs)
         return self._xmltmp
+
+    def to_string(self):
+        return remover_acentos(self._xml()).decode('utf-8')
 
     def _clear(self):
         self._xmltmp = None

@@ -2,14 +2,12 @@ import os
 
 # schemas não constantes na versão 4.00
 import brasil.dfe.leiaute.cte.cte_v400
-import brasil.dfe.leiaute.cte.procCTe_v400
-from brasil.dfe.leiaute.cte.consStatServCTe_v400 import consStatServCTe
 from brasil.dfe.leiaute.cte.cteModalRodoviario_v400 import rodo
-from brasil.utils.text import remover_acentos
 
 
 class CTe(brasil.dfe.leiaute.cte.cte_v400.CTe):
     _config = None
+    _schema = None
 
     # def validate(self, _nfe_config=None):
     #     self._nfe_config = _nfe_config
@@ -47,9 +45,9 @@ class CTe(brasil.dfe.leiaute.cte.cte_v400.CTe):
             url += f'chCTe={self.chave}&tpAmb={config.amb}'
             self.infCTeSupl.qrCodCTe = f'<![CDATA[{url.replace(" ", "")}]]>'
 
-    def _xml(self, name=None):
+    def to_string(self):
         self._prepare()
-        return remover_acentos(super()._xml(name)).decode('utf-8')
+        return super().to_string()
 
     @property
     def chave(self):

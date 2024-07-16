@@ -1,17 +1,11 @@
-import os
-import base64
-import gzip
 import datetime
-import requests
-from lxml import etree
 
 from .utils.xml_utils import tag
-from .services import BaseConfig
 from .ws import *
 
 
 class Header:
-    soapVersion: str = 'soap'
+    soapVersion: str = 'soap12'
     element: str = None
     xmlns: str = None
     cUF: str = None
@@ -39,15 +33,11 @@ class Body:
     element: str = None
     xml: str = None
 
-    def parse_body(self):
+    def __str__(self):
         v = str(self.soapVersion) + ':' if self.soapVersion else ''
         kwargs = {}
         if self.xmlns:
             kwargs['xmlns'] = self.xmlns
-        return v, kwargs
-
-    def __str__(self):
-        v, kwargs = self.parse_body()
         return tag(
             v + 'Body',
             tag(
@@ -55,18 +45,9 @@ class Body:
                 self.xml,
                 **kwargs
             ),
-        )
+            )
 
-    @property
-    def encoded_body(self):
-        v, kwargs = self.parse_body()
-        compressed_content = base64.b64encode((gzip.compress(self.xml.encode('utf-8')))).decode('utf-8')
-        body_tag = tag(self.element, compressed_content, **kwargs)
-        return tag(
-            v + 'Body',
-            body_tag
-        )
-         
+
 
 class BaseService:
     header: Header
@@ -106,19 +87,13 @@ class BaseService:
     def url(self):
         return self.config.services.get(self.webservice, self.uf, self.tpAmb, self.versao)
 
-    def envelope(self, encoded=False):
+    def envelope(self):
         self.preparar()
         s = ''
-        # na versão 4.00 não é necessario enviar soap header
-        if self.header and self.versao == '3.00':
-            s += str(self.header)
-        # xml = etree.fromstring(self.xml._xml())
-        # xml.attrib['xmlns'] = self.namespace
-        # self.body.xml = etree.tostring(xml).decode('utf-8').replace('versao="4.00" xmlns="http://www.portalfiscal.inf.br/nfe"', 'xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"')
-        self.body.xml = self.xml._xml()
+        self.body.xml = self.xml.to_string()
         if self.config.salvar_arquivos:
             self.config.salvar_arquivo(self.body.xml, self.filename('env'))
-        s += (self.body.encoded_body if encoded else str(self.body))
+        s += str(self.body)
         t = self.body.soapVersion + ':Envelope'
         return f'<?xml version="1.0" encoding="UTF-8"?><{t} {self.xmlattrs}>{s}</{t}>'.encode('utf-8')
 
@@ -177,7 +152,6 @@ class BaseService:
     @property
     def headers(self):
         return {
-            # 'SOAPAction': '"%s"' % self.soapwsdl,
             'Content-Type': self.contentType,
         }
 

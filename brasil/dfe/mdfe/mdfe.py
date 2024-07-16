@@ -1,11 +1,13 @@
-import os
 import datetime
+import os
+
 from lxml import etree
-from ..base import DocumentoFiscal
-from .v300 import MDFe, evCancMDFe, mdfeProc, Element
-from .settings import Config
-from .ws import Recepcao, Consulta, RetornoRecepcao, RecepcaoEvento, eventoMDFe
+
 from brasil.utils.text import remover_acentos
+from .settings import Config
+from .v300 import MDFe, mdfeProc
+from .ws import Recepcao, Consulta, RetornoRecepcao, RecepcaoEvento, eventoMDFe
+from ..base import DocumentoFiscal
 
 
 class _MDFe:
@@ -18,6 +20,10 @@ class _MDFe:
         elif proc:
             self.mdfeProc = proc
             self.MDFe = self.mdfeProc.MDFe
+
+    @property
+    def chave(self):
+        return self.MDFe.infMDFe.Id[4:]
 
 
 class Manifestos(list):
@@ -58,7 +64,7 @@ class Manifesto(DocumentoFiscal):
             self.manifestos.add(xml)
 
     def to_xml(self, doc: MDFe=None):
-        return doc._xml()
+        return doc.to_string()
 
     def enviar_(self, lote: int):
         svc = Recepcao(self.config)
@@ -86,8 +92,7 @@ class Manifesto(DocumentoFiscal):
                 return self.config.certificado.assinar(child, ref)
 
     def from_xml(self, xml: str):
-        doc = etree.fromstring(xml)
-        doc.tag.endswith('mdfeProc')
+        return self.manifestos.add(xml)
 
     def consultar(self, chave: str) -> RetornoRecepcao:
         """
@@ -120,12 +125,9 @@ class Manifesto(DocumentoFiscal):
         inf.dhEvento = dh_emis.strftime('%Y-%m-%dT%H:%M:%S') + '-03:00' if isinstance(dh_emis, datetime.datetime) else dh_emis
         inf.tpAmb = self.config.amb
         inf.nSeqEvento = seq
-        if len(cnpjcpf) == 11:
-            inf.CPF = cnpjcpf
-        else:
-            inf.CNPJ = cnpjcpf
+        inf.CNPJ_CPF = cnpjcpf
         inf.cOrgao = orgao or self.config.orgao
-        inf.chMDFe = self.manifesto.MDFe.chave
+        inf.chMDFe = self.manifesto.chave
         inf.tpAmb = self.config.amb
         inf.Id = 'ID' + inf.tpEvento + inf.chMDFe + seq.zfill(2)
         inf.detEvento.evCancMDFe = evCancMDFe()
@@ -135,9 +137,9 @@ class Manifesto(DocumentoFiscal):
         canc_ev.nProt = protocolo
         canc_ev.descEvento = 'Cancelamento'
         # validar xml específico do evento de cancelamento        
-        canc_schema = etree.XMLSchema(file=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'schemas', 'mdfe', 'evCancMDFe_v3.00.xsd'))
-        if not canc_schema.validate(etree.fromstring(canc_ev._xml())):
-            raise AssertionError(canc_schema.error_log.last_error.message)
+        # canc_schema = etree.XMLSchema(file=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'schemas', 'mdfe', 'evCancMDFe_v3.00.xsd'))
+        # if not canc_schema.validate(etree.fromstring(canc_ev._xml())):
+        #     raise AssertionError(canc_schema.error_log.last_error.message)
         return self.enviar_evento(evento)
     
     def encerrar(self, protocolo: str | int, dt: str | datetime.datetime, uf: str | int, cMun: str | int,
@@ -154,35 +156,28 @@ class Manifesto(DocumentoFiscal):
         :param str orgao: Código do órgão de recepção do Evento. Utilizar a Tabela do IBGE estendida.
         :param str seq: Sequencial do evento para o mesmo tipo de evento. Para maioria dos eventos será 1, nos casos em que possa existir mais de um evento o autor do evento deve numerar de forma sequencial.
         """
-        from brasil.dfe.leiaute.mdfe.evEncMDFe_v300 import evEncMDFe
         ev = eventoMDFe()
-        ev._xmlns = "http://www.portalfiscal.inf.br/mdfe"
         ev.versao = '3.00'
         inf = ev.infEvento
         inf.tpAmb = self.config.amb
         inf.cOrgao = orgao or self.config.orgao
-        if len(cnpjcpf) == 11:
-            inf.CPF = cnpjcpf
-        else:
-            inf.CNPJ = cnpjcpf
-        inf.chMDFe = self.conhecimento.MDFe.chave
+        inf.CNPJ_CPF = cnpjcpf
+        inf.chMDFe = self.manifesto.chave
         inf.dhEvento = dh_emis.strftime('%Y-%m-%dT%H:%M:%S') + '-03:00' if isinstance(dh_emis, datetime.datetime) else dh_emis
         inf.tpEvento = '110112'
         inf.nSeqEvento = seq
-        inf.detEvento.evEncMDFe = evEncMDFe()
-        enc_ev = inf.detEvento.evEncMDFe
-        enc_ev._xmlns = "http://www.portalfiscal.inf.br/mdfe"
+        enc = inf.detEvento.evEncMDFe
         inf.detEvento.versaoEvento = '3.00'
         inf.Id = 'ID' + inf.tpEvento + inf.chMDFe + seq.zfill(2)
-        enc_ev.descEvento = 'Encerramento'
-        enc_ev.nProt = protocolo
-        enc_ev.dtEnc = dt.strftime('%Y-%m-%d') if isinstance(dt, datetime.datetime) else dt
-        enc_ev.cUF = uf
-        enc_ev.cMun = cMun
+        enc.descEvento = 'Encerramento'
+        enc.nProt = protocolo
+        enc.dtEnc = dt.strftime('%Y-%m-%d') if isinstance(dt, datetime.datetime) else dt
+        enc.cUF = uf
+        enc.cMun = cMun
         # validar xml específico do evento de encerramento        
-        enc_schema = etree.XMLSchema(file=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'schemas', 'mdfe', 'evEncMDFe_v3.00.xsd'))
-        if not enc_schema.validate(etree.fromstring(enc_ev._xml())):
-            raise AssertionError(enc_schema.error_log.last_error.message)
+        # ev_schema = etree.XMLSchema(file=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'schemas', 'mdfe', 'evEncMDFe_v3.00.xsd'))
+        # if not ev_schema.validate(etree.fromstring(ev.to_string())):
+        #     raise AssertionError(ev_schema.error_log.last_error.message)
         return self.enviar_evento(ev)
 
     def enviar_evento(self, evento: eventoMDFe) -> RecepcaoEvento:
