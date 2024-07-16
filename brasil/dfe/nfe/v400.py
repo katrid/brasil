@@ -46,8 +46,12 @@ class NFe(brasil.dfe.leiaute.nfe.nfe_v400.NFe):
 
     @chave.setter
     def chave(self, value):
-        self.infNFe.ide.cDV = value[-1]
-        self.infNFe.Id = 'NFe' + value
+        if value:
+            self.infNFe.ide.cDV = value[-1]
+            self.infNFe.Id = 'NFe' + value
+        else:
+            self.infNFe.Id = None
+            self.infNFe.ide.cDV = None
 
     def _prepare(self):
         if self.infNFe.ide.tpAmb == '2':
