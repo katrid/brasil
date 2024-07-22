@@ -266,7 +266,7 @@ Informar a descrição do produto predominante"""
                     CEP: Annotated[str, Element] = None
                     latitude: Annotated[TLatitude, Element] = None
                     longitude: Annotated[TLongitude, Element] = None
-                    CEP = Choice("CEP")
+                    CEP_ = Choice("CEP")
 
                 infLocalCarrega: Annotated[_infLocalCarrega, Element] = None
 
@@ -275,7 +275,7 @@ Informar a descrição do produto predominante"""
                     CEP: Annotated[str, Element] = None
                     latitude: Annotated[TLatitude, Element] = None
                     longitude: Annotated[TLongitude, Element] = None
-                    CEP = Choice("CEP")
+                    CEP_ = Choice("CEP")
 
                 infLocalDescarrega: Annotated[_infLocalDescarrega, Element] = None
 

@@ -430,6 +430,8 @@ class Choice:
                     instance.CNPJ = value
                 else:
                     instance.CPF = value
+            else:
+                setattr(instance, self.choices[0], value)
 
 
 class XmlSignature(str):

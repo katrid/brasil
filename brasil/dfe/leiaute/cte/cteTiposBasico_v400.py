@@ -1218,7 +1218,7 @@ Para Transporte de Pessoas indicar número de passageiros, para excesso de bagag
                 dEmi: Annotated[TData, Element] = None
                 vDoc: Annotated[TDec_1302, Element] = None
                 chBPe: Annotated[TChDFe, Element] = None
-                chBPe = Choice("chBPe")
+                chBPe_ = Choice("chBPe")
 
             infDocRef: Annotated[ElementList[_infDocRef], Element] = None
 
