@@ -396,7 +396,7 @@ class XsChoice(XsSequence):
         name = '_'.join([el.name for el in self.elements])
         if name:
             choices = ', '.join([f'"{el.name}"' for el in self.elements])
-            stream.append(f'{indent_str}{name} = Choice({choices})')
+            stream.append(f'{indent_str}{name}{"_" if len(self.elements) == 1 else ""} = Choice({choices})')
 
 
 class XsComplexType(XsElement):
