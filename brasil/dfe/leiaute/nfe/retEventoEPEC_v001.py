@@ -21,6 +21,7 @@ class TCOrgaoIBGE(str):
 
 
 class retEnvEvento(ComplexType):
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     versao: Annotated[TVerEvento, Attribute] = None
     idLote: Annotated[str, Element] = None
     tpAmb: Annotated[TAmb, Element] = None

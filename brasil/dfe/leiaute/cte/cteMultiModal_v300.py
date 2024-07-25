@@ -13,6 +13,7 @@ from .cteTiposBasico_v300 import *
 
 class multimodal(ComplexType):
     """Informações do Multimodal"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     COTM: Annotated[str, Element] = None
     indNegociavel: Annotated[str, Element] = None
 

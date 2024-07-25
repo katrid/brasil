@@ -12,6 +12,7 @@ from .tiposDistDFe_v100 import *
 
 class distDFeInt(ComplexType):
     """Schema de pedido de distribuição de DF-e de interesse"""
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     versao: Annotated[TVerDistDFe, Attribute] = None
     tpAmb: Annotated[TAmb, Element] = None
     cUFAutor: Annotated[TCodUfIBGE, Element] = None

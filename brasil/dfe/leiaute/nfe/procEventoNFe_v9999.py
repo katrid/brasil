@@ -12,6 +12,7 @@ from .retEnvCancelPProrrogNFe_v10 import *
 
 
 class procEventoNFe(ComplexType):
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     versao: Annotated[str, Attribute(pattern=r'[0-9]{2}\.[0-9]{2}')] = None
 
     class _evento(ComplexType):

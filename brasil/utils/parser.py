@@ -221,6 +221,8 @@ class XsElement(XsBaseElement):
         indent_str = '    ' * indent
         tp = self.type
         if isinstance(tp, XsComplexType):
+            if self.xmlns:
+                self.type.xmlns = self.xmlns
             self.type.compile(indent, stream)
             tp = tp.name
             if self.parent is None:
@@ -430,6 +432,8 @@ class XsComplexType(XsElement):
             self.content.compile(indent + 1, stream)
         if self.documentation:
             stream.append(f'{indent_str}    """{'\n'.join(self.documentation).replace('"', '\\"')}"""')
+        if self.xmlns:
+            stream.append(f'{indent_str}    _xmlns = "{self.xmlns}"')
         for attr in self.attributes:
             attr.compile(indent + 1, stream)
         for el in self.sequence:
@@ -462,7 +466,7 @@ class XsSimpleContent(XsComplexType):
 
     def compile(self, indent: int, stream: List[str]):
         indent_str = '    ' * indent
-        stream.append(f'{indent_str}value: {BASE_TYPE_MAP.get(self.extension, self.extension)} = None')
+        stream.append(f'{indent_str}_simple_content = {BASE_TYPE_MAP.get(self.extension, self.extension)}')
 
 
 class XsSchema:

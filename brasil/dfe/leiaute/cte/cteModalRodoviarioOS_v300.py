@@ -23,6 +23,7 @@ class TNroRegEstadual(str):
 
 class rodoOS(ComplexType):
     """Informações do modal Rodoviário"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     TAF: Annotated[TTermoAutFreta, Element] = None
     NroRegEstadual: Annotated[TNroRegEstadual, Element] = None
     TAF_NroRegEstadual = Choice("TAF", "NroRegEstadual")

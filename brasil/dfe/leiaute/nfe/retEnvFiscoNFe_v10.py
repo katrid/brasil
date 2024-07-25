@@ -17,6 +17,7 @@ class TCOrgaoIBGE(str):
 
 class retEnvEvento(ComplexType):
     """TAG raiz do Resultado do Envio do Evento"""
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     versao: Annotated[str, Attribute(pattern=r'[0-9]{2}\.[0-9]{2}')] = None
     idLote: Annotated[str, Element] = None
     tpAmb: Annotated[TAmb, Element] = None

@@ -17,6 +17,7 @@ class TVerResNFe(str):
 
 class resNFe(ComplexType):
     """Schema da estrutura XML gerada pelo Ambiente Nacional com o conjunto de informações resumidas de uma NF-e"""
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     versao: Annotated[TVerResNFe, Attribute] = None
     chNFe: Annotated[TChNFe, Element] = None
     CNPJ: Annotated[TCnpj, Element] = None

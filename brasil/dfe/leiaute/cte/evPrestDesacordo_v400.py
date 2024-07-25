@@ -12,6 +12,7 @@ from .eventoCTeTiposBasico_v400 import *
 
 class evPrestDesacordo(ComplexType):
     """Schema XML de validação do evento Prestação do Serviço em Desacordo 610110"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     descEvento: Annotated[str, Element] = None
     indDesacordoOper: Annotated[str, Element] = None
     xObs: Annotated[str, Element] = None

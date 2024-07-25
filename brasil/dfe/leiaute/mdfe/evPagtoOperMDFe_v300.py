@@ -12,6 +12,7 @@ from .eventoMDFeTiposBasico_v300 import *
 
 class evPagtoOperMDFe(ComplexType):
     """Schema XML de validação do evento de pagamento da operação de transporte 110116"""
+    _xmlns = "http://www.portalfiscal.inf.br/mdfe"
     descEvento: Annotated[str, Element] = None
     nProt: Annotated[TProt, Element] = None
 

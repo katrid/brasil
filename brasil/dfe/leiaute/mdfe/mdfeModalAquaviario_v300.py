@@ -12,6 +12,7 @@ from .mdfeTiposBasico_v300 import *
 
 class aquav(ComplexType):
     """Informações do modal Aquaviário"""
+    _xmlns = "http://www.portalfiscal.inf.br/mdfe"
     irin: Annotated[str, Element] = None
     tpEmb: Annotated[str, Element] = None
     cEmbar: Annotated[str, Element] = None

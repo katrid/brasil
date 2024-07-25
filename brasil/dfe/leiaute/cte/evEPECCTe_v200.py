@@ -13,6 +13,7 @@ from .eventoCTeTiposBasico_v200 import *
 class evEPECCTe(ComplexType):
     """Schema XML de validação do evento de emissão prévia de emissão em contingência 
 110113"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     descEvento: Annotated[str, Element] = None
     xJust: Annotated[TJust, Element] = None
     vICMS: Annotated[TDec_1302, Element] = None

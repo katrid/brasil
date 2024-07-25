@@ -12,6 +12,7 @@ from .tiposGeralCTe_v400 import *
 
 class aereo(ComplexType):
     """Informações do modal Aéreo"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     nMinu: Annotated[str, Element] = None
     nOCA: Annotated[str, Element] = None
     dPrevAereo: Annotated[TData, Element] = None

@@ -12,6 +12,7 @@ from .tiposDistDFe_v101 import *
 
 class retDistDFeInt(ComplexType):
     """Schema do resultado do pedido de distribuição de DF-e de interesse"""
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     versao: Annotated[TVerDistDFe, Attribute] = None
     tpAmb: Annotated[TAmb, Element] = None
     verAplic: Annotated[TVerAplic, Element] = None
@@ -25,7 +26,7 @@ class retDistDFeInt(ComplexType):
         """Conjunto de informações resumidas e documentos fiscais eletrônicos de interesse da pessoa ou empresa. """
 
         class _docZip(ComplexType):
-            value: base64Binary = None
+            _simple_content = base64Binary
             """Informação resumida ou documento fiscal eletrônico de interesse da pessoa ou empresa. O conteúdo desta tag estará compactado no padrão gZip. O tipo do campo é base64Binary."""
 
         docZip: Annotated[ElementList[_docZip], Element] = None

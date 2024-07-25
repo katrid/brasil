@@ -12,5 +12,6 @@ from .inutCTeTiposBasico_v300 import *
 
 class retInutCTe(ComplexType):
     """Schema XML de validação do retorno do Pedido de Inutilização de Numeração do CT-e"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
 
 

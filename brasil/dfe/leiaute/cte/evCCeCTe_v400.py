@@ -13,6 +13,7 @@ from .eventoCTeTiposBasico_v400 import *
 class evCCeCTe(ComplexType):
     """Schema XML de validação do evento carta de correção 
 110110"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     descEvento: Annotated[str, Element] = None
 
     class _infCorrecao(ComplexType):

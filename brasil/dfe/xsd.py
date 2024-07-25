@@ -85,6 +85,7 @@ class ComplexType(SimpleType, metaclass=ElementType):
     _xmltmp = None
     _parent = None
     _max_occurs = None
+    _simple_content = None
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -212,7 +213,10 @@ class ComplexType(SimpleType, metaclass=ElementType):
                     sub = getattr(self, tag, None)
                     if isinstance(sub, ElementList):
                         if issubclass(prop.type, ComplexType):
-                            if prop.type._props:
+                            if prop.type._simple_content is base64Binary:
+                                # ler o conteúdo como base64
+                                sub.add().value = child.text
+                            elif prop.type._props:
                                 sub.add()._read_xml(child)
                             else:
                                 sub.add()._read_xml(etree.tostring(child))

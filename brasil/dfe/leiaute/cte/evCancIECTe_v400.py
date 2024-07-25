@@ -13,6 +13,7 @@ from .eventoCTeTiposBasico_v400 import *
 class evCancIECTe(ComplexType):
     """Schema XML de validação do evento cancelamento do insucesso de entrega eletrônico do CT-e 
 110191"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     descEvento: Annotated[str, Element] = None
     nProt: Annotated[TProt, Element] = None
     nProtIE: Annotated[TProt, Element] = None

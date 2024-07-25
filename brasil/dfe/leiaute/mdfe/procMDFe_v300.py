@@ -12,6 +12,7 @@ from .mdfeTiposBasico_v300 import *
 
 class mdfeProc(ComplexType):
     """ MDF-e processado"""
+    _xmlns = "http://www.portalfiscal.inf.br/mdfe"
     versao: Annotated[TVerMDe, Attribute] = None
     ipTransmissor: Annotated[TIPv4, Attribute] = None
     nPortaCon: Annotated[str, Attribute(pattern=r'[0-9]{1,5}')] = None

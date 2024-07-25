@@ -25,6 +25,7 @@ class TEnderFer(ComplexType):
 
 class ferrov(ComplexType):
     """Informações do modal Ferroviário"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     tpTraf: Annotated[str, Element] = None
 
     class _trafMut(ComplexType):

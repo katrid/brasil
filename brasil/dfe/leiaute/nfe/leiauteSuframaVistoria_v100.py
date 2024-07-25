@@ -82,6 +82,7 @@ chMDFe: Annotated[str, Element] = None
 chCTe: Annotated[str, Element] = None
 
 class modalRodov(ComplexType):
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     placaVeic: Annotated[str, Element] = None
     UFVeic: Annotated[str, Element] = None
     placaCarreta: Annotated[str, Element] = None
@@ -115,6 +116,7 @@ class UFCarreta2(TUf):
 
 
 class modalOutro(ComplexType):
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     tpModal: Annotated[str, Element] = None
     xIdent: Annotated[str, Element] = None
 
@@ -122,6 +124,7 @@ tpModal: Annotated[str, Element] = None
 xIdent: Annotated[str, Element] = None
 
 class ctg(ComplexType):
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     nFormSeg: Annotated[str, Element] = None
     UFDest: Annotated[str, Element] = None
     tpEmis: Annotated[str, Element] = None

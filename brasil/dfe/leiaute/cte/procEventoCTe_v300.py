@@ -12,5 +12,6 @@ from .eventoCTeTiposBasico_v300 import *
 
 class procEventoCTe(ComplexType):
     """Pedido de Registro de Eventos de CT-e processado"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
 
 

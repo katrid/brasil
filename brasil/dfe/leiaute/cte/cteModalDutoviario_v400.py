@@ -13,6 +13,7 @@ from .cteTiposBasico_v400 import *
 
 class duto(ComplexType):
     """Informações do modal Dutoviário"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     vTar: Annotated[TDec_0906Opc, Element] = None
     dIni: Annotated[TData, Element] = None
     dFim: Annotated[TData, Element] = None

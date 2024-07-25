@@ -13,6 +13,7 @@ from .eventoCTeTiposBasico_v400 import *
 class evCECTe(ComplexType):
     """Schema XML de validação do evento comprovante de entrega eletrônico do CT-e 
 110180"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     descEvento: Annotated[str, Element] = None
     nProt: Annotated[TProt, Element] = None
     dhEntrega: Annotated[TDateTimeUTC, Element] = None

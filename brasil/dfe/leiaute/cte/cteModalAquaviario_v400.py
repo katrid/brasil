@@ -12,6 +12,7 @@ from .cteTiposBasico_v400 import *
 
 class aquav(ComplexType):
     """Informações do modal Aquaviário"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     vPrest: Annotated[TDec_1302, Element] = None
     vAFRMM: Annotated[TDec_1302, Element] = None
     xNavio: Annotated[str, Element] = None

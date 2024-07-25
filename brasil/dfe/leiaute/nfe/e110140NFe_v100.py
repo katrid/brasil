@@ -11,6 +11,7 @@ from .tiposBasico_v103 import *
 
 
 class detEvento(ComplexType):
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     versao: Annotated[str, Attribute(enumeration=['1.00'])] = None
     descEvento: Annotated[str, Element] = None
     cOrgaoAutor: Annotated[str, Element] = None

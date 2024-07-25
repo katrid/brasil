@@ -12,6 +12,7 @@ from .eventoMDFeTiposBasico_v300 import *
 
 class evConfirmaServMDFe(ComplexType):
     """Schema XML de validação do evento de confirmação do serviço de transporte 110117"""
+    _xmlns = "http://www.portalfiscal.inf.br/mdfe"
     descEvento: Annotated[str, Element] = None
     nProt: Annotated[TProt, Element] = None
 

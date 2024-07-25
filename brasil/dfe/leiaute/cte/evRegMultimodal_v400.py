@@ -12,6 +12,7 @@ from .eventoCTeTiposBasico_v400 import *
 
 class evRegMultimodal(ComplexType):
     """Schema XML de validação do evento Registro Multimodal 110160"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     descEvento: Annotated[str, Element] = None
     xRegistro: Annotated[str, Element] = None
     nDoc: Annotated[str, Element] = None

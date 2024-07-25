@@ -28,6 +28,7 @@ class TCIOT(str):
 
 class rodo(ComplexType):
     """Informações do modal Rodoviário"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     RNTRC: Annotated[TRNTRC, Element] = None
     dPrev: Annotated[TData, Element] = None
     lota: Annotated[str, Element] = None

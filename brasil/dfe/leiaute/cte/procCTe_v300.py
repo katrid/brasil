@@ -12,6 +12,7 @@ from .cteTiposBasico_v300 import *
 
 class cteProc(ComplexType):
     """ CT-e processado"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     versao: Annotated[TVerCTe, Attribute] = None
     ipTransmissor: Annotated[TIPv4, Attribute] = None
     CTe: Annotated[TCTe, Element] = None

@@ -12,6 +12,7 @@ from .eventoCTeTiposBasico_v400 import *
 
 class evGTV(ComplexType):
     """Schema XML de validação do evento informações da GTV 110170"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     descEvento: Annotated[str, Element] = None
 
     class _infGTV(ComplexType):

@@ -13,6 +13,7 @@ from .consReciCTeTiposBasico_v200 import *
 
 class cteProc(ComplexType):
     """ CT-e processado"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     versao: Annotated[TVerCTe, Attribute] = None
     CTe: Annotated[TCTe, Element] = None
     protCTe: Annotated[TProtCTe, Element] = None

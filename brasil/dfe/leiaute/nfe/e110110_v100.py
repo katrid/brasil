@@ -11,6 +11,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 
 class detEvento(ComplexType):
     """Schema XML de validação do evento do carta de correção e1101110"""
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     versao: Annotated[str, Attribute(enumeration=['1.00'])] = None
     descEvento: Annotated[str, Element] = None
     xCorrecao: Annotated[str, Element] = None

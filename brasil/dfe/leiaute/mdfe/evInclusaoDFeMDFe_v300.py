@@ -13,6 +13,7 @@ from .eventoMDFeTiposBasico_v300 import *
 class evIncDFeMDFe(ComplexType):
     """Schema XML de validação do evento de inclusão de DFe 
 110115"""
+    _xmlns = "http://www.portalfiscal.inf.br/mdfe"
     descEvento: Annotated[str, Element] = None
     nProt: Annotated[TProt, Element] = None
     cMunCarrega: Annotated[TCodMunIBGE, Element] = None

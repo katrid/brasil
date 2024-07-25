@@ -12,6 +12,7 @@ from .eventoCTeTiposBasico_v400 import *
 
 class evCancPrestDesacordo(ComplexType):
     """Schema XML de validação do evento Cancelamento Prestação do Serviço em Desacordo 610111"""
+    _xmlns = "http://www.portalfiscal.inf.br/cte"
     descEvento: Annotated[str, Element] = None
     nProtEvPrestDes: Annotated[TProt, Element] = None
 

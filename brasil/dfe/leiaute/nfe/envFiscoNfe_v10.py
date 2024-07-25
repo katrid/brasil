@@ -32,6 +32,7 @@ class TRespCancPedido(ComplexType):
 
 class detEvento(ComplexType):
     """Informações do Fisco"""
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     versao: Annotated[str, Attribute(enumeration=['1.00'])] = None
     descEvento: Annotated[str, Element] = None
     idPedido: Annotated[str, Element] = None

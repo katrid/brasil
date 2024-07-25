@@ -22,6 +22,7 @@ class TCIOT(str):
 
 class rodo(ComplexType):
     """Informações do modal Rodoviário"""
+    _xmlns = "http://www.portalfiscal.inf.br/mdfe"
 
     class _infANTT(ComplexType):
         """Grupo de informações para Agência Reguladora"""

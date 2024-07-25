@@ -17,6 +17,7 @@ class TVerResEvento(str):
 
 class resEvento(ComplexType):
     """Schema da estrutura XML gerada pelo Ambiente Nacional com o conjunto de informações resumidas de um evento de NF-e"""
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     versao: Annotated[TVerResEvento, Attribute] = None
     cOrgao: Annotated[TCOrgaoIBGE, Element] = None
     CNPJ: Annotated[TCnpj, Element] = None

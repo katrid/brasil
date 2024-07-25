@@ -12,6 +12,7 @@ from .tiposGeralMDFe_v300 import *
 
 class aereo(ComplexType):
     """Informações do modal Aéreo"""
+    _xmlns = "http://www.portalfiscal.inf.br/mdfe"
     nac: Annotated[str, Element] = None
     matr: Annotated[str, Element] = None
     nVoo: Annotated[str, Element] = None

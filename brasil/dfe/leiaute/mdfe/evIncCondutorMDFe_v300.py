@@ -12,6 +12,7 @@ from .eventoMDFeTiposBasico_v300 import *
 
 class evIncCondutorMDFe(ComplexType):
     """Schema XML de validação do evento de inclusao de condutor 110114"""
+    _xmlns = "http://www.portalfiscal.inf.br/mdfe"
     descEvento: Annotated[str, Element] = None
 
     class _condutor(ComplexType):

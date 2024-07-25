@@ -12,6 +12,7 @@ from .tiposBasico_v310 import *
 
 class detEvento(ComplexType):
     """Informações do Cancelamento de Pedido de Prorrogação"""
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     versao: Annotated[str, Attribute(enumeration=['1.00'])] = None
     descEvento: Annotated[str, Element] = None
     idPedidoCancelado: Annotated[str, Element] = None

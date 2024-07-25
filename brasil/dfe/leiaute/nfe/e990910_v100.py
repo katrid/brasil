@@ -12,6 +12,7 @@ from .tiposBasico_v103 import *
 
 class detEvento(ComplexType):
     """Schema XML de validação do evento do Confirmação de Internalização da Mercadoria na SUFRAMA 990910"""
+    _xmlns = "http://www.portalfiscal.inf.br/nfe"
     versao: Annotated[str, Attribute(enumeration=['1.00'])] = None
     descEvento: Annotated[str, Element] = None
     PINe: Annotated[str, Element] = None

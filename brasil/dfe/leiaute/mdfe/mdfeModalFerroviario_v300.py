@@ -12,6 +12,7 @@ from .tiposGeralMDFe_v300 import *
 
 class ferrov(ComplexType):
     """Informações do modal Ferroviário"""
+    _xmlns = "http://www.portalfiscal.inf.br/mdfe"
 
     class _trem(ComplexType):
         """Informações da composição do trem"""
