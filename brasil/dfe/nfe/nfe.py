@@ -60,11 +60,24 @@ class NotasFiscais(list):
 class NotaFiscal(DocumentoFiscal):
     notas: NotasFiscais[_NFe]
 
-    def __init__(self, xml=None, config: Config = None):
+    def __init__(self, xml=None, config: Config = None, tp_emis='1'):
         self.config: Config = config
         self.notas = NotasFiscais(config)
         if xml:
             self.notas.add(xml)
+        self.tp_emis = tp_emis
+
+    @property
+    def tp_emis(self):
+        return self._tp_emis
+
+    @tp_emis.setter
+    def tp_emis(self, value):
+        self._tp_emis = value
+        if value == '6':
+            self.config.uf = 'SVC-AN'
+        elif value == '7':
+            self.config.uf = 'SVC-RS'
 
     def to_xml(self, doc: NFe=None):
         return doc._xml()
@@ -74,6 +87,7 @@ class NotaFiscal(DocumentoFiscal):
         return self.notas[0]
 
     def enviar(self, lote: str, sincrono=False):
+        # mudar o tipo de emissão da configuração
         svc = Autorizacao(self.config)
         amb = self.config.amb
         for nota in self.notas:
