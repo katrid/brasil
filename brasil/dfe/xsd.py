@@ -98,7 +98,11 @@ class ComplexType(SimpleType, metaclass=ElementType):
                 if prop.origin is ElementList or prop.origin is list:
                     setattr(self, prop.name, ElementList(prop.type))
                 elif issubclass(prop.type, ComplexType):
-                    setattr(self, prop.name, prop.type())
+                    v = prop.type()
+                    # só incluir namespace na raiz
+                    if v._xmlns:
+                        v._xmlns = ''
+                    setattr(self, prop.name, v)
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
