@@ -1,5 +1,7 @@
 import os
 
+from lxml import etree
+
 # schemas não constantes na versão 4.00
 import brasil.dfe.leiaute.cte.cte_v400
 from brasil.dfe.leiaute.cte.procCTe_v400 import cteProc
@@ -32,20 +34,20 @@ class CTe(brasil.dfe.leiaute.cte.cte_v400.CTe):
     #     validator.run_validations(_nfe_config=_nfe_config)
     #
     def _validate_schema(self):
-        # if CTe.schema is None:
-        #     CTe.schema = etree.XMLSchema(
-        #         file=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'schemas', 'cte',
-        #                           'cte_v4.00.xsd')
-        #     )
-        # xml = self._xml()
-        # if not self.schema.validate(etree.fromstring(xml)):
-        #     return self.schema.error_log.last_error.message
-        pass
+        if CTe._schema is None:
+            CTe._schema = etree.XMLSchema(
+                file=os.path.join(
+                    os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'schemas', 'cte', 'cte_v4.00.xsd',
+                )
+            )
+        xml = self._xml()
+        if not self._schema.validate(etree.fromstring(xml)):
+            return self._schema.error_log.last_error.message
 
     @property
     def rodo(self) -> rodo:
         return self.infCte.infCTeNorm.infModal.rodo
-    
+
     def _prepare(self):
         if self._config:
             config = self._config
