@@ -136,7 +136,9 @@ class ComplexType(SimpleType, metaclass=ElementType):
                 v = getattr(self, k, None)
                 if v is None:
                     continue
-                if isinstance(prop.element, Attribute):
+                if v is EmptyTag:
+                    args.append('')
+                elif isinstance(prop.element, Attribute):
                     kwargs[k] = str(v)
                     continue
                 elif prop.type is XmlSignature:
@@ -443,4 +445,8 @@ class Choice:
 
 
 class XmlSignature(str):
+    pass
+
+
+class EmptyTag:
     pass
