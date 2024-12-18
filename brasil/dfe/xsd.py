@@ -137,7 +137,8 @@ class ComplexType(SimpleType, metaclass=ElementType):
                 if v is None:
                     continue
                 if v is EmptyTag:
-                    args.append('')
+                    args.append(tag(k, ''))
+                    continue
                 elif isinstance(prop.element, Attribute):
                     kwargs[k] = str(v)
                     continue
