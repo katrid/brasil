@@ -2055,18 +2055,19 @@ class Registro0600(Registro):
 
 
 class Registro0001(BlocoInicial):
-   Registro0005: Registro0005
-   Registro0015: BlockList[Registro0015]
-   Registro0100: Registro0100
-   Registro0150: BlockList[Registro0150]
-   Registro0190: BlockList[Registro0190]
-   Registro0200: BlockList[Registro0200]
-   Registro0300: BlockList[Registro0300]
-   Registro0400: BlockList[Registro0400]
-   Registro0450: BlockList[Registro0450]
-   Registro0460: BlockList[Registro0460]
-   Registro0500: BlockList[Registro0500]
-   Registro0600: BlockList[Registro0600]
+   pass
+   # Registro0005: Registro0005
+   # Registro0015: BlockList[Registro0015]
+   # Registro0100: Registro0100
+   # Registro0150: BlockList[Registro0150]
+   # Registro0190: BlockList[Registro0190]
+   # Registro0200: BlockList[Registro0200]
+   # Registro0300: BlockList[Registro0300]
+   # Registro0400: BlockList[Registro0400]
+   # Registro0450: BlockList[Registro0450]
+   # Registro0460: BlockList[Registro0460]
+   # Registro0500: BlockList[Registro0500]
+   # Registro0600: BlockList[Registro0600]
 
 
 class Registro0002(Registro):
