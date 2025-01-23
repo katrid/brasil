@@ -176,6 +176,8 @@ class TextBlock(Block):
         return ''
 
     def _write_number(self, val: float | Decimal | int) -> str:
+        if val is None:
+            return ''
         return f'{val:.2f}'.replace('.', ',')
 
     def _begin_write(self):
