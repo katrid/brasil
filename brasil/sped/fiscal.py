@@ -1094,15 +1094,15 @@ class RegistroC181(Registro):
     DT_DOC_SAIDA: date  # /// Data da emissão do documento fiscal de saída
     NUM_ITEM_SAIDA: str  # /// Número do item em que foi escriturada a saída em um registro C185, C380, C480 ou C815 quando o contribuinte informar a saída em um arquivo de perfil A.
     VL_UNIT_CONV_SAIDA: float  # /// Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo QUANT_CONV, correspondente ao valor do campo VL_UNIT_CONV, preenchido na ocasião da saída
-    VL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA: Decimal | str  # /// Valor médio unitário do ICMS OP, das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_ICMS_OP_ESTOQUE_CONV, preenchido na ocasião da saída
-    VL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA: Decimal | str  # /// Valor médio unitário do ICMS ST, incluindo FCP ST, das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_ICMS_ST_ESTOQUE_CONV, preenchido na ocasião da saída
-    VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA: Decimal | str  # /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV, preenchido na ocasião da saída
-    VL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA: Decimal | str  # /// Valor unitário para o ICMS na operação, correspondente ao valor do campo VL_UNIT_ICMS_NA_OPERACAO_CONV, preenchido na ocasião da saída
-    VL_UNIT_ICMS_OP_CONV_SAIDA: Decimal | str  # /// Valor unitário do ICMS correspondente ao valor do campo VL_UNIT_ICMS_OP_CONV, preenchido na ocasião da saída
-    VL_UNIT_ICMS_ST_CONV_REST: Decimal | str  # /// Valor unitário do total do ICMS ST, incluindo FCP ST, a ser restituído/ressarcido, correspondente ao estorno do complemento apurado na operação de saída.
-    VL_UNIT_FCP_ST_CONV_REST: Decimal | str  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_REST, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal | str  # /// Valor unitário do estorno do ressarcimento/restituição, incluindo FCP ST, apurado na operação de saída.
-    VL_UNIT_FCP_ST_CONV_COMPL: Decimal | str  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_COMPL, considerando unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA: Decimal  # /// Valor médio unitário do ICMS OP, das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_ICMS_OP_ESTOQUE_CONV, preenchido na ocasião da saída
+    VL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA: Decimal  # /// Valor médio unitário do ICMS ST, incluindo FCP ST, das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_ICMS_ST_ESTOQUE_CONV, preenchido na ocasião da saída
+    VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA: Decimal  # /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV, preenchido na ocasião da saída
+    VL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA: Decimal  # /// Valor unitário para o ICMS na operação, correspondente ao valor do campo VL_UNIT_ICMS_NA_OPERACAO_CONV, preenchido na ocasião da saída
+    VL_UNIT_ICMS_OP_CONV_SAIDA: Decimal  # /// Valor unitário do ICMS correspondente ao valor do campo VL_UNIT_ICMS_OP_CONV, preenchido na ocasião da saída
+    VL_UNIT_ICMS_ST_CONV_REST: Decimal  # /// Valor unitário do total do ICMS ST, incluindo FCP ST, a ser restituído/ressarcido, correspondente ao estorno do complemento apurado na operação de saída.
+    VL_UNIT_FCP_ST_CONV_REST: Decimal  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_REST, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal  # /// Valor unitário do estorno do ressarcimento/restituição, incluindo FCP ST, apurado na operação de saída.
+    VL_UNIT_FCP_ST_CONV_COMPL: Decimal  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_COMPL, considerando unidade utilizada para informar o campo QUANT_CONV.
 
 
 class RegistroC170(Registro):
@@ -1165,15 +1165,15 @@ class RegistroC185(Registro):
     QUANT_CONV: float  # /// Quantidade do item.
     UNID: str  # /// Unidade adotada para informar o campo QUANT_CONV.
     VL_UNIT_CONV: float  # /// Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_NA_OPERACAO_CONV: Decimal | str  # /// Valor unitário para o ICMS na operação, caso não houvesse a ST, considerando unidade utilizada para informar o campo QUANT_CONV, considerando redução da base de cálculo do ICMS ST na tributação, se houver.
-    VL_UNIT_ICMS_OP_CONV: Decimal | str  # /// Valor unitário do ICMS que o contribuinte teria se creditado, ou pode se creditar, referente à operação de entrada da mercadoria, caso estivesse submetida ao regime comum de tributação, no desfazimento da substituição tributária, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_OP_ESTOQUE_CONV: Decimal | str  # /// Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_ST_ESTOQUE_CONV: Decimal | str  # /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Decimal | str  # /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_ST_CONV_REST: Decimal | str  # /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_FCP_ST_CONV_REST: Decimal | str  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_REST, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal | str  # ///  Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_FCP_ST_CONV_COMPL: Decimal | str  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_COMPL, considerando unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_NA_OPERACAO_CONV: Decimal  # /// Valor unitário para o ICMS na operação, caso não houvesse a ST, considerando unidade utilizada para informar o campo QUANT_CONV, considerando redução da base de cálculo do ICMS ST na tributação, se houver.
+    VL_UNIT_ICMS_OP_CONV: Decimal  # /// Valor unitário do ICMS que o contribuinte teria se creditado, ou pode se creditar, referente à operação de entrada da mercadoria, caso estivesse submetida ao regime comum de tributação, no desfazimento da substituição tributária, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_OP_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_ST_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_ST_CONV_REST: Decimal  # /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_FCP_ST_CONV_REST: Decimal  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_REST, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal  # ///  Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_FCP_ST_CONV_COMPL: Decimal  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_COMPL, considerando unidade utilizada para informar o campo QUANT_CONV.
 
 
 class RegistroC186(Registro):
@@ -1292,10 +1292,10 @@ class RegistroC330(Registro):
     VL_UNIT_ICMS_OP_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
     VL_UNIT_ICMS_ST_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando unidade utilizada para informar o campo QUANT_CONV.
     VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_ST_CONV_REST: Decimal | str  # /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_FCP_ST_CONV_REST: Decimal | str  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_REST, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal | str  # /// Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_FCP_ST_CONV_COMPL: Decimal | str  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_COMPL, considerando unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_ST_CONV_REST: Decimal  # /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_FCP_ST_CONV_REST: Decimal  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_REST, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal  # /// Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_FCP_ST_CONV_COMPL: Decimal  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_COMPL, considerando unidade utilizada para informar o campo QUANT_CONV.
 
 
 class RegistroC321(Registro):
@@ -1348,10 +1348,10 @@ class RegistroC380(Registro):
     VL_UNIT_ICMS_OP_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
     VL_UNIT_ICMS_ST_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando unidade utilizada para informar o campo QUANT_CONV.
     VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, considerando unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_ST_CONV_REST: Decimal | str  # /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_FCP_ST_CONV_REST: Decimal | str  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_REST, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal | str  # /// Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_FCP_ST_CONV_COMPL: Decimal | str  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_COMPL, considerando unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_ST_CONV_REST: Decimal  # /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_FCP_ST_CONV_REST: Decimal  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_REST, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal  # /// Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_FCP_ST_CONV_COMPL: Decimal  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_COMPL, considerando unidade utilizada para informar o campo QUANT_CONV.
     CST_ICMS: str  # ///Código da Situação Tributária referente ao ICMS.
     CFOP: str  # /// Código Fiscal de Operação e Prestação.
 
@@ -1408,10 +1408,10 @@ class RegistroC430(Registro):
     VL_UNIT_ICMS_OP_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
     VL_UNIT_ICMS_ST_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando unidade utilizada para informar o campo QUANT_CONV.
     VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, considerando unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_ST_CONV_REST: Decimal | str  # /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_FCP_ST_CONV_REST: Decimal | str  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_REST, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal | str  # /// Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_FCP_ST_CONV_COMPL: Decimal | str  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_COMPL, considerando unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_ST_CONV_REST: Decimal  # /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_FCP_ST_CONV_REST: Decimal  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_REST, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal  # /// Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_FCP_ST_CONV_COMPL: Decimal  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_COMPL, considerando unidade utilizada para informar o campo QUANT_CONV.
     CST_ICMS: str  # /// Código da Situação Tributária referente ao ICMS.
     CFOP: str  # /// Código Fiscal de Operação e Prestação
 
@@ -1449,10 +1449,10 @@ class RegistroC480(Registro):
     VL_UNIT_ICMS_OP_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
     VL_UNIT_ICMS_ST_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando unidade utilizada para informar o campo QUANT_CONV.
     VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Decimal  # /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, considerando unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_ST_CONV_REST: Decimal | str  # /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_FCP_ST_CONV_REST: Decimal | str  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_REST, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal | str  # /// Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo QUANT_CONV.
-    VL_UNIT_FCP_ST_CONV_COMPL: Decimal | str  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_COMPL, considerando unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_ST_CONV_REST: Decimal  # /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_FCP_ST_CONV_REST: Decimal  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_REST, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal  # /// Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo QUANT_CONV.
+    VL_UNIT_FCP_ST_CONV_COMPL: Decimal  # /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo VL_UNIT_ICMS_ST_CONV_COMPL, considerando unidade utilizada para informar o campo QUANT_CONV.
     CST_ICMS: str  # /// Código da Situação Tributária referente ao ICMS.
     CFOP: str  # /// Código Fiscal de Operação e Prestação.
 
@@ -1629,8 +1629,8 @@ class RegistroC500(Registro):
     SER_DOC_REF: str  # /// Série do documento fiscal referenciado.
     NUM_DOC_REF: str  # /// Número do documento fiscal referenciado.
     MES_DOC_REF: str  # /// Mês e ano da emissão do documento fiscal referenciado.
-    ENER_INJET: Decimal | str  # /// Outras deduções
-    OUTRAS_DED: Decimal | str  # /// Energia injetada
+    ENER_INJET: Decimal  # /// Outras deduções
+    OUTRAS_DED: Decimal  # /// Energia injetada
     RegistroC510: BlockList[RegistroC510]  # /// BLOCO C - Lista de RegistroC510 (FILHO)
     RegistroC590: BlockList[RegistroC590]  # /// BLOCO C - Lista de RegistroC590 (FILHO)
     RegistroC595: BlockList[RegistroC595]  # /// BLOCO C - Lista de RegistroC595 (FILHO)
@@ -1736,15 +1736,15 @@ class RegistroC815(Registro):
     QUANT_CONV: Decimal
     UNID: str
     VL_UNIT_CONV: Decimal
-    VL_UNIT_ICMS_NA_OPERACAO_CONV: Decimal | str
-    VL_UNIT_ICMS_OP_CONV: Decimal | str
-    VL_UNIT_ICMS_OP_ESTOQUE_CONV: Decimal | str
-    VL_UNIT_ICMS_ST_ESTOQUE_CONV: Decimal | str
-    VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Decimal | str
-    VL_UNIT_ICMS_ST_CONV_REST: Decimal | str
-    VL_UNIT_FCP_ST_CONV_REST: Decimal | str
-    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal | str
-    VL_UNIT_FCP_ST_CONV_COMPL: Decimal | str
+    VL_UNIT_ICMS_NA_OPERACAO_CONV: Decimal
+    VL_UNIT_ICMS_OP_CONV: Decimal
+    VL_UNIT_ICMS_OP_ESTOQUE_CONV: Decimal
+    VL_UNIT_ICMS_ST_ESTOQUE_CONV: Decimal
+    VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Decimal
+    VL_UNIT_ICMS_ST_CONV_REST: Decimal
+    VL_UNIT_FCP_ST_CONV_REST: Decimal
+    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal
+    VL_UNIT_FCP_ST_CONV_COMPL: Decimal
 
 
 class RegistroC810(Registro):
@@ -1790,8 +1790,8 @@ class RegistroC800(Registro):
     NUM_CFE: str
     DT_DOC: date
     VL_CFE: Decimal
-    VL_PIS: Decimal | str
-    VL_COFINS: Decimal | str
+    VL_PIS: Decimal
+    VL_COFINS: Decimal
     CNPJ_CPF: str
     NR_SAT: str
     CHV_CFE: str
@@ -1799,8 +1799,8 @@ class RegistroC800(Registro):
     VL_MERC: Decimal
     VL_OUT_DA: Decimal
     VL_ICMS: Decimal
-    VL_PIS_ST: Decimal | str
-    VL_COFINS_ST: Decimal | str
+    VL_PIS_ST: Decimal
+    VL_COFINS_ST: Decimal
     RegistroC810: BlockList[RegistroC810]
     RegistroC850: BlockList[RegistroC850]  # /// BLOCO C - Lista de RegistroC850 (FILHO)
     RegistroC855: BlockList[RegistroC855]
@@ -1811,15 +1811,15 @@ class RegistroC880(Registro):
     QUANT_CONV: Decimal
     UNID: str
     VL_UNIT_CONV: Decimal
-    VL_UNIT_ICMS_NA_OPERACAO_CONV: Decimal | str
-    VL_UNIT_ICMS_OP_CONV: Decimal | str
-    VL_UNIT_ICMS_OP_ESTOQUE_CONV: Decimal | str
-    VL_UNIT_ICMS_ST_ESTOQUE_CONV: Decimal | str
-    VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Decimal | str
-    VL_UNIT_ICMS_ST_CONV_REST: Decimal | str
-    VL_UNIT_FCP_ST_CONV_REST: Decimal | str
-    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal | str
-    VL_UNIT_FCP_ST_CONV_COMPL: Decimal | str
+    VL_UNIT_ICMS_NA_OPERACAO_CONV: Decimal
+    VL_UNIT_ICMS_OP_CONV: Decimal
+    VL_UNIT_ICMS_OP_ESTOQUE_CONV: Decimal
+    VL_UNIT_ICMS_ST_ESTOQUE_CONV: Decimal
+    VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Decimal
+    VL_UNIT_ICMS_ST_CONV_REST: Decimal
+    VL_UNIT_FCP_ST_CONV_REST: Decimal
+    VL_UNIT_ICMS_ST_CONV_COMPL: Decimal
+    VL_UNIT_FCP_ST_CONV_COMPL: Decimal
 
 
 class RegistroC870(Registro):
@@ -2001,7 +2001,7 @@ class Registro0200(Registro):
     EX_IPI: str
     COD_GEN: str
     COD_LST: str
-    ALIQ_ICMS: Decimal | str
+    ALIQ_ICMS: Decimal
     CEST: str
     Registro0205: BlockList[Registro0205]  # /// BLOCO 0 - Lista de Registro0205 (FILHO)
     Registro0206: BlockList[Registro0206]  # /// BLOCO 0 - Lista de Registro0206 (FILHO)
