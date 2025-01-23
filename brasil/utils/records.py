@@ -18,7 +18,7 @@ class Field:
 class Block:
     _content: str
     _fields: List[Field]
-    _eol = ''
+    _newline = ''
     _separator = ''
 
     def __init__(self, **kwargs):
@@ -44,7 +44,7 @@ class Block:
         pass
 
     def _write_list(self, val: List[Self]) -> str:
-        return self._eol.join(v._write() for v in val)
+        return self._newline.join(v._write() for v in val)
 
     def __getitem__(self, item):
         return self._write_value(getattr(self.__class__, item), getattr(self, item))
@@ -63,11 +63,13 @@ class Block:
     def _write(self):
         s = self._begin_write()
         # process lists
-        children = self._eol.join(
-            self._write_list(getattr(self, f.name)) for f in self._fields if f.type_origin is BlockList
-        )
+        children = []
+        for f in self._fields:
+            if f.type_origin is BlockList:
+                if c := self._write_list(getattr(self, f.name)):
+                    children.append(c)
         if children:
-            s += self._eol + children
+            s += self._newline + self._newline.join(children)
         return s
 
     def __str__(self):
@@ -120,7 +122,7 @@ class TextFile(BaseFile):
 class TextBlock(Block):
     _content = None
     _pattern: Pattern = None
-    _eol = '\n'
+    _newline = '\n'
     _separator = ','
     _begin = ''
     _end = ''
