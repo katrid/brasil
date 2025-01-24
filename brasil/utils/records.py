@@ -67,7 +67,10 @@ class Block:
         # process lists
         children = []
         for f in self._fields:
-            if f.type_origin is BlockList:
+            if issubclass(f.data_type, Block):
+                if c := getattr(self, f.name):
+                    children.append(c._write())
+            elif f.type_origin is BlockList:
                 if c := self._write_list(getattr(self, f.name)):
                     children.append(c)
         if children:
