@@ -57,7 +57,9 @@ class Block:
 
     def _begin_write(self):
         return self._separator.join(
-            self._write_value(f, getattr(self, f.name)) for f in self._fields if f.type_origin is not BlockList
+            self._write_value(f, getattr(self, f.name))
+            for f in self._fields
+            if f.type_origin is not BlockList and not issubclass(f.data_type, Block)
         )
 
     def _write(self):
