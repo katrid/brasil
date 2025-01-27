@@ -1905,7 +1905,7 @@ class Registro0000(Registro):
 class Registro0005(Registro):
     FANTASIA: str  # /// Nome de fantasia associado:
     CEP: str
-    ENDERECO: str
+    END: str
     NUM: str
     COMPL: str
     BAIRRO: str
