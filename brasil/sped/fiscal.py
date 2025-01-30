@@ -1950,7 +1950,7 @@ class Registro0150(Registro):
     IE: str
     COD_MUN: int
     SUFRAMA: str
-    ENDERECO: str
+    END: str
     NUM: str
     COMPL: str
     BAIRRO: str
