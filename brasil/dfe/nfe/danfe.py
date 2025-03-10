@@ -1,208 +1,61 @@
 import os
 import json
-import dateutil.parser
-from reptile.bands import Report
-from brasil.dfe.utils.dfe_utils import *
-from brasil.dfe.retrato import DocumentoAuxiliar
-from brasil.utils.xml import NotasFiscais, NodeProxy 
+from brasil.dfe.nfe import NotaFiscal
+from brasil.dfe.leiaute.nfe.procEventoNFe_v100 import TProcEvento
+
+EVENTOS = {
+    '110110': 'CARTA DE CORREÇÃO',
+    '110111': 'CANCELAMENTO',
+}
+
+AMBIENTE = {
+    '1': 'PRODUÇÃO',
+    '2': 'HOMOLOGAÇÃO',
+}
 
 
-class DANFE(DocumentoAuxiliar):
-    situacao: str = None
+def mascara_doc(doc: str) -> str:
+    if not doc:
+        return ''
+    if len(doc) == 14:
+        return f'{doc[:2]}.{doc[2:5]}.{doc[5:8]}/{doc[8:12]}-{doc[12:]}'
+    elif len(doc) == 11:
+        return f'{doc[:3]}.{doc[3:6]}.{doc[6:9]}/{doc[9:13]}'
+    return doc
 
-    def __init__(self, xml: str | bytes, situacao: str='T') -> None:
-        if isinstance(xml, str):
-            xml = xml.encode()
-        self.situacao = situacao
-        self._xml = NotasFiscais.fromstring(xml)
-        self.id = self._xml._docs[0]._node[0].find('{http://www.portalfiscal.inf.br/nfe}infNFe').get('Id')
-        self.xml = {}
-        for doc in self._xml._docs:
-            self.xml = {**self.xml, **NodeProxy.to_dict(doc._node[0])}
-        if 'protNFe' in self.xml:
-            self.xml = {'nfeProc': self.xml}
 
-    def prepare(self):
-        self.load_template('DANFERetrato.json')
-        prepared = self.prepared_xml
-        if self.situacao == 'C':
-            self.template['report']['watermark']['text'] = 'Documento Cancelado'
-            self.template['report']['watermark']['size'] = 40
-        if 'nfeProc' in prepared:
-            infNFe = prepared['nfeProc']['NFe']['infNFe']
-            del self.template['report']['watermark']
-        else:
-            infNFe = prepared['NFe']['infNFe']
+def print_pdf(xml: str | bytes) -> bytes:
+    """Gerar o PDF do DANFE"""
+    from reptile.bands import Report
+    from reptile.exports.pdf import PDF
+    rep = Report(self.prepare())
+    doc = rep.prepare()
+    PDF(doc).export(output_path)
 
-        infNFe['transp']['tp_frete'] = FRETE.get(infNFe['transp']['modFrete'])
-        self.template['report']['datasources'] = [
-            {
-                'name': 'dados',
-                'data': [prepared] 
-            },
-            {
-                'name': 'itens', 
-                'data': [] 
-            },
-            {
-                'name': 'dest',
-                'data': [infNFe['dest']],
-            },
-            {
-                'name': 'imposto',
-                'data': [infNFe['total']['ICMSTot']]
-            },
-            {
-                'name': 'transporte',
-                'data': [infNFe['transp']]
-            },
-            {
-                'name': 'infcomplementares',
-                'data': [infNFe['infAdic']]
-            }
-        ]
 
-        if 'retirada' in infNFe:
-            self.template['report']['datasources'].append(
-                {
-                    'name': 'retirada',
-                    'data': [infNFe['retirada']]
-                },
-            )
-        if 'entrega' in infNFe:
-            self.template['report']['datasources'].append(
-                {
-                    'name': 'entrega',
-                    'data': [infNFe['entrega']]
-                },
-            )
-        if infNFe['transp'].get('vol'):
-            self.template['report']['datasources'].append(
-                {
-                    'name': 'volumes',
-                    'data': [infNFe['transp'].get('vol')]
-                },
-            )
-        # add itens datasource
-        if not isinstance(infNFe['det'], list):
-            infNFe['det'] = [infNFe['det']]
-
-        for item in infNFe['det']:
-            self.template['report']['datasources'][1]['data'].append(item)
-            
-        return self.template, self.id + '.pdf'
-    
-    @property
-    def prepared_xml(self):
-        # format specific fields for diplay needs only
-        formatted = self.xml.copy()
-        if 'nfeProc' in formatted:
-            infNFe = formatted['nfeProc']['NFe'] 
-            formatted['NFe'] = infNFe
-        else:
-            infNFe = formatted['NFe']
-
-        dhEmi = dateutil.parser.isoparse(infNFe['infNFe']['ide']['dhEmi'])
-        formatted['dtEmi'] = dhEmi.date().strftime('%d/%m/%Y')
-        formatted['hEmi'] = dhEmi.time().strftime('%H:%M:%S')        
-        formatted['serie'] = infNFe['infNFe']['ide']['serie'].zfill(3)
-        numero = infNFe['infNFe']['ide']['nNF'].zfill(9)
-        formatted['numero'] = '.'.join([numero[i:i + 3] for i in range(0, len(numero), 3)])
-        dhSaiEnt = dateutil.parser.isoparse(infNFe['infNFe']['ide']['dhSaiEnt'])
-        formatted['dtSaiEnt'] = dhSaiEnt.date().strftime('%d/%m/%Y')
-        formatted['hSaiEnt'] = dhSaiEnt.time().strftime('%H:%M:%S')
-        formatted['docEmit'] = format_doc(infNFe['infNFe']['emit'])
-        formatted['docDest'] = format_doc(infNFe['infNFe']['dest'])
-
-        if 'nfeProc' in formatted: # se nf transmitida
-            chave = formatted['nfeProc']['protNFe']['infProt']['chNFe']
-            formatted['barcode'] = f'{chave}'
-            formatted['chave'] = ' '.join([chave[i:i + 4] for i in range(0, len(chave), 4)])
-            if 'dhRecbto' in formatted['nfeProc']['protNFe']['infProt']:
-                dhAut = dateutil.parser.isoparse(formatted['nfeProc']['protNFe']['infProt']['dhRecbto'])
-                formatted['dtAut'] = dhAut.date().strftime('%d/%m/%Y')
-                formatted['hAut'] = dhAut.time().strftime('%H:%M:%S')
-            else:
-                formatted['dtAut'] = None
-                formatted['hAut'] = None
-        else:
-            chave = self.id.replace('NFe', '')
-            formatted['barcode'] = f'{chave}'
-            formatted['chave'] = ' '.join([chave[i:i + 4] for i in range(0, len(chave), 4)])
-
-        itens = infNFe['infNFe']['det']
-        if not isinstance(itens, list):
-            itens = [itens]
-        for item in itens:
-            item['imposto']['ICMS'] = self.get_icms(item)
-            item['imposto']['IPI'] = self.get_ipi(item)
-
-        formatted['resumo'] = f'Emissão: {formatted["dtEmi"]} Dest/Reme: {infNFe["infNFe"]["dest"]["xNome"]} Valor Total: {infNFe["infNFe"]["total"]["ICMSTot"]["vNF"]}'
-        
-        # format all number values
-        formatted = format_all_numbers(formatted)
-        return formatted
-        
-    def get_icms(self, item: dict):
-        icms = item['imposto']['ICMS'].copy()
-        if 'ICMS' in icms:
-            return icms['ICMS']
-        elif 'ICMS00' in icms:
-            return icms['ICMS00']
-        elif 'ICMS10' in icms:
-            return icms['ICMS10']
-        elif 'ICMS20' in icms:
-            return icms['ICMS20']
-        elif 'ICMS30' in icms:
-            return {
-                'vBC': icms['ICMS30']['vBCST'],
-                'pICMS': icms['ICMS30']['pICMSST'],
-                'vICMS': icms['ICMS30']['vICMSST'],
-                'CST': icms['ICMS30']['CST'],
-            }
-        elif 'ICMS40' in icms:
-            return {
-                'vBC': '0,00',
-                'pICMS': '0,00',
-                'vICMS': icms['ICMS40'].get('vICMSDeson') or '0,00',
-                'CST': icms['ICMS40']['CST'],
-            }
-        elif 'ICMS51' in icms:
-            return {'vICMS': '0,00', **icms['ICMS51']}
-        elif 'ICMS60' in icms:
-            return {
-                'vBC': icms['ICMS60']['vBCEfet'],
-                'pICMS': icms['ICMS60']['pICMSEfet'],
-                'vICMS': icms['ICMS60']['vICMSEfet'],
-                'CST': icms['ICMS60']['CST'],
-            }
-        elif 'ICMS70' in icms:
-            return icms['ICMS70']
-        elif 'ICMS90' in icms:
-            return icms['ICMS90']
-        elif 'ICMSPart' in icms:
-            return icms['ICMSPart']
-        elif 'ICMSST' in icms:
-            return {
-                'vBC': icms['ICMSST']['vBCSTDest'],
-                'pICMS': icms['ICMSST']['pST'],
-                'vICMS': icms['ICMSST']['vICMSSTDest'],
-                'CST': icms['ICMSST']['CST'],
-            }
-        else:
-            return {
-                'vBC': '0,00',
-                'pICMS': '0,00',
-                'vICMS': '0,00',
-                'CST': icms['CST'],
-            }
-    
-    def get_ipi(self, item: dict):
-        if 'IPI' in item['imposto']:
-            ipi = item['imposto']['IPI'].copy()
-            return list(ipi.values())[0]
-        else:
-            return {
-                'pIPI': '0,00',
-                'vIPI': '0,00'
-            }
+def evento_pdf(xml, xml_evento: str | bytes) -> bytes:
+    """Gerar o PDF do evento"""
+    from reptile.bands import Report
+    from reptile.exports.pdf import PDF
+    # carregar template
+    template_name = os.path.join(os.path.dirname(__file__), '../templates/danfe-evento.json')
+    with open(template_name, 'rb') as f:
+        template = json.load(f)
+    rep = Report(template)
+    # carregar xmls
+    nf = NotaFiscal(xml).nota
+    ev = TProcEvento.fromstring(xml_evento)
+    ret_evento = ev.retEvento and ev.retEvento.infEvento
+    evento = ev.evento.infEvento
+    evento.desc_evento = EVENTOS.get(ret_evento.tpEvento, ret_evento.tpEvento)
+    evento.ambiente = AMBIENTE[evento.tpAmb]
+    rep.set_data('evento', [evento])
+    rep.context['mascara_doc'] = mascara_doc
+    rep.context['nfe'] = nf
+    rep.context['retEvento'] = ret_evento
+    rep.context['dest'] = nf.NFe.infNFe.dest
+    rep.context['emit'] = nf.NFe.infNFe.emit
+    # processar template
+    doc = rep.prepare()
+    # gerar pdf
+    return PDF(doc).export_bytes()
