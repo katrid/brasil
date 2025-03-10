@@ -9,6 +9,7 @@ from .settings import Config
 from .v400 import NFe, nfeProc
 from .ws import StatusServico, Autorizacao, RetAutorizacao, Consulta, RecepcaoEvento
 from ..base import DocumentoFiscal
+from ..xsd import EmptyTag
 
 
 class _NFe:
