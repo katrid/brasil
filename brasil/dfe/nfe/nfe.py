@@ -28,7 +28,7 @@ class _NFe:
         return self.NFe.infNFe.Id[3:]
 
 
-class NotasFiscais(list):
+class NotasFiscais(list[_NFe]):
     def __init__(self, config: Config):
         super().__init__()
         self._config = config

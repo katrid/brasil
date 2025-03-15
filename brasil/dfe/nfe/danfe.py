@@ -1,17 +1,21 @@
 import os
+from datetime import datetime
 import json
+
+try:
+    from reptile.bands import Report
+    from reptile.exports.pdf import PDF
+    from reptile.utils.text import format_mask, format_number
+except:
+    pass
+
 from brasil.dfe.nfe import NotaFiscal
+from brasil.dfe.leiaute.nfe.nfe_v400 import NFe
 from brasil.dfe.leiaute.nfe.procEventoNFe_v100 import TProcEvento
+from brasil.dfe.nfe.consts import EVENTOS
+from brasil.dfe.consts import AMBIENTE
 
-EVENTOS = {
-    '110110': 'CARTA DE CORREÇÃO',
-    '110111': 'CANCELAMENTO',
-}
-
-AMBIENTE = {
-    '1': 'PRODUÇÃO',
-    '2': 'HOMOLOGAÇÃO',
-}
+__all__ = ['print_pdf', 'evento_pdf']
 
 
 def mascara_doc(doc: str) -> str:
@@ -24,19 +28,108 @@ def mascara_doc(doc: str) -> str:
     return doc
 
 
-def print_pdf(xml: str | bytes) -> bytes:
+def get_imposto(imp: NFe._infNFe._det._imposto):
+    return {
+        'icms': get_icms(imp),
+        'ipi': imp.IPI,
+    }
+
+
+def get_icms(imp: NFe._infNFe._det._imposto):
+    if imp.ICMS.ICMS00.CST == '00':
+        return imp.ICMS.ICMS00
+    if imp.ICMS.ICMS10.CST == '10':
+        return imp.ICMS.ICMS10
+    if imp.ICMS.ICMS20.CST == '20':
+        return imp.ICMS.ICMS20
+    if imp.ICMS.ICMS30.CST == '30':
+        return imp.ICMS.ICMS30
+    if imp.ICMS.ICMS40.CST == '40':
+        return imp.ICMS.ICMS40
+    if imp.ICMS.ICMS51.CST == '51':
+        return imp.ICMS.ICMS51
+    if imp.ICMS.ICMS60.CST == '60':
+        return imp.ICMS.ICMS60
+    if imp.ICMS.ICMS70.CST == '70':
+        return imp.ICMS.ICMS70
+    if imp.ICMS.ICMS90.CST == '90':
+        return imp.ICMS.ICMS90
+
+
+# inicializar configurações reptile
+try:
+    from reptile.env import EnvironmentSettings
+
+    EnvironmentSettings.DecimalSettings.decimal_pos = 2
+    EnvironmentSettings.DecimalSettings.thousand_sep = '.'
+    EnvironmentSettings.DecimalSettings.decimal_sep = ','
+except ModuleNotFoundError:
+    pass
+
+
+def print_pdf(xml: str | bytes, template_name='danfe-retrato.json', logo: bytes = None) -> bytes:
     """Gerar o PDF do DANFE"""
-    from reptile.bands import Report
-    from reptile.exports.pdf import PDF
-    rep = Report(self.prepare())
+    # carregar template
+    template_name = os.path.join(os.path.dirname(__file__), f'../templates/{template_name}')
+    with open(template_name, 'rb') as f:
+        template = json.load(f)
+    rep = Report(template)
+    # carregar xmls
+    nf = NotaFiscal(xml).nota
+    emit = nf.NFe.infNFe.emit
+    imp = nf.NFe.infNFe.total.ICMSTot
+    transp = nf.NFe.infNFe.transp
+    inf_adic = nf.NFe.infNFe.infAdic.infCpl
+    if inf_adic:
+        inf_adic = inf_adic.replace(';', '\n')
+    if emit.CRT == '0':
+        descr_cst = 'CSOSN / CST'
+    else:
+        descr_cst = 'CST'
+    rep.context['descr_cst'] = descr_cst
+    rep.context['vols'] = transp.vol
+    rep.context['descr_total'] = 'LÍQUIDO'
+    rep.context['descr_desconto'] = 'VALOR'  # todo parametrizar %
+    mensagem_sefaz = nf.nfeProc.protNFe.infProt.xMsg if nf.nfeProc else None
+    rep.context['mensagem_sefaz'] = mensagem_sefaz
+    rep.context['ide'] = nf.NFe.infNFe.ide
+    rep.context['emit'] = emit
+    rep.context['dest'] = nf.NFe.infNFe.dest
+    rep.context['imp'] = imp
+    rep.context['transp'] = transp
+    rep.context['transporta'] = transp.transporta
+    rep.context['chave'] = nf.chave
+    prods = [{'prod': det.prod, 'imp': get_imposto(det.imposto)} for det in nf.NFe.infNFe.det]
+    rep.context['prods'] = prods
+    rep.context['mascara_doc'] = mascara_doc
+    rep.context['inf_adic'] = [{'obs': inf_adic}]
+    if nf.nfeProc:
+        rep.context['protocolo'] = nf.nfeProc.protNFe.infProt.nProt + ' ' + datetime.fromisoformat(
+            nf.nfeProc.protNFe.infProt.dhRecbto).strftime('%d/%m/%Y %H:%M:%S')
+    else:
+        rep.context['protocolo'] = 'SEM VALOR FISCAL'
+    end = emit.enderEmit
+    rep.context[
+        'emit_endereco'] = f'{end.xLgr} {end.nro}, {end.xCpl or ""}, {end.xBairro} {end.xMun} - {end.UF} - CEP: {format_mask("99999-999", end.CEP)}\nFone: {(end.fone and format_mask("(99)99999-9999", end.fone)) or ""}'
+
+    # formatar resumo do canhoto
+    vl = format_number(',0.00', nf.NFe.infNFe.total.ICMSTot.vNF)
+    rep.context[
+        'resumo_canhoto'] = f'Emissão: {datetime.fromisoformat(nf.NFe.infNFe.ide.dhEmi).strftime('%d/%m/%Y')}  Dest/Reme: {nf.NFe.infNFe.dest.xNome}  Valor Total R$ ' + vl
+
+    # tratar logo
+    if not logo:
+        elEmit = rep.find_object('memDadosEmitente')
+        elEmit.left = 6
+        elEmit.width += 85
+
     doc = rep.prepare()
-    PDF(doc).export(output_path)
+    # gerar pdf
+    return PDF(doc).export_bytes()
 
 
 def evento_pdf(xml, xml_evento: str | bytes) -> bytes:
     """Gerar o PDF do evento"""
-    from reptile.bands import Report
-    from reptile.exports.pdf import PDF
     # carregar template
     template_name = os.path.join(os.path.dirname(__file__), '../templates/danfe-evento.json')
     with open(template_name, 'rb') as f:
@@ -48,7 +141,7 @@ def evento_pdf(xml, xml_evento: str | bytes) -> bytes:
     ret_evento = ev.retEvento and ev.retEvento.infEvento
     evento = ev.evento.infEvento
     evento.desc_evento = EVENTOS.get(ret_evento.tpEvento, ret_evento.tpEvento)
-    evento.ambiente = AMBIENTE[evento.tpAmb]
+    evento.ambiente = AMBIENTE[evento.tpAmb].upper()
     rep.set_data('evento', [evento])
     rep.context['mascara_doc'] = mascara_doc
     rep.context['nfe'] = nf

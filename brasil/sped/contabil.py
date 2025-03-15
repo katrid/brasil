@@ -237,7 +237,6 @@ class RegistroJ935(Registro):
 
 
 class Bloco_J(BlocoSPED):
-   Bloco_0: Bloco_0
    RegistroJ001: RegistroJ001
    RegistroJ005: BlockList[RegistroJ005]
    RegistroJ800: BlockList[RegistroJ800]
@@ -289,8 +288,6 @@ class RegistroC990(Registro):
 
 
 class Bloco_C(BlocoSPED):
-   GerarBlocoC: bool
-   Bloco_0: Bloco_0
    RegistroC001: RegistroC001
    RegistroC040: RegistroC040
    RegistroC990: RegistroC990
@@ -680,7 +677,6 @@ class RegistroI550(Registro):
 
 
 class Bloco_I(BlocoSPED):
-   Bloco_0: Bloco_0
    RegistroI001: RegistroI001  # /// BLOCO I - RegistroI001
    RegistroI010: RegistroI010  # /// BLOCO I - RegistroI010
    RegistroI012: BlockList[RegistroI012]
@@ -697,21 +693,9 @@ class Bloco_I(BlocoSPED):
    RegistroI510: BlockList[RegistroI510]
    RegistroI550: BlockList[RegistroI550]
    RegistroI990: RegistroI990  # /// BLOCO I - FRegistroI990
-   RegistroI015Count: int
-   RegistroI051Count: int
-   RegistroI052Count: int
-   RegistroI053Count: int
-   RegistroI151Count: int
-   RegistroI155Count: int
-   RegistroI157Count: int
-   RegistroI250Count: int
-   RegistroI310Count: int
-   RegistroI355Count: int
-   RegistroI555Count: int
 
 
 class SPEDContabil:
-   Conteudo: BlockList[str]
    DT_INI: date
    DT_FIN: date
    Bloco_0: Bloco_0
@@ -720,11 +704,22 @@ class SPEDContabil:
    Bloco_I: Bloco_I
    Bloco_J: Bloco_J
    Bloco_K: Bloco_K
-   Path: str  # /// Path do arquivo a ser gerado
-   Delimitador: str
-   ReplaceDelimitador: bool
-   TrimString: bool
-   CurMascara: str
-   Arquivo: str
-   LinhasBuffer: int
-   DeveAtualizarTotalLinhasNosRegistros: bool  # /// Método do evento OnError
+
+   def __str__(self):
+      res = []
+      if self.Bloco_0:
+         if self.Bloco_0.Registro0000:
+            self.Bloco_0.Registro0000.DT_INI = self.DT_INI
+            self.Bloco_0.Registro0000.DT_FIN = self.DT_FIN
+         res.append(str(self.Bloco_0))
+      if self.Bloco_C:
+         res.append(str(self.Bloco_C))
+      if self.Bloco_9:
+         res.append(str(self.Bloco_9))
+      if self.Bloco_I:
+         res.append(str(self.Bloco_I))
+      if self.Bloco_J:
+         res.append(str(self.Bloco_J))
+      if self.Bloco_K:
+         res.append(str(self.Bloco_K))
+      return '\r\n'.join(res)
