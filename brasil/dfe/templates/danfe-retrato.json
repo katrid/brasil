@@ -1,0 +1,4239 @@
+{
+  "report": {
+    "version": 1,
+    "type": "banded",
+    "pages": [
+      {
+        "type": "banded",
+        "name": "page1",
+        "height": 1122,
+        "width": 794,
+        "pageSize": "A4",
+        "orientation": 0,
+        "margins": {"top": 26.46, "left": 26.46, "right": 26.46, "bottom": 26.46},
+        "design": {
+          "zoom": 150
+        },
+        "bands": [
+          {
+            "type": "ReportTitle",
+            "name": "reportTitle1",
+            "width": 794,
+            "height": 82.37396350666678,
+            "objects": [
+              {
+                "type": "Text",
+                "name": "Memo2",
+                "x": 0,
+                "y": 0,
+                "width": 641.29963,
+                "height": 37.79527559,
+                "text": "Recebemos de {{emit.xNome}} os produtos e/ou serviços constantes da Nota Fiscal Eletrônica indicada ao lado. \r\n{{resumo_canhoto}}",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 7
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": false,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo3",
+                "x": 145.51181102,
+                "y": 37.79527559,
+                "width": 495.11811024,
+                "height": 30.23624,
+                "text": "IDENTIFICAÇÃO E ASSINATURA DO RECEBEDOR",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": false,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo4",
+                "x": 0,
+                "y": 37.79527559,
+                "width": 145.51181102,
+                "height": 30.23624,
+                "text": "DATA DO RECEBIMENTO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo17",
+                "x": 640.62992126,
+                "y": 0,
+                "width": 102.04721236,
+                "height": 68.03149606,
+                "text": "NF-e\r\nNº {{ format_mask('999.999.999', ide.nNF.zfill(9)) }}\r\nSérie {{ide.serie.zfill(3)}}",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 10,
+                  "bold": true
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Line",
+                "name": "line1",
+                "x": 0,
+                "y": 74.66666666666667,
+                "width": 744,
+                "height": 7.666666666666668,
+                "color": "#000000",
+                "lineWidth": 1,
+                "lineStyle": 1
+              }
+            ]
+          },
+          {
+            "type": "PageHeader",
+            "name": "emitente",
+            "width": 794,
+            "height": 174.125,
+            "objects": [
+              {
+                "type": "Barcode",
+                "name": "BarCodeContigencia",
+                "x": 469.76407,
+                "y": 84.37013,
+                "width": 233,
+                "height": 34.01574559,
+                "field": null,
+                "barcodeType": "code128"
+              },
+              {
+                "type": "Text",
+                "name": "memConsultaAutenticidade",
+                "x": 423.30736,
+                "y": 79.37013,
+                "width": 321.26005,
+                "height": 41.57480559,
+                "text": "Consulta de autenticidade no portal nacional da NF-e www.nfe.fazenda.gov.br/portal ou no site da Sefaz autorizadora",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 9
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo1",
+                "x": 423.30736,
+                "y": 0,
+                "width": 321.25984252,
+                "height": 49.13389,
+                "text": "",
+                "font": {
+                  "name": "Arial",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Barcode",
+                "name": "BarCodeChave",
+                "x": 445.67717756,
+                "y": 5.55906,
+                "width": 277,
+                "height": 37.79527559,
+                "field": null,
+                "barcodeType": "code128",
+                "expression": "chave"
+              },
+              {
+                "type": "Text",
+                "name": "Memo6",
+                "x": 423.30736,
+                "y": 49.13389,
+                "width": 321.26005,
+                "height": 30.23624,
+                "text": "CHAVE DE ACESSO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo8",
+                "x": 423.30736,
+                "y": 56.69291339,
+                "width": 321.26005,
+                "height": 18.89765,
+                "text": "{{ ' '.join(re.findall('....', chave)) }}",
+                "hAlign": 1,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 9,
+                  "bold": true
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true
+              },
+              {
+                "type": "Text",
+                "name": "Memo9",
+                "x": 309.92146,
+                "y": 0,
+                "width": 113.38582677,
+                "height": 120.94496,
+                "text": "DANFE",
+                "hAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 12,
+                  "bold": true
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memEmitente",
+                "x": 0,
+                "y": 0,
+                "width": 309.92146,
+                "height": 120.94496,
+                "text": "{{emit.xNome}}",
+                "hAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 12,
+                  "bold": true
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 1,
+                  "top": 2,
+                  "right": 1,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memDadosEmitente",
+                "x": 100.82684,
+                "y": 37.79527559,
+                "width": 207.87402063,
+                "height": 81.25984252,
+                "text": "{{emit_endereco}}",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 1,
+                  "top": 1,
+                  "right": 1,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo12",
+                "x": 313.1577,
+                "y": 15.897649999999999,
+                "width": 105.82684,
+                "height": 34.67718,
+                "text": "Documento Auxiliar da \r\nNota Fiscal Eletrônica",
+                "hAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true
+              },
+              {
+                "type": "Text",
+                "name": "Memo13",
+                "x": 316.71676,
+                "y": 70.81107,
+                "width": 98.26778,
+                "height": 49.13389,
+                "text": "Nº {{ format_mask('999.999.999', ide.nNF.zfill(9)) }}\r\nSérie {{ide.serie.zfill(3)}}\r\nFolha 1/1",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 10,
+                  "bold": true
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false
+              },
+              {
+                "type": "Text",
+                "name": "Memo15",
+                "x": 313.71676,
+                "y": 45.35436,
+                "width": 75.5906,
+                "height": 22.67718,
+                "text": "0 - ENTRADA\r\n1 - SAÍDA",
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true
+              },
+              {
+                "type": "Text",
+                "name": "Memo16",
+                "x": 392.41496666666666,
+                "y": 45.35433071,
+                "width": 25.343832016666664,
+                "height": 22.67716535,
+                "text": "{{ide.tpNF}}",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 10,
+                  "bold": true
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false
+              },
+              {
+                "type": "Text",
+                "name": "Memo19",
+                "x": 0,
+                "y": 120.94496,
+                "width": 423.30736,
+                "height": 26.45669291,
+                "text": "NATUREZA DA OPERAÇÃO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo20",
+                "x": 0,
+                "y": 129.25984252,
+                "width": 423.30736,
+                "height": 17.00787402,
+                "text": "{{ide.natOp}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1,
+                  "left": 5
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo21",
+                "x": 423.30736,
+                "y": 120.94496,
+                "width": 321.26005,
+                "height": 26.45669291,
+                "text": "PROTOCOLO DE AUTORIZAÇÃO DE USO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo22",
+                "x": 423.30736,
+                "y": 129.25984252,
+                "width": 321.26005,
+                "height": 17.00787402,
+                "text": "{{ protocolo }}",
+                "hAlign": 1,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8",
+                  "bold": true
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true
+              },
+              {
+                "type": "Text",
+                "name": "Memo23",
+                "x": 0,
+                "y": 147.40167,
+                "width": 253.22851,
+                "height": 26.45669291,
+                "text": "INSCRIÇÃO ESTADUAL",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo24",
+                "x": 0,
+                "y": 156.85041079,
+                "width": 253.22851,
+                "height": 17.00787402,
+                "text": "{{emit.IE}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1,
+                  "left": 5
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo25",
+                "x": 253.22851,
+                "y": 147.40167,
+                "width": 253.22851,
+                "height": 26.45669291,
+                "text": "INSCRIÇÃO ESTADUAL DO SUBSTITUTO TRIBUTÁRIO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo26",
+                "x": 253.22851,
+                "y": 156.85041079,
+                "width": 253.22851,
+                "height": 17.00787402,
+                "text": "{{emit.IEST}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1,
+                  "left": 5
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo27",
+                "x": 506.45702,
+                "y": 147.40167,
+                "width": 238.11039,
+                "height": 26.45669291,
+                "text": "CNPJ / CPF",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo28",
+                "x": 506.45702,
+                "y": 156.85041079,
+                "width": 238.11039,
+                "height": 17.00787402,
+                "text": "{{mascara_doc(emit.CNPJ_CPF)}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1,
+                  "left": 5
+                }
+              },
+              {
+                "type": "Image",
+                "name": "image1",
+                "x": 6.666666666666664,
+                "y": 38.66666666666668,
+                "width": 84.66666666666666,
+                "height": 76.66666666666667,
+                "field": "logo",
+                "transparent": false
+              }
+            ],
+            "childBand": "destinatario"
+          },
+          {
+            "type": "ChildBand",
+            "name": "destinatario",
+            "width": 794,
+            "height": 96.3328670766667,
+            "objects": [
+              {
+                "type": "Text",
+                "name": "Memo29",
+                "x": 0,
+                "y": 16.89765,
+                "width": 468.66172,
+                "height": 26.45669291,
+                "text": "NOME / RAZÃO SOCIAL",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo30",
+                "x": 0,
+                "y": 26.34639079,
+                "width": 464.88219,
+                "height": 17.00787402,
+                "text": "{{dest.xNome}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo31",
+                "x": 631.18151,
+                "y": 16.89765,
+                "width": 113.3859,
+                "height": 26.45669291,
+                "text": "DATA DA EMISSÃO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo32",
+                "x": 631.18151,
+                "y": 26.34639079,
+                "width": 113.3859,
+                "height": 17.00787402,
+                "text": "{{ datetime.fromisoformat(ide.dhEmi).strftime('%d/%m/%Y') }}",
+                "hAlign": 1,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo33",
+                "x": 631.18151,
+                "y": 43.35436,
+                "width": 113.3859,
+                "height": 26.45669291,
+                "text": "DATA DA SAÍDA",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo34",
+                "x": 631.18151,
+                "y": 52.80310079,
+                "width": 113.3859,
+                "height": 17.00787402,
+                "text": "{{ datetime.fromisoformat(ide.dhSaiEnt).strftime('%d/%m/%Y') }}",
+                "hAlign": 1,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo35",
+                "x": 631.18151,
+                "y": 69.81107,
+                "width": 113.3859,
+                "height": 26.45669291,
+                "text": "HORA DA SAÍDA",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo36",
+                "x": 631.18151,
+                "y": 79.25981079,
+                "width": 113.3859,
+                "height": 17.00787402,
+                "text": "{{ datetime.fromisoformat(ide.dhSaiEnt).strftime('%H:%M:%S') }}",
+                "hAlign": 1,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo37",
+                "x": 468.66172,
+                "y": 16.89765,
+                "width": 162.51979,
+                "height": 26.45669291,
+                "text": "CNPJ / CPF",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo38",
+                "x": 468.66172,
+                "y": 26.34639079,
+                "width": 162.51979,
+                "height": 17.00787402,
+                "text": "{{ mascara_doc(dest.CNPJ_CPF_idEstrangeiro) }}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo39",
+                "x": 555.59091,
+                "y": 43.35436,
+                "width": 75.5906,
+                "height": 26.45669291,
+                "text": "CEP",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo40",
+                "x": 555.59091,
+                "y": 52.80310079,
+                "width": 75.5906,
+                "height": 17.00787402,
+                "text": "{{format_mask('99999-999', dest.enderDest.CEP)}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 9
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo41",
+                "x": 385.51206,
+                "y": 43.35436,
+                "width": 170.07885,
+                "height": 26.45669291,
+                "text": "BAIRRO / DISTRITO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo42",
+                "x": 385.51206,
+                "y": 52.80310079,
+                "width": 170.07885,
+                "height": 17.00787402,
+                "text": "{{dest.enderDest.xBairro}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo43",
+                "x": 0,
+                "y": 43.35436,
+                "width": 385.51206,
+                "height": 26.45669291,
+                "text": "ENDEREÇO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo44",
+                "x": 0,
+                "y": 52.80310079,
+                "width": 381.73253,
+                "height": 17.00787402,
+                "text": "{{dest.enderDest.xLgr}}, {{dest.enderDest.nro}}  {{dest.xCpl}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo45",
+                "x": 0,
+                "y": 69.81107,
+                "width": 355.27582,
+                "height": 26.45669291,
+                "text": "MUNICÍPIO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo46",
+                "x": 0,
+                "y": 79.25981079,
+                "width": 351.49629,
+                "height": 17.00787402,
+                "text": "{{dest.enderDest.xMun}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo47",
+                "x": 355.27582,
+                "y": 69.81107,
+                "width": 30.23624,
+                "height": 26.45669291,
+                "text": "UF",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo48",
+                "x": 355.27582,
+                "y": 79.25981079,
+                "width": 30.23624,
+                "height": 17.00787402,
+                "text": "{{dest.enderDest.UF}}",
+                "hAlign": 1,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo49",
+                "x": 385.51206,
+                "y": 69.81107,
+                "width": 113.3859,
+                "height": 26.45669291,
+                "text": "TELEFONE / FAX",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo50",
+                "x": 385.51206,
+                "y": 79.25981079,
+                "width": 113.3859,
+                "height": 17.00787402,
+                "text": "{{dest.enderDest.fone}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo51",
+                "x": 498.89796,
+                "y": 69.81107,
+                "width": 132.28355,
+                "height": 26.45669291,
+                "text": "INSCRIÇÃO ESTADUAL",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo52",
+                "x": 498.89796,
+                "y": 79.25981079,
+                "width": 132.28355,
+                "height": 17.00787402,
+                "text": "{{dest.IE}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo53",
+                "x": 0,
+                "y": 3.77953,
+                "width": 430.86642,
+                "height": 13.22834402,
+                "text": "DESTINATÁRIO / REMETENTE",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 7,
+                  "bold": true
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true
+              }
+            ],
+            "childBand": "imposto"
+          },
+          {
+            "type": "ChildBand",
+            "name": "imposto",
+            "width": 794,
+            "height": 70.15652535000008,
+            "objects": [
+              {
+                "type": "Text",
+                "name": "Memo58",
+                "x": 0,
+                "y": 3.77953000000002,
+                "width": 430.86642,
+                "height": 13.22834402,
+                "text": "CÁLCULO DO IMPOSTO",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 7,
+                  "bold": true
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true
+              },
+              {
+                "type": "Text",
+                "name": "QuadroVBC",
+                "x": 0,
+                "y": 17.11812244,
+                "width": 114.8976378,
+                "height": 26.45669291,
+                "text": "BASE DE CÁLCULO DO ICMS",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memVBC",
+                "x": 0,
+                "y": 26.56686323,
+                "width": 114.8976378,
+                "height": 17.00787402,
+                "text": "{{imp.vBC}}",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.2f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "QuadroVICMS",
+                "x": 114.8976378,
+                "y": 17.11812244,
+                "width": 114.8976378,
+                "height": 26.45669291,
+                "text": "VALOR DO ICMS",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memVICMS",
+                "x": 114.8976378,
+                "y": 26.56686323,
+                "width": 114.8976378,
+                "height": 17.00787402,
+                "text": "{{imp.vICMS}}",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.2f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "QuadroVBCST",
+                "x": 229.79527559,
+                "y": 17.11812244,
+                "width": 128.50402,
+                "height": 26.45669291,
+                "text": "BASE DE CÁLCULO DO ICMS SUBST.",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memVBCST",
+                "x": 229.79527559,
+                "y": 26.56686323,
+                "width": 128.50402,
+                "height": 17.00787402,
+                "text": "{{imp.vBCST}}",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.2f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "QuadrovST",
+                "x": 358.2992126,
+                "y": 17.11812244,
+                "width": 113.3859,
+                "height": 26.45669291,
+                "text": "VALOR DO ICMS SUBST.",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memVST",
+                "x": 358.2992126,
+                "y": 26.56686323,
+                "width": 113.3859,
+                "height": 17.00787402,
+                "text": "{{imp.vST}}",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.2f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo67",
+                "x": 597.16574,
+                "y": 17.11812244,
+                "width": 147.40167,
+                "height": 26.45669291,
+                "text": "VALOR TOTAL DOS PRODUTOS",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo68",
+                "x": 597.16574,
+                "y": 25.56686323,
+                "width": 147.40167,
+                "height": 17.00787402,
+                "text": "{{imp.vProd}}",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.2f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo69",
+                "x": 459.590848,
+                "y": 43.57483244,
+                "width": 137.574892,
+                "height": 26.45669291,
+                "text": "VALOR DO IPI",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo70",
+                "x": 459.590848,
+                "y": 53.02357323,
+                "width": 137.574892,
+                "height": 17.00787402,
+                "text": "{{imp.vIPI}}",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.2f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo71",
+                "x": 329.575016,
+                "y": 43.57483244,
+                "width": 130.015832,
+                "height": 26.45669291,
+                "text": "OUTRAS DESPESAS ACESSÓRIAS",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo72",
+                "x": 329.575016,
+                "y": 53.02357323,
+                "width": 130.015832,
+                "height": 17.00787402,
+                "text": "{{imp.vOutro}}",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.2f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo73",
+                "x": 229.795424,
+                "y": 43.57483244,
+                "width": 99.779592,
+                "height": 26.45669291,
+                "text": "DESCONTO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo74",
+                "x": 229.795424,
+                "y": 53.02357323,
+                "width": 99.779592,
+                "height": 17.00787402,
+                "text": "{{imp.vDesc}}",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.2f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo75",
+                "x": 114.897712,
+                "y": 43.57483244,
+                "width": 114.897712,
+                "height": 26.45669291,
+                "text": "VALOR DO SEGURO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo76",
+                "x": 114.897712,
+                "y": 53.02357323,
+                "width": 114.897712,
+                "height": 17.00787402,
+                "text": "{{imp.vSeg}}",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.2f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo77",
+                "x": 0,
+                "y": 43.57483244,
+                "width": 114.897712,
+                "height": 26.45669291,
+                "text": "VALOR DO FRETE",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo78",
+                "x": 0,
+                "y": 53.02357323,
+                "width": 114.897712,
+                "height": 17.00787402,
+                "text": "{{imp.vFrete}}",
+                "hAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.2f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo79",
+                "x": 597.16574,
+                "y": 43.57483244,
+                "width": 147.40167,
+                "height": 26.45669291,
+                "text": "VALOR TOTAL DA NOTA",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo80",
+                "x": 597.16574,
+                "y": 52.02357323,
+                "width": 147.40167,
+                "height": 17.00787402,
+                "text": "{{ imp.vNF }}",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.2f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "QuadroVTOTTRIB",
+                "x": 471.68502961,
+                "y": 17.19685039,
+                "width": 125.48033937,
+                "height": 26.26771654,
+                "text": "V.APROX. TRIBUTOS {{imp.vTribFonte}}",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memVTOTTRIB",
+                "x": 472.44125,
+                "y": 26.64566929,
+                "width": 124.72449,
+                "height": 17.00787402,
+                "text": "{{imp.vTotTrib}} ({{imp.vTribPerc}} %)",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.2f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              }
+            ],
+            "childBand": "transp"
+          },
+          {
+            "type": "ChildBand",
+            "name": "transp",
+            "width": 794,
+            "height": 69.92133551,
+            "objects": [
+              {
+                "type": "Text",
+                "name": "Memo82",
+                "x": 0,
+                "y": 3.77953000000002,
+                "width": 430.86642,
+                "height": 13.22834402,
+                "text": "TRANSPORTADOR / VOLUMES TRANSPORTADOS",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 7,
+                  "bold": true
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true
+              },
+              {
+                "type": "Text",
+                "name": "Memo83",
+                "x": 636.0945126,
+                "y": 17.0079326,
+                "width": 108.47243362,
+                "height": 26.45669291,
+                "text": "CNPJ / CPF",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo84",
+                "x": 636.0945126,
+                "y": 26.45667339,
+                "width": 108.47243362,
+                "height": 17.00787402,
+                "text": "{{mascara_doc(transporta.CNPJ_CPF)}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo85",
+                "x": 608.50433,
+                "y": 17.0079326,
+                "width": 27.59054874,
+                "height": 26.45669291,
+                "text": "UF",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo86",
+                "x": 608.50433,
+                "y": 26.45667339,
+                "width": 27.59054874,
+                "height": 17.00787402,
+                "text": "{{transp.veicTransp.UF}}",
+                "hAlign": 1,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo87",
+                "x": 529.13385827,
+                "y": 17.0079326,
+                "width": 79.3700787401575,
+                "height": 26.45669291,
+                "text": "PLACA DO VEÍCULO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo88",
+                "x": 529.13385827,
+                "y": 26.45667339,
+                "width": 79.3700787401575,
+                "height": 17.00787402,
+                "text": "{{transp.veicTransp.placa}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo89",
+                "x": 449.76377953,
+                "y": 17.0079326,
+                "width": 79.37013,
+                "height": 26.45669291,
+                "text": "CÓDIGO ANTT",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo90",
+                "x": 449.76377953,
+                "y": 26.45667339,
+                "width": 75.5906,
+                "height": 17.00787402,
+                "text": "{{transp.veicTransp.RNTC}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo91",
+                "x": 347.716535433071,
+                "y": 17.0079326,
+                "width": 102.047244094488,
+                "height": 26.45669291,
+                "text": "FRETE POR CONTA",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo92",
+                "x": 347.716535433071,
+                "y": 26.45667339,
+                "width": 102.047244094488,
+                "height": 17.00787402,
+                "text": "{{transp.modFrete}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo93",
+                "x": 0,
+                "y": 17.0079326,
+                "width": 347.716535433071,
+                "height": 26.45669291,
+                "text": "NOME / RAZÃO SOCIAL",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo94",
+                "x": 0,
+                "y": 26.45667339,
+                "width": 347.716535433071,
+                "height": 17.00787402,
+                "text": "{{transporta.xNome}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo95",
+                "x": 608.50433,
+                "y": 43.4646426,
+                "width": 27.59054874,
+                "height": 26.45669291,
+                "text": "UF",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo96",
+                "x": 608.50433,
+                "y": 52.91338339,
+                "width": 27.59054874,
+                "height": 17.00787402,
+                "text": "{{transporta.UF}}",
+                "hAlign": 1,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo97",
+                "x": 636.0945126,
+                "y": 43.4646426,
+                "width": 108.47243362,
+                "height": 26.45669291,
+                "text": "INSCRIÇÃO ESTADUAL",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo98",
+                "x": 636.0945126,
+                "y": 52.91338339,
+                "width": 108.47243362,
+                "height": 17.00787402,
+                "text": "{{transporta.IE}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo99",
+                "x": 355.275590551181,
+                "y": 43.4646426,
+                "width": 253.228346456693,
+                "height": 26.45669291,
+                "text": "MUNICÍPIO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo100",
+                "x": 355.275590551181,
+                "y": 52.91338339,
+                "width": 253.228346456693,
+                "height": 17.00787402,
+                "text": "{{transporta.xMun}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo101",
+                "x": 0,
+                "y": 43.4646426,
+                "width": 355.27559055,
+                "height": 26.45669291,
+                "text": "ENDEREÇO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo102",
+                "x": 0,
+                "y": 52.91338339,
+                "width": 355.27559055,
+                "height": 17.00787402,
+                "text": "{{transporta.xEnder}}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "8"
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              }
+            ]
+          },
+          {
+            "type": "DataBand",
+            "name": "vol",
+            "width": 794,
+            "height": 26.630208333333336,
+            "objects": [
+              {
+                "type": "Text",
+                "name": "Memo182",
+                "x": 0,
+                "y": 7.55902338999999,
+                "width": 59.21263667,
+                "height": 17.00787402,
+                "text": "{{ vol.qVol }}",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 8
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo184",
+                "x": 59.21263667,
+                "y": 7.55902338999999,
+                "width": 153.70088667,
+                "height": 17.00787402,
+                "text": "{{ vol.esp }}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 8
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo187",
+                "x": 212.91352333,
+                "y": 7.55902338999999,
+                "width": 142.36229667,
+                "height": 17.00787402,
+                "text": "{{ vol.marca }}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 8
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo157",
+                "x": 355.27582,
+                "y": 7.55902338999999,
+                "width": 161.25994667,
+                "height": 17.00787402,
+                "text": "{{ vol.nVol }}",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 8
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo194",
+                "x": 516.53576667,
+                "y": 7.55902338999999,
+                "width": 119.68511667,
+                "height": 17.00787402,
+                "text": "{{ vol.pesoB }}",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 8
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.3f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo158",
+                "x": 636.22088333,
+                "y": 7.55902338999999,
+                "width": 108.34652667,
+                "height": 17.00787402,
+                "text": "{{ vol.pesoL }}",
+                "hAlign": 2,
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 8
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "displayFormat": {
+                  "format": "{:,.3f}",
+                  "kind": "Numeric"
+                },
+                "padding": {
+                  "left": 5,
+                  "top": 1,
+                  "right": 5,
+                  "bottom": 1
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo159",
+                "x": 0,
+                "y": 0.110282600000005,
+                "width": 59.21263667,
+                "height": 26.45669291,
+                "text": "QUANTIDADE",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo160",
+                "x": 59.21263667,
+                "y": 0.110282600000005,
+                "width": 153.70088667,
+                "height": 26.45669291,
+                "text": "ESPÉCIE",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo176",
+                "x": 212.91352333,
+                "y": 0.110282600000005,
+                "width": 142.36229667,
+                "height": 26.45669291,
+                "text": "MARCA",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo177",
+                "x": 355.27582,
+                "y": 0.110282600000005,
+                "width": 161.25994667,
+                "height": 26.45669291,
+                "text": "NUMERAÇÃO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo178",
+                "x": 516.53576667,
+                "y": 0.110282600000005,
+                "width": 119.68511667,
+                "height": 26.45669291,
+                "text": "PESO BRUTO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo179",
+                "x": 636.09448819,
+                "y": 0.110282600000005,
+                "width": 108.47243362,
+                "height": 26.45669291,
+                "text": "PESO LÍQUIDO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              }
+            ],
+            "expression": "vols"
+          },
+          {
+            "type": "HeaderBand",
+            "name": "prodHeader",
+            "width": 794,
+            "height": 40,
+            "objects": [
+              {
+                "type": "Text",
+                "name": "Memo115",
+                "x": 0,
+                "y": 3.77953000000002,
+                "width": 430.86642,
+                "height": 13.22834402,
+                "text": "DADOS DOS PRODUTOS / SERVIÇOS",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 7,
+                  "bold": true
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true
+              },
+              {
+                "type": "Text",
+                "name": "Memo116",
+                "x": 0,
+                "y": 18.33859244,
+                "width": 60.47248,
+                "height": 22.67716291,
+                "text": "CÓDIGO\r\nPRODUTO",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memTitItDesc",
+                "x": 60.47248,
+                "y": 18.33859244,
+                "width": 221.48031496,
+                "height": 22.67716291,
+                "text": "DESCRIÇÃO DO PRODUTO / SERVIÇO",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": false,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memTitItNCM",
+                "x": 281.90547764,
+                "y": 18.33859244,
+                "width": 37.7953,
+                "height": 22.67716291,
+                "text": "NCM/SH",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memTitItCST",
+                "x": 319.70075323,
+                "y": 18.33859244,
+                "width": 26.45669535,
+                "height": 22.67716291,
+                "text": "{{ descr_cst }}",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memTitItCFOP",
+                "x": 346.15744614,
+                "y": 18.33859244,
+                "width": 24.56692913,
+                "height": 22.6771678,
+                "text": "CFOP",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memTitItUnd",
+                "x": 370.72443386,
+                "y": 18.33859244,
+                "width": 22.67718,
+                "height": 22.67716291,
+                "text": "UNID.",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memTitQCom",
+                "x": 393.40159921,
+                "y": 18.33859244,
+                "width": 51.02363425,
+                "height": 22.67716291,
+                "text": "QTDE.",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memTitvUnCom",
+                "x": 444.42548,
+                "y": 18.33859244,
+                "width": 45.35436,
+                "height": 22.67716291,
+                "text": "VALOR\r\nUNITÁRIO",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memTitItDesconto",
+                "x": 489.96062992,
+                "y": 18.33859244,
+                "width": 39.30708661,
+                "height": 22.67716291,
+                "text": "{{ descr_desconto }}\r\nDESCONTO",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": false,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo125",
+                "x": 529.1342,
+                "y": 18.33859244,
+                "width": 45.35436,
+                "height": 22.67716291,
+                "text": "VALOR\r\n{{ descr_total }}",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": false,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo126",
+                "x": 574.48856,
+                "y": 18.33859244,
+                "width": 45.35436,
+                "height": 22.67716291,
+                "text": "BASE DE \r\nCÁLC. ICMS",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo127",
+                "x": 619.84292,
+                "y": 18.33859244,
+                "width": 41.57480315,
+                "height": 22.67716291,
+                "text": "VALOR\r\nICMS",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo128",
+                "x": 661.417322834646,
+                "y": 18.33859244,
+                "width": 41.57480315,
+                "height": 22.67716291,
+                "text": "VALOR\r\nIPI",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo129",
+                "x": 702.99212598,
+                "y": 29.67718244,
+                "width": 20.7874015748031,
+                "height": 11.33857291,
+                "text": "ICMS",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo130",
+                "x": 723.779527559055,
+                "y": 29.67718244,
+                "width": 20.7874015748031,
+                "height": 11.33857291,
+                "text": "IPI",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo189",
+                "x": 702.99212354,
+                "y": 18.33859244,
+                "width": 41.57483,
+                "height": 11.33857291,
+                "text": "ALÍQ. %",
+                "hAlign": 1,
+                "vAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              }
+            ]
+          },
+          {
+            "type": "DataBand",
+            "name": "prod",
+            "width": 794,
+            "height": 11.502604166666666,
+            "objects": [
+              {
+                "type": "Text",
+                "name": "Memo131",
+                "x": 0,
+                "y": 0,
+                "width": 60.47248,
+                "height": 11.33858268,
+                "text": "{{prod.prod.cProd}}",
+                "hAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": true
+              },
+              {
+                "type": "Text",
+                "name": "memItDesc",
+                "x": 60.47248,
+                "y": 0,
+                "width": 221.48031496,
+                "height": 11.33858268,
+                "text": "{{prod.prod.xProd}}",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": false,
+                  "right": false,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": true
+              },
+              {
+                "type": "Text",
+                "name": "memItNCM",
+                "x": 281.90547764,
+                "y": 0,
+                "width": 37.7953,
+                "height": 11.33858268,
+                "text": "{{prod.prod.NCM}}",
+                "hAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": false
+              },
+              {
+                "type": "Text",
+                "name": "memItCST",
+                "x": 319.70075323,
+                "y": 0,
+                "width": 26.45669535,
+                "height": 11.33858268,
+                "text": "{{prod.imp.icms.orig}}{{prod.imp.icms.CST}}",
+                "hAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": false
+              },
+              {
+                "type": "Text",
+                "name": "memItCFOP",
+                "x": 346.15744614,
+                "y": 0,
+                "width": 24.56692913,
+                "height": 11.33858268,
+                "text": "{{prod.prod.CFOP}}",
+                "hAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": false
+              },
+              {
+                "type": "Text",
+                "name": "memItUnd",
+                "x": 370.72443386,
+                "y": 0,
+                "width": 22.67718,
+                "height": 11.33858268,
+                "text": "{{prod.prod.uCom}}",
+                "hAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": true
+              },
+              {
+                "type": "Text",
+                "name": "memqCom",
+                "x": 393.40159921,
+                "y": 0,
+                "width": 51.02363425,
+                "height": 11.33858268,
+                "text": "{{prod.prod.qCom}}",
+                "hAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": true,
+                "displayFormat": {
+                  "kind": "Numeric",
+                  "format": "{:,.2f}"
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memvUnCom",
+                "x": 444.42548,
+                "y": 0,
+                "width": 45.35436,
+                "height": 11.33858268,
+                "text": "{{prod.prod.vUnCom}}",
+                "hAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": true,
+                "displayFormat": {
+                  "kind": "Numeric",
+                  "format": "{:,.2f}"
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memItDesconto",
+                "x": 489.96062992,
+                "y": 0,
+                "width": 39.30708661,
+                "height": 11.33858268,
+                "text": "{{prod.prod.vDesc}}",
+                "hAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": false,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": true,
+                "displayFormat": {
+                  "kind": "Numeric",
+                  "format": "{:,.2f}"
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo140",
+                "x": 529.1342,
+                "y": 0,
+                "width": 45.35436,
+                "height": 11.33858268,
+                "text": "{{prod.prod.vProd}}",
+                "hAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": false,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": true,
+                "displayFormat": {
+                  "kind": "Numeric",
+                  "format": "{:,.2f}"
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo141",
+                "x": 574.48856,
+                "y": 0,
+                "width": 45.35436,
+                "height": 11.33858268,
+                "text": "{{prod.imp.icms.vBC}}",
+                "hAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": true,
+                "displayFormat": {
+                  "kind": "Numeric",
+                  "format": "{:,.2f}"
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo142",
+                "x": 619.84292,
+                "y": 0,
+                "width": 41.57480315,
+                "height": 11.33858268,
+                "text": "{{prod.imp.icms.vICMS}}",
+                "hAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": true,
+                "displayFormat": {
+                  "kind": "Numeric",
+                  "format": "{:,.2f}"
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo143",
+                "x": 661.41732283,
+                "y": 0,
+                "width": 41.57483,
+                "height": 11.33858268,
+                "text": "{{prod.imp.ipi.vIPI}}",
+                "hAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": true,
+                "displayFormat": {
+                  "kind": "Numeric",
+                  "format": "{:,.2f}"
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo144",
+                "x": 702.99212598,
+                "y": 0,
+                "width": 20.78740157,
+                "height": 11.33858268,
+                "text": "{{prod.imp.icms.pICMS or 0}}",
+                "hAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": false,
+                "displayFormat": {
+                  "kind": "Numeric",
+                  "format": "{:,.2f}"
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo145",
+                "x": 723.77952756,
+                "y": 0,
+                "width": 20.78740157,
+                "height": 11.33858268,
+                "text": "{{prod.imp.ipi.pIPI or 0}}",
+                "hAlign": 1,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "border": {
+                  "left": true,
+                  "top": false,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": false,
+                "displayFormat": {
+                  "kind": "Numeric",
+                  "format": "{:,.2f}"
+                }
+              }
+            ],
+            "expression": "prods",
+            "header": "prodHeader"
+          },
+          {
+            "type": "DataBand",
+            "name": "dados_adic",
+            "width": 794,
+            "height": 143.29135567,
+            "objects": [
+              {
+                "type": "Text",
+                "name": "Memo66",
+                "x": 487.55905512,
+                "y": 18.56694622,
+                "width": 257.00785205,
+                "height": 124.72440945,
+                "text": "RESERVADO AO FISCO",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo137",
+                "x": 0,
+                "y": 18.56694622,
+                "width": 487.55905512,
+                "height": 124.72440213,
+                "text": "INFORMAÇÕES COMPLEMENTARES",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 5
+                },
+                "border": {
+                  "left": true,
+                  "top": true,
+                  "right": true,
+                  "bottom": true,
+                  "width": 1,
+                  "color": 0,
+                  "style": 1
+                },
+                "allowTags": false,
+                "canGrow": true,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "memObs",
+                "x": 0,
+                "y": 28.43829579666667,
+                "width": 485.6692889,
+                "height": 114.49868766333333,
+                "text": "{{ dados_adic.obs }}",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              },
+              {
+                "type": "Text",
+                "name": "Memo146",
+                "x": 0,
+                "y": 3.77953000000002,
+                "width": 430.86642,
+                "height": 13.22834402,
+                "text": "DADOS ADICIONAIS",
+                "vAlign": 2,
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 7,
+                  "bold": true
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true
+              },
+              {
+                "type": "Text",
+                "name": "Memo180",
+                "x": 487.55937,
+                "y": 25.7007874,
+                "width": 255.11811024,
+                "height": 117.16535433,
+                "text": "{{ mensagem_sefaz }}",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": 6
+                },
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": true,
+                "padding": {
+                  "left": 2,
+                  "top": 2,
+                  "right": 2,
+                  "bottom": 2
+                }
+              }
+            ],
+            "printOnBottom": true,
+            "expression": "inf_adic"
+          },
+          {
+            "type": "PageFooter",
+            "name": "pageFooter1",
+            "width": 794,
+            "height": 16.151041666666664,
+            "objects": [
+              {
+                "type": "Text",
+                "name": "text1",
+                "x": 1.3333333333332957,
+                "y": 1.3333333333333353,
+                "width": 582.666666666667,
+                "height": 14.666666666666666,
+                "text": "DATA E HORA DA IMPRESSÃO: {{ datetime.now().strftime('%d/%m/%Y %H:%M:%S') }} {{ user_name }}",
+                "font": {
+                  "name": "Times New Roman",
+                  "size": "6",
+                  "color": "#000000"
+                },
+                "allowExpression": true,
+                "allowTags": false,
+                "canGrow": false,
+                "wrap": false
+              }
+            ]
+          }
+        ],
+        "titleBeforeHeader": true
+      }
+    ],
+    "datasources": [
+      {
+        "name": "dsItens",
+        "fields": [],
+        "type": "DataSource",
+        "format": "json"
+      }
+    ]
+  }
+}
