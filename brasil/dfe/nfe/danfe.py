@@ -12,6 +12,7 @@ except:
 from brasil.dfe.nfe import NotaFiscal
 from brasil.dfe.leiaute.nfe.nfe_v400 import NFe
 from brasil.dfe.leiaute.nfe.procEventoNFe_v100 import TProcEvento
+from brasil.dfe.leiaute.nfe import e110110_v100
 from brasil.dfe.nfe.consts import EVENTOS
 from brasil.dfe.consts import AMBIENTE
 
@@ -143,6 +144,10 @@ def evento_pdf(xml, xml_evento: str | bytes) -> bytes:
     evento.desc_evento = EVENTOS.get(ret_evento.tpEvento, ret_evento.tpEvento)
     evento.ambiente = AMBIENTE[evento.tpAmb].upper()
     rep.set_data('evento', [evento])
+    if evento.tpEvento == '110110':
+        det_evento = e110110_v100.detEvento.fromstring(evento.detEvento)
+        rep.context['xCondUso'] = det_evento.xCondUso.replace('com: I', 'com:\nI').replace(';', '\n')
+        rep.context['xCorrecao'] = det_evento.xCorrecao.replace(';', '\n')
     rep.context['mascara_doc'] = mascara_doc
     rep.context['nfe'] = nf
     rep.context['retEvento'] = ret_evento
