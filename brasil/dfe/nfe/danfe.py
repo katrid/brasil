@@ -46,7 +46,7 @@ def get_icms(imp: NFe._infNFe._det._imposto):
         return imp.ICMS.ICMS20
     if imp.ICMS.ICMS30.CST == '30':
         return imp.ICMS.ICMS30
-    if imp.ICMS.ICMS40.CST == '40':
+    if imp.ICMS.ICMS40.CST in ('40', '41', '50'):
         return imp.ICMS.ICMS40
     if imp.ICMS.ICMS51.CST == '51':
         return imp.ICMS.ICMS51
