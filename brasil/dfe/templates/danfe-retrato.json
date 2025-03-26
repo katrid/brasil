@@ -1175,7 +1175,7 @@
                 "y": 52.80310079,
                 "width": 381.73253,
                 "height": 17.00787402,
-                "text": "{{dest.enderDest.xLgr}}, {{dest.enderDest.nro}}  {{dest.xCpl}}",
+                "text": "{{dest.enderDest.xLgr}}, {{dest.enderDest.nro}} {{dest.enderDest.xCpl}}",
                 "vAlign": 2,
                 "font": {
                   "name": "Times New Roman",
