@@ -324,6 +324,17 @@ class TProtGTVe(ComplexType):
     Signature: Annotated[XmlSignature, Element] = None
 
 
+class TRetCTeSimp(ComplexType):
+    """Tipo Retorno do Pedido de Autorização de CT-e Simplificado (Modelo 57)"""
+    versao: Annotated[TVerCTe, Attribute] = None
+    tpAmb: Annotated[TAmb, Element] = None
+    cUF: Annotated[TCodUfIBGE, Element] = None
+    verAplic: Annotated[TVerAplic, Element] = None
+    cStat: Annotated[TStat, Element] = None
+    xMotivo: Annotated[TMotivo, Element] = None
+    protCTe: Annotated[TProtCTe, Element] = None
+
+
 class TRetCTe(ComplexType):
     """Tipo Retorno do Pedido de Autorização de CT-e (Modelo 57)"""
     versao: Annotated[TVerCTe, Attribute] = None
@@ -376,12 +387,16 @@ class TImp(ComplexType):
         vBC: Annotated[TDec_1302, Element] = None
         pICMS: Annotated[TDec_0302, Element] = None
         vICMS: Annotated[TDec_1302, Element] = None
+        vICMSDeson: Annotated[TDec_1302, Element] = None
+        cBenef: Annotated[str, Element] = None
 
     ICMS20: Annotated[_ICMS20, Element] = None
 
     class _ICMS45(ComplexType):
         """ICMS  Isento, não Tributado ou diferido"""
         CST: Annotated[str, Element] = None
+        vICMSDeson: Annotated[TDec_1302, Element] = None
+        cBenef: Annotated[str, Element] = None
 
     ICMS45: Annotated[_ICMS45, Element] = None
 
@@ -392,6 +407,8 @@ class TImp(ComplexType):
         vICMSSTRet: Annotated[TDec_1302, Element] = None
         pICMSSTRet: Annotated[TDec_0302, Element] = None
         vCred: Annotated[TDec_1302, Element] = None
+        vICMSDeson: Annotated[TDec_1302, Element] = None
+        cBenef: Annotated[str, Element] = None
 
     ICMS60: Annotated[_ICMS60, Element] = None
 
@@ -403,6 +420,8 @@ class TImp(ComplexType):
         pICMS: Annotated[TDec_0302, Element] = None
         vICMS: Annotated[TDec_1302, Element] = None
         vCred: Annotated[TDec_1302, Element] = None
+        vICMSDeson: Annotated[TDec_1302, Element] = None
+        cBenef: Annotated[str, Element] = None
 
     ICMS90: Annotated[_ICMS90, Element] = None
 
@@ -413,6 +432,8 @@ class TImp(ComplexType):
         vBCOutraUF: Annotated[TDec_1302, Element] = None
         pICMSOutraUF: Annotated[TDec_0302, Element] = None
         vICMSOutraUF: Annotated[TDec_1302, Element] = None
+        vICMSDeson: Annotated[TDec_1302, Element] = None
+        cBenef: Annotated[str, Element] = None
 
     ICMSOutraUF: Annotated[_ICMSOutraUF, Element] = None
 
@@ -457,6 +478,302 @@ class TUnidadeTransp(ComplexType):
     qtdRat: Annotated[TDec_0302_0303, Element] = None
 
 
+class TFinCTeSimp(str):
+    """Tipos Finalidade de CT-e Simplificado"""
+    pass
+
+
+class TModTranspSimp(str):
+    """ Tipo Modal transporte do CTe Simplificado"""
+    pass
+
+
+class TCRT(str):
+    """Tipo Código Regime Tributário"""
+    pass
+
+
+class TProcEmi(str):
+    """Tipo processo de emissão do CT-e"""
+    pass
+
+
+class TCTeSimp(ComplexType):
+    """Tipo Conhecimento de Transporte Eletrônico (Modelo 57) - Modelo Simplificado"""
+
+    class _infCte(ComplexType):
+        """Informações do CT-e"""
+        versao: Annotated[TVerCTe, Attribute] = None
+        Id: Annotated[str, Attribute(pattern=r'CTe[0-9]{44}')] = None
+
+        class _ide(ComplexType):
+            """Identificação do CT-e"""
+            cUF: Annotated[TCodUfIBGE, Element] = None
+            cCT: Annotated[str, Element] = None
+            CFOP: Annotated[TCfop, Element] = None
+            natOp: Annotated[str, Element] = None
+            mod: Annotated[TModCT, Element] = None
+            serie: Annotated[TSerie, Element] = None
+            nCT: Annotated[TNF, Element] = None
+            dhEmi: Annotated[TDateTimeUTC, Element] = None
+            tpImp: Annotated[str, Element] = None
+            tpEmis: Annotated[str, Element] = None
+            cDV: Annotated[str, Element] = None
+            tpAmb: Annotated[TAmb, Element] = None
+            tpCTe: Annotated[TFinCTeSimp, Element] = None
+            procEmi: Annotated[TProcEmi, Element] = None
+            verProc: Annotated[str, Element] = None
+            cMunEnv: Annotated[TCodMunIBGE, Element] = None
+            xMunEnv: Annotated[str, Element] = None
+            UFEnv: Annotated[TUf, Element] = None
+            modal: Annotated[TModTranspSimp, Element] = None
+            tpServ: Annotated[str, Element] = None
+            UFIni: Annotated[TUf, Element] = None
+            UFFim: Annotated[TUf, Element] = None
+            retira: Annotated[str, Element] = None
+            xDetRetira: Annotated[str, Element] = None
+            dhCont: Annotated[TDateTimeUTC, Element] = None
+            xJust: Annotated[str, Element] = None
+
+        ide: Annotated[_ide, Element] = None
+
+        class _compl(ComplexType):
+            """Dados complementares do CT-e para fins operacionais ou comerciais"""
+            xCaracAd: Annotated[str, Element] = None
+            xCaracSer: Annotated[str, Element] = None
+
+            class _fluxo(ComplexType):
+                """Previsão do fluxo da carga
+Preenchimento obrigatório para o modal aéreo."""
+                xOrig: Annotated[str, Element] = None
+
+                class _pass_(ComplexType):
+                    xPass: Annotated[str, Element] = None
+
+                pass_: Annotated[ElementList[_pass_], Element] = None
+                xDest: Annotated[str, Element] = None
+                xRota: Annotated[str, Element] = None
+
+            fluxo: Annotated[_fluxo, Element] = None
+            xObs: Annotated[str, Element] = None
+
+            class _ObsCont(ComplexType):
+                """Campo de uso livre do contribuinte
+Informar o nome do campo no atributo xCampo e o conteúdo do campo no XTexto"""
+                xCampo: Annotated[str, Attribute(min_length=1, max_length=20)] = None
+                xTexto: Annotated[str, Element] = None
+
+            ObsCont: Annotated[ElementList[_ObsCont], Element] = None
+
+            class _ObsFisco(ComplexType):
+                """Campo de uso livre do contribuinte
+Informar o nome do campo no atributo xCampo e o conteúdo do campo no XTexto"""
+                xCampo: Annotated[str, Attribute(min_length=1, max_length=20)] = None
+                xTexto: Annotated[str, Element] = None
+
+            ObsFisco: Annotated[ElementList[_ObsFisco], Element] = None
+
+        compl: Annotated[_compl, Element] = None
+
+        class _emit(ComplexType):
+            """Identificação do Emitente do CT-e"""
+            CNPJ: Annotated[TCnpj, Element] = None
+            CPF: Annotated[TCpf, Element] = None
+            CNPJ_CPF = Choice("CNPJ", "CPF")
+            IE: Annotated[TIe, Element] = None
+            IEST: Annotated[TIe, Element] = None
+            xNome: Annotated[str, Element] = None
+            xFant: Annotated[str, Element] = None
+            enderEmit: Annotated[TEndeEmi, Element] = None
+            CRT: Annotated[TCRT, Element] = None
+
+        emit: Annotated[_emit, Element] = None
+
+        class _toma(ComplexType):
+            """Identificação do tomador do serviço no CT-e"""
+            toma: Annotated[str, Element] = None
+            indIEToma: Annotated[str, Element] = None
+            CNPJ: Annotated[TCnpjOpc, Element] = None
+            CPF: Annotated[TCpf, Element] = None
+            CNPJ_CPF = Choice("CNPJ", "CPF")
+            IE: Annotated[TIeDest, Element] = None
+            xNome: Annotated[str, Element] = None
+            ISUF: Annotated[str, Element] = None
+            fone: Annotated[TFone, Element] = None
+            enderToma: Annotated[TEndereco, Element] = None
+            email: Annotated[TEmail, Element] = None
+
+        toma: Annotated[_toma, Element] = None
+
+        class _infCarga(ComplexType):
+            """Informações da Carga do CT-e"""
+            vCarga: Annotated[TDec_1302, Element] = None
+            proPred: Annotated[str, Element] = None
+            xOutCat: Annotated[str, Element] = None
+
+            class _infQ(ComplexType):
+                """Informações de quantidades da Carga do CT-e
+Para o Aéreo é obrigatório o preenchimento desse campo da seguinte forma.
+1 - Peso Bruto, sempre em quilogramas (obrigatório);
+2 - Peso Cubado; sempre em quilogramas;
+3 - Quantidade de volumes, sempre em unidades (obrigatório);
+4 - Cubagem, sempre em metros cúbicos (obrigatório apenas quando for impossível preencher as dimensões da(s) embalagem(ens) na tag xDime do leiaute do Aéreo)."""
+                cUnid: Annotated[str, Element] = None
+                tpMed: Annotated[str, Element] = None
+                qCarga: Annotated[TDec_1104, Element] = None
+
+            infQ: Annotated[ElementList[_infQ], Element] = None
+            vCargaAverb: Annotated[TDec_1302Opc, Element] = None
+
+        infCarga: Annotated[_infCarga, Element] = None
+
+        class _det(ComplexType):
+            """Detalhamento das entregas / prestações do CTe Simplificado"""
+            nItem: Annotated[str, Attribute(pattern=r'[1-9]{1}[0-9]{0,1}|[1-8]{1}[0-9]{2}|[9]{1}[0-8]{1}[0-9]{1}|[9]{1}[9]{1}[0]{1}')] = None
+            cMunIni: Annotated[TCodMunIBGE, Element] = None
+            xMunIni: Annotated[str, Element] = None
+            cMunFim: Annotated[TCodMunIBGE, Element] = None
+            xMunFim: Annotated[str, Element] = None
+            vPrest: Annotated[TDec_1302, Element] = None
+            vRec: Annotated[TDec_1302, Element] = None
+
+            class _Comp(ComplexType):
+                """Componentes do Valor da Prestação"""
+                xNome: Annotated[str, Element] = None
+                vComp: Annotated[TDec_1302, Element] = None
+
+            Comp: Annotated[ElementList[_Comp], Element] = None
+
+            class _infNFe(ComplexType):
+                """Informações das NF-e"""
+                chNFe: Annotated[TChDFe, Element] = None
+                PIN: Annotated[str, Element] = None
+                dPrev: Annotated[TData, Element] = None
+                infUnidCarga: Annotated[ElementList[TUnidCarga], Element] = None
+                infUnidTransp: Annotated[ElementList[TUnidadeTransp], Element] = None
+                infUnidCarga_infUnidTransp = Choice("infUnidCarga", "infUnidTransp")
+
+            infNFe: Annotated[ElementList[_infNFe], Element] = None
+
+            class _infDocAnt(ComplexType):
+                """Documentos anteriores"""
+                chCTe: Annotated[TChDFe, Element] = None
+                tpPrest: Annotated[str, Element] = None
+
+                class _infNFeTranspParcial(ComplexType):
+                    chNFe: Annotated[TChDFe, Element] = None
+
+                infNFeTranspParcial: Annotated[ElementList[_infNFeTranspParcial], Element] = None
+
+            infDocAnt: Annotated[ElementList[_infDocAnt], Element] = None
+            infNFe_infDocAnt = Choice("infNFe", "infDocAnt")
+
+        det: Annotated[ElementList[_det], Element] = None
+
+        class _infModal(ComplexType):
+            """Informações do modal"""
+            versaoModal: Annotated[str, Attribute(pattern=r'4\.(0[0-9]|[1-9][0-9])')] = None
+            rodo: Annotated[rodo, Element] = None
+            aquav: Annotated[aquav, Element] = None
+
+        infModal: Annotated[_infModal, Element] = None
+
+        class _cobr(ComplexType):
+            """Dados da cobrança do CT-e"""
+
+            class _fat(ComplexType):
+                """Dados da fatura"""
+                nFat: Annotated[str, Element] = None
+                vOrig: Annotated[TDec_1302Opc, Element] = None
+                vDesc: Annotated[TDec_1302Opc, Element] = None
+                vLiq: Annotated[TDec_1302Opc, Element] = None
+
+            fat: Annotated[_fat, Element] = None
+
+            class _dup(ComplexType):
+                """Dados das duplicatas"""
+                nDup: Annotated[str, Element] = None
+                dVenc: Annotated[TData, Element] = None
+                vDup: Annotated[TDec_1302Opc, Element] = None
+
+            dup: Annotated[ElementList[_dup], Element] = None
+
+        cobr: Annotated[_cobr, Element] = None
+
+        class _infCteSub(ComplexType):
+            """Informações do CT-e de substituição """
+            chCte: Annotated[str, Element] = None
+            indAlteraToma: Annotated[str, Element] = None
+
+        infCteSub: Annotated[_infCteSub, Element] = None
+
+        class _imp(ComplexType):
+            """Informações relativas aos Impostos"""
+            ICMS: Annotated[TImp, Element] = None
+            vTotTrib: Annotated[TDec_1302, Element] = None
+            infAdFisco: Annotated[str, Element] = None
+
+            class _ICMSUFFim(ComplexType):
+                """Informações do ICMS de partilha com a UF de término do serviço de transporte na operação interestadual
+Grupo a ser informado nas prestações interestaduais para consumidor final, não contribuinte do ICMS"""
+                vBCUFFim: Annotated[TDec_1302, Element] = None
+                pFCPUFFim: Annotated[TDec_0302, Element] = None
+                pICMSUFFim: Annotated[TDec_0302, Element] = None
+                pICMSInter: Annotated[TDec_0302, Element] = None
+                vFCPUFFim: Annotated[TDec_1302, Element] = None
+                vICMSUFFim: Annotated[TDec_1302, Element] = None
+                vICMSUFIni: Annotated[TDec_1302, Element] = None
+
+            ICMSUFFim: Annotated[_ICMSUFFim, Element] = None
+
+        imp: Annotated[_imp, Element] = None
+
+        class _total(ComplexType):
+            """Valores Totais do CTe"""
+            vTPrest: Annotated[TDec_1302, Element] = None
+            vTRec: Annotated[TDec_1302, Element] = None
+
+        total: Annotated[_total, Element] = None
+
+        class _autXML(ComplexType):
+            """Autorizados para download do XML do DF-e
+Informar CNPJ ou CPF. Preencher os zeros não significativos."""
+            CNPJ: Annotated[TCnpj, Element] = None
+            CPF: Annotated[TCpf, Element] = None
+            CNPJ_CPF = Choice("CNPJ", "CPF")
+
+        autXML: Annotated[ElementList[_autXML], Element] = None
+        infRespTec: Annotated[TRespTec, Element] = None
+
+        class _infSolicNFF(ComplexType):
+            """Grupo de informações do pedido de emissão da Nota Fiscal Fácil"""
+            xSolic: Annotated[str, Element] = None
+
+        infSolicNFF: Annotated[_infSolicNFF, Element] = None
+
+        class _infPAA(ComplexType):
+            """Grupo de Informação do Provedor de Assinatura e Autorização"""
+            CNPJPAA: Annotated[TCnpj, Element] = None
+
+            class _PAASignature(ComplexType):
+                """Assinatura RSA do Emitente para DFe gerados por PAA"""
+                SignatureValue: Annotated[base64Binary, Element] = None
+                RSAKeyValue: Annotated[TRSAKeyValueType, Element] = None
+
+            PAASignature: Annotated[_PAASignature, Element] = None
+
+        infPAA: Annotated[_infPAA, Element] = None
+
+    infCte: Annotated[_infCte, Element] = None
+
+    class _infCTeSupl(ComplexType):
+        """Informações suplementares do CT-e"""
+        qrCodCTe: Annotated[str, Element] = None
+
+    infCTeSupl: Annotated[_infCTeSupl, Element] = None
+    Signature: Annotated[XmlSignature, Element] = None
+
+
 class TDocAssoc(str):
     """ Tipo Documento Associado"""
     pass
@@ -469,16 +786,6 @@ class TFinCTe(str):
 
 class TModTransp(str):
     """ Tipo Modal transporte"""
-    pass
-
-
-class TCRT(str):
-    """Tipo Código Regime Tributário"""
-    pass
-
-
-class TProcEmi(str):
-    """Tipo processo de emissão do CT-e"""
     pass
 
 
@@ -1003,12 +1310,16 @@ class TImpOS(ComplexType):
         vBC: Annotated[TDec_1302, Element] = None
         pICMS: Annotated[TDec_0302, Element] = None
         vICMS: Annotated[TDec_1302, Element] = None
+        vICMSDeson: Annotated[TDec_1302, Element] = None
+        cBenef: Annotated[str, Element] = None
 
     ICMS20: Annotated[_ICMS20, Element] = None
 
     class _ICMS45(ComplexType):
         """ICMS  Isento, não Tributado ou diferido"""
         CST: Annotated[str, Element] = None
+        vICMSDeson: Annotated[TDec_1302, Element] = None
+        cBenef: Annotated[str, Element] = None
 
     ICMS45: Annotated[_ICMS45, Element] = None
 
@@ -1020,6 +1331,8 @@ class TImpOS(ComplexType):
         pICMS: Annotated[TDec_0302, Element] = None
         vICMS: Annotated[TDec_1302, Element] = None
         vCred: Annotated[TDec_1302, Element] = None
+        vICMSDeson: Annotated[TDec_1302, Element] = None
+        cBenef: Annotated[str, Element] = None
 
     ICMS90: Annotated[_ICMS90, Element] = None
 
@@ -1030,6 +1343,8 @@ class TImpOS(ComplexType):
         vBCOutraUF: Annotated[TDec_1302, Element] = None
         pICMSOutraUF: Annotated[TDec_0302, Element] = None
         vICMSOutraUF: Annotated[TDec_1302, Element] = None
+        vICMSDeson: Annotated[TDec_1302, Element] = None
+        cBenef: Annotated[str, Element] = None
 
     ICMSOutraUF: Annotated[_ICMSOutraUF, Element] = None
 
