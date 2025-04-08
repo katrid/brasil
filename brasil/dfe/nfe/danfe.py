@@ -106,13 +106,15 @@ def print_pdf(xml: str | bytes, template_name='danfe-retrato.json', logo: bytes 
     rep.context['mascara_doc'] = mascara_doc
     rep.context['inf_adic'] = [{'obs': inf_adic}]
     if nf.nfeProc:
-        rep.context['protocolo'] = nf.nfeProc.protNFe.infProt.nProt + ' ' + datetime.fromisoformat(
-            nf.nfeProc.protNFe.infProt.dhRecbto).strftime('%d/%m/%Y %H:%M:%S')
+        if nf.nfeProc.protNFe.infProt.dhRecbto:
+            dh_recbto = datetime.fromisoformat(nf.nfeProc.protNFe.infProt.dhRecbto).strftime('%d/%m/%Y %H:%M:%S')
+        else:
+            dh_recbto = ''
+        rep.context['protocolo'] = nf.nfeProc.protNFe.infProt.nProt + ' ' + dh_recbto
     else:
         rep.context['protocolo'] = 'SEM VALOR FISCAL'
     end = emit.enderEmit
-    rep.context[
-        'emit_endereco'] = f'{end.xLgr} {end.nro}, {end.xCpl or ""}, {end.xBairro} {end.xMun} - {end.UF} - CEP: {format_mask("99999-999", end.CEP)}\nFone: {(end.fone and format_mask("(99)99999-9999", end.fone)) or ""}'
+    rep.context['emit_endereco'] = f'{end.xLgr} {end.nro}, {end.xCpl or ""}, {end.xBairro} {end.xMun} - {end.UF} - CEP: {format_mask("99999-999", end.CEP)}\nFone: {(end.fone and format_mask("(99)99999-9999", end.fone)) or ""}'
 
     # formatar resumo do canhoto
     vl = format_number(',0.00', nf.NFe.infNFe.total.ICMSTot.vNF)
