@@ -175,7 +175,9 @@ class Conhecimento(DocumentoFiscal):
 
     def enviar_evento(self, lote, evento):
         svc = RecepcaoEvento(self.config)
-        id_evento = evento.infEvento.Id = 'ID' + evento.infEvento.tpEvento + evento.infEvento.chCTe + str(evento.infEvento.nSeqEvento).zfill(2)
+        id_evento = evento.infEvento.Id
+        if not id_evento:
+            id_evento = evento.infEvento.Id = 'ID' + evento.infEvento.tpEvento + evento.infEvento.chCTe + str(evento.infEvento.nSeqEvento).zfill(3)
         evento.idLote = lote
         svc.xml = evento
         xml = evento._xml()

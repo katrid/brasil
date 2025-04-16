@@ -19,6 +19,7 @@ from brasil.dfe.leiaute.cte.consReciCTe_v300 import consReciCTe  # noqa
 from brasil.dfe.leiaute.cte.retConsReciCTe_v300 import retConsReciCTe  # noqa
 from brasil.dfe.leiaute.cte.retCTe_v400 import retCTe  # noqa
 from brasil.dfe.leiaute.cte.evCancCTe_v400 import evCancCTe  # noqa
+from brasil.dfe.leiaute.cte.evCCeCTe_v400 import evCCeCTe  # noqa
 from brasil.dfe.leiaute.cte.cteSimp_v400 import CTeSimp, TCTeSimp  # noqa
 from brasil.dfe.leiaute.cte.cteModalRodoviario_v400 import rodo
 from brasil.utils.text import remover_acentos  # noqa
