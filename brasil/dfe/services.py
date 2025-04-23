@@ -37,6 +37,7 @@ class BaseConfig:
     services: Services
     versao: str = None
     log = getLogger('DFe')
+    on_save_file: callable = None
 
     def __init__(
             self, xml_path: str=None, cert_file: str=None, cert_senha: str=None, uf: str=None, versao=None, tp_amb=2
@@ -54,6 +55,8 @@ class BaseConfig:
         self.salvar_soap = True
 
     def salvar_arquivo(self, xml, arquivo):
+        if self.on_save_file:
+            return self.on_save_file(xml, arquivo)
         mode = 'w'
         if isinstance(xml, bytes):
             mode += 'b'
