@@ -113,6 +113,8 @@ def print_pdf(xml: str | bytes, template_name='danfe-retrato.json', logo: bytes 
         rep.context['protocolo'] = nf.nfeProc.protNFe.infProt.nProt + ' ' + dh_recbto
     else:
         rep.context['protocolo'] = 'SEM VALOR FISCAL'
+        rep.pages[0].watermark.text = 'SEM VALOR FISCAL'
+        rep.pages[0].watermark.enabled = True
     end = emit.enderEmit
     rep.context['emit_endereco'] = f'{end.xLgr} {end.nro}, {end.xCpl or ""}, {end.xBairro} {end.xMun} - {end.UF} - CEP: {format_mask("99999-999", end.CEP)}\nFone: {(end.fone and format_mask("(99)99999-9999", end.fone)) or ""}'
 
