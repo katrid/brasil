@@ -156,7 +156,11 @@ class TextBlock(Block):
         if field.data_type is int:
             return self._write_int(val)
         if field.data_type is date:
-            return self._write_date(val)
+            try:
+                return self._write_date(val)
+            except Exception as e:
+                print(f'Error converting field: {field.name}, value: {val}, error: {e}')
+                raise
         if field.data_type in (float, Decimal):
             return self._write_number(val)
         return self._write_str(val)
