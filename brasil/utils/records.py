@@ -159,8 +159,7 @@ class TextBlock(Block):
             try:
                 return self._write_date(val)
             except Exception as e:
-                print(f'Error converting field: {field.name}, value: {val}, error: {e}')
-                raise
+                raise ValueError(f'Error converting field: {field.name}, value: {val}, error: {e}')
         if field.data_type in (float, Decimal):
             return self._write_number(val)
         return self._write_str(val)
