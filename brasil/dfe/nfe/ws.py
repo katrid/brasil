@@ -3,7 +3,7 @@ from brasil.dfe.utils.xml_utils import tag
 from .v400 import (
     consStatServ, retConsStatServ, enviNFe, retEnviNFe, consReciNFe, retConsReciNFe, consSitNFe, retConsSitNFe,
     envEvento, retEnvEvento,
-    distDFeInt, retDistDFeInt,
+    distDFeInt, retDistDFeInt, inutNFe, retInutNFe,
 )
 
 
@@ -76,10 +76,10 @@ class Inutiliza(WebService):
     namespace = 'http://www.portalfiscal.inf.br/nfe'
     wsdl = 'http://www.portalfiscal.inf.br/nfe/wsdl/NFeInutilizacao4'
     method = 'nfeInutilizacaoNF'
-    Xml = consReciNFe
-    xml: consReciNFe
-    Retorno = retConsReciNFe
-    retorno: retConsReciNFe = None
+    Xml = inutNFe
+    xml: inutNFe
+    Retorno = retInutNFe
+    retorno: retInutNFe = None
 
     def preparar(self):
         super().preparar()
