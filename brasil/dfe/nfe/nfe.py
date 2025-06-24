@@ -7,9 +7,9 @@ from lxml import etree
 from brasil.dfe.leiaute.nfe.eventoCancNFe_v100 import evento as TEventoCanc
 from .settings import Config
 from .v400 import NFe, nfeProc
-from .ws import StatusServico, Autorizacao, RetAutorizacao, Consulta, RecepcaoEvento
+from .ws import StatusServico, Autorizacao, RetAutorizacao, Consulta, RecepcaoEvento, Inutiliza
 from ..base import DocumentoFiscal
-from ..xsd import EmptyTag
+from ..xsd import EmptyTag  # noqa
 
 
 class _NFe:
@@ -148,19 +148,30 @@ class NotaFiscal(DocumentoFiscal):
         svc.executar()
         return svc
 
-    def inutilizar_nfe(self, orgao=None, ano=None, cnpj=None, mod=None, serie=None, nf_ini=None, nf_fim=None, justificativa=None, amb=2):
+    def inutilizar_nfe(self, orgao=None, ano=None, cnpj=None, mod=55, serie=None, nf_ini=None, nf_fim=None, justificativa=None) -> Inutiliza:
         from brasil.dfe.leiaute.nfe.inutNFe_v400 import inutNFe
         inut = inutNFe()
         if not orgao:
             orgao = self.config.orgao
+        ano = str(ano)[-2:]
+        inut.infInut.tpAmb = self.config.amb
+        inut.infInut.xServ = 'INUTILIZAR'
         inut.infInut.cUF = orgao
         inut.infInut.serie = serie
         inut.infInut.mod = mod
+        cnpj = cnpj.zfill(14)
         inut.infInut.CNPJ = cnpj
         inut.infInut.ano = ano
         inut.infInut.nNFIni = nf_ini
         inut.infInut.nNFFin = nf_fim
         inut.infInut.xJust = justificativa
+        id = inut.infInut.Id = 'ID' + str(orgao).zfill(2) + ano + cnpj + str(mod).zfill(2) + str(serie).zfill(3) + str(nf_ini).zfill(9) + str(nf_fim).zfill(9)
+        # assinar o XML de inutilização
+        inut.Signature = self.config.certificado.assinar(inut.to_string(), id)
+        svc = Inutiliza(self.config)
+        svc.xml = inut
+        svc.executar()
+        return svc
 
     def assinar(self):
         for nota in self.notas:
