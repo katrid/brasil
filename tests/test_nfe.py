@@ -5,8 +5,6 @@ import os
 import datetime
 from unittest import TestCase
 
-from lxml import etree
-
 from brasil.dfe.nfe.settings import Config
 from brasil.dfe.nfe import NotaFiscal
 from brasil.dfe.leiaute.nfe.nfe_v400 import NFe
@@ -48,7 +46,7 @@ class NFeTestCase(TestCase):
         nfe.infNFe.emit.CNPJ_CPF = '12345678901234'
         nfe.infNFe.ide.dhEmi = datetime.datetime.now()
         nfe.infNFe.Id = 'NFe' + gerar_chave_acesso(
-            nfe.infNFe.ide.cUF, nfe.infNFe.ide.dhEmi, nfe.infNFe.emit.CNPJ_CPF, '1', '1', '1', '55', '55'
+            nfe.infNFe.ide.cUF, nfe.infNFe.ide.dhEmi, nfe.infNFe.emit.CNPJ_CPF, 1, 1, 1, 55, 55
         )
         nfe.Signature = self.config.certificado.assinar(nfe.to_string(), nfe.infNFe.Id)
         xml = nfe.to_string()
@@ -57,5 +55,5 @@ class NFeTestCase(TestCase):
         self.assertEqual(nfe2.to_string(), xml)
 
     def _test_danfe(self, xml):
-        from brasil.dfe.nfe.danfe import DANFE
-        danfe = DANFE(xml)
+        from brasil.dfe.nfe.danfe import print_pdf
+        print_pdf(xml=xml)
