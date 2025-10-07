@@ -81,7 +81,7 @@ class Conhecimentos(list):
             cte = _CTe(cte_simp=CTeSimp())
             # automaticamente versão 4.00
             cte.CTeSimp.infCte.versao = '4.00'
-            cte.CTe._config = self._config
+            cte._config = self._config
             self.append(cte)
             return cte
         else:
