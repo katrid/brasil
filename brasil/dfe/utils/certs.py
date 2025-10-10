@@ -136,8 +136,8 @@ class Certificado(object):
             xml = etree.fromstring(xml)
         signer = BrasilXMLSigner(
             method=signxml.methods.enveloped,
-            signature_algorithm='rsa-sha256',
-            digest_algorithm='sha256',
+            signature_algorithm='rsa-sha1',
+            digest_algorithm='sha1',
             c14n_algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315",
         )
         signer.namespaces = {None: signer.namespaces['ds']}
@@ -147,8 +147,3 @@ class Certificado(object):
         ).find(".//{http://www.w3.org/2000/09/xmldsig#}Signature")
         res = etree.tostring(signed, encoding=str)
         return res
-
-    def verificar_assinatura(self, xml: bytes):
-        root = etree.fromstring(xml)
-        signxml.XMLVerifier().verify(root)
-        return True
