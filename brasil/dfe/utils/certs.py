@@ -3,6 +3,7 @@ from datetime import datetime
 
 from lxml import etree
 from OpenSSL import crypto
+from psycopg.errors import NonstandardUseOfEscapeCharacter
 
 try:
     import signxml
@@ -95,11 +96,25 @@ class Certificado(object):
         return self._key
 
     def _get_cert(self):
-        p = self.pkcs12
-        self.privatekey = p.get_privatekey()
-        pkey = crypto.dump_privatekey(crypto.FILETYPE_PEM, self.privatekey)
-        cert = crypto.dump_certificate(crypto.FILETYPE_PEM, p.get_certificate())
-        return cert, pkey
+        try:
+            from cryptography.hazmat.primitives.serialization import pkcs12, Encoding, PrivateFormat, NoEncryption
+            from cryptography.hazmat.backends import default_backend
+            pkey, cert, _,  = pkcs12.load_key_and_certificates(
+                self.pfx,
+                self.senha.encode('utf-8') if self.senha else None,
+                backend=default_backend()
+            )
+            return (
+                cert.public_bytes(Encoding.PEM),
+                pkey.private_bytes(Encoding.PEM, PrivateFormat.PKCS8, NoEncryption()),
+            )
+        except ImportError:
+            # Fallback para pyOpenSSL
+            p = self.pkcs12
+            self.privatekey = p.get_privatekey()
+            pkey = crypto.dump_privatekey(crypto.FILETYPE_PEM, self.privatekey)
+            cert = crypto.dump_certificate(crypto.FILETYPE_PEM, p.get_certificate())
+            return cert, pkey
 
     def split_cert(self, pfx, pwd, cert_file, key_file):
         cert, pkey = self._get_cert()
