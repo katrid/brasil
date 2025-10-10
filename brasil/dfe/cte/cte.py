@@ -46,6 +46,15 @@ class _CTe:
     def aquav(self):
         return self.CTe.infCte.infCTeNorm.infModal.aquav
 
+    def to_xml(self):
+        if self.CTe is not None:
+            return self.CTe._xml()
+        elif self.CTeSimp is not None:
+            return self.CTeSimp._xml()
+        elif self.cteProc is not None:
+            return self.cteProc._xml()
+        return None
+
 
 class Conhecimentos(list):
     """Classe com um conjunto de utilitários para lidar com uma lista de ct-e"""
@@ -184,3 +193,6 @@ class Conhecimento(DocumentoFiscal):
         evento.Signature = self.config.certificado.assinar(xml, id_evento)
         svc.executar()
         return svc
+
+    def validar_assinatura(self):
+        self.config.certificado.verificar_assinatura(self.conhecimento.to_xml())
