@@ -3,7 +3,6 @@ from datetime import datetime
 
 from lxml import etree
 from OpenSSL import crypto
-from psycopg.errors import NonstandardUseOfEscapeCharacter
 
 try:
     import signxml
