@@ -109,14 +109,12 @@ class CTe(CTe400, CTeMixin):
     class _infCte(CTe400._infCte):
         class _infCTeNorm(CTe400._infCte._infCTeNorm):
             class _infModal(CTe400._infCte._infCTeNorm._infModal):
-                def __init__(self, *args, **kwargs):
-                    super().__init__(*args, **kwargs)
-                    self.versaoModal = '4.00'
-
                 rodo: rodo = None
                 # TODO implementar demais modais
+            _infModal.versaoModal = '4.00'
             infModal: Annotated[_infModal, Element] = None
         infCTeNorm: Annotated[_infCTeNorm, Element] = None
+    _infCte.versao = '4.00'
     infCte: Annotated[_infCte, Element] = None
 
     @property
@@ -137,17 +135,19 @@ class CTe(CTe400, CTeMixin):
 class CTeSimp(CTeSimp400, CTeMixin):
     _xsd_file = 'cteSimp_v4.00.xsd'
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.infCte.versao = '4.00'
+
     # Redefinindo a classe infCte para adicionar o modal rodo
     # não vem automaticamente através do xsd
     class _infCte(CTeSimp400._infCte):
         class _infModal(CTeSimp400._infCte._infModal):
-            def __init__(self, *args, **kwargs):
-                super().__init__(*args, **kwargs)
-                self.versaoModal = '4.00'
             rodo: rodo = None
             # TODO implementar demais modais
-
+        _infModal.versaoModal = '4.00'
         infModal: Annotated[_infModal, Element] = None
+    _infCte.versao = '4.00'
 
     @property
     def rodo(self) -> rodo:
