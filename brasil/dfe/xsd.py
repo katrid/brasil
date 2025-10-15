@@ -97,6 +97,8 @@ class ComplexType(SimpleType, metaclass=ElementType):
                 # init the list
                 if prop.origin is ElementList or prop.origin is list:
                     setattr(self, prop.name, ElementList(prop.type))
+                elif prop.type is None:
+                    setattr(self, prop.name, None)
                 elif issubclass(prop.type, ComplexType):
                     v = prop.type()
                     # só incluir namespace na raiz
@@ -149,6 +151,14 @@ class ComplexType(SimpleType, metaclass=ElementType):
                     v = v.strftime('%Y-%m-%dT%H:%M:%S-03:00')
                 elif prop.type is datetime.date and isinstance(v, datetime.date):
                     v = v.strftime('%Y-%m-%d')
+                elif prop.type is None:
+                    if v is None:
+                        continue
+                    elif isinstance(v, ComplexType):
+                        xml = v._xml(k)
+                        if xml:
+                            args.append(xml)
+                        continue
                 elif issubclass(prop.type, Decimal) and v == 0 and prop.type._xs_optional:
                     continue
                 elif issubclass(prop.type, Decimal) and v is not None and prop.type._xs_dec:

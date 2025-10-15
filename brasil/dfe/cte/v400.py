@@ -102,6 +102,8 @@ class CTeMixin:
 
 
 class CTe(CTe400, CTeMixin):
+    _xsd_file = 'cte_v4.00.xsd'
+
     # Redefinindo a classe infCte para adicionar o modal rodo
     # não vem automaticamente através do xsd
     class _infCte(CTe400._infCte):
@@ -111,6 +113,8 @@ class CTe(CTe400, CTeMixin):
                 # TODO implementar demais modais
 
             infModal: Annotated[_infModal, Element] = None
+        infCTeNorm: Annotated[_infCTeNorm, Element] = None
+    infCte: Annotated[_infCte, Element] = None
 
     @property
     def rodo(self) -> rodo:
@@ -128,15 +132,16 @@ class CTe(CTe400, CTeMixin):
 
 
 class CTeSimp(CTeSimp400, CTeMixin):
+    _xsd_file = 'cteSimp_v4.00.xsd'
+
     # Redefinindo a classe infCte para adicionar o modal rodo
     # não vem automaticamente através do xsd
     class _infCte(CTeSimp400._infCte):
-        class _infCTeNorm(CTeSimp400._infCte):
-            class _infModal(CTeSimp400._infCte._infModal):
-                rodo: rodo = None
-                # TODO implementar demais modais
+        class _infModal(CTeSimp400._infCte._infModal):
+            rodo: rodo = None
+            # TODO implementar demais modais
 
-            infModal: Annotated[_infModal, Element] = None
+        infModal: Annotated[_infModal, Element] = None
 
     @property
     def rodo(self) -> rodo:
