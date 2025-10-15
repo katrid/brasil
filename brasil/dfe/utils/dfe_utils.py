@@ -70,8 +70,10 @@ def gerar_codigo(num: int) -> int:
     return i
 
 
-def gerar_chave_acesso(uf: int, emis: datetime, cnpj: str, serie: int, numero: int, tp_emi: int, codigo: int,
-                       modelo: int) -> str:
+def gerar_chave_acesso(
+        uf: int, emis: datetime, cnpj: str, serie: int, numero: int, tp_emi: int, codigo: int,
+        modelo: int
+) -> str:
     if codigo == 0:
         codigo = gerar_codigo(numero)
     emis = emis.strftime("%y%m")

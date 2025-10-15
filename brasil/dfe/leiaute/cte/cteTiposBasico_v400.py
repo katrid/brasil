@@ -673,8 +673,6 @@ Para o Aéreo é obrigatório o preenchimento desse campo da seguinte forma.
         class _infModal(ComplexType):
             """Informações do modal"""
             versaoModal: Annotated[str, Attribute(pattern=r'4\.(0[0-9]|[1-9][0-9])')] = None
-            rodo: Annotated[rodo, Element] = None
-            aquav: Annotated[aquav, Element] = None
 
         infModal: Annotated[_infModal, Element] = None
 
@@ -1181,8 +1179,6 @@ Este grupo deve ser informado quando o documento originário for NF """
             class _infModal(ComplexType):
                 """Informações do modal"""
                 versaoModal: Annotated[str, Attribute(pattern=r'4\.(0[0-9]|[1-9][0-9])')] = None
-                rodo: Annotated[rodo, Element] = None
-                aquav: Annotated[aquav, Element] = None
 
             infModal: Annotated[_infModal, Element] = None
 
@@ -1549,8 +1545,6 @@ Para Transporte de Pessoas indicar número de passageiros, para excesso de bagag
                 """Informações do modal
 Obrigatório para Pessoas e Bagagem"""
                 versaoModal: Annotated[str, Attribute(pattern=r'4\.(0[0-9]|[1-9][0-9])')] = None
-                rodo: Annotated[rodo, Element] = None
-                aquav: Annotated[aquav, Element] = None
 
             infModal: Annotated[_infModal, Element] = None
 
@@ -1700,5 +1694,3 @@ class TCIOT(str):
     pass
 
 
-from .cteModalRodoviario_v400 import *
-from .cteModalAquaviario_v400 import *

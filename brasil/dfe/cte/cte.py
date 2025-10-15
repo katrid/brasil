@@ -112,17 +112,8 @@ class Conhecimento(DocumentoFiscal):
         if xml:
             self.conhecimentos.add(xml)
 
-    def to_xml(self, doc: CTe=None):
-        return doc._xml()
-
-    # versao 4.0 nao utiliza mais lotes
-    def enviar_(self, lote: int):
-        svc = Recepcao(self.config)
-        for ct in self.conhecimentos:
-            svc.xml.CTe.append(ct.CTe)
-        svc.xml.idLote = lote
-        svc.executar()
-        return svc
+    def to_xml(self, doc: CTe | CTeSimp = None):
+        return doc.to_string()
 
     def enviar(self):
         svc = Recepcao(self.config)
@@ -133,13 +124,6 @@ class Conhecimento(DocumentoFiscal):
     @property
     def conhecimento(self):
         return self.conhecimentos[0]
-
-    def assinar(self, root, ref):
-        if isinstance(root, str):
-            root = etree.fromstring(root)
-        for child in root:
-            if child.tag.endswith('infCte'):
-                return self.config.certificado.assinar(child, ref)
 
     def from_xml(self, xml: str):
         doc = etree.fromstring(xml)
@@ -186,7 +170,8 @@ class Conhecimento(DocumentoFiscal):
         svc = RecepcaoEvento(self.config)
         id_evento = evento.infEvento.Id
         if not id_evento:
-            id_evento = evento.infEvento.Id = 'ID' + evento.infEvento.tpEvento + evento.infEvento.chCTe + str(evento.infEvento.nSeqEvento).zfill(3)
+            id_evento = evento.infEvento.Id = 'ID' + evento.infEvento.tpEvento + evento.infEvento.chCTe + str(
+                evento.infEvento.nSeqEvento).zfill(3)
         evento.idLote = lote
         svc.xml = evento
         xml = evento._xml()

@@ -574,8 +574,6 @@ Este grupo deve ser informado quando o documento originário for NF """
             class _infModal(ComplexType):
                 """Informações do modal"""
                 versaoModal: Annotated[str, Attribute(pattern=r'2\.(0[0-9]|[1-9][0-9])')] = None
-                rodo: Annotated[rodo, Element] = None
-                aquav: Annotated[aquav, Element] = None
 
             infModal: Annotated[_infModal, Element] = None
 
@@ -775,5 +773,3 @@ class TCListServ(str):
     pass
 
 
-from .cteModalRodoviario_v200 import *
-from .cteModalAquaviario_v200 import *

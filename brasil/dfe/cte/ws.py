@@ -10,7 +10,7 @@ from brasil.consts import CODIGO_UF
 from brasil.dfe.utils.xml_utils import tag
 from .v400 import (
     consStatServCTe, retConsStatServCTe, consSitCTe, retConsSitCTe, eventoCTe, retEventoCTe,
-    distDFeInt, retDistDFeInt, consReciCTe, retConsReciCTe, retCTe, CTe, )
+    distDFeInt, retDistDFeInt, consReciCTe, retConsReciCTe, retCTe, CTe, CTeSimp)
 
 
 class Header(brasil.dfe.ws.Header):
@@ -132,8 +132,8 @@ class Recepcao(WebService):
     namespace = 'http://www.portalfiscal.inf.br/cte'
     wsdl = 'http://www.portalfiscal.inf.br/cte/wsdl/CTeRecepcaoSincV4'
     method = 'cteRecepcao'
-    Xml = CTe
-    xml: CTe
+    Xml = CTe | CTeSimp
+    xml: CTe | CTeSimp
     Retorno = retCTe
     retorno: retCTe = None
 

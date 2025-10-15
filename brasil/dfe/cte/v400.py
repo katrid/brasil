@@ -1,9 +1,12 @@
 import os
+from typing import Annotated
 
 from lxml import etree
 
-# schemas não constantes na versão 4.00
-import brasil.dfe.leiaute.cte.cte_v400
+from brasil.dfe.xsd import Element
+from brasil.dfe.leiaute.cte.cte_v400 import CTe as CTe400
+from brasil.dfe.leiaute.cte.cteSimp_v400 import CTeSimp as CTeSimp400, TCTeSimp  # noqa
+from brasil.dfe.leiaute.cte.cteModalRodoviario_v400 import rodo
 from brasil.dfe.leiaute.cte.procCTe_v400 import cteProc  # noqa
 from brasil.dfe.leiaute.cte.retConsStatServCTe_v400 import retConsStatServCTe  # noqa
 from brasil.dfe.leiaute.cte.consSitCTe_v400 import consSitCTe  # noqa
@@ -20,35 +23,45 @@ from brasil.dfe.leiaute.cte.retConsReciCTe_v300 import retConsReciCTe  # noqa
 from brasil.dfe.leiaute.cte.retCTe_v400 import retCTe  # noqa
 from brasil.dfe.leiaute.cte.evCancCTe_v400 import evCancCTe  # noqa
 from brasil.dfe.leiaute.cte.evCCeCTe_v400 import evCCeCTe  # noqa
-from brasil.dfe.leiaute.cte.cteSimp_v400 import CTeSimp, TCTeSimp  # noqa
-from brasil.dfe.leiaute.cte.cteModalRodoviario_v400 import rodo
 from brasil.utils.text import remover_acentos  # noqa
+from brasil.dfe.utils.dfe_utils import gerar_chave_acesso, gerar_codigo
 
 
-class CTe(brasil.dfe.leiaute.cte.cte_v400.CTe):
-    _config = None
+class CTeMixin:
     _schema = None
+    _config = None
+    _xsd_file: str = None
+    infCte: CTe400._infCte
 
-    # def validate(self, _nfe_config=None):
-    #     self._nfe_config = _nfe_config
-    #     validator = CTeValidator(self)
-    #     self._validate_schema()
-    #     validator.run_validations(_nfe_config=_nfe_config)
-    #
-    def _validate_schema(self):
-        if CTe._schema is None:
-            CTe._schema = etree.XMLSchema(
-                file=os.path.join(
-                    os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'schemas', 'cte', 'cte_v4.00.xsd',
-                )
-            )
-        xml = self._xml()
-        if not self._schema.validate(etree.fromstring(xml)):
-            return self._schema.error_log.last_error.message
+    def gerar_chave(self):
+        """
+        Gerar a chave de acesso do CTe
+        :return:
+        """
+        self._validar_chave()
+        if self.infCte.ide.cCT is None:
+            self.infCte.ide.cCT = gerar_codigo(self.infCte.ide.nCT)
+        self.chave = gerar_chave_acesso(
+            self.infCte.ide.cUF,
+            self.infCte.ide.dhEmi,
+            self.infCte.emit.CNPJ_CPF,
+            self.infCte.ide.serie,
+            self.infCte.ide.nCT,
+            self.infCte.ide.tpEmis,
+            self.infCte.ide.cCT,
+            self.infCte.ide.mod,
+        )
 
-    @property
-    def rodo(self) -> rodo:
-        return self.infCte.infCTeNorm.infModal.rodo
+    def _validar_chave(self):
+        ide = self.infCte.ide
+        emit = self.infCte.emit
+        assert ide.cUF, 'CTe: O campo cUF é obrigatório'
+        assert ide.dhEmi, 'CTe: O campo dhEmi é obrigatório'
+        assert emit.CNPJ_CPF, 'CTe: O campo CNPJ_CPF do emitente é obrigatório'
+        assert ide.serie is not None, 'CTe: O campo serie é obrigatório'
+        assert ide.nCT, 'CTe: O campo nCT é obrigatório'
+        assert ide.tpEmis, 'CTe: O campo tpEmis é obrigatório'
+        assert ide.mod, 'CTe: O campo mod é obrigatório'
 
     def _prepare(self):
         if self._config:
@@ -65,10 +78,76 @@ class CTe(brasil.dfe.leiaute.cte.cte_v400.CTe):
             url += f'chCTe={self.chave}&tpAmb={config.amb}'
             self.infCTeSupl.qrCodCTe = f'<![CDATA[{url.replace(" ", "")}]]>'
 
-    def to_string(self):
-        self._prepare()
-        return super().to_string()
-
     @property
     def chave(self):
+        if self.infCte.Id is None:
+            self.gerar_chave()
         return self.infCte.Id[3:]
+
+    @chave.setter
+    def chave(self, value):
+        self.infCte.Id = 'CTe' + value
+        self.infCte.ide.cDV = value[-1]
+
+    def _validate_schema(self):
+        if self.__class__._schema is None:  # cache schema validation
+            self.__class__._schema = etree.XMLSchema(
+                file=os.path.join(
+                    os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'schemas', 'cte', self._xsd_file,
+                )
+            )
+        xml = self.to_string()
+        if not self._schema.validate(etree.fromstring(xml)):
+            return self._schema.error_log.last_error.message
+
+
+class CTe(CTe400, CTeMixin):
+    # Redefinindo a classe infCte para adicionar o modal rodo
+    # não vem automaticamente através do xsd
+    class _infCte(CTe400._infCte):
+        class _infCTeNorm(CTe400._infCte._infCTeNorm):
+            class _infModal(CTe400._infCte._infCTeNorm._infModal):
+                rodo: rodo = None
+                # TODO implementar demais modais
+
+            infModal: Annotated[_infModal, Element] = None
+
+    @property
+    def rodo(self) -> rodo:
+        """
+        Atalho para o modal rodoviário em infCte.infCTeNorm.infModal.rodo
+        :return:
+        """
+        if self.infCte.infCTeNorm.infModal.rodo is None:
+            self.infCte.infCTeNorm.infModal.rodo = rodo()
+        return self.infCte.infCTeNorm.infModal.rodo
+
+    def to_string(self):
+        self._prepare()  # preparar tags especiais antes de gerar o xml
+        return super().to_string()
+
+
+class CTeSimp(CTeSimp400, CTeMixin):
+    # Redefinindo a classe infCte para adicionar o modal rodo
+    # não vem automaticamente através do xsd
+    class _infCte(CTeSimp400._infCte):
+        class _infCTeNorm(CTeSimp400._infCte):
+            class _infModal(CTeSimp400._infCte._infModal):
+                rodo: rodo = None
+                # TODO implementar demais modais
+
+            infModal: Annotated[_infModal, Element] = None
+
+    @property
+    def rodo(self) -> rodo:
+        """
+        Atalho para o modal rodoviário em infCte.infModal.rodo
+        :return:
+        """
+        if self.infCte.infModal.rodo is None:
+            self.infCte.infModal.rodo = rodo()
+        return self.infCte.infModal.rodo
+
+    def to_string(self):
+        self._prepare()  # preparar tags especiais antes de gerar o xml
+        return super().to_string()

@@ -8,9 +8,6 @@ from decimal import Decimal
 
 from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .tiposGeralCTe_v400 import *
-from .evPrestDesacordo_v400 import *
-from .evCancCTe_v400 import *
-from .evCCeCTe_v400 import *
 
 
 class TVerEvento(str):
@@ -37,9 +34,6 @@ class TEvento(ComplexType):
         class _detEvento(ComplexType):
             """Detalhamento do evento específico"""
             versaoEvento: Annotated[str, Attribute(pattern=r'4\.(0[0-9]|[1-9][0-9])')] = None
-            evPrestDesacordo: Annotated[evPrestDesacordo, Element] = None
-            evCancCTe: Annotated[evCancCTe, Element] = None
-            evCCeCTe: Annotated[evCCeCTe, Element] = None
 
         detEvento: Annotated[_detEvento, Element] = None
 

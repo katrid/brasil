@@ -37,13 +37,20 @@ class Certificado(object):
 
     def load(self):
         if not self._loaded:
-            cert = crypto.dump_certificate(crypto.FILETYPE_PEM, self.pkcs12.get_certificate())
-            certificate = crypto.load_certificate(crypto.FILETYPE_PEM, cert)
-            # Obter informações do certificado
-            self._emissor = dict(certificate.get_issuer().get_components())
-            self._proprietario = dict(certificate.get_subject().get_components())
-            self._emissao = datetime.strptime(certificate.get_notBefore().decode('utf-8'), '%Y%m%d%H%M%SZ')
-            self._validade = datetime.strptime(certificate.get_notAfter().decode('utf-8'), '%Y%m%d%H%M%SZ')
+            from cryptography.hazmat.primitives.serialization import pkcs12, Encoding, PrivateFormat, NoEncryption
+            from cryptography.hazmat.backends import default_backend
+
+            pkey, cert, _, = pkcs12.load_key_and_certificates(
+                self.pfx,
+                self.senha.encode('utf-8') if self.senha else None,
+                backend=default_backend()
+            )
+
+            self._emissor = cert.issuer.rfc4514_string()
+            self._proprietario = cert.subject.rfc4514_string()
+            self._emissao = cert.not_valid_before
+            self._validade = cert.not_valid_after
+
             self._loaded = True
 
     @property
@@ -147,3 +154,17 @@ class Certificado(object):
         ).find(".//{http://www.w3.org/2000/09/xmldsig#}Signature")
         res = etree.tostring(signed, encoding=str)
         return res
+
+    def verificar_assinatura(self, xml: bytes | str):
+        """
+        Verificar a assinatura de um XML
+        :param xml:
+        :return:
+        """
+        root = etree.fromstring(xml)
+        cfg = signxml.SignatureConfiguration(
+            signature_methods=frozenset([signxml.SignatureMethod.RSA_SHA1]),
+            digest_algorithms=frozenset([signxml.DigestAlgorithm.SHA1]),
+        )
+        signxml.XMLVerifier().verify(root, expect_config=cfg, id_attribute='Id')
+        return True

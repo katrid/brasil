@@ -87,7 +87,7 @@ class BaseService:
         self.clear()
 
     def clear(self):
-        self.xml = self.Xml()
+        self.xml = None
 
     @property
     def url(self):

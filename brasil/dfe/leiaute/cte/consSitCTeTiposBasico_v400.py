@@ -8,7 +8,6 @@ from decimal import Decimal
 
 from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .tiposGeralCTe_v400 import *
-from .procCTe_v400 import *
 
 
 class TVerConsSitCTe(str):
@@ -32,7 +31,12 @@ class TRetConsSitCTe(ComplexType):
     cStat: Annotated[TStat, Element] = None
     xMotivo: Annotated[TMotivo, Element] = None
     cUF: Annotated[TCodUfIBGE, Element] = None
-    protCTe: Annotated[TProtCTe, Element] = None
+
+    class _protCTe(ComplexType):
+        """Retornar protCTe da versão correspondente do CT-e autorizado"""
+        versao: Annotated[str, Attribute(enumeration=['1.03', '1.04', '2.00', '3.00', '4.00'])] = None
+
+    protCTe: Annotated[_protCTe, Element] = None
 
     class _procEventoCTe(ComplexType):
         """Retornar procEventoCTe da versão correspondente do evento CT-e autorizado"""

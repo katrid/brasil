@@ -19,7 +19,7 @@ class NFeTestCase(TestCase):
         # gerar os xmls de teste na pasta ./xml
         cls.xml_path = './xml'
         cls.config = Config(
-            xml_path=cls.xml_path, cert_file='./brasil-test.pfx', cert_senha=cls.pfx_password, uf='BA',
+            xml_path=cls.xml_path, cert_file='./test.pfx', cert_senha=cls.pfx_password, uf='BA',
         )
         if not os.path.isdir(cls.xml_path):
             os.mkdir(cls.xml_path)
@@ -53,7 +53,3 @@ class NFeTestCase(TestCase):
         nfe2 = NFe.fromstring(xml)
         # o conteúdo do xml precisa ser preservado
         self.assertEqual(nfe2.to_string(), xml)
-
-    def _test_danfe(self, xml):
-        from brasil.dfe.nfe.danfe import print_pdf
-        print_pdf(xml=xml)
