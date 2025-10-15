@@ -109,9 +109,12 @@ class CTe(CTe400, CTeMixin):
     class _infCte(CTe400._infCte):
         class _infCTeNorm(CTe400._infCte._infCTeNorm):
             class _infModal(CTe400._infCte._infCTeNorm._infModal):
+                def __init__(self, *args, **kwargs):
+                    super().__init__(*args, **kwargs)
+                    self.versaoModal = '4.00'
+
                 rodo: rodo = None
                 # TODO implementar demais modais
-
             infModal: Annotated[_infModal, Element] = None
         infCTeNorm: Annotated[_infCTeNorm, Element] = None
     infCte: Annotated[_infCte, Element] = None
@@ -138,6 +141,9 @@ class CTeSimp(CTeSimp400, CTeMixin):
     # não vem automaticamente através do xsd
     class _infCte(CTeSimp400._infCte):
         class _infModal(CTeSimp400._infCte._infModal):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.versaoModal = '4.00'
             rodo: rodo = None
             # TODO implementar demais modais
 
