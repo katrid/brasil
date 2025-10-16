@@ -85,6 +85,8 @@ class BaseService:
             self.body = self.body()
             self.body.xmlns = self.xmlns
         self.clear()
+        if self.Xml:
+            self.xml = self.Xml()
 
     def clear(self):
         self.xml = None
@@ -96,7 +98,10 @@ class BaseService:
     def envelope(self):
         self.preparar()
         s = ''
-        self.body.xml = self.xml.to_string()
+        if isinstance(self.xml, str):
+            self.body.xml = self.xml
+        else:
+            self.body.xml = self.xml.to_string()
         if self.config.salvar_arquivos:
             self.config.salvar_arquivo(self.body.xml, self.filename('env'))
         s += str(self.body)
