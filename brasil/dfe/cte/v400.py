@@ -134,6 +134,7 @@ class CTe(CTe400, CTeMixin):
 
 class CTeSimp(CTeSimp400, CTeMixin):
     _xsd_file = 'cteSimp_v4.00.xsd'
+    _tag = 'CTe'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
