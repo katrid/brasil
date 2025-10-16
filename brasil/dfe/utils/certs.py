@@ -104,6 +104,7 @@ class Certificado(object):
         return self._key
 
     def _get_cert(self):
+        # Fallback para pyOpenSSL
         try:
             from cryptography.hazmat.primitives.serialization import pkcs12, Encoding, PrivateFormat, NoEncryption
             from cryptography.hazmat.backends import default_backend
