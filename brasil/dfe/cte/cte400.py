@@ -1,6 +1,6 @@
 from .v400 import CTe, CTeSimp
 from .settings import Config
-from .ws import Recepcao, Consulta, RetornoRecepcao, RecepcaoEvento, eventoCTe
+from .ws import Recepcao, RecepcaoSimp, Consulta, RetornoRecepcao, RecepcaoEvento, eventoCTe
 
 
 class Conhecimento:
