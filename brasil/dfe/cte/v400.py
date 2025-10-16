@@ -150,6 +150,7 @@ class CTeSimp(CTeSimp400, CTeMixin):
         infModal: Annotated[_infModal, Element] = None
 
     _infCte.versao = '4.00'
+    infCte: Annotated[_infCte, Element] = None
 
     @property
     def rodo(self) -> rodo:
