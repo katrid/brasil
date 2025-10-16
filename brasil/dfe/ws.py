@@ -85,7 +85,7 @@ class BaseService:
             self.body = self.body()
             self.body.xmlns = self.xmlns
         self.clear()
-        if self.Xml:
+        if callable(self.Xml):
             self.xml = self.Xml()
 
     def clear(self):
