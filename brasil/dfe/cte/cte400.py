@@ -19,3 +19,9 @@ class Conhecimento:
         svc.xml = xml or self.cte
         svc.executar()
         return svc
+
+    def enviar_simp(self, xml: str = None):
+        svc = RecepcaoSimp(self.config)
+        svc.xml = xml or self.cte
+        svc.executar()
+        return svc

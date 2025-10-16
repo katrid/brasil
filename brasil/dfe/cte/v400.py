@@ -21,6 +21,7 @@ from brasil.dfe.leiaute.cte.retDistDFeInt_v100 import retDistDFeInt  # noqa
 from brasil.dfe.leiaute.cte.consReciCTe_v300 import consReciCTe  # noqa
 from brasil.dfe.leiaute.cte.retConsReciCTe_v300 import retConsReciCTe  # noqa
 from brasil.dfe.leiaute.cte.retCTe_v400 import retCTe  # noqa
+from brasil.dfe.leiaute.cte.retCTeSimp_v400 import retCTeSimp  # noqa
 from brasil.dfe.leiaute.cte.evCancCTe_v400 import evCancCTe  # noqa
 from brasil.dfe.leiaute.cte.evCCeCTe_v400 import evCCeCTe  # noqa
 from brasil.utils.text import remover_acentos  # noqa
@@ -137,7 +138,6 @@ class CTe(CTe400, CTeMixin):
 
 class CTeSimp(CTeSimp400, CTeMixin):
     _xsd_file = 'cteSimp_v4.00.xsd'
-    _tag = 'CTe'
 
     # Redefinindo a classe infCte para adicionar o modal rodo
     # não vem automaticamente através do xsd
