@@ -8,15 +8,14 @@ class Conhecimento:
     Simplifica a integração do CTe e CTeSimp com os web services
     """
 
-    def __init__(self, cte: CTe | CTeSimp = None, config: Config=None):
+    def __init__(self, cte: CTe | CTeSimp = None, config: Config = None):
         self.cte = cte
         self.config: Config = config
         if cte is not None:
             cte._config = config
 
-    def enviar(self):
+    def enviar(self, xml: str = None):
         svc = Recepcao(self.config)
-        svc.xml = self.cte
+        svc.xml = xml or self.cte
         svc.executar()
         return svc
-

@@ -48,6 +48,8 @@ class Certificado(object):
 
             self._emissor = cert.issuer.rfc4514_string()
             self._proprietario = cert.subject.rfc4514_string()
+            # self._emissao = cert.not_valid_before_utc
+            # self._validade = cert.not_valid_after_utc
             self._emissao = cert.not_valid_before
             self._validade = cert.not_valid_after
 
