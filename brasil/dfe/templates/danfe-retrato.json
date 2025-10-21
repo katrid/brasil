@@ -3886,7 +3886,7 @@
                 "y": 0,
                 "width": 45.35436,
                 "height": 11.33858268,
-                "text": "{{prod.prod.vProd}}",
+                "text": "{{prod.prod.vProd-prod.prod.vDesc}}",
                 "hAlign": 2,
                 "font": {
                   "name": "Times New Roman",
