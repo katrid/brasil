@@ -14,7 +14,7 @@ from brasil.dfe.leiaute.cte.retConsSitCTe_v400 import retConsSitCTe  # noqa
 from brasil.dfe.leiaute.cte.consStatServCTe_v400 import consStatServCTe  # noqa
 from brasil.dfe.leiaute.cte.enviCTe_v300 import enviCTe  # noqa
 from brasil.dfe.leiaute.cte.retEnviCTe_v300 import retEnviCte  # noqa
-from brasil.dfe.leiaute.cte.eventoCTe_v400 import eventoCTe  # noqa
+from brasil.dfe.leiaute.cte.eventoCTe_v400 import eventoCTe as eventoCTe400  # noqa
 from brasil.dfe.leiaute.cte.retEventoCTe_v400 import retEventoCTe  # noqa
 from brasil.dfe.leiaute.cte.distDFeInt_v100 import distDFeInt  # noqa
 from brasil.dfe.leiaute.cte.retDistDFeInt_v100 import retDistDFeInt  # noqa
@@ -165,3 +165,22 @@ class CTeSimp(CTeSimp400, CTeMixin):
     def to_string(self):
         self._prepare()  # preparar tags especiais antes de gerar o xml
         return super().to_string()
+
+
+class eventoCTe(eventoCTe400):
+    class _infEvento(eventoCTe400._infEvento):
+        class _detEvento(eventoCTe400._infEvento._detEvento):
+            evCancCTe: evCancCTe = None
+
+        detEvento: Annotated[_detEvento, Element] = None
+    infEvento: Annotated[_infEvento, Element] = None
+
+    @property
+    def evCancCTe(self) -> evCancCTe:
+        """
+        Atalho para o evento de cancelamento evCancCTe
+        :return:
+        """
+        if self.infEvento.detEvento.evCancCTe is None:
+            self.infEvento.detEvento.evCancCTe = evCancCTe()
+        return self.infEvento.detEvento.evCancCTe
