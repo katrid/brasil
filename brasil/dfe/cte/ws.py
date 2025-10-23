@@ -183,7 +183,7 @@ class RecepcaoEvento(WebService):
         inf.chCTe = chave
         inf.tpEvento = '110111'
         inf.dhEvento = dh or datetime.datetime.now()
-        canc = inf.detEvento.evCancCTe
+        canc = evento.evCancCTe
         inf.detEvento.versaoEvento = '4.00'
         canc.descEvento = 'Cancelamento'
         canc.nProt = protocolo
