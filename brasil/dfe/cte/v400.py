@@ -10,7 +10,8 @@ from brasil.dfe.leiaute.cte.cteModalRodoviario_v400 import rodo
 from brasil.dfe.leiaute.cte.procCTe_v400 import cteProc  # noqa
 from brasil.dfe.leiaute.cte.retConsStatServCTe_v400 import retConsStatServCTe  # noqa
 from brasil.dfe.leiaute.cte.consSitCTe_v400 import consSitCTe  # noqa
-from brasil.dfe.leiaute.cte.retConsSitCTe_v400 import retConsSitCTe  # noqa
+from brasil.dfe.leiaute.cte.retConsSitCTe_v400 import retConsSitCTe as retConsSitCTe400  # noqa
+from brasil.dfe.leiaute.cte.cteTiposBasico_v400 import TProtCTe  # noqa
 from brasil.dfe.leiaute.cte.consStatServCTe_v400 import consStatServCTe  # noqa
 from brasil.dfe.leiaute.cte.enviCTe_v300 import enviCTe  # noqa
 from brasil.dfe.leiaute.cte.retEnviCTe_v300 import retEnviCte  # noqa
@@ -184,3 +185,7 @@ class eventoCTe(eventoCTe400):
         if self.infEvento.detEvento.evCancCTe is None:
             self.infEvento.detEvento.evCancCTe = evCancCTe()
         return self.infEvento.detEvento.evCancCTe
+    
+
+class retConsSitCTe(retConsSitCTe400):
+    protCTe: Annotated[TProtCTe, Element] = None
