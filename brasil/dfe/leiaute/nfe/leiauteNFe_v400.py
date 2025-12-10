@@ -498,6 +498,7 @@ class TNFe(ComplexType):
                         vFCP: Annotated[TDec_1302, Element] = None
                         vICMSDeson: Annotated[TDec_1302, Element] = None
                         motDesICMS: Annotated[str, Element] = None
+                        indDeduzDeson: Annotated[str, Element] = None
 
                     ICMS20: Annotated[_ICMS20, Element] = None
 
@@ -517,6 +518,7 @@ class TNFe(ComplexType):
                         vFCPST: Annotated[TDec_1302, Element] = None
                         vICMSDeson: Annotated[TDec_1302, Element] = None
                         motDesICMS: Annotated[str, Element] = None
+                        indDeduzDeson: Annotated[str, Element] = None
 
                     ICMS30: Annotated[_ICMS30, Element] = None
 
@@ -529,6 +531,7 @@ class TNFe(ComplexType):
                         CST: Annotated[str, Element] = None
                         vICMSDeson: Annotated[TDec_1302, Element] = None
                         motDesICMS: Annotated[str, Element] = None
+                        indDeduzDeson: Annotated[str, Element] = None
 
                     ICMS40: Annotated[_ICMS40, Element] = None
 
@@ -598,6 +601,7 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
                         vFCPST: Annotated[TDec_1302, Element] = None
                         vICMSDeson: Annotated[TDec_1302, Element] = None
                         motDesICMS: Annotated[str, Element] = None
+                        indDeduzDeson: Annotated[str, Element] = None
                         vICMSSTDeson: Annotated[TDec_1302, Element] = None
                         motDesICMSST: Annotated[str, Element] = None
 
@@ -627,6 +631,7 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
                         vFCPST: Annotated[TDec_1302, Element] = None
                         vICMSDeson: Annotated[TDec_1302, Element] = None
                         motDesICMS: Annotated[str, Element] = None
+                        indDeduzDeson: Annotated[str, Element] = None
                         vICMSSTDeson: Annotated[TDec_1302, Element] = None
                         motDesICMSST: Annotated[str, Element] = None
 
