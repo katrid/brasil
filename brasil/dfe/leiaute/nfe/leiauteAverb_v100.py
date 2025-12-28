@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: leiauteAverb_v1.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,9 +10,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposBasico_v103 import *
 
 
-class TVerEvento(str):
-    """Tipo Versão do Evento"""
-    pass
+TVerEvento: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do Evento""", ]
 
 
 class TEvento(ComplexType):
@@ -25,7 +23,7 @@ class TEvento(ComplexType):
         tpAmb: Annotated[TAmb, Element] = None
         CNPJ: Annotated[TCnpj, Element] = None
         chNFe: Annotated[TChNFe, Element] = None
-        dhEvento: Annotated[TDateTimeUTC, Element] = None
+        dhEvento: Annotated[datetime | str, Element] = None
         tpEvento: Annotated[str, Element] = None
         nSeqEvento: Annotated[str, Element] = None
         verEvento: Annotated[str, Element] = None
@@ -39,8 +37,8 @@ class TEvento(ComplexType):
 
             class _itensAverbados(ComplexType):
                 """Informações dos itens da NF-e do evento."""
-                dhEmbarque: Annotated[TDateTimeUTC, Element] = None
-                dhAverbacao: Annotated[TDateTimeUTC, Element] = None
+                dhEmbarque: Annotated[datetime | str, Element] = None
+                dhAverbacao: Annotated[datetime | str, Element] = None
                 nDue: Annotated[str, Element] = None
                 nItem: Annotated[str, Element] = None
                 nItemDue: Annotated[str, Element] = None
@@ -55,9 +53,7 @@ class TEvento(ComplexType):
     Signature: Annotated[XmlSignature, Element] = None
 
 
-class TCOrgaoIBGE(str):
-    """Tipo Código de orgão (UF da tabela do IBGE)"""
-    pass
+TCOrgaoIBGE: TypeAlias = Annotated[str, SimpleType, """Tipo Código de orgão (UF da tabela do IBGE)""", ]
 
 
 class TretEvento(ComplexType):
@@ -86,9 +82,7 @@ class TretEvento(ComplexType):
     Signature: Annotated[XmlSignature, Element] = None
 
 
-class TVerEnvEvento(str):
-    """Tipo Versão do EnvEvento"""
-    pass
+TVerEnvEvento: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do EnvEvento""", ]
 
 
 class TEnvEvento(ComplexType):

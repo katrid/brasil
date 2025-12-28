@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: e990910_v1.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -16,7 +16,7 @@ class detEvento(ComplexType):
     versao: Annotated[str, Attribute(enumeration=['1.00'])] = None
     descEvento: Annotated[str, Element] = None
     PINe: Annotated[str, Element] = None
-    dVistoria: Annotated[TDateTimeUTC, Element] = None
+    dVistoria: Annotated[datetime | str, Element] = None
     locVistoria: Annotated[str, Element] = None
     postoVistoria: Annotated[str, Element] = None
     xHistorico: Annotated[str, Element] = None

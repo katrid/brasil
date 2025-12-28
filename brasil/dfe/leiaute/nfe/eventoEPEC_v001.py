@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: eventoEPEC_v0.01.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,14 +10,10 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposBasico_v310 import *
 
 
-class TVerEvento(str):
-    """Versão do Tipo do Evento"""
-    pass
+TVerEvento: TypeAlias = Annotated[str, SimpleType, """Versão do Tipo do Evento""", ]
 
 
-class TCOrgaoIBGE(str):
-    """Tipo Código de orgão (UF da tabela do IBGE + 91 RFB)"""
-    pass
+TCOrgaoIBGE: TypeAlias = Annotated[str, SimpleType, """Tipo Código de orgão (UF da tabela do IBGE + 91 RFB)""", ]
 
 
 class envEvento(ComplexType):
@@ -38,7 +34,7 @@ class envEvento(ComplexType):
             CPF: Annotated[TCpf, Element] = None
             CNPJ_CPF = Choice("CNPJ", "CPF")
             chNFe: Annotated[TChNFe, Element] = None
-            dhEvento: Annotated[TDateTimeUTC, Element] = None
+            dhEvento: Annotated[datetime | str, Element] = None
             tpEvento: Annotated[str, Element] = None
             nSeqEvento: Annotated[str, Element] = None
             verEvento: Annotated[TVerEvento, Element] = None
@@ -50,7 +46,7 @@ class envEvento(ComplexType):
                 cOrgaoAutor: Annotated[TCodUfIBGE, Element] = None
                 tpAutor: Annotated[str, Element] = None
                 verAplic: Annotated[TVerAplic, Element] = None
-                dhEmi: Annotated[TDateTimeUTC, Element] = None
+                dhEmi: Annotated[datetime | str, Element] = None
                 tpNF: Annotated[str, Element] = None
                 IE: Annotated[TIe, Element] = None
 

@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: leiauteConsultaCadastro_v2.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,14 +10,10 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposBasico_v103 import *
 
 
-class TUfCons(str):
-    """Tipo Sigla da UF consultada"""
-    pass
+TUfCons: TypeAlias = Annotated[str, SimpleType, """Tipo Sigla da UF consultada""", ]
 
 
-class TVerConsCad(str):
-    """Tipo Versão do Leiaute da Consulta Cadastro 2.00"""
-    pass
+TVerConsCad: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do Leiaute da Consulta Cadastro 2.00""", ]
 
 
 class TConsCad(ComplexType):
@@ -61,7 +57,7 @@ class TRetConsCad(ComplexType):
         CNPJ: Annotated[TCnpjVar, Element] = None
         CPF: Annotated[TCpfVar, Element] = None
         IE_CNPJ_CPF = Choice("IE", "CNPJ", "CPF")
-        dhCons: Annotated[datetime, Element] = None
+        dhCons: Annotated[datetime | str, Element] = None
         cUF: Annotated[TCodUfIBGE, Element] = None
 
         class _infCad(ComplexType):

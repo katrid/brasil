@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: retDistDFeInt_v1.01.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -18,7 +18,7 @@ class retDistDFeInt(ComplexType):
     verAplic: Annotated[TVerAplic, Element] = None
     cStat: Annotated[TStat, Element] = None
     xMotivo: Annotated[TMotivo, Element] = None
-    dhResp: Annotated[TDateTimeUTC, Element] = None
+    dhResp: Annotated[datetime | str, Element] = None
     ultNSU: Annotated[TNSU, Element] = None
     maxNSU: Annotated[TNSU, Element] = None
 

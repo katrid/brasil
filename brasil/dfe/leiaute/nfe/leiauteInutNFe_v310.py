@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: leiauteInutNFe_v3.10.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,9 +10,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposBasico_v310 import *
 
 
-class TVerInutNFe(str):
-    """Tipo Versão do leiaute de Inutilização 3.10"""
-    pass
+TVerInutNFe: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do leiaute de Inutilização 3.10""", ]
 
 
 class TInutNFe(ComplexType):
@@ -55,7 +53,7 @@ class TRetInutNFe(ComplexType):
         serie: Annotated[TSerie, Element] = None
         nNFIni: Annotated[TNF, Element] = None
         nNFFin: Annotated[TNF, Element] = None
-        dhRecbto: Annotated[TDateTimeUTC, Element] = None
+        dhRecbto: Annotated[datetime | str, Element] = None
         nProt: Annotated[TProt, Element] = None
 
     infInut: Annotated[_infInut, Element] = None

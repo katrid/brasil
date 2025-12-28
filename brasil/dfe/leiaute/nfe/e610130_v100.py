@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: e610130_v1.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -22,13 +22,13 @@ class detEvento(ComplexType):
     class _CTe(ComplexType):
         chCTe: Annotated[str, Element] = None
         nProtCTe: Annotated[str, Element] = None
-        dhEntrega: Annotated[TDateTimeUTC, Element] = None
+        dhEntrega: Annotated[datetime | str, Element] = None
         nDoc: Annotated[str, Element] = None
         xNome: Annotated[str, Element] = None
         latGPS: Annotated[TLatitude, Element] = None
         longGPS: Annotated[TLongitude, Element] = None
         hashEntregaCTe: Annotated[base64Binary, Element] = None
-        dhHashEntregaCTe: Annotated[TDateTimeUTC, Element] = None
+        dhHashEntregaCTe: Annotated[datetime | str, Element] = None
 
     CTe: Annotated[_CTe, Element] = None
 

@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: leiauteEventoCancNFe_v1.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,9 +10,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposBasico_v103 import *
 
 
-class TVerEvento(str):
-    """Tipo Versão do Evento"""
-    pass
+TVerEvento: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do Evento""", ]
 
 
 class TEvento(ComplexType):
@@ -27,7 +25,7 @@ class TEvento(ComplexType):
         CPF: Annotated[TCpf, Element] = None
         CNPJ_CPF = Choice("CNPJ", "CPF")
         chNFe: Annotated[TChNFe, Element] = None
-        dhEvento: Annotated[TDateTimeUTC, Element] = None
+        dhEvento: Annotated[datetime | str, Element] = None
         tpEvento: Annotated[str, Element] = None
         nSeqEvento: Annotated[str, Element] = None
         verEvento: Annotated[str, Element] = None
@@ -71,9 +69,7 @@ class TRetEvento(ComplexType):
     Signature: Annotated[XmlSignature, Element] = None
 
 
-class TVerEnvEvento(str):
-    """Tipo Versão do EnvEvento"""
-    pass
+TVerEnvEvento: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do EnvEvento""", ]
 
 
 class TEnvEvento(ComplexType):

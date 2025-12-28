@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: leiauteConsNFeDest_v1.01.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,14 +10,10 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposBasico_v103 import *
 
 
-class TNSU(str):
-    """ Tipo número sequencial único do AN"""
-    pass
+TNSU: TypeAlias = Annotated[str, SimpleType, """ Tipo número sequencial único do AN""", ]
 
 
-class TVeConsNFeDest(str):
-    """ Tipo Versão da consultaNFeDest"""
-    pass
+TVeConsNFeDest: TypeAlias = Annotated[str, SimpleType, """ Tipo Versão da consultaNFeDest""", ]
 
 
 class TConsNFeDest(ComplexType):
@@ -38,7 +34,7 @@ class TRetConsNFeDest(ComplexType):
     verAplic: Annotated[TVerAplic, Element] = None
     cStat: Annotated[TStat, Element] = None
     xMotivo: Annotated[TMotivo, Element] = None
-    dhResp: Annotated[datetime, Element] = None
+    dhResp: Annotated[datetime | str, Element] = None
     indCont: Annotated[str, Element] = None
     ultNSU: Annotated[str, Element] = None
 
@@ -58,7 +54,7 @@ class TRetConsNFeDest(ComplexType):
             tpNF: Annotated[str, Element] = None
             vNF: Annotated[TDec_1302, Element] = None
             digVal: Annotated[str, Element] = None
-            dhRecbto: Annotated[datetime, Element] = None
+            dhRecbto: Annotated[datetime | str, Element] = None
             cSitNFe: Annotated[str, Element] = None
             cSitConf: Annotated[str, Element] = None
 
@@ -77,7 +73,7 @@ class TRetConsNFeDest(ComplexType):
             tpNF: Annotated[str, Element] = None
             vNF: Annotated[TDec_1302, Element] = None
             digVal: Annotated[str, Element] = None
-            dhRecbto: Annotated[datetime, Element] = None
+            dhRecbto: Annotated[datetime | str, Element] = None
             cSitNFe: Annotated[str, Element] = None
             cSitConf: Annotated[str, Element] = None
 
@@ -93,7 +89,7 @@ class TRetConsNFeDest(ComplexType):
             descEvento: Annotated[str, Element] = None
             xCorrecao: Annotated[str, Element] = None
             tpNF: Annotated[str, Element] = None
-            dhRecbto: Annotated[datetime, Element] = None
+            dhRecbto: Annotated[datetime | str, Element] = None
 
         resCCe: Annotated[_resCCe, Element] = None
         resNFe_resCanc_resCCe = Choice("resNFe", "resCanc", "resCCe")

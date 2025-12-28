@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: leiauteNFe_v3.10.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -61,35 +61,23 @@ class TVeiculo(ComplexType):
     RNTC: Annotated[str, Element] = None
 
 
-class Torig(str):
-    """Tipo Origem da mercadoria CST ICMS  origem da mercadoria: 0-Nacional exceto as indicadas nos códigos 3, 4, 5 e 8;
-1-Estrangeira - Importação direta; 2-Estrangeira - Adquirida no mercado interno; 3-Nacional, conteudo superior 40% e inferior ou igual a 70%; 4-Nacional, processos produtivos básicos; 5-Nacional, conteudo inferior 40%; 6-Estrangeira - Importação direta, com similar nacional, lista CAMEX; 7-Estrangeira - mercado interno, sem simular,lista CAMEX;8-Nacional, Conteúdo de Importação superior a 70%."""
-    pass
+Torig: TypeAlias = Annotated[str, SimpleType, """Tipo Origem da mercadoria CST ICMS  origem da mercadoria: 0-Nacional exceto as indicadas nos códigos 3, 4, 5 e 8;
+1-Estrangeira - Importação direta; 2-Estrangeira - Adquirida no mercado interno; 3-Nacional, conteudo superior 40% e inferior ou igual a 70%; 4-Nacional, processos produtivos básicos; 5-Nacional, conteudo inferior 40%; 6-Estrangeira - Importação direta, com similar nacional, lista CAMEX; 7-Estrangeira - mercado interno, sem simular,lista CAMEX;8-Nacional, Conteúdo de Importação superior a 70%.""", ]
 
 
-class TFinNFe(str):
-    """Tipo Finalidade da NF-e (1=Normal; 2=Complementar; 3=Ajuste; 4=Devolução/Retorno)"""
-    pass
+TFinNFe: TypeAlias = Annotated[str, SimpleType, """Tipo Finalidade da NF-e (1=Normal; 2=Complementar; 3=Ajuste; 4=Devolução/Retorno)""", ]
 
 
-class TProcEmi(str):
-    """Tipo processo de emissão da NF-e"""
-    pass
+TProcEmi: TypeAlias = Annotated[str, SimpleType, """Tipo processo de emissão da NF-e""", ]
 
 
-class TCListServ(str):
-    """Tipo Código da Lista de Serviços LC 116/2003"""
-    pass
+TCListServ: TypeAlias = Annotated[str, SimpleType, """Tipo Código da Lista de Serviços LC 116/2003""", ]
 
 
-class TVerNFe(str):
-    """ Tipo Versão da NF-e - 3.10"""
-    pass
+TVerNFe: TypeAlias = Annotated[str, SimpleType, """ Tipo Versão da NF-e - 3.10""", ]
 
 
-class TGuid(str):
-    """Identificador único (Globally Unique Identifier)"""
-    pass
+TGuid: TypeAlias = Annotated[str, SimpleType, """Identificador único (Globally Unique Identifier)""", ]
 
 
 class TIpi(ComplexType):
@@ -134,8 +122,8 @@ class TNFe(ComplexType):
             mod: Annotated[TMod, Element] = None
             serie: Annotated[TSerie, Element] = None
             nNF: Annotated[TNF, Element] = None
-            dhEmi: Annotated[TDateTimeUTC, Element] = None
-            dhSaiEnt: Annotated[TDateTimeUTC, Element] = None
+            dhEmi: Annotated[datetime | str, Element] = None
+            dhSaiEnt: Annotated[datetime | str, Element] = None
             tpNF: Annotated[str, Element] = None
             idDest: Annotated[str, Element] = None
             cMunFG: Annotated[TCodMunIBGE, Element] = None
@@ -148,7 +136,7 @@ class TNFe(ComplexType):
             indPres: Annotated[str, Element] = None
             procEmi: Annotated[TProcEmi, Element] = None
             verProc: Annotated[str, Element] = None
-            dhCont: Annotated[TDateTimeUTC, Element] = None
+            dhCont: Annotated[datetime | str, Element] = None
             xJust: Annotated[str, Element] = None
 
             class _NFref(ComplexType):
@@ -1108,7 +1096,7 @@ class TProtNFe(ComplexType):
         tpAmb: Annotated[TAmb, Element] = None
         verAplic: Annotated[TVerAplic, Element] = None
         chNFe: Annotated[TChNFe, Element] = None
-        dhRecbto: Annotated[TDateTimeUTC, Element] = None
+        dhRecbto: Annotated[datetime | str, Element] = None
         nProt: Annotated[TProt, Element] = None
         digVal: Annotated[TXML, Element] = None
         cStat: Annotated[TStat, Element] = None
@@ -1118,9 +1106,7 @@ class TProtNFe(ComplexType):
     Signature: Annotated[XmlSignature, Element] = None
 
 
-class TIdLote(str):
-    """ Tipo Identificação de Lote"""
-    pass
+TIdLote: TypeAlias = Annotated[str, SimpleType, """ Tipo Identificação de Lote""", ]
 
 
 class TEnviNFe(ComplexType):
@@ -1139,7 +1125,7 @@ class TRetEnviNFe(ComplexType):
     cStat: Annotated[TStat, Element] = None
     xMotivo: Annotated[TMotivo, Element] = None
     cUF: Annotated[TCodUfIBGE, Element] = None
-    dhRecbto: Annotated[TDateTimeUTC, Element] = None
+    dhRecbto: Annotated[datetime | str, Element] = None
 
     class _infRec(ComplexType):
         """Dados do Recibo do Lote"""
@@ -1167,7 +1153,7 @@ class TRetConsReciNFe(ComplexType):
     cStat: Annotated[TStat, Element] = None
     xMotivo: Annotated[TMotivo, Element] = None
     cUF: Annotated[TCodUfIBGE, Element] = None
-    dhRecbto: Annotated[TDateTimeUTC, Element] = None
+    dhRecbto: Annotated[datetime | str, Element] = None
     cMsg: Annotated[str, Element] = None
     xMsg: Annotated[str, Element] = None
     protNFe: Annotated[ElementList[TProtNFe], Element] = None

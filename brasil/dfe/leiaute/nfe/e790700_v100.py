@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: e790700_v1.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -20,8 +20,8 @@ class detEvento(ComplexType):
 
     class _itensAverbados(ComplexType):
         """Informações dos itens da NF-e do evento."""
-        dhEmbarque: Annotated[TDateTimeUTC, Element] = None
-        dhAverbacao: Annotated[TDateTimeUTC, Element] = None
+        dhEmbarque: Annotated[datetime | str, Element] = None
+        dhAverbacao: Annotated[datetime | str, Element] = None
         nDue: Annotated[str, Element] = None
         nItem: Annotated[str, Element] = None
         nItemDue: Annotated[str, Element] = None

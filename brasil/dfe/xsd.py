@@ -3,7 +3,7 @@ import re
 from decimal import Decimal
 from importlib import import_module
 from inspect import get_annotations
-from typing import get_origin, get_args, List, Self
+from typing import get_origin, get_args, List, Self, get_type_hints
 
 from lxml import etree
 
@@ -26,6 +26,7 @@ class XmlProp:
     origin = None
     element = None
     cls = None
+    type_args = None
 
     def __init__(self, name: str, annotations, cls: type = None):
         self.name = name
@@ -37,6 +38,9 @@ class XmlProp:
                     args = get_args(arg)
                     if args:
                         self.type = args[0]
+                        if args := get_args(self.type):
+                            self.type_args = args
+                            self.type = args[0]
                 else:
                     self.type = arg
             elif i == 1:
@@ -90,6 +94,8 @@ class ComplexType(SimpleType, metaclass=ElementType):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # inicializar elemento
+        if self._props is None:
+            type(self)._load_metadata()
         if self._props:
             for k, prop in self._props.items():
                 if prop.origin is None and prop.cls is not None and prop.type is type(None):
@@ -106,14 +112,22 @@ class ComplexType(SimpleType, metaclass=ElementType):
                         v._xmlns = ''
                     setattr(self, prop.name, v)
 
-    def __init_subclass__(cls, **kwargs):
-        super().__init_subclass__(**kwargs)
+    @classmethod
+    def _load_metadata(cls):
+        # check base classes
+        for base in cls.__bases__:
+            if  base is not ComplexType and issubclass(base, ComplexType) and base._props is None:
+                base._load_metadata()
         if cls.__module__ != 'brasil.dfe.xsd':
             props = {'pass' if k == 'pass_' else k: XmlProp(k, a, cls) for k, a in get_annotations(cls).items()}
             if props:
                 if not cls._props:
                     cls._props = {}
                 cls._props = {**cls._props, **props}
+
+    # def __init_subclass__(cls, **kwargs):
+    #     super().__init_subclass__(**kwargs)
+    #     cls._load_metadata()
 
     def add(self, *args, **kwargs):
         new_obj = self.__class__()
@@ -159,10 +173,10 @@ class ComplexType(SimpleType, metaclass=ElementType):
                         if xml:
                             args.append(xml)
                         continue
-                elif issubclass(prop.type, Decimal) and v == 0 and prop.type._xs_optional:
+                elif issubclass(prop.type, Decimal) and v == 0 and prop.type_args and (_xs := prop.type_args[-1]) and isinstance(_xs, dict) and _xs.get('opc'):
                     continue
-                elif issubclass(prop.type, Decimal) and v is not None and prop.type._xs_dec:
-                    fmt = '{:.%sf}' % prop.type._xs_dec[1]
+                elif issubclass(prop.type, Decimal) and v is not None and prop.type_args and (xs_dec := prop.type_args[-1]):
+                    fmt = '{:.%sf}' % xs_dec[1]
                     if isinstance(v, str):
                         v = float(v)
                     v = string.format(fmt, v)

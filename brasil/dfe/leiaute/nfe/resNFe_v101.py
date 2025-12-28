@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: resNFe_v1.01.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,9 +10,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposDistDFe_v101 import *
 
 
-class TVerResNFe(str):
-    """Tipo Versão do leiate resNFe"""
-    pass
+TVerResNFe: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do leiate resNFe""", ]
 
 
 class resNFe(ComplexType):
@@ -25,11 +23,11 @@ class resNFe(ComplexType):
     CNPJ_CPF = Choice("CNPJ", "CPF")
     xNome: Annotated[str, Element] = None
     IE: Annotated[TIe, Element] = None
-    dhEmi: Annotated[TDateTimeUTC, Element] = None
+    dhEmi: Annotated[datetime | str, Element] = None
     tpNF: Annotated[str, Element] = None
     vNF: Annotated[TDec_1302, Element] = None
     digVal: Annotated[TXML, Element] = None
-    dhRecbto: Annotated[TDateTimeUTC, Element] = None
+    dhRecbto: Annotated[datetime | str, Element] = None
     nProt: Annotated[TProt, Element] = None
     cSitNFe: Annotated[str, Element] = None
 

@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: leiauteDownloadNFe_v1.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,9 +10,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposBasico_v103 import *
 
 
-class TVerDownloadNFe(str):
-    """ Tipo Versão da consultaNFeDest"""
-    pass
+TVerDownloadNFe: TypeAlias = Annotated[str, SimpleType, """ Tipo Versão da consultaNFeDest""", ]
 
 
 class TDownloadNFe(ComplexType):
@@ -31,7 +29,7 @@ class TRetDownloadNFe(ComplexType):
     verAplic: Annotated[TVerAplic, Element] = None
     cStat: Annotated[TStat, Element] = None
     xMotivo: Annotated[TMotivo, Element] = None
-    dhResp: Annotated[datetime, Element] = None
+    dhResp: Annotated[datetime | str, Element] = None
 
     class _retNFe(ComplexType):
         """Conjunto de informação das  NF-e localizadas"""

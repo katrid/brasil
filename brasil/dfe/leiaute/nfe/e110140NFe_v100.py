@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: e110140NFe_v1.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -42,7 +42,7 @@ class verAplic(TVerAplic):
     _xmlns = "http://www.portalfiscal.inf.br/nfe"
 
 
-class dhEmi(TDateTimeUTC):
+class dhEmi(datetime | str):
     """Data de emissão no formato UTC.  AAAA-MM-DDThh:mm:ssTZD"""
     _xmlns = "http://www.portalfiscal.inf.br/nfe"
 

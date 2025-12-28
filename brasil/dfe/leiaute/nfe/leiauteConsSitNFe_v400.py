@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: leiauteConsSitNFe_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,9 +10,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposBasico_v400 import *
 
 
-class TVerConsSitNFe(str):
-    """Tipo Versão do Leiaute da Cosulta situação NF-e - 4.00"""
-    pass
+TVerConsSitNFe: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do Leiaute da Cosulta situação NF-e - 4.00""", ]
 
 
 class TConsSitNFe(ComplexType):
@@ -23,9 +21,7 @@ class TConsSitNFe(ComplexType):
     chNFe: Annotated[TChNFe, Element] = None
 
 
-class TVerNFe(str):
-    """ Tipo Versão da NF-e"""
-    pass
+TVerNFe: TypeAlias = Annotated[str, SimpleType, """ Tipo Versão da NF-e""", ]
 
 
 class TProtNFe(ComplexType):
@@ -38,7 +34,7 @@ class TProtNFe(ComplexType):
         tpAmb: Annotated[TAmb, Element] = None
         verAplic: Annotated[TVerAplic, Element] = None
         chNFe: Annotated[TChNFe, Element] = None
-        dhRecbto: Annotated[datetime, Element] = None
+        dhRecbto: Annotated[datetime | str, Element] = None
         nProt: Annotated[TProt, Element] = None
         digVal: Annotated[TXML, Element] = None
         cStat: Annotated[TStat, Element] = None
@@ -48,9 +44,7 @@ class TProtNFe(ComplexType):
     Signature: Annotated[XmlSignature, Element] = None
 
 
-class TVerCancNFe(str):
-    """Tipo Versão do leiaute de Cancelamento de NF-e - 2.00/1.07"""
-    pass
+TVerCancNFe: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do leiaute de Cancelamento de NF-e - 2.00/1.07""", ]
 
 
 class TRetCancNFe(ComplexType):
@@ -66,16 +60,14 @@ class TRetCancNFe(ComplexType):
         xMotivo: Annotated[TMotivo, Element] = None
         cUF: Annotated[TCodUfIBGE, Element] = None
         chNFe: Annotated[TChNFe, Element] = None
-        dhRecbto: Annotated[datetime, Element] = None
+        dhRecbto: Annotated[datetime | str, Element] = None
         nProt: Annotated[TProt, Element] = None
 
     infCanc: Annotated[_infCanc, Element] = None
     Signature: Annotated[XmlSignature, Element] = None
 
 
-class TRetVerEvento(str):
-    """Tipo Versão do Evento"""
-    pass
+TRetVerEvento: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do Evento""", ]
 
 
 class TRetEvento(ComplexType):
@@ -97,16 +89,14 @@ class TRetEvento(ComplexType):
         CPFDest: Annotated[TCpf, Element] = None
         CNPJDest_CPFDest = Choice("CNPJDest", "CPFDest")
         emailDest: Annotated[str, Element] = None
-        dhRegEvento: Annotated[TDateTimeUTC, Element] = None
+        dhRegEvento: Annotated[datetime | str, Element] = None
         nProt: Annotated[TProt, Element] = None
 
     infEvento: Annotated[_infEvento, Element] = None
     Signature: Annotated[XmlSignature, Element] = None
 
 
-class TVerEvento(str):
-    """Tipo Versão do Evento 1.00"""
-    pass
+TVerEvento: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do Evento 1.00""", ]
 
 
 class TEvento(ComplexType):
@@ -121,7 +111,7 @@ class TEvento(ComplexType):
         CPF: Annotated[TCpf, Element] = None
         CNPJ_CPF = Choice("CNPJ", "CPF")
         chNFe: Annotated[TChNFe, Element] = None
-        dhEvento: Annotated[TDateTimeUTC, Element] = None
+        dhEvento: Annotated[datetime | str, Element] = None
         tpEvento: Annotated[str, Element] = None
         nSeqEvento: Annotated[str, Element] = None
         verEvento: Annotated[str, Element] = None
@@ -150,7 +140,7 @@ class TRetConsSitNFe(ComplexType):
     cStat: Annotated[TStat, Element] = None
     xMotivo: Annotated[TMotivo, Element] = None
     cUF: Annotated[TCodUfIBGE, Element] = None
-    dhRecbto: Annotated[TDateTimeUTC, Element] = None
+    dhRecbto: Annotated[datetime | str, Element] = None
     chNFe: Annotated[TChNFe, Element] = None
     protNFe: Annotated[TProtNFe, Element] = None
     retCancNFe: Annotated[TRetCancNFe, Element] = None

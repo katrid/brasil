@@ -2,12 +2,13 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: leiauteNFe_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
 from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .tiposBasico_v400 import *
+from .DFeTiposBasicos_v100 import *
 
 
 class TEndereco(ComplexType):
@@ -78,35 +79,42 @@ class TVeiculo(ComplexType):
     RNTC: Annotated[str, Element] = None
 
 
-class Torig(str):
-    """Tipo Origem da mercadoria CST ICMS  origem da mercadoria: 0-Nacional exceto as indicadas nos códigos 3, 4, 5 e 8;
-1-Estrangeira - Importação direta; 2-Estrangeira - Adquirida no mercado interno; 3-Nacional, conteudo superior 40% e inferior ou igual a 70%; 4-Nacional, processos produtivos básicos; 5-Nacional, conteudo inferior 40%; 6-Estrangeira - Importação direta, com similar nacional, lista CAMEX; 7-Estrangeira - mercado interno, sem simular,lista CAMEX;8-Nacional, Conteúdo de Importação superior a 70%."""
-    pass
+Torig: TypeAlias = Annotated[str, SimpleType, """Tipo Origem da mercadoria CST ICMS  origem da mercadoria: 0-Nacional exceto as indicadas nos códigos 3, 4, 5 e 8;1-Estrangeira - Importação direta; 2-Estrangeira - Adquirida no mercado interno; 3-Nacional, conteudo superior 40% e inferior ou igual a 70%; 4-Nacional, processos produtivos básicos; 5-Nacional, conteudo inferior 40%; 6-Estrangeira - Importação direta, com similar nacional, lista CAMEX; 7-Estrangeira - mercado interno, sem simular,lista CAMEX;8-Nacional, Conteúdo de Importação superior a 70%.""", ]
 
 
-class TFinNFe(str):
-    """Tipo Finalidade da NF-e (1=Normal; 2=Complementar; 3=Ajuste; 4=Devolução/Retorno)"""
-    pass
+TFinNFe: TypeAlias = Annotated[str, SimpleType, """Tipo Finalidade da NF-e (1=Normal; 2=Complementar; 3=Ajuste; 4=Devolução/Retorno)""", ]
 
 
-class TProcEmi(str):
-    """Tipo processo de emissão da NF-e"""
-    pass
+TTpNFDebito: TypeAlias = Annotated[str, SimpleType, """Tipo de Nota de Débito: 
+			01=Transferência de créditos para Cooperativas; 
+			02=Anulação de Crédito por Saídas Imunes/Isentas; 
+			03=Débitos de notas fiscais não processadas na apuração; 
+			04=Multa e juros; 
+			05=Transferência de crédito na sucessão; 
+			06=Pagamento antecipado; 
+			07=Perda em estoque; 
+			08=Desenquadramento do SN;""", ]
 
 
-class TCListServ(str):
-    """Tipo Código da Lista de Serviços LC 116/2003"""
-    pass
+TTpNFCredito: TypeAlias = Annotated[str, SimpleType, """Tipo de Nota de Crédito: 
+			01=Multa e juros; 
+			02=Apropriação de crédito presumido de IBS sobre o saldo devedor na ZFM (art. 450, § 1º, LC 214/25);
+			03=Retorno por recusa na entrega ou por não localização do destinatário na tentativa de entrega;
+			04=Redução de valores;
+			05=Transferência de crédito na sucessão;
+			""", ]
 
 
-class TVerNFe(str):
-    """ Tipo Versão da NF-e - 4.00"""
-    pass
+TProcEmi: TypeAlias = Annotated[str, SimpleType, """Tipo processo de emissão da NF-e""", ]
 
 
-class TGuid(str):
-    """Identificador único (Globally Unique Identifier)"""
-    pass
+TCListServ: TypeAlias = Annotated[str, SimpleType, """Tipo Código da Lista de Serviços LC 116/2003""", ]
+
+
+TVerNFe: TypeAlias = Annotated[str, SimpleType, """ Tipo Versão da NF-e - 4.00""", ]
+
+
+TGuid: TypeAlias = Annotated[str, SimpleType, """Identificador único (Globally Unique Identifier)""", ]
 
 
 class TIpi(ComplexType):
@@ -149,27 +157,32 @@ class TNFe(ComplexType):
             mod: Annotated[TMod, Element] = None
             serie: Annotated[TSerie, Element] = None
             nNF: Annotated[TNF, Element] = None
-            dhEmi: Annotated[TDateTimeUTC, Element] = None
-            dhSaiEnt: Annotated[TDateTimeUTC, Element] = None
+            dhEmi: Annotated[datetime | str, Element] = None
+            dhSaiEnt: Annotated[datetime | str, Element] = None
+            dPrevEntrega: Annotated[TData, Element] = None
             tpNF: Annotated[str, Element] = None
             idDest: Annotated[str, Element] = None
             cMunFG: Annotated[TCodMunIBGE, Element] = None
+            cMunFGIBS: Annotated[TCodMunIBGE, Element] = None
             tpImp: Annotated[str, Element] = None
             tpEmis: Annotated[str, Element] = None
             cDV: Annotated[str, Element] = None
             tpAmb: Annotated[TAmb, Element] = None
             finNFe: Annotated[TFinNFe, Element] = None
+            tpNFDebito: Annotated[TTpNFDebito, Element] = None
+            tpNFCredito: Annotated[TTpNFCredito, Element] = None
             indFinal: Annotated[str, Element] = None
             indPres: Annotated[str, Element] = None
             indIntermed: Annotated[str, Element] = None
             procEmi: Annotated[TProcEmi, Element] = None
             verProc: Annotated[str, Element] = None
-            dhCont: Annotated[TDateTimeUTC, Element] = None
+            dhCont: Annotated[datetime | str, Element] = None
             xJust: Annotated[str, Element] = None
 
             class _NFref(ComplexType):
                 """Grupo de infromações da NF referenciada"""
                 refNFe: Annotated[TChNFe, Element] = None
+                refNFeSig: Annotated[TChNFe, Element] = None
 
                 class _refNF(ComplexType):
                     """Dados da NF modelo 1/1A referenciada ou NF modelo 2 referenciada"""
@@ -204,9 +217,16 @@ class TNFe(ComplexType):
                     nCOO: Annotated[str, Element] = None
 
                 refECF: Annotated[_refECF, Element] = None
-                refNFe_refNF_refNFP_refCTe_refECF = Choice("refNFe", "refNF", "refNFP", "refCTe", "refECF")
+                refNFe_refNFeSig_refNF_refNFP_refCTe_refECF = Choice("refNFe", "refNFeSig", "refNF", "refNFP", "refCTe", "refECF")
 
             NFref: Annotated[ElementList[_NFref], Element] = None
+            gCompraGov: Annotated[TCompraGov, Element] = None
+
+            class _gPagAntecipado(ComplexType):
+                """Informado para abater as parcelas de antecipação de pagamento, conforme Art. 10. § 4º"""
+                refNFe: Annotated[ElementList[TChNFe], Element] = None
+
+            gPagAntecipado: Annotated[_gPagAntecipado, Element] = None
 
         ide: Annotated[_ide, Element] = None
 
@@ -284,6 +304,15 @@ class TNFe(ComplexType):
                 indEscala: Annotated[str, Element] = None
                 CNPJFab: Annotated[TCnpj, Element] = None
                 cBenef: Annotated[str, Element] = None
+
+                class _gCred(ComplexType):
+                    """Grupo de informações sobre o CréditoPresumido """
+                    cCredPresumido: Annotated[str, Element] = None
+                    pCredPresumido: Annotated[TDec_0302a04, Element] = None
+                    vCredPresumido: Annotated[TDec_1302, Element] = None
+
+                gCred: Annotated[ElementList[_gCred], Element] = None
+                tpCredPresIBSZFM: Annotated[TTpCredPresIBSZFM, Element] = None
                 EXTIPI: Annotated[str, Element] = None
                 CFOP: Annotated[str, Element] = None
                 uCom: Annotated[str, Element] = None
@@ -300,10 +329,10 @@ class TNFe(ComplexType):
                 vDesc: Annotated[TDec_1302Opc, Element] = None
                 vOutro: Annotated[TDec_1302Opc, Element] = None
                 indTot: Annotated[str, Element] = None
+                indBemMovelUsado: Annotated[str, Element] = None
 
                 class _DI(ComplexType):
-                    """Delcaração de Importação
-(NT 2011/004)"""
+                    """Declaração de Importação (NT 2011/004)"""
                     nDI: Annotated[str, Element] = None
                     dDI: Annotated[TData, Element] = None
                     xLocDesemb: Annotated[str, Element] = None
@@ -313,6 +342,8 @@ class TNFe(ComplexType):
                     vAFRMM: Annotated[TDec_1302, Element] = None
                     tpIntermedio: Annotated[str, Element] = None
                     CNPJ: Annotated[TCnpj, Element] = None
+                    CPF: Annotated[TCpf, Element] = None
+                    CNPJ_CPF = Choice("CNPJ", "CPF")
                     UFTerceiro: Annotated[TUfEmi, Element] = None
                     cExportador: Annotated[str, Element] = None
 
@@ -353,6 +384,21 @@ class TNFe(ComplexType):
                     cAgreg: Annotated[str, Element] = None
 
                 rastro: Annotated[ElementList[_rastro], Element] = None
+
+                class _infProdNFF(ComplexType):
+                    """Informações mais detalhadas do produto (usada na NFF)"""
+                    cProdFisco: Annotated[str, Element] = None
+                    cOperNFF: Annotated[str, Element] = None
+
+                infProdNFF: Annotated[_infProdNFF, Element] = None
+
+                class _infProdEmb(ComplexType):
+                    """Informações mais detalhadas do produto (usada na NFF)"""
+                    xEmb: Annotated[str, Element] = None
+                    qVolEmb: Annotated[TDec_0803v, Element] = None
+                    uEmb: Annotated[str, Element] = None
+
+                infProdEmb: Annotated[_infProdEmb, Element] = None
 
                 class _veicProd(ComplexType):
                     """Veículos novos"""
@@ -429,6 +475,15 @@ class TNFe(ComplexType):
                         vEncFin: Annotated[TDec_1203, Element] = None
 
                     encerrante: Annotated[_encerrante, Element] = None
+                    pBio: Annotated[TDec_03v00a04Max100Opc, Element] = None
+
+                    class _origComb(ComplexType):
+                        """Grupo indicador da origem do combustível"""
+                        indImport: Annotated[str, Element] = None
+                        cUFOrig: Annotated[TCodUfIBGE, Element] = None
+                        pOrig: Annotated[TDec_03v00a04Max100Opc, Element] = None
+
+                    origComb: Annotated[ElementList[_origComb], Element] = None
 
                 comb: Annotated[_comb, Element] = None
                 nRECOPI: Annotated[str, Element] = None
@@ -457,6 +512,16 @@ class TNFe(ComplexType):
 
                     ICMS00: Annotated[_ICMS00, Element] = None
 
+                    class _ICMS02(ComplexType):
+                        """Tributação monofásica própria sobre combustíveis"""
+                        orig: Annotated[Torig, Element] = None
+                        CST: Annotated[str, Element] = None
+                        qBCMono: Annotated[TDec_1104v, Element] = None
+                        adRemICMS: Annotated[TDec_0302a04, Element] = None
+                        vICMSMono: Annotated[TDec_1302, Element] = None
+
+                    ICMS02: Annotated[_ICMS02, Element] = None
+
                     class _ICMS10(ComplexType):
                         """Tributação pelo ICMS
 10 - Tributada e com cobrança do ICMS por substituição tributária"""
@@ -482,6 +547,21 @@ class TNFe(ComplexType):
                         motDesICMSST: Annotated[str, Element] = None
 
                     ICMS10: Annotated[_ICMS10, Element] = None
+
+                    class _ICMS15(ComplexType):
+                        """Tributação monofásica própria e com responsabilidade pela retenção sobre combustíveis"""
+                        orig: Annotated[Torig, Element] = None
+                        CST: Annotated[str, Element] = None
+                        qBCMono: Annotated[TDec_1104v, Element] = None
+                        adRemICMS: Annotated[TDec_0302a04, Element] = None
+                        vICMSMono: Annotated[TDec_1302, Element] = None
+                        qBCMonoReten: Annotated[TDec_1104v, Element] = None
+                        adRemICMSReten: Annotated[TDec_0302a04, Element] = None
+                        vICMSMonoReten: Annotated[TDec_1302, Element] = None
+                        pRedAdRem: Annotated[TDec_0302Max100, Element] = None
+                        motRedAdRem: Annotated[str, Element] = None
+
+                    ICMS15: Annotated[_ICMS15, Element] = None
 
                     class _ICMS20(ComplexType):
                         """Tributção pelo ICMS
@@ -536,13 +616,12 @@ class TNFe(ComplexType):
                     ICMS40: Annotated[_ICMS40, Element] = None
 
                     class _ICMS51(ComplexType):
-                        """Tributção pelo ICMS
-51 - Diferimento
-A exigência do preenchimento das informações do ICMS diferido fica à critério de cada UF."""
+                        """Tributção pelo ICMS 51 - Diferimento. A exigência do preenchimento das informações do ICMS diferido fica à critério de cada UF."""
                         orig: Annotated[Torig, Element] = None
                         CST: Annotated[str, Element] = None
                         modBC: Annotated[str, Element] = None
                         pRedBC: Annotated[TDec_0302a04, Element] = None
+                        cBenefRBC: Annotated[str, Element] = None
                         vBC: Annotated[TDec_1302, Element] = None
                         pICMS: Annotated[TDec_0302a04, Element] = None
                         vICMSOp: Annotated[TDec_1302, Element] = None
@@ -557,6 +636,21 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
                         vFCPEfet: Annotated[TDec_1302, Element] = None
 
                     ICMS51: Annotated[_ICMS51, Element] = None
+
+                    class _ICMS53(ComplexType):
+                        """Tributação monofásica sobre combustíveis com recolhimento diferido"""
+                        orig: Annotated[Torig, Element] = None
+                        CST: Annotated[str, Element] = None
+                        qBCMono: Annotated[TDec_1104v, Element] = None
+                        adRemICMS: Annotated[TDec_0302a04, Element] = None
+                        vICMSMonoOp: Annotated[TDec_1302, Element] = None
+                        pDif: Annotated[TDec_0302a04Max100, Element] = None
+                        vICMSMonoDif: Annotated[TDec_1302, Element] = None
+                        vICMSMono: Annotated[TDec_1302, Element] = None
+                        qBCMonoDif: Annotated[TDec_1104v, Element] = None
+                        adRemICMSDif: Annotated[TDec_0302a04, Element] = None
+
+                    ICMS53: Annotated[_ICMS53, Element] = None
 
                     class _ICMS60(ComplexType):
                         """Tributação pelo ICMS
@@ -576,6 +670,16 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
                         vICMSEfet: Annotated[TDec_1302, Element] = None
 
                     ICMS60: Annotated[_ICMS60, Element] = None
+
+                    class _ICMS61(ComplexType):
+                        """Tributação monofásica sobre combustíveis cobrada anteriormente;"""
+                        orig: Annotated[Torig, Element] = None
+                        CST: Annotated[str, Element] = None
+                        qBCMonoRet: Annotated[TDec_1104v, Element] = None
+                        adRemICMSRet: Annotated[TDec_0302a04, Element] = None
+                        vICMSMonoRet: Annotated[TDec_1302, Element] = None
+
+                    ICMS61: Annotated[_ICMS61, Element] = None
 
                     class _ICMS70(ComplexType):
                         """Tributação pelo ICMS 
@@ -653,6 +757,9 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                         vBCST: Annotated[TDec_1302, Element] = None
                         pICMSST: Annotated[TDec_0302a04, Element] = None
                         vICMSST: Annotated[TDec_1302, Element] = None
+                        vBCFCPST: Annotated[TDec_1302, Element] = None
+                        pFCPST: Annotated[TDec_0302a04Opc, Element] = None
+                        vFCPST: Annotated[TDec_1302, Element] = None
                         pBCOp: Annotated[TDec_0302a04Opc, Element] = None
                         UFST: Annotated[TUf, Element] = None
 
@@ -747,7 +854,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                     ICMSSN500: Annotated[_ICMSSN500, Element] = None
 
                     class _ICMSSN900(ComplexType):
-                        """Tributação do ICMS pelo SIMPLES NACIONAL, CRT=1 – Simples Nacional e CSOSN=900 (v2.0)"""
+                        """Tributação do ICMS pelo SIMPLES NACIONAL, CRT=1 – Simples Nacional, CRT=4 - MEI e CSOSN=900 (v2.0)"""
                         orig: Annotated[Torig, Element] = None
                         CSOSN: Annotated[str, Element] = None
                         modBC: Annotated[str, Element] = None
@@ -768,7 +875,7 @@ Operação interestadual para consumidor final com partilha do ICMS  devido na o
                         vCredICMSSN: Annotated[TDec_1302, Element] = None
 
                     ICMSSN900: Annotated[_ICMSSN900, Element] = None
-                    ICMS00_ICMS10_ICMS20_ICMS30_ICMS40_ICMS51_ICMS60_ICMS70_ICMS90_ICMSPart_ICMSST_ICMSSN101_ICMSSN102_ICMSSN201_ICMSSN202_ICMSSN500_ICMSSN900 = Choice("ICMS00", "ICMS10", "ICMS20", "ICMS30", "ICMS40", "ICMS51", "ICMS60", "ICMS70", "ICMS90", "ICMSPart", "ICMSST", "ICMSSN101", "ICMSSN102", "ICMSSN201", "ICMSSN202", "ICMSSN500", "ICMSSN900")
+                    ICMS00_ICMS02_ICMS10_ICMS15_ICMS20_ICMS30_ICMS40_ICMS51_ICMS53_ICMS60_ICMS61_ICMS70_ICMS90_ICMSPart_ICMSST_ICMSSN101_ICMSSN102_ICMSSN201_ICMSSN202_ICMSSN500_ICMSSN900 = Choice("ICMS00", "ICMS02", "ICMS10", "ICMS15", "ICMS20", "ICMS30", "ICMS40", "ICMS51", "ICMS53", "ICMS60", "ICMS61", "ICMS70", "ICMS90", "ICMSPart", "ICMSST", "ICMSSN101", "ICMSSN102", "ICMSSN201", "ICMSSN202", "ICMSSN500", "ICMSSN900")
 
                 ICMS: Annotated[_ICMS, Element] = None
                 IPI: Annotated[TIpi, Element] = None
@@ -963,6 +1070,8 @@ Substituição Tributaria;"""
                     vICMSUFRemet: Annotated[TDec_1302, Element] = None
 
                 ICMSUFDest: Annotated[_ICMSUFDest, Element] = None
+                IS: Annotated[TIS, Element] = None
+                IBSCBS: Annotated[TTribNFe, Element] = None
 
             imposto: Annotated[_imposto, Element] = None
 
@@ -977,6 +1086,33 @@ Substituição Tributaria;"""
 
             impostoDevol: Annotated[_impostoDevol, Element] = None
             infAdProd: Annotated[str, Element] = None
+
+            class _obsItem(ComplexType):
+                """Grupo de observações de uso livre (para o item da NF-e) """
+
+                class _obsCont(ComplexType):
+                    """Grupo de observações de uso livre (para o item da NF-e) """
+                    xCampo: Annotated[str, Attribute(min_length=1, max_length=20)] = None
+                    xTexto: Annotated[str, Element] = None
+
+                obsCont: Annotated[_obsCont, Element] = None
+
+                class _obsFisco(ComplexType):
+                    """Grupo de observações de uso livre (para o item da NF-e) """
+                    xCampo: Annotated[str, Attribute(min_length=1, max_length=20)] = None
+                    xTexto: Annotated[str, Element] = None
+
+                obsFisco: Annotated[_obsFisco, Element] = None
+
+            obsItem: Annotated[_obsItem, Element] = None
+            vItem: Annotated[TDec_1302, Element] = None
+
+            class _DFeReferenciado(ComplexType):
+                """Referenciamento de item de outros DFe"""
+                chaveAcesso: Annotated[TChNFe, Element] = None
+                nItem: Annotated[str, Element] = None
+
+            DFeReferenciado: Annotated[_DFeReferenciado, Element] = None
 
         det: Annotated[ElementList[_det], Element] = None
 
@@ -996,6 +1132,12 @@ Substituição Tributaria;"""
                 vST: Annotated[TDec_1302, Element] = None
                 vFCPST: Annotated[TDec_1302, Element] = None
                 vFCPSTRet: Annotated[TDec_1302, Element] = None
+                qBCMono: Annotated[TDec_1302, Element] = None
+                vICMSMono: Annotated[TDec_1302, Element] = None
+                qBCMonoReten: Annotated[TDec_1302, Element] = None
+                vICMSMonoReten: Annotated[TDec_1302, Element] = None
+                qBCMonoRet: Annotated[TDec_1302, Element] = None
+                vICMSMonoRet: Annotated[TDec_1302, Element] = None
                 vProd: Annotated[TDec_1302, Element] = None
                 vFrete: Annotated[TDec_1302, Element] = None
                 vSeg: Annotated[TDec_1302, Element] = None
@@ -1039,6 +1181,9 @@ Substituição Tributaria;"""
                 vRetPrev: Annotated[TDec_1302Opc, Element] = None
 
             retTrib: Annotated[_retTrib, Element] = None
+            ISTot: Annotated[TISTot, Element] = None
+            IBSCBSTot: Annotated[TIBSCBSMonoTot, Element] = None
+            vNFTot: Annotated[TDec_1302Opc, Element] = None
 
         total: Annotated[_total, Element] = None
 
@@ -1124,13 +1269,18 @@ Substituição Tributaria;"""
                 tPag: Annotated[str, Element] = None
                 xPag: Annotated[str, Element] = None
                 vPag: Annotated[TDec_1302, Element] = None
+                dPag: Annotated[TData, Element] = None
+                CNPJPag: Annotated[TCnpj, Element] = None
+                UFPag: Annotated[TUfEmi, Element] = None
 
                 class _card(ComplexType):
-                    """Grupo de Cartões"""
+                    """Grupo de Cartões, PIX, Boletos e outros Pagamentos Eletrônicos"""
                     tpIntegra: Annotated[str, Element] = None
                     CNPJ: Annotated[TCnpj, Element] = None
                     tBand: Annotated[str, Element] = None
                     cAut: Annotated[str, Element] = None
+                    CNPJReceb: Annotated[TCnpj, Element] = None
+                    idTermPag: Annotated[str, Element] = None
 
                 card: Annotated[_card, Element] = None
 
@@ -1173,6 +1323,7 @@ e o conteúdo do campo no xTexto"""
                 """Grupo de informações do  processo referenciado"""
                 nProc: Annotated[str, Element] = None
                 indProc: Annotated[str, Element] = None
+                tpAto: Annotated[str, Element] = None
 
             procRef: Annotated[ElementList[_procRef], Element] = None
 
@@ -1222,6 +1373,34 @@ e o conteúdo do campo no xTexto"""
         cana: Annotated[_cana, Element] = None
         infRespTec: Annotated[TInfRespTec, Element] = None
 
+        class _infSolicNFF(ComplexType):
+            """Grupo para informações da solicitação da NFF"""
+            xSolic: Annotated[str, Element] = None
+
+        infSolicNFF: Annotated[_infSolicNFF, Element] = None
+
+        class _agropecuario(ComplexType):
+            """Produtos Agropecurários Animais, Vegetais e Florestais"""
+
+            class _defensivo(ComplexType):
+                """Defensivo Agrícola / Agrotóxico"""
+                nReceituario: Annotated[str, Element] = None
+                CPFRespTec: Annotated[TCpf, Element] = None
+
+            defensivo: Annotated[ElementList[_defensivo], Element] = None
+
+            class _guiaTransito(ComplexType):
+                """Guias De Trânsito de produtos agropecurários animais, vegetais e de origem florestal."""
+                tpGuia: Annotated[str, Element] = None
+                UFGuia: Annotated[TUfEmi, Element] = None
+                serieGuia: Annotated[str, Element] = None
+                nGuia: Annotated[str, Element] = None
+
+            guiaTransito: Annotated[_guiaTransito, Element] = None
+            defensivo_guiaTransito = Choice("defensivo", "guiaTransito")
+
+        agropecuario: Annotated[_agropecuario, Element] = None
+
     infNFe: Annotated[_infNFe, Element] = None
 
     class _infNFeSupl(ComplexType):
@@ -1243,7 +1422,7 @@ class TProtNFe(ComplexType):
         tpAmb: Annotated[TAmb, Element] = None
         verAplic: Annotated[TVerAplic, Element] = None
         chNFe: Annotated[TChNFe, Element] = None
-        dhRecbto: Annotated[TDateTimeUTC, Element] = None
+        dhRecbto: Annotated[datetime | str, Element] = None
         nProt: Annotated[TProt, Element] = None
         digVal: Annotated[TXML, Element] = None
         cStat: Annotated[TStat, Element] = None
@@ -1255,9 +1434,7 @@ class TProtNFe(ComplexType):
     Signature: Annotated[XmlSignature, Element] = None
 
 
-class TIdLote(str):
-    """ Tipo Identificação de Lote"""
-    pass
+TIdLote: TypeAlias = Annotated[str, SimpleType, """ Tipo Identificação de Lote""", ]
 
 
 class TEnviNFe(ComplexType):
@@ -1276,7 +1453,7 @@ class TRetEnviNFe(ComplexType):
     cStat: Annotated[TStat, Element] = None
     xMotivo: Annotated[TMotivo, Element] = None
     cUF: Annotated[TCodUfIBGE, Element] = None
-    dhRecbto: Annotated[TDateTimeUTC, Element] = None
+    dhRecbto: Annotated[datetime | str, Element] = None
 
     class _infRec(ComplexType):
         """Dados do Recibo do Lote"""
@@ -1304,7 +1481,7 @@ class TRetConsReciNFe(ComplexType):
     cStat: Annotated[TStat, Element] = None
     xMotivo: Annotated[TMotivo, Element] = None
     cUF: Annotated[TCodUfIBGE, Element] = None
-    dhRecbto: Annotated[TDateTimeUTC, Element] = None
+    dhRecbto: Annotated[datetime | str, Element] = None
     cMsg: Annotated[str, Element] = None
     xMsg: Annotated[str, Element] = None
     protNFe: Annotated[ElementList[TProtNFe], Element] = None

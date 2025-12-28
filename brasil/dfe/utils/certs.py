@@ -50,8 +50,8 @@ class Certificado(object):
             self._proprietario = cert.subject.rfc4514_string()
             # self._emissao = cert.not_valid_before_utc
             # self._validade = cert.not_valid_after_utc
-            self._emissao = cert.not_valid_before
-            self._validade = cert.not_valid_after
+            self._emissao = cert.not_valid_before_utc
+            self._validade = cert.not_valid_after_utc
 
             self._loaded = True
 

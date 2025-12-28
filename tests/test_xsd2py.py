@@ -20,7 +20,7 @@ class ParserTestCase(TestCase):
         schema = parser.schemas['leiauteNFe_v4.00.xsd']
         schema.to_python()
 
-    def _test_convert_nfe(self):
+    def test_convert_nfe(self):
         parser = convert_dir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'schemas', 'nfe'))
         base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'brasil', 'dfe', 'leiaute', 'nfe')
         if not os.path.exists(base_dir):
@@ -35,7 +35,7 @@ class ParserTestCase(TestCase):
         #     with open(os.path.join(base_dir, filename + '.py'), 'w') as f:
         #         f.write(content)
 
-    def test_convert_cte(self):
+    def _test_convert_cte(self):
         parser = convert_dir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'schemas', 'cte'))
         base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'brasil', 'dfe', 'leiaute', 'cte')
         if not os.path.exists(base_dir):

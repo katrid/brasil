@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: xmldsig-core-schema_v1.01.xsd
 # xmlns: http://www.w3.org/2000/09/xmldsig#
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -70,11 +70,9 @@ class X509DataType(ComplexType):
     X509Certificate: Annotated[base64Binary, Element] = None
 
 
-class DigestValueType(base64Binary):
-    pass
+DigestValueType: TypeAlias = Annotated[base64Binary, SimpleType, ]
 
 
-class TTransformURI(anyURI):
-    pass
+TTransformURI: TypeAlias = Annotated[anyURI, SimpleType, ]
 
 

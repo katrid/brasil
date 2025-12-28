@@ -2,96 +2,61 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: tiposDistDFe_v1.01.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
 from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 
 
-class TNSU(str):
-    """Tipo número sequencial único"""
-    pass
+TNSU: TypeAlias = Annotated[str, SimpleType, """Tipo número sequencial único""", ]
 
 
-class TQNSU(int):
-    """Tipo quantidade de NSU"""
-    pass
+TQNSU: TypeAlias = Annotated[int, SimpleType, """Tipo quantidade de NSU""", ]
 
 
-class TVerDistDFe(str):
-    """Tipo Versão dos leiautes do Web Service NFeDistribuicaoDFe"""
-    pass
+TVerDistDFe: TypeAlias = Annotated[str, SimpleType, """Tipo Versão dos leiautes do Web Service NFeDistribuicaoDFe""", ]
 
 
-class TAmb(str):
-    """Tipo Ambiente"""
-    pass
+TAmb: TypeAlias = Annotated[str, SimpleType, """Tipo Ambiente""", ]
 
 
-class TCodUfIBGE(str):
-    """Tipo Código da UF da tabela do IBGE"""
-    pass
+TCodUfIBGE: TypeAlias = Annotated[str, SimpleType, """Tipo Código da UF da tabela do IBGE""", ]
 
 
-class TCOrgaoIBGE(str):
-    """Tipo Código de orgão (UF da tabela do IBGE + 90 RFB)"""
-    pass
+TCOrgaoIBGE: TypeAlias = Annotated[str, SimpleType, """Tipo Código de orgão (UF da tabela do IBGE + 90 RFB)""", ]
 
 
-class TCnpj(str):
-    """Tipo Número do CNPJ"""
-    pass
+TCnpj: TypeAlias = Annotated[str, SimpleType, """Tipo Número do CNPJ""", ]
 
 
-class TCpf(str):
-    """Tipo Número do CPF"""
-    pass
+TCpf: TypeAlias = Annotated[str, SimpleType, """Tipo Número do CPF""", ]
 
 
-class TString(str):
-    """ Tipo string genérico"""
-    pass
+TString: TypeAlias = Annotated[str, SimpleType, """ Tipo string genérico""", ]
 
 
-class TVerAplic(str):
-    """Tipo Versão do Aplicativo"""
-    pass
+TVerAplic: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do Aplicativo""", ]
 
 
-class TStat(str):
-    """Tipo Código da Mensagem enviada"""
-    pass
+TStat: TypeAlias = Annotated[str, SimpleType, """Tipo Código da Mensagem enviada""", ]
 
 
-class TMotivo(str):
-    """Tipo Motivo"""
-    pass
+TMotivo: TypeAlias = Annotated[str, SimpleType, """Tipo Motivo""", ]
 
 
-class TChNFe(str):
-    """Tipo Chave da Nota Fiscal Eletrônica"""
-    pass
+TChNFe: TypeAlias = Annotated[str, SimpleType, """Tipo Chave da Nota Fiscal Eletrônica""", ]
 
 
-class TProt(str):
-    """Tipo Número do Protocolo de Status"""
-    pass
+TProt: TypeAlias = Annotated[str, SimpleType, """Tipo Número do Protocolo de Status""", ]
 
 
-class TDateTimeUTC(str):
-    """Data e Hora, formato UTC (AAAA-MM-DDThh:mm:ssTZD, onde TZD = +hh:mm ou -hh:mm)"""
-    pass
+TDateTimeUTC: TypeAlias = Annotated[str, SimpleType, """Data e Hora, formato UTC (AAAA-MM-DDThh:mm:ssTZD, onde TZD = +hh:mm ou -hh:mm)""", ]
 
 
-class TIe(str):
-    """Tipo Inscrição Estadual do Emitente // alterado EM 24/10/08 para aceitar ISENTO"""
-    pass
+TIe: TypeAlias = Annotated[str, SimpleType, """Tipo Inscrição Estadual do Emitente // alterado EM 24/10/08 para aceitar ISENTO""", ]
 
 
-class TDec_1302(Decimal):
-    """Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais"""
-    _xs_dec = (13, 2)
-    _xs_optional = False
+TDec_1302: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais""", (13, 2)]
 
 

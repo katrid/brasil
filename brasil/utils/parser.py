@@ -1,5 +1,5 @@
 from __future__ import annotations
-
+import re
 import os
 from typing import List, Self
 
@@ -331,16 +331,27 @@ class XsSimpleType(XsBaseElement):
         base = BASE_TYPE_MAP.get(self.type, self.type)
         if self.name.startswith('TDec_'):
             base = 'Decimal'
-        stream.append(f'{indent_str}class {self.name}({base}):')
+        s = f'{indent_str}{self.name}: TypeAlias = Annotated[{base}, SimpleType, '
         if self.documentation:
-            stream.append(f'{indent_str}    """{'\n'.join(self.documentation).replace('"', '\\"')}"""')
+            # s += f'{indent_str}    """{'\n'.join(self.documentation).replace('"', '\\"')}"""'
+            s += f'"""{'\n'.join(self.documentation).replace('"', '\\"')}""", '
         if base == 'Decimal':
             tam = self.name.split('_')[1]
-            tam = f'({int(tam[0:2])}, {int(tam[2:4])})'
-            stream.append(f'{indent_str}    _xs_dec = {tam}')
-            stream.append(f'{indent_str}    _xs_optional = {self.name.endswith('Opc')}')
-        else:
-            stream.append(f'{indent_str}    pass')
+            s += '{"dec": '
+            if r := re.search(r'a\d+', tam):
+                tam = f'({int(tam[0:2])}, {int(r.group()[1:])})'
+            else:
+                tam = f'({int(tam[0:2])}, {int(tam[2:4])})'
+            # stream.append(f'{indent_str}    _xs_dec = {tam}')
+            # stream.append(f'{indent_str}    _xs_optional = {self.name.endswith('Opc')}')
+            s += tam
+            if self.name.endswith('Opc'):
+                s += ', "opc": True'
+            s += '}'
+        s += ']'
+        stream.append(s)
+        # else:
+        #     stream.append(f'{indent_str}    pass')
         stream.append('')
 
     def get_deps(self):
@@ -513,11 +524,11 @@ class XsSchema:
         stream.append(f'# xsd: {self.name}')
         stream.append(f'# xmlns: {self.xmlns}')
         # prepare symbols
-        self.parser.schema = self
+        self.parser._schema = self
         for el in self.elements:
             el.prepare(self)
         stream.extend([
-            'from typing import List, Annotated',
+            'from typing import List, Annotated, TypeAlias',
             'from datetime import date, datetime',
             'from decimal import Decimal',
             '',
@@ -582,8 +593,10 @@ def adjust_deps(types):
 
 BASE_TYPE_MAP = {
     'xs:string': 'str',
+    'xs:gYearMonth': 'str',
     'xs:ID': 'str',
-    'xs:dateTime': 'datetime',
+    'xs:dateTime': 'datetime | str',
+    'TDateTimeUTC': 'datetime | str',
     'TString': 'str',
     'ds:SignedInfoType': 'TXML',
     'ds:SignatureValueType': 'TXML',

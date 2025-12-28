@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: retEnvFiscoNFe_v1.0.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,9 +10,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposBasico_v310 import *
 
 
-class TCOrgaoIBGE(str):
-    """Tipo Código de orgão (UF da tabela do IBGE + 91 RFB)"""
-    pass
+TCOrgaoIBGE: TypeAlias = Annotated[str, SimpleType, """Tipo Código de orgão (UF da tabela do IBGE + 91 RFB)""", ]
 
 
 class retEnvEvento(ComplexType):
@@ -44,7 +42,7 @@ class retEnvEvento(ComplexType):
             nSeqEvento: Annotated[str, Element] = None
             CNPJDest: Annotated[TCnpjOpc, Element] = None
             emailDest: Annotated[str, Element] = None
-            dhRegEvento: Annotated[TDateTimeUTC, Element] = None
+            dhRegEvento: Annotated[datetime | str, Element] = None
             nProt: Annotated[TProt, Element] = None
 
         infEvento: Annotated[_infEvento, Element] = None

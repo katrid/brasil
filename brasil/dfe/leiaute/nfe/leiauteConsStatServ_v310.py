@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: leiauteConsStatServ_v3.10.xsd
 # xmlns: http://www.portalfiscal.inf.br/nfe
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,9 +10,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposBasico_v310 import *
 
 
-class TVerConsStatServ(str):
-    """Tipo versão do leiuate da Consulta Status do Serviço 3.10"""
-    pass
+TVerConsStatServ: TypeAlias = Annotated[str, SimpleType, """Tipo versão do leiuate da Consulta Status do Serviço 3.10""", ]
 
 
 class TConsStatServ(ComplexType):
@@ -31,9 +29,9 @@ class TRetConsStatServ(ComplexType):
     cStat: Annotated[TStat, Element] = None
     xMotivo: Annotated[TMotivo, Element] = None
     cUF: Annotated[TCodUfIBGE, Element] = None
-    dhRecbto: Annotated[TDateTimeUTC, Element] = None
+    dhRecbto: Annotated[datetime | str, Element] = None
     tMed: Annotated[TMed, Element] = None
-    dhRetorno: Annotated[TDateTimeUTC, Element] = None
+    dhRetorno: Annotated[datetime | str, Element] = None
     xObs: Annotated[TMotivo, Element] = None
 
 
