@@ -337,17 +337,17 @@ class XsSimpleType(XsBaseElement):
             s += f'"""{'\n'.join(self.documentation).replace('"', '\\"')}""", '
         if base == 'Decimal':
             tam = self.name.split('_')[1]
-            s += '{"dec": '
+            s += '('
             if r := re.search(r'a\d+', tam):
-                tam = f'({int(tam[0:2])}, {int(r.group()[1:])})'
+                tam = f'{int(tam[0:2])}, {int(r.group()[1:])}'
             else:
-                tam = f'({int(tam[0:2])}, {int(tam[2:4])})'
+                tam = f'{int(tam[0:2])}, {int(tam[2:4])}'
             # stream.append(f'{indent_str}    _xs_dec = {tam}')
             # stream.append(f'{indent_str}    _xs_optional = {self.name.endswith('Opc')}')
             s += tam
             if self.name.endswith('Opc'):
-                s += ', "opc": True'
-            s += '}'
+                s += ', True'
+            s += ')'
         s += ']'
         stream.append(s)
         # else:

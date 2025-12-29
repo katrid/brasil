@@ -51,7 +51,7 @@ TDec_0204v: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com até 
 TDec_0302a04: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com até 3 dígitos inteiros, podendo ter de 2 até 4 decimais""", (3, 4)]
 
 
-TDec_0302a04Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com até 3 dígitos inteiros e 2 até 4 decimais. Utilizados em TAGs opcionais, não aceita valor zero.""", (3, 4)]
+TDec_0302a04Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com até 3 dígitos inteiros e 2 até 4 decimais. Utilizados em TAGs opcionais, não aceita valor zero.""", (3, 4, True)]
 
 
 TDec_0302Max100: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 3 inteiros (no máximo 100), com 2 decimais""", (3, 2)]
@@ -60,7 +60,7 @@ TDec_0302Max100: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 
 TDec_0304Max100: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 3 inteiros (no máximo 100), com 4 decimais""", (3, 4)]
 
 
-TDec_03v00a04Max100Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 3 inteiros (no máximo 100), com 4 decimais, não aceita valor zero""", (3, 4)]
+TDec_03v00a04Max100Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 3 inteiros (no máximo 100), com 4 decimais, não aceita valor zero""", (3, 4, True)]
 
 
 TDec_0302a04Max100: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 3 inteiros (no máximo 100), com até 4 decimais""", (3, 4)]
@@ -75,7 +75,7 @@ TDec_1104: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 11 int
 TDec_1104v: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 11 inteiros, podendo ter de 1 até 4 decimais""", (11, 4)]
 
 
-TDec_1104Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 11 inteiros, podendo ter 4 decimais (utilizado em tags opcionais)""", (11, 4)]
+TDec_1104Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 11 inteiros, podendo ter 4 decimais (utilizado em tags opcionais)""", (11, 4, True)]
 
 
 TDec_1110v: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 11 inteiros, podendo ter de 1 até 10 decimais""", (11, 10)]
@@ -90,7 +90,7 @@ TDec_1204: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 12 int
 TDec_1204v: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 12 inteiros de 1 até 4 decimais""", (12, 4)]
 
 
-TDec_1204Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 12 inteiros com 1 até 4 decimais""", (12, 4)]
+TDec_1204Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 12 inteiros com 1 até 4 decimais""", (12, 4, True)]
 
 
 TDec_1204temperatura: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 12 inteiros, 1 a 4 decimais""", (12, 4)]
@@ -99,7 +99,7 @@ TDec_1204temperatura: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal
 TDec_1302: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais""", (13, 2)]
 
 
-TDec_1302Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais, utilizado em tags opcionais""", (13, 2)]
+TDec_1302Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais, utilizado em tags opcionais""", (13, 2, True)]
 
 
 TIeDest: TypeAlias = Annotated[str, SimpleType, """Tipo Inscrição Estadual do Destinatário // alterado para aceitar vazio ou ISENTO - maio/2010 v2.0""", ]

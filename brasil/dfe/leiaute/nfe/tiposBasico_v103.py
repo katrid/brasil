@@ -45,43 +45,43 @@ TCpfVar: TypeAlias = Annotated[str, SimpleType, """Tipo Número do CPF de tamanh
 TDec_0302: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 5 dígitos, sendo 3 de corpo e 2 decimais""", (3, 2)]
 
 
-TDec_0302Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 5 dígitos, sendo 3 de corpo e 2 decimais, utilizado em tags opcionais""", (3, 2)]
+TDec_0302Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 5 dígitos, sendo 3 de corpo e 2 decimais, utilizado em tags opcionais""", (3, 2, True)]
 
 
 TDec_0803: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 11 dígitos, sendo 8 de corpo e 3 decimais""", (8, 3)]
 
 
-TDec_0803Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 11 dígitos, sendo 8 de corpo e 3 decimais utilizado em tags opcionais""", (8, 3)]
+TDec_0803Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 11 dígitos, sendo 8 de corpo e 3 decimais utilizado em tags opcionais""", (8, 3, True)]
 
 
 TDec_0804: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 12 dígitos, sendo 8 de corpo e 4decimais""", (8, 4)]
 
 
-TDec_0804Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 12 dígitos, sendo 8 de corpo e 4 decimais, utilizado em tags opcionais""", (8, 4)]
+TDec_0804Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 12 dígitos, sendo 8 de corpo e 4 decimais, utilizado em tags opcionais""", (8, 4, True)]
 
 
 TDec_1104: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 11 de corpo e 4 decimais""", (11, 4)]
 
 
-TDec_1104Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 11 de corpo e 4 decimais, utilizado em tags opcionais""", (11, 4)]
+TDec_1104Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 11 de corpo e 4 decimais, utilizado em tags opcionais""", (11, 4, True)]
 
 
 TDec_1203: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 12 de corpo e 3 decimais""", (12, 3)]
 
 
-TDec_1203Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 12 de corpo e 3 decimais, utilizado em tags opcionais""", (12, 3)]
+TDec_1203Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 12 de corpo e 3 decimais, utilizado em tags opcionais""", (12, 3, True)]
 
 
 TDec_1204: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 16 dígitos, sendo 12 de corpo e 4 decimais""", (12, 4)]
 
 
-TDec_1204Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 16 dígitos, sendo 12 de corpo e 4 decimais, utilizado em tags opcionais""", (12, 4)]
+TDec_1204Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 16 dígitos, sendo 12 de corpo e 4 decimais, utilizado em tags opcionais""", (12, 4, True)]
 
 
 TDec_1302: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais""", (13, 2)]
 
 
-TDec_1302Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais, utilizado em tags opcionais""", (13, 2)]
+TDec_1302Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais, utilizado em tags opcionais""", (13, 2, True)]
 
 
 TDec_1110: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com até  21 dígitos, sendo 11 de corpo e até 10 decimais // aperfeiçoamento v2.0""", (11, 10)]

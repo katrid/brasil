@@ -45,6 +45,8 @@ class XmlProp:
                     self.type = arg
             elif i == 1:
                 self.element = arg
+            elif isinstance(arg, tuple):
+                self.type_args = arg
 
     def find_on_module(self):
         mod = import_module(self.cls.__module__)
@@ -119,7 +121,13 @@ class ComplexType(SimpleType, metaclass=ElementType):
             if  base is not ComplexType and issubclass(base, ComplexType) and base._props is None:
                 base._load_metadata()
         if cls.__module__ != 'brasil.dfe.xsd':
-            props = {'pass' if k == 'pass_' else k: XmlProp(k, a, cls) for k, a in get_annotations(cls).items()}
+            props = {
+                'pass'
+                if k == 'pass_'
+                else k: XmlProp(k, a, cls)
+                for k, a in get_type_hints(cls, include_extras=True).items()
+                if not k.startswith('_')
+            }
             if props:
                 if not cls._props:
                     cls._props = {}
@@ -173,10 +181,10 @@ class ComplexType(SimpleType, metaclass=ElementType):
                         if xml:
                             args.append(xml)
                         continue
-                elif issubclass(prop.type, Decimal) and v == 0 and prop.type_args and (_xs := prop.type_args[-1]) and isinstance(_xs, dict) and _xs.get('opc'):
+                elif issubclass(prop.type, Decimal) and v == 0 and prop.type_args and True in prop.type_args:  # opcional que não aceita zero
                     continue
-                elif issubclass(prop.type, Decimal) and v is not None and prop.type_args and (xs_dec := prop.type_args[-1]):
-                    fmt = '{:.%sf}' % xs_dec[1]
+                elif issubclass(prop.type, Decimal) and v is not None and prop.type_args:
+                    fmt = '{:.%sf}' % prop.type_args[1]
                     if isinstance(v, str):
                         v = float(v)
                     v = string.format(fmt, v)
