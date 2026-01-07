@@ -98,8 +98,9 @@ class ComplexType(SimpleType, metaclass=ElementType):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # inicializar elemento
-        if self._props is None:
-            type(self)._load_metadata()
+        # TODO postergar inicialização
+        # if self._props is None:
+        #     type(self)._load_metadata()
         if self._props:
             for k, prop in self._props.items():
                 if prop.origin is None and prop.cls is not None and prop.type is type(None):
@@ -135,9 +136,9 @@ class ComplexType(SimpleType, metaclass=ElementType):
                     cls._props = {}
                 cls._props = {**cls._props, **props}
 
-    # def __init_subclass__(cls, **kwargs):
-    #     super().__init_subclass__(**kwargs)
-    #     cls._load_metadata()
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        cls._load_metadata()
 
     def add(self, *args, **kwargs):
         new_obj = self.__class__()
@@ -185,8 +186,16 @@ class ComplexType(SimpleType, metaclass=ElementType):
                         continue
                 elif issubclass(prop.type, Decimal) and v == 0 and prop.type_args and True in prop.type_args:  # opcional que não aceita zero
                     continue
-                elif issubclass(prop.type, Decimal) and v is not None and prop.type_args:
+                elif issubclass(prop.type, Decimal) and v is not None and prop.type_args is not None:
                     fmt = '{:.%sf}' % prop.type_args[1]
+                    if isinstance(v, str):
+                        v = float(v)
+                    v = string.format(fmt, v)
+                    xml = tag(k, v)
+                    args.append(xml)
+                    continue
+                elif issubclass(prop.type, Decimal) and v is not None and prop.type_args is None:
+                    fmt = '{:.%sf}' % prop.type._xs_dec[1]  # TODO remover no após atualizar mdfe
                     if isinstance(v, str):
                         v = float(v)
                     v = string.format(fmt, v)
