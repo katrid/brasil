@@ -31,8 +31,8 @@ from brasil.utils.text import remover_acentos
 
 
 # adicionar modal (não é possível adicionar via interpretação do xsd)
+brasil.dfe.leiaute.mdfe.mdfe_v300.MDFe._infMDFe._infModal._props = brasil.dfe.leiaute.mdfe.mdfe_v300.MDFe._infMDFe._infModal._props or {}
 brasil.dfe.leiaute.mdfe.mdfe_v300.MDFe._infMDFe._infModal._props['rodo'] = XmlProp('rodo', Annotated[brasil.dfe.leiaute.mdfe.mdfeModalRodoviario_v300.rodo, Element])
-brasil.dfe.leiaute.mdfe.mdfe_v300.MDFe._infMDFe._infModal._props['aquav'] = XmlProp('aquav', Annotated[brasil.dfe.leiaute.mdfe.mdfeModalAquaviario_v300.aquav, Element])
 
 
 class MDFe(brasil.dfe.leiaute.mdfe.mdfe_v300.MDFe):
