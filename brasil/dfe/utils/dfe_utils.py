@@ -78,6 +78,7 @@ def gerar_chave_acesso(
         codigo = gerar_codigo(numero)
     emis = emis.strftime("%y%m")
     res = f'{uf}{emis}{cnpj.zfill(14)}{str(modelo).zfill(2)}{str(serie).zfill(3)}{str(numero).zfill(9)}{tp_emi}{str(codigo).zfill(8)}'
+    print(uf, emis, cnpj, modelo, serie, numero, tp_emi, codigo)
     return res + str(modulo11(res))
 
 

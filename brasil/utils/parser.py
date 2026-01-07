@@ -2,6 +2,7 @@ from __future__ import annotations
 import re
 import os
 from typing import List, Self
+from decimal import Decimal
 
 from lxml import etree
 from lxml.etree import _Element
@@ -329,14 +330,14 @@ class XsSimpleType(XsBaseElement):
         stream.append('')
         # decimal special type
         base = BASE_TYPE_MAP.get(self.type, self.type)
-        if self.name.startswith('TDec_'):
+        if re.match(r'TDec_?\d', self.name):
             base = 'Decimal'
         s = f'{indent_str}{self.name}: TypeAlias = Annotated[{base}, SimpleType, '
         if self.documentation:
             # s += f'{indent_str}    """{'\n'.join(self.documentation).replace('"', '\\"')}"""'
             s += f'"""{'\n'.join(self.documentation).replace('"', '\\"')}""", '
         if base == 'Decimal':
-            tam = self.name.split('_')[1]
+            tam = self.name[5:] if self.name.startswith('TDec_') else self.name[4:]
             s += '('
             if r := re.search(r'a\d+', tam):
                 tam = f'{int(tam[0:2])}, {int(r.group()[1:])}'
