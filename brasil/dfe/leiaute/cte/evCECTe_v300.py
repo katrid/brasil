@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: evCECTe_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -16,13 +16,13 @@ class evCECTe(ComplexType):
     _xmlns = "http://www.portalfiscal.inf.br/cte"
     descEvento: Annotated[str, Element] = None
     nProt: Annotated[TProt, Element] = None
-    dhEntrega: Annotated[TDateTimeUTC, Element] = None
+    dhEntrega: Annotated[datetime | str, Element] = None
     nDoc: Annotated[str, Element] = None
     xNome: Annotated[str, Element] = None
     latitude: Annotated[TLatitude, Element] = None
     longitude: Annotated[TLongitude, Element] = None
     hashEntrega: Annotated[base64Binary, Element] = None
-    dhHashEntrega: Annotated[TDateTimeUTC, Element] = None
+    dhHashEntrega: Annotated[datetime | str, Element] = None
 
     class _infEntrega(ComplexType):
         """Grupo de informações das NF-e que foram entregues ao Destinatário

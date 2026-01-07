@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: evEPECCTe_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -35,6 +35,6 @@ class evEPECCTe(ComplexType):
     UFIni: Annotated[TUf, Element] = None
     UFFim: Annotated[TUf, Element] = None
     tpCTe: Annotated[str, Element] = None
-    dhEmi: Annotated[TDateTimeUTC, Element] = None
+    dhEmi: Annotated[datetime | str, Element] = None
 
 

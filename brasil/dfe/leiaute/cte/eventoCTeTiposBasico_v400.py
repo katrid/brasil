@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: eventoCTeTiposBasico_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,9 +10,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposGeralCTe_v400 import *
 
 
-class TVerEvento(str):
-    """Tipo Versão do Evento"""
-    pass
+TVerEvento: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do Evento""", ]
 
 
 class TEvento(ComplexType):
@@ -20,14 +18,14 @@ class TEvento(ComplexType):
     versao: Annotated[TVerEvento, Attribute] = None
 
     class _infEvento(ComplexType):
-        Id: Annotated[str, Attribute(pattern=r'ID[0-9]{53}')] = None
+        Id: Annotated[str, Attribute(pattern=r'ID[0-9]{12}[A-Z0-9]{12}[0-9]{29}')] = None
         cOrgao: Annotated[TCOrgaoIBGE, Element] = None
         tpAmb: Annotated[TAmb, Element] = None
         CNPJ: Annotated[TCnpj, Element] = None
         CPF: Annotated[TCpf, Element] = None
         CNPJ_CPF = Choice("CNPJ", "CPF")
         chCTe: Annotated[TChDFe, Element] = None
-        dhEvento: Annotated[TDateTimeUTC, Element] = None
+        dhEvento: Annotated[datetime | str, Element] = None
         tpEvento: Annotated[str, Element] = None
         nSeqEvento: Annotated[str, Element] = None
 
@@ -75,7 +73,7 @@ class TRetEvento(ComplexType):
         tpEvento: Annotated[str, Element] = None
         xEvento: Annotated[str, Element] = None
         nSeqEvento: Annotated[str, Element] = None
-        dhRegEvento: Annotated[TDateTimeUTC, Element] = None
+        dhRegEvento: Annotated[datetime | str, Element] = None
         nProt: Annotated[TProt, Element] = None
 
     infEvento: Annotated[_infEvento, Element] = None
@@ -87,18 +85,14 @@ class TProcEvento(ComplexType):
     versao: Annotated[TVerEvento, Attribute] = None
     ipTransmissor: Annotated[TIPv4, Attribute] = None
     nPortaCon: Annotated[str, Attribute(pattern=r'[0-9]{1,5}')] = None
-    dhConexao: Annotated[TDateTimeUTC, Attribute] = None
+    dhConexao: Annotated[datetime | str, Attribute] = None
     eventoCTe: Annotated[TEvento, Element] = None
     retEventoCTe: Annotated[TRetEvento, Element] = None
 
 
-class TModTransp(str):
-    """ Tipo Modal transporte"""
-    pass
+TModTransp: TypeAlias = Annotated[str, SimpleType, """ Tipo Modal transporte""", ]
 
 
-class TNSU(str):
-    """ Tipo número sequencial único do AN"""
-    pass
+TNSU: TypeAlias = Annotated[str, SimpleType, """ Tipo número sequencial único do AN""", ]
 
 

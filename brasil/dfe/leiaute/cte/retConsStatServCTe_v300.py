@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: retConsStatServCTe_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 

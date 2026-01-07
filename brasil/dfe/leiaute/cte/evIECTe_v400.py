@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: evIECTe_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -16,14 +16,14 @@ class evIECTe(ComplexType):
     _xmlns = "http://www.portalfiscal.inf.br/cte"
     descEvento: Annotated[str, Element] = None
     nProt: Annotated[TProt, Element] = None
-    dhTentativaEntrega: Annotated[TDateTimeUTC, Element] = None
+    dhTentativaEntrega: Annotated[datetime | str, Element] = None
     nTentativa: Annotated[str, Element] = None
     tpMotivo: Annotated[str, Element] = None
     xJustMotivo: Annotated[str, Element] = None
     latitude: Annotated[TLatitude, Element] = None
     longitude: Annotated[TLongitude, Element] = None
     hashTentativaEntrega: Annotated[base64Binary, Element] = None
-    dhHashTentativaEntrega: Annotated[TDateTimeUTC, Element] = None
+    dhHashTentativaEntrega: Annotated[datetime | str, Element] = None
 
     class _infEntrega(ComplexType):
         """Grupo de informações das NF-e que não tiveram sucesso na entrega ao Destinatário

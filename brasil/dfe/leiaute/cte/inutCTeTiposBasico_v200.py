@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: inutCTeTiposBasico_v2.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,9 +10,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposGeralCTe_v200 import *
 
 
-class TVerInutCTe(str):
-    """ Tipo Versão Inutilização de numeração de CT-e - 1.04"""
-    pass
+TVerInutCTe: TypeAlias = Annotated[str, SimpleType, """ Tipo Versão Inutilização de numeração de CT-e - 1.04""", ]
 
 
 class TInutCTe(ComplexType):
@@ -55,7 +53,7 @@ class TRetInutCTe(ComplexType):
         serie: Annotated[TSerie, Element] = None
         nCTIni: Annotated[TNF, Element] = None
         nCTFin: Annotated[TNF, Element] = None
-        dhRecbto: Annotated[datetime, Element] = None
+        dhRecbto: Annotated[datetime | str, Element] = None
         nProt: Annotated[TProt, Element] = None
 
     infInut: Annotated[_infInut, Element] = None

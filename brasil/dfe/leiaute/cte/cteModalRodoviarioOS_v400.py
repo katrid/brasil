@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: cteModalRodoviarioOS_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -11,14 +11,10 @@ from .tiposGeralCTe_v400 import *
 from .cteTiposBasico_v400 import *
 
 
-class TTermoAutFreta(str):
-    """Tipo Termo  de Autorização de Fretamento – TAF"""
-    pass
+TTermoAutFreta: TypeAlias = Annotated[str, SimpleType, """Tipo Termo  de Autorização de Fretamento – TAF""", ]
 
 
-class TNroRegEstadual(str):
-    """Tipo Número de Registro Estadual"""
-    pass
+TNroRegEstadual: TypeAlias = Annotated[str, SimpleType, """Tipo Número de Registro Estadual""", ]
 
 
 class rodoOS(ComplexType):
@@ -55,7 +51,7 @@ Só preenchido quando o veículo não pertencer à empresa emitente do CT-e OS""
     class _infFretamento(ComplexType):
         """Dados do fretamento (apenas para Transporte de Pessoas)"""
         tpFretamento: Annotated[str, Element] = None
-        dhViagem: Annotated[TDateTimeUTC, Element] = None
+        dhViagem: Annotated[datetime | str, Element] = None
 
     infFretamento: Annotated[_infFretamento, Element] = None
 

@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: consReciCTeTiposBasico_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -11,9 +11,7 @@ from .tiposGeralCTe_v300 import *
 from .cteTiposBasico_v300 import *
 
 
-class TVerConsReciCTe(str):
-    """ Tipo Versão do Consulta Lote de CT-e """
-    pass
+TVerConsReciCTe: TypeAlias = Annotated[str, SimpleType, """ Tipo Versão do Consulta Lote de CT-e """, ]
 
 
 class TConsReciCTe(ComplexType):

@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: procCTe_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -16,7 +16,7 @@ class cteProc(ComplexType):
     versao: Annotated[TVerCTe, Attribute] = None
     ipTransmissor: Annotated[TIPv4, Attribute] = None
     nPortaCon: Annotated[str, Attribute(pattern=r'[0-9]{1,5}')] = None
-    dhConexao: Annotated[TDateTimeUTC, Attribute] = None
+    dhConexao: Annotated[datetime | str, Attribute] = None
     CTe: Annotated[TCTe, Element] = None
     protCTe: Annotated[TProtCTe, Element] = None
 

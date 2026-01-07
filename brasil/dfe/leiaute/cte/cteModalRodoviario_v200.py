@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: cteModalRodoviario_v2.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -11,19 +11,13 @@ from .tiposGeralCTe_v200 import *
 from .cteTiposBasico_v200 import *
 
 
-class TRNTRC(str):
-    """Tipo RNTRC - Registro Nacional Transportadores Rodoviários de Carga"""
-    pass
+TRNTRC: TypeAlias = Annotated[str, SimpleType, """Tipo RNTRC - Registro Nacional Transportadores Rodoviários de Carga""", ]
 
 
-class TPlaca(str):
-    """Tipo Placa """
-    pass
+TPlaca: TypeAlias = Annotated[str, SimpleType, """Tipo Placa """, ]
 
 
-class TCIOT(str):
-    """Tipo CIOT - Código Identificador da Operação de Transporte"""
-    pass
+TCIOT: TypeAlias = Annotated[str, SimpleType, """Tipo CIOT - Código Identificador da Operação de Transporte""", ]
 
 
 class rodo(ComplexType):

@@ -2,282 +2,163 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: tiposGeralCTe_v2.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
 from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 
 
-class TAmb(str):
-    """Tipo Ambiente"""
-    pass
+TAmb: TypeAlias = Annotated[str, SimpleType, """Tipo Ambiente""", ]
 
 
-class Tano(str):
-    """ Tipo ano"""
-    pass
+Tano: TypeAlias = Annotated[str, SimpleType, """ Tipo ano""", ]
 
 
-class TCodUfIBGE(str):
-    """Tipo Código da UF da tabela do IBGE"""
-    pass
+TCodUfIBGE: TypeAlias = Annotated[str, SimpleType, """Tipo Código da UF da tabela do IBGE""", ]
 
 
-class TCodMunIBGE(str):
-    """Tipo Código do Município da tabela do IBGE"""
-    pass
+TCodMunIBGE: TypeAlias = Annotated[str, SimpleType, """Tipo Código do Município da tabela do IBGE""", ]
 
 
-class TCOrgaoIBGE(str):
-    """Tipo Código de orgão (UF da tabela do IBGE + 90 SUFRAMA)"""
-    pass
+TCOrgaoIBGE: TypeAlias = Annotated[str, SimpleType, """Tipo Código de orgão (UF da tabela do IBGE + 90 SUFRAMA)""", ]
 
 
-class TChNFe(str):
-    """Tipo Chave da Nota Fiscal Eletrônica"""
-    pass
+TChNFe: TypeAlias = Annotated[str, SimpleType, """Tipo Chave da Nota Fiscal Eletrônica""", ]
 
 
-class TCnpj(str):
-    """Tipo Número do CNPJ"""
-    pass
+TCnpj: TypeAlias = Annotated[str, SimpleType, """Tipo Número do CNPJ""", ]
 
 
-class TFone(str):
-    """Tipo Número do Telefone"""
-    pass
+TFone: TypeAlias = Annotated[str, SimpleType, """Tipo Número do Telefone""", ]
 
 
-class TCnpjVar(str):
-    """Tipo Número do CNPJ tamanho varíavel (3-14)"""
-    pass
+TCnpjVar: TypeAlias = Annotated[str, SimpleType, """Tipo Número do CNPJ tamanho varíavel (3-14)""", ]
 
 
-class TCnpjOpc(str):
-    """Tipo Número do CNPJ Opcional"""
-    pass
+TCnpjOpc: TypeAlias = Annotated[str, SimpleType, """Tipo Número do CNPJ Opcional""", ]
 
 
-class TCpf(str):
-    """Tipo Número do CPF"""
-    pass
+TCpf: TypeAlias = Annotated[str, SimpleType, """Tipo Número do CPF""", ]
 
 
-class TCpfVar(str):
-    """Tipo Número do CPF de tamanho variável (3-11)"""
-    pass
+TCpfVar: TypeAlias = Annotated[str, SimpleType, """Tipo Número do CPF de tamanho variável (3-11)""", ]
 
 
-class TData(str):
-    """ Tipo data AAAA-MM-DD"""
-    pass
+TData: TypeAlias = Annotated[str, SimpleType, """ Tipo data AAAA-MM-DD""", ]
 
 
-class TDec_0302(Decimal):
-    """Tipo Decimal com 5 dígitos, sendo 3 de corpo e 2 decimais"""
-    _xs_dec = (3, 2)
-    _xs_optional = False
+TDec_0302: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 5 dígitos, sendo 3 de corpo e 2 decimais""", (3, 2)]
 
 
-class TDec_0303(Decimal):
-    """Tipo Decimal com 6 dígitos, sendo 3 de corpo e 3 decimais"""
-    _xs_dec = (3, 3)
-    _xs_optional = False
+TDec_0303: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 6 dígitos, sendo 3 de corpo e 3 decimais""", (3, 3)]
 
 
-class TDec_0302_0303(Decimal):
-    """Tipo Decimal com 6  ou 5 dígitos, sendo 3 de corpo e 3 ou 2 decimais"""
-    _xs_dec = (3, 2)
-    _xs_optional = False
+TDec_0302_0303: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 6  ou 5 dígitos, sendo 3 de corpo e 3 ou 2 decimais""", (3, 2)]
 
 
-class TDec_0302Opc(Decimal):
-    """Tipo Decimal com 5 dígitos, sendo 3 de corpo e 2 decimais, utilizado em tags opcionais"""
-    _xs_dec = (3, 2)
-    _xs_optional = True
+TDec_0302Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 5 dígitos, sendo 3 de corpo e 2 decimais, utilizado em tags opcionais""", (3, 2, True)]
 
 
-class TDec_0803(Decimal):
-    """Tipo Decimal com 11 dígitos, sendo 8 de corpo e 3 decimais"""
-    _xs_dec = (8, 3)
-    _xs_optional = False
+TDec_0803: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 11 dígitos, sendo 8 de corpo e 3 decimais""", (8, 3)]
 
 
-class TDec_0803Opc(Decimal):
-    """Tipo Decimal com 11 dígitos, sendo 8 de corpo e 3 decimais utilizado em tags opcionais"""
-    _xs_dec = (8, 3)
-    _xs_optional = True
+TDec_0803Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 11 dígitos, sendo 8 de corpo e 3 decimais utilizado em tags opcionais""", (8, 3, True)]
 
 
-class TDec_0804(Decimal):
-    """Tipo Decimal com 12 dígitos, sendo 8 de corpo e 4decimais"""
-    _xs_dec = (8, 4)
-    _xs_optional = False
+TDec_0804: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 12 dígitos, sendo 8 de corpo e 4decimais""", (8, 4)]
 
 
-class TDec_0804Opc(Decimal):
-    """Tipo Decimal com 12 dígitos, sendo 8 de corpo e 4 decimais, utilizado em tags opcionais"""
-    _xs_dec = (8, 4)
-    _xs_optional = True
+TDec_0804Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 12 dígitos, sendo 8 de corpo e 4 decimais, utilizado em tags opcionais""", (8, 4, True)]
 
 
-class TDec_0906Opc(Decimal):
-    """Tipo Decimal com 15 dígitos, sendo 9 de corpo e 6 decimais, utilizado em tags opcionais"""
-    _xs_dec = (9, 6)
-    _xs_optional = True
+TDec_0906Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 9 de corpo e 6 decimais, utilizado em tags opcionais""", (9, 6, True)]
 
 
-class TDec_1104(Decimal):
-    """Tipo Decimal com 15 dígitos, sendo 11 de corpo e 4 decimais"""
-    _xs_dec = (11, 4)
-    _xs_optional = False
+TDec_1104: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 11 de corpo e 4 decimais""", (11, 4)]
 
 
-class TDec_1104Opc(Decimal):
-    """Tipo Decimal com 15 dígitos, sendo 11 de corpo e 4 decimais, utilizado em tags opcionais"""
-    _xs_dec = (11, 4)
-    _xs_optional = True
+TDec_1104Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 11 de corpo e 4 decimais, utilizado em tags opcionais""", (11, 4, True)]
 
 
-class TDec_1203(Decimal):
-    """Tipo Decimal com 15 dígitos, sendo 12 de corpo e 3 decimais"""
-    _xs_dec = (12, 3)
-    _xs_optional = False
+TDec_1203: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 12 de corpo e 3 decimais""", (12, 3)]
 
 
-class TDec_1203Opc(Decimal):
-    """Tipo Decimal com 15 dígitos, sendo 12 de corpo e 3 decimais, utilizado em tags opcionais"""
-    _xs_dec = (12, 3)
-    _xs_optional = True
+TDec_1203Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 12 de corpo e 3 decimais, utilizado em tags opcionais""", (12, 3, True)]
 
 
-class TDec_1204(Decimal):
-    """Tipo Decimal com 16 dígitos, sendo 12 de corpo e 4 decimais"""
-    _xs_dec = (12, 4)
-    _xs_optional = False
+TDec_1204: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 16 dígitos, sendo 12 de corpo e 4 decimais""", (12, 4)]
 
 
-class TDec_1204Opc(Decimal):
-    """Tipo Decimal com 16 dígitos, sendo 12 de corpo e 4 decimais, utilizado em tags opcionais"""
-    _xs_dec = (12, 4)
-    _xs_optional = True
+TDec_1204Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 16 dígitos, sendo 12 de corpo e 4 decimais, utilizado em tags opcionais""", (12, 4, True)]
 
 
-class TDec_1302(Decimal):
-    """Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais"""
-    _xs_dec = (13, 2)
-    _xs_optional = False
+TDec_1302: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais""", (13, 2)]
 
 
-class TDec_1302Opc(Decimal):
-    """Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais, utilizado em tags opcionais"""
-    _xs_dec = (13, 2)
-    _xs_optional = True
+TDec_1302Opc: TypeAlias = Annotated[Decimal, SimpleType, """Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais, utilizado em tags opcionais""", (13, 2, True)]
 
 
-class TIe(str):
-    """Tipo Inscrição Estadual do Emitente"""
-    pass
+TIe: TypeAlias = Annotated[str, SimpleType, """Tipo Inscrição Estadual do Emitente""", ]
 
 
-class TIeDest(str):
-    """Tipo Inscrição Estadual do Destinatário"""
-    pass
+TIeDest: TypeAlias = Annotated[str, SimpleType, """Tipo Inscrição Estadual do Destinatário""", ]
 
 
-class TString(str):
-    """ Tipo string genérico"""
-    pass
+TString: TypeAlias = Annotated[str, SimpleType, """ Tipo string genérico""", ]
 
 
-class TJust(str):
-    """Tipo Justificativa"""
-    pass
+TJust: TypeAlias = Annotated[str, SimpleType, """Tipo Justificativa""", ]
 
 
-class TMed(str):
-    """ Tipo temp médio em segundos"""
-    pass
+TMed: TypeAlias = Annotated[str, SimpleType, """ Tipo temp médio em segundos""", ]
 
 
-class TModCT(str):
-    """Tipo Modelo Documento Fiscal"""
-    pass
+TModCT: TypeAlias = Annotated[str, SimpleType, """Tipo Modelo Documento Fiscal""", ]
 
 
-class TModNF(str):
-    """Tipo Modelo Documento Fiscal - NF Remetente"""
-    pass
+TModNF: TypeAlias = Annotated[str, SimpleType, """Tipo Modelo Documento Fiscal - NF Remetente""", ]
 
 
-class TtipoUnidTransp(str):
-    """Tipo da Unidade de Transporte"""
-    pass
+TtipoUnidTransp: TypeAlias = Annotated[str, SimpleType, """Tipo da Unidade de Transporte""", ]
 
 
-class TtipoUnidCarga(str):
-    """Tipo da Unidade de Carga"""
-    pass
+TtipoUnidCarga: TypeAlias = Annotated[str, SimpleType, """Tipo da Unidade de Carga""", ]
 
 
-class TMotivo(str):
-    """Tipo Motivo"""
-    pass
+TMotivo: TypeAlias = Annotated[str, SimpleType, """Tipo Motivo""", ]
 
 
-class TNF(str):
-    """Tipo Número do Documento Fiscal"""
-    pass
+TNF: TypeAlias = Annotated[str, SimpleType, """Tipo Número do Documento Fiscal""", ]
 
 
-class TProt(str):
-    """Tipo Número do Protocolo de Status"""
-    pass
+TProt: TypeAlias = Annotated[str, SimpleType, """Tipo Número do Protocolo de Status""", ]
 
 
-class TRec(str):
-    """Tipo Número do Recibo do envio de lote de NF-e"""
-    pass
+TRec: TypeAlias = Annotated[str, SimpleType, """Tipo Número do Recibo do envio de lote de NF-e""", ]
 
 
-class TSerie(str):
-    """Tipo Série do Documento Fiscal """
-    pass
+TSerie: TypeAlias = Annotated[str, SimpleType, """Tipo Série do Documento Fiscal """, ]
 
 
-class TServ(str):
-    """Tipo Serviço solicitado"""
-    pass
+TServ: TypeAlias = Annotated[str, SimpleType, """Tipo Serviço solicitado""", ]
 
 
-class TStat(str):
-    """Tipo Código da Mensagem enviada"""
-    pass
+TStat: TypeAlias = Annotated[str, SimpleType, """Tipo Código da Mensagem enviada""", ]
 
 
-class TUf(str):
-    """Tipo Sigla da UF"""
-    pass
+TUf: TypeAlias = Annotated[str, SimpleType, """Tipo Sigla da UF""", ]
 
 
-class TUF_sem_EX(str):
-    """Tipo Sigla da UF, sem Exterior"""
-    pass
+TUF_sem_EX: TypeAlias = Annotated[str, SimpleType, """Tipo Sigla da UF, sem Exterior""", ]
 
 
-class TVerAplic(str):
-    """Tipo Versão do Aplicativo"""
-    pass
+TVerAplic: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do Aplicativo""", ]
 
 
-class TLatitude(str):
-    """Coordenada geográfica Latitude"""
-    pass
+TLatitude: TypeAlias = Annotated[str, SimpleType, """Coordenada geográfica Latitude""", ]
 
 
-class TLongitude(str):
-    """Coordenada geográfica Longitude"""
-    pass
+TLongitude: TypeAlias = Annotated[str, SimpleType, """Coordenada geográfica Longitude""", ]
 
 

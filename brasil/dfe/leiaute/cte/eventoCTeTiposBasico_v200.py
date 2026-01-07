@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: eventoCTeTiposBasico_v2.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,9 +10,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposGeralCTe_v200 import *
 
 
-class TVerEvento(str):
-    """Tipo Versão do Evento"""
-    pass
+TVerEvento: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do Evento""", ]
 
 
 class TEvento(ComplexType):
@@ -68,18 +66,12 @@ class TProcEvento(ComplexType):
     retEventoCTe: Annotated[TRetEvento, Element] = None
 
 
-class TModTransp(str):
-    """ Tipo Modal transporte"""
-    pass
+TModTransp: TypeAlias = Annotated[str, SimpleType, """ Tipo Modal transporte""", ]
 
 
-class TNSU(str):
-    """ Tipo número sequencial único do AN"""
-    pass
+TNSU: TypeAlias = Annotated[str, SimpleType, """ Tipo número sequencial único do AN""", ]
 
 
-class TPlaca(str):
-    """Tipo Placa """
-    pass
+TPlaca: TypeAlias = Annotated[str, SimpleType, """Tipo Placa """, ]
 
 

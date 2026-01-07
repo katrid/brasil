@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: consSitCTeTiposBasico_v2.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -13,9 +13,7 @@ from .cancCTeTiposBasico_v200 import *
 from .eventoCTeTiposBasico_v200 import *
 
 
-class TVerConsSitCTe(str):
-    """ Tipo Versão do Consulta situação de CT-e - 2.00"""
-    pass
+TVerConsSitCTe: TypeAlias = Annotated[str, SimpleType, """ Tipo Versão do Consulta situação de CT-e - 2.00""", ]
 
 
 class TConsSitCTe(ComplexType):

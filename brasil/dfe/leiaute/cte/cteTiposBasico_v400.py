@@ -2,22 +2,19 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: cteTiposBasico_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
 from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, TString, Restriction, ID, base64Binary, anyURI, string, dateTime, TXML, ElementList, XmlSignature
 from .tiposGeralCTe_v400 import *
+from .DFeTiposBasicos_v100 import *
 
 
-class TModTranspGTVe(str):
-    """ Tipo Modal transporte GTVe"""
-    pass
+TModTranspGTVe: TypeAlias = Annotated[str, SimpleType, """ Tipo Modal transporte GTVe""", ]
 
 
-class TFinGTVe(str):
-    """Tipo Finalidade da GTV-e"""
-    pass
+TFinGTVe: TypeAlias = Annotated[str, SimpleType, """Tipo Finalidade da GTV-e""", ]
 
 
 class TEndeEmi(ComplexType):
@@ -47,9 +44,7 @@ class TEndereco(ComplexType):
     xPais: Annotated[str, Element] = None
 
 
-class TEmail(str):
-    """Tipo Email"""
-    pass
+TEmail: TypeAlias = Annotated[str, SimpleType, """Tipo Email""", ]
 
 
 class TRespTec(ComplexType):
@@ -62,14 +57,10 @@ class TRespTec(ComplexType):
     hashCSRT: Annotated[base64Binary, Element] = None
 
 
-class TCfop(str):
-    """Tipo CFOP"""
-    pass
+TCfop: TypeAlias = Annotated[str, SimpleType, """Tipo CFOP""", ]
 
 
-class TVerCTe(str):
-    """Tipo Versão do CT-e - 4.00"""
-    pass
+TVerCTe: TypeAlias = Annotated[str, SimpleType, """Tipo Versão do CT-e - 4.00""", ]
 
 
 class TGTVe(ComplexType):
@@ -79,7 +70,7 @@ class TGTVe(ComplexType):
     class _infCte(ComplexType):
         """Informações do CT-e do tipo GTV-e"""
         versao: Annotated[TVerCTe, Attribute] = None
-        Id: Annotated[str, Attribute(pattern=r'CTe[0-9]{44}')] = None
+        Id: Annotated[str, Attribute(pattern=r'CTe[0-9]{6}[A-Z0-9]{12}[0-9]{26}')] = None
 
         class _ide(ComplexType):
             """Identificação da GTV-e """
@@ -90,7 +81,7 @@ class TGTVe(ComplexType):
             mod: Annotated[TModGTVe, Element] = None
             serie: Annotated[TSerie, Element] = None
             nCT: Annotated[TNF, Element] = None
-            dhEmi: Annotated[TDateTimeUTC, Element] = None
+            dhEmi: Annotated[datetime | str, Element] = None
             tpImp: Annotated[str, Element] = None
             tpEmis: Annotated[str, Element] = None
             cDV: Annotated[str, Element] = None
@@ -103,8 +94,8 @@ class TGTVe(ComplexType):
             modal: Annotated[TModTranspGTVe, Element] = None
             tpServ: Annotated[str, Element] = None
             indIEToma: Annotated[str, Element] = None
-            dhSaidaOrig: Annotated[TDateTimeUTC, Element] = None
-            dhChegadaDest: Annotated[TDateTimeUTC, Element] = None
+            dhSaidaOrig: Annotated[datetime | str, Element] = None
+            dhChegadaDest: Annotated[datetime | str, Element] = None
 
             class _toma(ComplexType):
                 """Indicador do \"papel\" do tomador do serviço no GT-e"""
@@ -127,7 +118,7 @@ class TGTVe(ComplexType):
 
             tomaTerceiro: Annotated[_tomaTerceiro, Element] = None
             toma_tomaTerceiro = Choice("toma", "tomaTerceiro")
-            dhCont: Annotated[TDateTimeUTC, Element] = None
+            dhCont: Annotated[datetime | str, Element] = None
             xJust: Annotated[str, Element] = None
 
         ide: Annotated[_ide, Element] = None
@@ -253,7 +244,7 @@ class TProtCTe(ComplexType):
         tpAmb: Annotated[TAmb, Element] = None
         verAplic: Annotated[TVerAplic, Element] = None
         chCTe: Annotated[TChDFe, Element] = None
-        dhRecbto: Annotated[TDateTimeUTC, Element] = None
+        dhRecbto: Annotated[datetime | str, Element] = None
         nProt: Annotated[TProt, Element] = None
         digVal: Annotated[TXML, Element] = None
         cStat: Annotated[TStat, Element] = None
@@ -280,7 +271,7 @@ class TProtCTeOS(ComplexType):
         tpAmb: Annotated[TAmb, Element] = None
         verAplic: Annotated[TVerAplic, Element] = None
         chCTe: Annotated[TChDFe, Element] = None
-        dhRecbto: Annotated[TDateTimeUTC, Element] = None
+        dhRecbto: Annotated[datetime | str, Element] = None
         nProt: Annotated[TProt, Element] = None
         digVal: Annotated[TXML, Element] = None
         cStat: Annotated[TStat, Element] = None
@@ -307,7 +298,7 @@ class TProtGTVe(ComplexType):
         tpAmb: Annotated[TAmb, Element] = None
         verAplic: Annotated[TVerAplic, Element] = None
         chCTe: Annotated[TChDFe, Element] = None
-        dhRecbto: Annotated[TDateTimeUTC, Element] = None
+        dhRecbto: Annotated[datetime | str, Element] = None
         nProt: Annotated[TProt, Element] = None
         digVal: Annotated[TXML, Element] = None
         cStat: Annotated[TStat, Element] = None
@@ -446,9 +437,7 @@ class TImp(ComplexType):
     ICMS00_ICMS20_ICMS45_ICMS60_ICMS90_ICMSOutraUF_ICMSSN = Choice("ICMS00", "ICMS20", "ICMS45", "ICMS60", "ICMS90", "ICMSOutraUF", "ICMSSN")
 
 
-class TContainer(str):
-    """Tipo Número do Container"""
-    pass
+TContainer: TypeAlias = Annotated[str, SimpleType, """Tipo Número do Container""", ]
 
 
 class TUnidCarga(ComplexType):
@@ -478,24 +467,16 @@ class TUnidadeTransp(ComplexType):
     qtdRat: Annotated[TDec_0302_0303, Element] = None
 
 
-class TFinCTeSimp(str):
-    """Tipos Finalidade de CT-e Simplificado"""
-    pass
+TFinCTeSimp: TypeAlias = Annotated[str, SimpleType, """Tipos Finalidade de CT-e Simplificado""", ]
 
 
-class TModTranspSimp(str):
-    """ Tipo Modal transporte do CTe Simplificado"""
-    pass
+TModTranspSimp: TypeAlias = Annotated[str, SimpleType, """ Tipo Modal transporte do CTe Simplificado""", ]
 
 
-class TCRT(str):
-    """Tipo Código Regime Tributário"""
-    pass
+TCRT: TypeAlias = Annotated[str, SimpleType, """Tipo Código Regime Tributário""", ]
 
 
-class TProcEmi(str):
-    """Tipo processo de emissão do CT-e"""
-    pass
+TProcEmi: TypeAlias = Annotated[str, SimpleType, """Tipo processo de emissão do CT-e""", ]
 
 
 class TCTeSimp(ComplexType):
@@ -504,7 +485,7 @@ class TCTeSimp(ComplexType):
     class _infCte(ComplexType):
         """Informações do CT-e"""
         versao: Annotated[TVerCTe, Attribute] = None
-        Id: Annotated[str, Attribute(pattern=r'CTe[0-9]{44}')] = None
+        Id: Annotated[str, Attribute(pattern=r'CTe[0-9]{6}[A-Z0-9]{12}[0-9]{26}')] = None
 
         class _ide(ComplexType):
             """Identificação do CT-e"""
@@ -515,7 +496,7 @@ class TCTeSimp(ComplexType):
             mod: Annotated[TModCT, Element] = None
             serie: Annotated[TSerie, Element] = None
             nCT: Annotated[TNF, Element] = None
-            dhEmi: Annotated[TDateTimeUTC, Element] = None
+            dhEmi: Annotated[datetime | str, Element] = None
             tpImp: Annotated[str, Element] = None
             tpEmis: Annotated[str, Element] = None
             cDV: Annotated[str, Element] = None
@@ -532,8 +513,9 @@ class TCTeSimp(ComplexType):
             UFFim: Annotated[TUf, Element] = None
             retira: Annotated[str, Element] = None
             xDetRetira: Annotated[str, Element] = None
-            dhCont: Annotated[TDateTimeUTC, Element] = None
+            dhCont: Annotated[datetime | str, Element] = None
             xJust: Annotated[str, Element] = None
+            gCompraGov: Annotated[TCompraGovReduzido, Element] = None
 
         ide: Annotated[_ide, Element] = None
 
@@ -723,6 +705,7 @@ Grupo a ser informado nas prestações interestaduais para consumidor final, nã
                 vICMSUFIni: Annotated[TDec_1302, Element] = None
 
             ICMSUFFim: Annotated[_ICMSUFFim, Element] = None
+            IBSCBS: Annotated[TTribCTe, Element] = None
 
         imp: Annotated[_imp, Element] = None
 
@@ -730,6 +713,7 @@ Grupo a ser informado nas prestações interestaduais para consumidor final, nã
             """Valores Totais do CTe"""
             vTPrest: Annotated[TDec_1302, Element] = None
             vTRec: Annotated[TDec_1302, Element] = None
+            vTotDFe: Annotated[TDec_1302, Element] = None
 
         total: Annotated[_total, Element] = None
 
@@ -772,24 +756,16 @@ Informar CNPJ ou CPF. Preencher os zeros não significativos."""
     Signature: Annotated[XmlSignature, Element] = None
 
 
-class TDocAssoc(str):
-    """ Tipo Documento Associado"""
-    pass
+TDocAssoc: TypeAlias = Annotated[str, SimpleType, """ Tipo Documento Associado""", ]
 
 
-class TFinCTe(str):
-    """Tipo Finalidade da CT-e"""
-    pass
+TFinCTe: TypeAlias = Annotated[str, SimpleType, """Tipo Finalidade da CT-e""", ]
 
 
-class TModTransp(str):
-    """ Tipo Modal transporte"""
-    pass
+TModTransp: TypeAlias = Annotated[str, SimpleType, """ Tipo Modal transporte""", ]
 
 
-class TTime(str):
-    """Tipo hora"""
-    pass
+TTime: TypeAlias = Annotated[str, SimpleType, """Tipo hora""", ]
 
 
 class TCTe(ComplexType):
@@ -798,7 +774,7 @@ class TCTe(ComplexType):
     class _infCte(ComplexType):
         """Informações do CT-e"""
         versao: Annotated[TVerCTe, Attribute] = None
-        Id: Annotated[str, Attribute(pattern=r'CTe[0-9]{44}')] = None
+        Id: Annotated[str, Attribute(pattern=r'CTe[0-9]{6}[A-Z0-9]{12}[0-9]{26}')] = None
 
         class _ide(ComplexType):
             """Identificação do CT-e"""
@@ -809,7 +785,7 @@ class TCTe(ComplexType):
             mod: Annotated[TModCT, Element] = None
             serie: Annotated[TSerie, Element] = None
             nCT: Annotated[TNF, Element] = None
-            dhEmi: Annotated[TDateTimeUTC, Element] = None
+            dhEmi: Annotated[datetime | str, Element] = None
             tpImp: Annotated[str, Element] = None
             tpEmis: Annotated[str, Element] = None
             cDV: Annotated[str, Element] = None
@@ -854,8 +830,9 @@ class TCTe(ComplexType):
 
             toma4: Annotated[_toma4, Element] = None
             toma3_toma4 = Choice("toma3", "toma4")
-            dhCont: Annotated[TDateTimeUTC, Element] = None
+            dhCont: Annotated[datetime | str, Element] = None
             xJust: Annotated[str, Element] = None
+            gCompraGov: Annotated[TCompraGovReduzido, Element] = None
 
         ide: Annotated[_ide, Element] = None
 
@@ -1052,6 +1029,8 @@ Grupo a ser informado nas prestações interestaduais para consumidor final, nã
                 vICMSUFIni: Annotated[TDec_1302, Element] = None
 
             ICMSUFFim: Annotated[_ICMSUFFim, Element] = None
+            IBSCBS: Annotated[TTribCTe, Element] = None
+            vTotDFe: Annotated[TDec_1302, Element] = None
 
         imp: Annotated[_imp, Element] = None
 
@@ -1134,7 +1113,13 @@ Este grupo deve ser informado quando o documento originário for NF """
                     infUnidCarga_infUnidTransp = Choice("infUnidCarga", "infUnidTransp")
 
                 infOutros: Annotated[ElementList[_infOutros], Element] = None
-                infNF_infNFe_infOutros = Choice("infNF", "infNFe", "infOutros")
+
+                class _infDCe(ComplexType):
+                    """Informações das DCe"""
+                    chave: Annotated[TChDFe, Element] = None
+
+                infDCe: Annotated[ElementList[_infDCe], Element] = None
+                infNF_infNFe_infOutros_infDCe = Choice("infNF", "infNFe", "infOutros", "infDCe")
 
             infDoc: Annotated[_infDoc, Element] = None
 
@@ -1353,9 +1338,7 @@ class TImpOS(ComplexType):
     ICMS00_ICMS20_ICMS45_ICMS90_ICMSOutraUF_ICMSSN = Choice("ICMS00", "ICMS20", "ICMS45", "ICMS90", "ICMSOutraUF", "ICMSSN")
 
 
-class TModTranspOS(str):
-    """ Tipo Modal transporte Outros Serviços"""
-    pass
+TModTranspOS: TypeAlias = Annotated[str, SimpleType, """ Tipo Modal transporte Outros Serviços""", ]
 
 
 class TCTeOS(ComplexType):
@@ -1365,7 +1348,7 @@ class TCTeOS(ComplexType):
     class _infCte(ComplexType):
         """Informações do CT-e Outros Serviços"""
         versao: Annotated[TVerCTe, Attribute] = None
-        Id: Annotated[str, Attribute(pattern=r'CTe[0-9]{44}')] = None
+        Id: Annotated[str, Attribute(pattern=r'CTe[0-9]{6}[A-Z0-9]{12}[0-9]{26}')] = None
 
         class _ide(ComplexType):
             """Identificação do CT-e Outros Serviços"""
@@ -1376,7 +1359,7 @@ class TCTeOS(ComplexType):
             mod: Annotated[TModCTOS, Element] = None
             serie: Annotated[TSerie, Element] = None
             nCT: Annotated[TNF, Element] = None
-            dhEmi: Annotated[TDateTimeUTC, Element] = None
+            dhEmi: Annotated[datetime | str, Element] = None
             tpImp: Annotated[str, Element] = None
             tpEmis: Annotated[str, Element] = None
             cDV: Annotated[str, Element] = None
@@ -1402,8 +1385,9 @@ class TCTeOS(ComplexType):
                 UFPer: Annotated[TUf, Element] = None
 
             infPercurso: Annotated[ElementList[_infPercurso], Element] = None
-            dhCont: Annotated[TDateTimeUTC, Element] = None
+            dhCont: Annotated[datetime | str, Element] = None
             xJust: Annotated[str, Element] = None
+            gCompraGov: Annotated[TCompraGovReduzido, Element] = None
 
         ide: Annotated[_ide, Element] = None
 
@@ -1502,6 +1486,8 @@ Grupo a ser informado nas prestações interestaduais para consumidor final, nã
                 vCSLL: Annotated[TDec_1302, Element] = None
 
             infTribFed: Annotated[_infTribFed, Element] = None
+            IBSCBS: Annotated[TTribCTe, Element] = None
+            vTotDFe: Annotated[TDec_1302, Element] = None
 
         imp: Annotated[_imp, Element] = None
 
@@ -1669,28 +1655,18 @@ class TEndReEnt(ComplexType):
     UF: Annotated[TUf, Element] = None
 
 
-class TCListServ(str):
-    """Tipo Código da Lista de Serviços LC 116/2003"""
-    pass
+TCListServ: TypeAlias = Annotated[str, SimpleType, """Tipo Código da Lista de Serviços LC 116/2003""", ]
 
 
-class TIdLote(str):
-    """Tipo Identificador de controle do envio do lote. Número seqüencial auto-incremental, de controle correspondente ao identificador único do lote enviado. A responsabilidade de gerar e controlar esse número é do próprio contribuinte."""
-    pass
+TIdLote: TypeAlias = Annotated[str, SimpleType, """Tipo Identificador de controle do envio do lote. Número seqüencial auto-incremental, de controle correspondente ao identificador único do lote enviado. A responsabilidade de gerar e controlar esse número é do próprio contribuinte.""", ]
 
 
-class TModDoc(str):
-    """ Tipo Modelo do Documento"""
-    pass
+TModDoc: TypeAlias = Annotated[str, SimpleType, """ Tipo Modelo do Documento""", ]
 
 
-class TRNTRC(str):
-    """Tipo RNTRC - Registro Nacional Transportadores Rodoviários de Carga"""
-    pass
+TRNTRC: TypeAlias = Annotated[str, SimpleType, """Tipo RNTRC - Registro Nacional Transportadores Rodoviários de Carga""", ]
 
 
-class TCIOT(str):
-    """Tipo CIOT - Código Identificador da Operação de Transporte"""
-    pass
+TCIOT: TypeAlias = Annotated[str, SimpleType, """Tipo CIOT - Código Identificador da Operação de Transporte""", ]
 
 

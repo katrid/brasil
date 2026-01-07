@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: consStatServTiposBasico_v4.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,9 +10,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposGeralCTe_v400 import *
 
 
-class TVerConsStat(str):
-    """ Tipo Versão do Consulta do Status do Serviço CTe"""
-    pass
+TVerConsStat: TypeAlias = Annotated[str, SimpleType, """ Tipo Versão do Consulta do Status do Serviço CTe""", ]
 
 
 class TConsStatServ(ComplexType):
@@ -31,9 +29,9 @@ class TRetConsStatServ(ComplexType):
     cStat: Annotated[TStat, Element] = None
     xMotivo: Annotated[TMotivo, Element] = None
     cUF: Annotated[TCodUfIBGE, Element] = None
-    dhRecbto: Annotated[TDateTimeUTC, Element] = None
+    dhRecbto: Annotated[datetime | str, Element] = None
     tMed: Annotated[int, Element] = None
-    dhRetorno: Annotated[TDateTimeUTC, Element] = None
+    dhRetorno: Annotated[datetime | str, Element] = None
     xObs: Annotated[str, Element] = None
 
 

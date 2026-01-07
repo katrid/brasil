@@ -2,7 +2,7 @@
 # DO NOT CHANGE THIS FILE (use compile override instead)
 # xsd: cancCTeTiposBasico_v3.00.xsd
 # xmlns: http://www.portalfiscal.inf.br/cte
-from typing import List, Annotated
+from typing import List, Annotated, TypeAlias
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -10,9 +10,7 @@ from brasil.dfe.xsd import Choice, SimpleType, ComplexType, Attribute, Element, 
 from .tiposGeralCTe_v300 import *
 
 
-class TVerCancCTe(str):
-    """ Tipo Versão de cancela CT-e"""
-    pass
+TVerCancCTe: TypeAlias = Annotated[str, SimpleType, """ Tipo Versão de cancela CT-e""", ]
 
 
 class TCancCTe(ComplexType):
@@ -45,7 +43,7 @@ class TRetCancCTe(ComplexType):
         cStat: Annotated[TStat, Element] = None
         xMotivo: Annotated[TMotivo, Element] = None
         chCTe: Annotated[TChNFe, Element] = None
-        dhRecbto: Annotated[datetime, Element] = None
+        dhRecbto: Annotated[datetime | str, Element] = None
         nProt: Annotated[TProt, Element] = None
 
     infCanc: Annotated[_infCanc, Element] = None
