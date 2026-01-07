@@ -47,6 +47,8 @@ class XmlProp:
                 self.element = arg
             elif isinstance(arg, tuple):
                 self.type_args = arg
+            elif arg is Attribute:
+                self.element = Attribute
 
     def find_on_module(self):
         mod = import_module(self.cls.__module__)
