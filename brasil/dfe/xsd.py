@@ -223,6 +223,8 @@ class ComplexType(SimpleType, metaclass=ElementType):
                 elif issubclass(prop.type, ComplexType):
                     if isinstance(v, str):
                         args.append(v)
+                else:
+                    args.append(tag(k, v))
         if not args:
             return ''
         if self._xmlns:
