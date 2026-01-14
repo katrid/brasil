@@ -32,17 +32,25 @@ class StmtTrn(TypedDict):
     FITID: str
     NAME: str
     MEMO: str
+    REFNUM: str
 
 
 class BankTranList(TypedDict):
-    DTSTART: datetime.datetime
-    DTEND: datetime.datetime
-    STMTTRN: list[dict]
+    DTSTART: str
+    DTEND: str
+    STMTTRN: list[StmtTrn]
+
+
+class BankAcctFrom(TypedDict):
+    BANKID: str
+    ACCTID: str
+    ACCTTYPE: str
+    BRANCHID: str
 
 
 class StmtRs(TypedDict):
     CURDEF: str
-    BANKACCTFROM: dict
+    BANKACCTFROM: BankAcctFrom
     BANKTRANLIST: BankTranList
     LEDGERBAL: dict
     AVAILBAL: dict
@@ -51,7 +59,7 @@ class StmtRs(TypedDict):
 class StmtTrnRs(TypedDict):
     TRNUID: str
     STATUS: dict
-    STMTRS: list[StmtRs]
+    STMTRS: StmtRs
 
 
 class BankMsgSrsv1(TypedDict):
