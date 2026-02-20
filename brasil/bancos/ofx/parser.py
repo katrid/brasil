@@ -21,7 +21,7 @@ class OfxParser:
         tags: list[dict] = [cur_tag]
         encoding = 'latin-1'
         encoding_map = {
-            'USASCII': 'ascii',
+            'USASCII': 'latin-1',
             'UNICODE': 'utf-16',
             'UTF-8': 'utf-8',
         }
@@ -63,7 +63,7 @@ class OfxParser:
                         v = None
                     header[k] = v
                     if k == 'ENCODING' and v:
-                        encoding = encoding_map.get(v.strip(), v.strip())
+                        encoding = encoding_map.get(v.strip(), encoding)
         doc.header = cast(OfxHeader, cast(object, header))
         doc.body = cast(OfxBody, cast(object, cur_tag))
         return doc
