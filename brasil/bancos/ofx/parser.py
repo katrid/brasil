@@ -2,12 +2,13 @@ import re
 from typing import cast
 from io import IOBase
 
-from .leiaute import OfxDocument, OfxBody, OfxHeader
+from brasil.bancos.ofx.leiaute import OfxDocument, OfxBody, OfxHeader
 
 
 class OfxParser:
     RE_INLINE_TAG = re.compile(r'<([a-zA-Z0-9_.]+)>([^<>]+)')
     RE_TAG = re.compile(r'<([a-zA-Z0-9_.]+)>')
+    RE_TAG_EMPTY = re.compile(r'<([a-zA-Z0-9_.]+)></\1>')
 
     def parse(self, ofx_data: IOBase):
         ofx_data.seek(0)
@@ -27,6 +28,9 @@ class OfxParser:
                         tag_name = tag.group(1)
                         tag_value = tag.group(2).strip()
                         cur_tag[tag_name] = tag_value
+                    elif tag := self.RE_TAG_EMPTY.match(s):
+                        tag_name = tag.group(1)
+                        cur_tag[tag_name] = None
                     elif tag := self.RE_TAG.match(s):
                         tag_name = tag.group(1)
                         if tag_name == 'OFX':
