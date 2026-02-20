@@ -21,7 +21,6 @@ class OfxParser:
         tags: list[dict] = [cur_tag]
         encoding = 'latin-1'
         encoding_map = {
-            'USASCII': 'latin-1',
             '1252': 'cp1252',
             'UNICODE': 'utf-16',
             'UTF-8': 'utf-8',
