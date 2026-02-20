@@ -22,6 +22,7 @@ class OfxParser:
         encoding = 'latin-1'
         encoding_map = {
             'USASCII': 'latin-1',
+            '1252': 'cp1252',
             'UNICODE': 'utf-16',
             'UTF-8': 'utf-8',
         }
@@ -63,6 +64,8 @@ class OfxParser:
                         v = None
                     header[k] = v
                     if k == 'ENCODING' and v:
+                        encoding = encoding_map.get(v.strip(), encoding)
+                    elif k == 'CHARSET' and v:
                         encoding = encoding_map.get(v.strip(), encoding)
         doc.header = cast(OfxHeader, cast(object, header))
         doc.body = cast(OfxBody, cast(object, cur_tag))
