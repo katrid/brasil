@@ -1,3 +1,5 @@
+import sys
+
 import re
 from typing import cast
 from io import IOBase
@@ -17,8 +19,14 @@ class OfxParser:
         cur_tag: dict = {}  # ofx
         cur_list: list | None = None
         tags: list[dict] = [cur_tag]
+        encoding = 'latin-1'
+        encoding_map = {
+            'USASCII': 'ascii',
+            'UNICODE': 'utf-16',
+            'UTF-8': 'utf-8',
+        }
         for l in ofx_data.readlines():
-            if s := l.decode('latin-1').strip():
+            if s := l.decode(encoding).strip():
                 if s.startswith('</'):  # ler tag de fechamento
                     cur_tag = tags.pop()
                     if tags:
@@ -30,7 +38,7 @@ class OfxParser:
                         cur_tag[tag_name] = tag_value
                     elif tag := self.RE_TAG_EMPTY.match(s):
                         tag_name = tag.group(1)
-                        cur_tag[tag_name] = None
+                        cur_tag[tag_name] = ''
                     elif tag := self.RE_TAG.match(s):
                         tag_name = tag.group(1)
                         if tag_name == 'OFX':
@@ -49,7 +57,20 @@ class OfxParser:
 
                 else:  # ler header
                     k, v = s.split(':', 1)
-                    header[k.strip()] = v.strip()
+                    k = k.strip()
+                    v = v.strip()
+                    if not v or v == 'NONE':
+                        v = None
+                    header[k] = v
+                    if k == 'ENCODING' and v:
+                        encoding = encoding_map.get(v.strip(), v.strip())
         doc.header = cast(OfxHeader, cast(object, header))
         doc.body = cast(OfxBody, cast(object, cur_tag))
         return doc
+
+
+if __name__ == "__main__":
+    with open(sys.argv[1], "rb") as f:
+        ofx = OfxParser().parse(f)
+        print(ofx.body)
+        print(ofx.body['BANKMSGSRSV1']['STMTTRNRS']['STMTRS']['BANKACCTFROM'])
