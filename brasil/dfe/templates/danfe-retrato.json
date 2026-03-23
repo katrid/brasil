@@ -3718,7 +3718,7 @@
                 "y": 0,
                 "width": 26.45669535,
                 "height": 11.33858268,
-                "text": "{{prod.imp.icms.orig}}{{prod.imp.icms.CST or prod.imp.icms.CSOSN}}",
+                "text": "{{prod.imp.icms.orig}}{{prod.imp.cst}}",
                 "hAlign": 1,
                 "font": {
                   "name": "Times New Roman",
