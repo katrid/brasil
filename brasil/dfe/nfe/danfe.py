@@ -31,35 +31,37 @@ def mascara_doc(doc: str) -> str:
 
 
 def get_imposto(imp: NFe._infNFe._det._imposto):
+    icms, cst = get_icms(imp)
     return {
-        'icms': get_icms(imp),
+        'icms': icms,
+        'cst': cst,
         'ipi': imp.IPI,
     }
 
 
 def get_icms(imp: NFe._infNFe._det._imposto):
     if imp.ICMS.ICMS00.CST == '00':
-        return imp.ICMS.ICMS00
+        return imp.ICMS.ICMS00, '00'
     if imp.ICMS.ICMS10.CST == '10':
-        return imp.ICMS.ICMS10
+        return imp.ICMS.ICMS10, '10'
     if imp.ICMS.ICMS20.CST == '20':
-        return imp.ICMS.ICMS20
+        return imp.ICMS.ICMS20, '20'
     if imp.ICMS.ICMS30.CST == '30':
-        return imp.ICMS.ICMS30
+        return imp.ICMS.ICMS30, '30'
     if imp.ICMS.ICMS40.CST in ('40', '41', '50'):
-        return imp.ICMS.ICMS40
+        return imp.ICMS.ICMS40, '40'
     if imp.ICMS.ICMS51.CST == '51':
-        return imp.ICMS.ICMS51
+        return imp.ICMS.ICMS51, '51'
     if imp.ICMS.ICMS60.CST == '60':
-        return imp.ICMS.ICMS60
+        return imp.ICMS.ICMS60, '60'
     if imp.ICMS.ICMS70.CST == '70':
-        return imp.ICMS.ICMS70
+        return imp.ICMS.ICMS70, '70'
     if imp.ICMS.ICMS90.CST == '90':
-        return imp.ICMS.ICMS90
+        return imp.ICMS.ICMS90, '90'
     if imp.ICMS.ICMSSN101.CSOSN == '101':
-        return imp.ICMS.ICMSSN101
+        return imp.ICMS.ICMSSN101, '101'
     if imp.ICMS.ICMSSN101.CSOSN == '102':
-        return imp.ICMS.ICMSSN102
+        return imp.ICMS.ICMSSN102, '102'
     return None
 
 
