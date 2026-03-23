@@ -31,7 +31,12 @@ def mascara_doc(doc: str) -> str:
 
 
 def get_imposto(imp: NFe._infNFe._det._imposto):
-    icms, cst = get_icms(imp)
+    icms = get_icms(imp)
+    if icms:
+        icms, cst = icms
+    else:
+        icms = None
+        cst = None
     return {
         'icms': icms,
         'cst': cst,
@@ -61,7 +66,7 @@ def get_icms(imp: NFe._infNFe._det._imposto):
     if imp.ICMS.ICMSSN101.CSOSN == '101':
         return imp.ICMS.ICMSSN101, '101'
     if imp.ICMS.ICMSSN101.CSOSN == '102':
-        return imp.ICMS.ICMSSN102, '102'
+        return imp.ICMS.ICMSSN102
     return None
 
 
