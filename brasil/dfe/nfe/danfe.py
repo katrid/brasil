@@ -66,7 +66,7 @@ def get_icms(imp: NFe._infNFe._det._imposto):
     if imp.ICMS.ICMSSN101.CSOSN == '101':
         return imp.ICMS.ICMSSN101, '101'
     if imp.ICMS.ICMSSN101.CSOSN == '102':
-        return imp.ICMS.ICMSSN102
+        return imp.ICMS.ICMSSN102, '102'
     return None
 
 
