@@ -11,6 +11,7 @@ class OfxParser:
     RE_INLINE_TAG = re.compile(r'<([a-zA-Z0-9_.]+)>([^<>]+)')
     RE_TAG = re.compile(r'<([a-zA-Z0-9_.]+)>')
     RE_TAG_EMPTY = re.compile(r'<([a-zA-Z0-9_.]+)></\1>')
+    encoding = 'latin-1'
 
     def parse(self, ofx_data: IOBase):
         ofx_data.seek(0)
@@ -19,7 +20,7 @@ class OfxParser:
         cur_tag: dict = {}  # ofx
         cur_list: list | None = None
         tags: list[dict] = [cur_tag]
-        encoding = 'latin-1'
+        encoding = self.encoding
         encoding_map = {
             '1252': 'cp1252',
             'UNICODE': 'utf-16',
@@ -63,7 +64,7 @@ class OfxParser:
                         v = None
                     header[k] = v
                     if k == 'ENCODING' and v:
-                        encoding = encoding_map.get(v.strip(), encoding)
+                        self.encoding = encoding = encoding_map.get(v.strip(), encoding)
                     elif k == 'CHARSET' and v:
                         encoding = encoding_map.get(v.strip(), encoding)
         doc.header = cast(OfxHeader, cast(object, header))
@@ -74,5 +75,6 @@ class OfxParser:
 if __name__ == "__main__":
     with open(sys.argv[1], "rb") as f:
         ofx = OfxParser().parse(f)
-        print(ofx.body)
-        print(ofx.body['BANKMSGSRSV1']['STMTTRNRS']['STMTRS']['BANKACCTFROM'])
+        for v in ofx.body['BANKMSGSRSV1']['STMTTRNRS']['STMTRS']['BANKTRANLIST']['STMTTRN']:
+            print(v)
+        # print(ofx.body['BANKMSGSRSV1']['STMTTRNRS']['STMTRS']['BANKACCTFROM'])
