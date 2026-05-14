@@ -4,5 +4,5 @@ from .leiaute import *
 from .parser import OfxParser
 
 
-def load_ofx(file: IOBase) -> OfxDocument:
-    return OfxParser().parse(file)
+def load_ofx(data: bytes) -> OfxDocument:
+    return OfxParser().parse(data)

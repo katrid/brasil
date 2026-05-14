@@ -12,8 +12,7 @@ class OfxParser:
     RE_TAG = re.compile(r'<([a-zA-Z0-9_.]+)>')
     RE_TAG_EMPTY = re.compile(r'<([a-zA-Z0-9_.]+)></\1>')
 
-    def parse(self, ofx_data: IOBase):
-        ofx_data.seek(0)
+    def parse(self, ofx_data: bytes):
         doc = OfxDocument()
         header = {}
         cur_tag: dict = {}  # ofx
@@ -25,7 +24,7 @@ class OfxParser:
             'UNICODE': 'utf-16',
             'UTF-8': 'utf-8',
         }
-        for l in ofx_data.readlines():
+        for l in ofx_data.splitlines():
             if s := l.decode(encoding).strip():
                 if s.startswith('</'):  # ler tag de fechamento
                     cur_tag = tags.pop()
@@ -73,7 +72,7 @@ class OfxParser:
 
 if __name__ == "__main__":
     with open(sys.argv[1], "rb") as f:
-        ofx = OfxParser().parse(f)
+        ofx = OfxParser().parse(f.read())
         for v in ofx.body['BANKMSGSRSV1']['STMTTRNRS']['STMTRS']['BANKTRANLIST']['STMTTRN']:
             print(v)
         # print(ofx.body['BANKMSGSRSV1']['STMTTRNRS']['STMTRS']['BANKACCTFROM'])
