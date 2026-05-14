@@ -67,6 +67,7 @@ class OfxParser:
                         encoding = encoding_map.get(v.strip(), encoding)
         doc.header = cast(OfxHeader, cast(object, header))
         doc.body = cast(OfxBody, cast(object, cur_tag))
+        doc.encoding = encoding
         return doc
 
 

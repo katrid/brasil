@@ -74,3 +74,4 @@ class OfxBody(TypedDict):
 class OfxDocument:
     header: OfxHeader
     body: OfxBody
+    encoding: str
