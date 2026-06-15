@@ -381,8 +381,10 @@ validate_rules = {
 
 
 class PEFANTTClient:
-    def __init__(self, tp_amb: Literal['1', '2']):
+    def __init__(self, tp_amb: Literal['1', '2'], pfx: bytes, password: str):
         self.tp_amb = tp_amb
+        self.pfx = pfx
+        self.password = password
 
     @classmethod
     def prepare(cls, payload: DeclaracaoOperacaoTransporteRequest, request_type: type[TypedDict]) -> None:
@@ -430,6 +432,11 @@ class PEFANTTClient:
     def _post(self, endpoint: str, payload: dict) -> dict:
         url = f'{AMBIENTE[self.tp_amb]}/{endpoint}'
         headers = {'Content-Type': 'application/json'}
+        requests.post(
+            self.url, data, verify=False,
+            cert=(self.config.certificado.cert_file, self.config.certificado.key_file),
+            headers=self.headers,
+        )
         response = requests.post(url, json=payload, headers=headers)
         return response.json()
 
