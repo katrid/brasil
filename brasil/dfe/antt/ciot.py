@@ -425,7 +425,7 @@ class PEFANTTClient:
                 if isinstance(val, (datetime.date, datetime.datetime)):
                     payload[k] = datetime.datetime.strftime(val, '%Y-%m-%d')
                 else:
-                    payload[k] = str(val)
+                    payload[k] = str(val) if val else None
             elif v is bool:
                 payload[k] = bool(val)
         if validator := validate_rules.get(request_type):
