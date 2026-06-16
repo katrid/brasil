@@ -364,21 +364,28 @@ def _dot_validate(dot: DeclaracaoOperacaoTransporteRequest):
     # 16.1
     if dot['InfPagamento']:
         for pag in dot['InfPagamento']:
-            if pag['TipoPagamento'] in (1, 2, 3, 4) and not pag['CodigoInstituicaoFinanceira']:
-                raise ValueError('Código de instituição financeira não informado')
-            if pag['TipoPagamento'] == 6 and not pag.get('IdentificadorPix'):
-                raise ValueError('Identificador Pix não informado')
-            # remover campos
-            if pag['TipoPagamento'] != 6 and pag.get('IdentificadorPix'):
-                pag.pop('IdentificadorPix')
-            if pag['IndPagamento'] == 1:
-                if not pag.get('NumeroParcela'):
-                    raise ValueError('Número de parcela não informado')
+            _pag_validate(pag)
 
+
+def _pag_validate(pag: InfPagamentoDOT):
+    if pag['TipoPagamento'] in (1, 2, 3, 4) and not pag['CodigoInstituicaoFinanceira']:
+        raise ValueError('Código de instituição financeira não informado')
+    if pag['TipoPagamento'] == 6 and not pag.get('IdentificadorPix'):
+        raise ValueError('Identificador Pix não informado')
+    if pag['TipoPagamento'] == 6 and ('NumeroConta' in pag or 'NumeroAgencia' in pag):
+        pag.pop('NumeroConta', None)
+        pag.pop('NumeroAgencia', None)
+    # remover campos
+    if pag['TipoPagamento'] != 6 and pag.get('IdentificadorPix'):
+        pag.pop('IdentificadorPix')
+    if pag['IndPagamento'] == 1:
+        if not pag.get('NumeroParcela'):
+            raise ValueError('Número de parcela não informado')
 
 
 validate_rules = {
     DeclaracaoOperacaoTransporteRequest: _dot_validate,
+    InfPagamentoDOT: _pag_validate,
 }
 
 
@@ -417,6 +424,8 @@ class PEFANTTClient:
                             continue
                     if str(val) not in map(str, args):
                         raise ValueError(f'{val} não é um valor válido para {k}')
+                elif origin is Literal and args and isinstance(args[0], int):
+                    payload[k] = int(val) if val else None
             elif v is Decimal:
                 payload[k] = 0 if val is None else round(float(val), 2)
             elif v is int:
