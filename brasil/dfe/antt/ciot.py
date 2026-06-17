@@ -1,7 +1,9 @@
 from typing import Annotated, Literal, NotRequired, TypedDict, get_type_hints, get_origin, get_args
+import os
 import datetime
 from dataclasses import dataclass
 from decimal import Decimal
+import json
 
 import requests
 
@@ -390,11 +392,12 @@ validate_rules = {
 
 
 class PEFANTTClient:
-    def __init__(self, tp_amb: Literal['1', '2'], pfx: bytes, password: str):
+    def __init__(self, tp_amb: Literal['1', '2'], pfx: bytes, password: str, caminho: str = None):
         self.tp_amb = tp_amb
         self.pfx = pfx
         self.password = password
         self.certificado = Certificado(pfx, password)
+        self.caminho = caminho
 
     @classmethod
     def prepare(cls, payload: DeclaracaoOperacaoTransporteRequest, request_type: type[TypedDict]) -> None:
@@ -444,10 +447,16 @@ class PEFANTTClient:
     def _post(self, endpoint: str, payload: dict) -> dict:
         url = f'{AMBIENTE[self.tp_amb]}/{endpoint}'
         headers = {'Content-Type': 'application/json'}
+        if self.caminho:
+            with open(os.path.join(self.caminho, f'env-{endpoint}-{datetime.datetime.now().isoformat()}.json'), 'w') as f:
+                f.write(json.dumps(payload, indent=2))
         response = requests.post(
             url, json=payload, headers=headers, verify=False,
             cert=(self.certificado.cert_file, self.certificado.key_file),
         )
+        if self.caminho:
+            with open(os.path.join(self.caminho, f'res-{endpoint}-{datetime.datetime.now().isoformat()}.json'), 'wb') as f:
+                f.write(response.content)
         return response.json()
 
     def consultar_situacao_transportador(
