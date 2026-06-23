@@ -12,7 +12,7 @@ class OfxParser:
     RE_TAG = re.compile(r'<([a-zA-Z0-9_.]+)>')
     RE_TAG_EMPTY = re.compile(r'<([a-zA-Z0-9_.]+)></\1>')
 
-    def parse(self, ofx_data: bytes):
+    def parse(self, ofx_data: bytes | str):
         doc = OfxDocument()
         header = {}
         cur_tag: dict = {}  # ofx
@@ -25,7 +25,7 @@ class OfxParser:
             'UTF-8': 'utf-8',
         }
         for l in ofx_data.splitlines():
-            if s := l.decode(encoding).strip():
+            if s := (l.decode(encoding).strip() if isinstance(ofx_data, bytes) else l.strip()):
                 if s.startswith('</'):  # ler tag de fechamento
                     cur_tag = tags.pop()
                     if tags:
