@@ -112,7 +112,7 @@ class BaseService:
         envelope = self.envelope()
         self.enviar(envelope)
         self.finalizar()
-        self.ok = self.response.status_code == 200
+        self.ok = str(self.response.status_code) == '200'
         return self.ok
 
     def preparar(self):
